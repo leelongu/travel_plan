@@ -891,6 +891,59 @@ img { display: block; max-width: 100%; }
 }
 
 /* ─── Footer ─────────────────────────────────────── */
+/* ─── Nav jump (between versions) ───────────────── */
+.nav-jump {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  padding: 18px 20px;
+  margin: 16px 12px 0;
+  background: var(--ink);
+  border-radius: var(--radius-lg);
+  border-top: 3px solid var(--gold);
+  color: var(--parchment);
+}
+.nav-jump__label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: rgba(247,242,232,0.4);
+  text-transform: uppercase;
+  margin-right: 8px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 4px;
+}
+.nav-jump__btn {
+  display: inline-block;
+  padding: 7px 16px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--gold-lt);
+  border-radius: 100px;
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-jump__btn:hover {
+  background: var(--gold);
+  color: var(--parchment);
+}
+.nav-jump__btn.active {
+  background: rgba(184,134,46,0.18);
+  color: var(--gold-lt);
+  cursor: default;
+  pointer-events: none;
+  border: 1px solid var(--gold);
+}
+@media (min-width: 600px) {
+  .nav-jump__label { width: auto; margin-bottom: 0; text-align: left; }
+}
+
 footer {
   background: #1a1410;
   color: rgba(247,242,232,0.55);
@@ -1020,6 +1073,14 @@ footer .footer-cta {
   <div class="tips-wrap">
     <h2 class="tips-title">全程实用贴士</h2>
     <div id="tips-container"><!-- JS 生成 --></div>
+  </div>
+
+  <!-- ═══════════════ NAV JUMP ═══════════════ -->
+  <div class="nav-jump">
+    <span class="nav-jump__label">// 切换行程版本</span>
+    <a href="shanxi-3d.html" class="nav-jump__btn active" aria-disabled="true">3 天精华版（当前）</a>
+    <a href="shanxi-7d.html" class="nav-jump__btn">7 天深度版</a>
+    <a href="index.html" class="nav-jump__btn">GitHub 首页</a>
   </div>
 
   <footer>
@@ -1299,7 +1360,7 @@ function reminderBadgeHTML(leadDays) {
           "time": "13:30–17:00",
           "lat": 40.1096,
           "lng": 113.1469,
-          "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Yungang11_2010.JPG?width=600",
+          "photo": "assets/img/yungang-grottoes.jpg",
           "rating": 4.8,
           "review": "北魏皇家石窟巅峰：昙曜五窟（第 16–20 窟）是云冈的精华，第 20 窟露天大佛最具识别度；第 5、6 窟雕饰繁复。建议预留 3–3.5 小时。",
           "openingHours": "4/1–10/31 约 8:30–17:30（以官方当日为准）",
@@ -1314,7 +1375,7 @@ function reminderBadgeHTML(leadDays) {
           "time": "18:30–21:00",
           "lat": 40.0935,
           "lng": 113.2967,
-          "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Datong_Nine_dragon_wall_(1)_January_1985.jpg?width=600",
+          "photo": "assets/img/nine-dragon-wall.jpg",
           "rating": 4.6,
           "review": "四牌楼古城中轴、九龙壁是中国现存最大九龙壁（明洪武年间），夜景灯光下色彩尤为惊艳；周围山西菜馆密集。",
           "openingHours": "全天（九龙壁外部）；内部 8:30–17:30",
@@ -1360,7 +1421,7 @@ function reminderBadgeHTML(leadDays) {
           "time": "07:00 出发 / 08:30 抵达",
           "lat": 39.6792,
           "lng": 113.7369,
-          "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Hanging_Temple_03.2025.jpg?width=600",
+          "photo": "assets/img/hanging-temple.jpg",
           "rating": 4.9,
           "review": "北岳恒山脚下、悬于绝壁 50 米高空：儒释道三教合一的小型寺庙群，黑神话悟空取景地之一。登临票稀缺，能否登临取决于预约运气。",
           "openingHours": "约 8:00–17:00（冬令 9:00 起）",
@@ -1375,7 +1436,7 @@ function reminderBadgeHTML(leadDays) {
           "time": "11:00 出发 / 11:30 抵达",
           "lat": 39.5572,
           "lng": 113.1847,
-          "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Fogong_Pagoda_1.jpg?width=600",
+          "photo": "assets/img/yingxian-pagoda.jpg",
           "rating": 4.9,
           "review": "佛宫寺释迦塔：世界现存最古老、最高大的纯木结构楼阁式塔（67.31m），全塔无一颗铁钉，纯榫卯；辽代清宁二年（1056）重建后未换过主结构。建议仰视塔身看斗拱、听风吹铁铃。",
           "openingHours": "约 8:30–17:30",
@@ -1460,7 +1521,7 @@ function reminderBadgeHTML(leadDays) {
           "time": "08:30–10:30",
           "lat": 40.0937,
           "lng": 113.2960,
-          "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Main_Hall_of_Huayan_Temple_(Datong).jpg?width=600",
+          "photo": "assets/img/huayan-temple.jpg",
           "rating": 4.7,
           "review": "辽代皇家寺庙，大雄宝殿是中国现存最大辽金佛殿（面阔九间）；薄伽教藏殿内的'合掌露齿菩萨'是辽代彩塑神品。建议请讲解了解'华严经'与辽代建筑逻辑。",
           "openingHours": "约 8:30–17:30",
@@ -1474,7 +1535,7 @@ function reminderBadgeHTML(leadDays) {
           "time": "10:45–11:45",
           "lat": 40.0942,
           "lng": 113.2965,
-          "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Shanhua_Temple_1.jpg?width=600",
+          "photo": "assets/img/shanhua-temple.jpg",
           "rating": 4.7,
           "review": "辽代木构，三圣殿 + 大雄宝殿，布局保存完整；游客密度远低于华严寺，安静。古建筑爱好者必去。",
           "openingHours": "约 8:30–17:30",
