@@ -2782,6 +2782,7 @@ function renderTimeline() {
     if (day.slots && day.slots.length) {
       html += '<div class="slots-grid">';
       day.slots.forEach(function (slot) {
+        slot._dayDate = day.date;
         html += renderSlotCard(slot);
       });
       html += '</div>';
@@ -3088,6 +3089,7 @@ function showDayTab(idx) {
   if (day.slots && day.slots.length) {
     html += '<div class="slots-grid">';
     day.slots.forEach(function (slot) {
+      slot._dayDate = day.date;
       html += renderSlotCard(slot);
     });
     html += '</div>';
@@ -3348,6 +3350,37 @@ function flashPoint(i) {
   }, 3000);
 }
 
+// ─────── 天气二次 patch ───────
+// fetchAllWeather() 完成后调用；只重渲染天气行，不重建整个卡片。
+function updateWeatherRows() {
+  trip.days.forEach(function (day) {
+    day.slots.forEach(function (slot) {
+      // 找到已渲染的天气行节点（querySelector 在 slot 卡片内）
+      var cards = document.querySelectorAll('.slot-card');
+      // 用 slot name + 时间戳定位（实际只能用 name，因为没有 ID）
+      cards.forEach(function (card) {
+        var nameEl = card.querySelector('.slot-name');
+        if (!nameEl || nameEl.textContent !== slot.name) return;
+        var w = getWeatherForRender(slot, day.date);
+        if (!w) return;
+        var weatherRow = card.querySelector('.slot-weather');
+        var noteRow = card.querySelector('.slot-weather-note');
+        if (!weatherRow) return;  // 没渲染就跳过
+        // 重写天气行
+        weatherRow.innerHTML =
+          '<span class="slot-weather-icon">' + escapeHTML(w.icon) + '</span>' +
+          '<span class="slot-weather-text">天气  ' + escapeHTML(w.conditions) + ' · '
+            + w.high + '°/' + w.low + '° · 💧' + escapeHTML(w.precipAdvice) + '</span>' +
+          (w.source === 'live' ? '<span class="slot-weather-live-dot" title="实时数据"></span>' : '');
+        if (noteRow) {
+          noteRow.innerHTML = '📡 Open-Meteo · 11km 网格 · 参考'
+            + (w.source === 'fallback' ? ' · <span class="slot-weather-error">⚠ 实时不可用</span>' : '');
+        }
+      });
+    });
+  });
+}
+
 (function init() {
   renderChecklist();
   renderPretrip();
@@ -3364,6 +3397,8 @@ function flashPoint(i) {
   travelMap = initTravelMap('map', mapPoints);
   renderRouteChips();
   initPlayButton();
+  // ── 启动天气抓取（不阻塞首屏）──
+  fetchAllWeather().then(updateWeatherRows);
 })();
 </script>
 
