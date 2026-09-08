@@ -1373,6 +1373,38 @@ footer .footer-cta {
   .slots-grid { padding: 0 12px; }
   .dining-section { margin: 14px 16px 0; }
 }
+
+/* ─────── 天气行（每个 slot 卡片） ─────── */
+.slot-weather {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(0,0,0,.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.slot-weather-icon { font-size: 16px; }
+.slot-weather-text { flex: 1; color: #2a2a2a; }
+.slot-weather-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4caf50;
+  flex-shrink: 0;
+}
+.slot-weather-note {
+  font-size: 11px;
+  color: #999;
+  margin-top: 4px;
+  padding-left: 4px;
+}
+.slot-weather-error {
+  color: #c62828;
+  font-size: 12px;
+  margin-left: 8px;
+}
+.slot-weather-loading { color: #999; }
 </style>
 </head>
 <body>
