@@ -598,7 +598,15 @@ img { display: block; max-width: 100%; }
   margin: 0 12px 16px;
 }
 @media (min-width: 768px) { .map-card { margin: 0 0 24px; } }
-.map-head { padding: 18px 22px 12px; }
+.map-head {
+  padding: 18px 22px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.map-head__title { flex: 1; min-width: 0; }
+.map-head__actions { flex-shrink: 0; }
 .map-head h2 {
   font-family: 'Noto Serif SC', serif;
   font-weight: 700;
@@ -683,6 +691,138 @@ img { display: block; max-width: 100%; }
 .route-chip__emoji {
   font-size: 13px;
   flex-shrink: 0;
+}
+
+/* ─── Play button + walking markers ─────────────── */
+.map-controls {
+  display: flex;
+  gap: 6px;
+}
+.map-btn {
+  background: rgba(255,255,255,0.94);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 7px 14px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 0.04em;
+}
+.map-btn:hover { background: var(--gold-lt); color: var(--ink); }
+.map-btn.playing { background: var(--cinnabar); color: #fff; border-color: var(--cinnabar); }
+.map-btn.playing:hover { background: var(--cinnabar-lt); }
+.map-btn .icon { font-size: 14px; }
+
+.walker-marker {
+  background: none !important;
+  border: none !important;
+  font-size: 28px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
+  z-index: 900;
+  pointer-events: none;
+}
+.walker-marker.second {
+  font-size: 26px;
+  opacity: 0.92;
+  z-index: 899;
+}
+.map-point-dim .route-pin {
+  opacity: 0.25;
+  transition: opacity 0.3s;
+}
+
+/* ─── Tabbed timeline ──────────────────────────── */
+.tab-strip {
+  display: flex;
+  gap: 6px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(184,134,46,0.3) transparent;
+}
+.tab-strip::-webkit-scrollbar { height: 4px; }
+.tab-strip::-webkit-scrollbar-thumb { background: rgba(184,134,46,0.3); border-radius: 2px; }
+.day-tab {
+  flex-shrink: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+  text-align: center;
+  min-width: 60px;
+  transition: all 0.18s;
+  font-family: 'Noto Serif SC', serif;
+}
+.day-tab:hover { border-color: var(--gold); }
+.day-tab.active {
+  background: var(--ink);
+  color: var(--gold-lt);
+  border-color: var(--gold);
+  font-weight: 700;
+}
+.day-tab__num {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 18px;
+  line-height: 1;
+  color: inherit;
+}
+.day-tab__weekday {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.10em;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.day-tab.active .day-tab__weekday { color: rgba(212,160,76,0.7); }
+
+/* ─── Toggle switch ─────────────────────────────── */
+.view-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1100;
+  display: flex;
+  gap: 0;
+  background: var(--ink);
+  border-radius: 100px;
+  padding: 4px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+}
+.view-toggle__btn {
+  border: none;
+  background: transparent;
+  color: rgba(247,242,232,0.55);
+  padding: 7px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 100px;
+  transition: all 0.18s;
+}
+.view-toggle__btn.active { background: var(--gold); color: var(--ink); font-weight: 700; }
+.view-toggle__btn:hover:not(.active) { color: var(--parchment); }
+@media (max-width: 480px) {
+  .view-toggle {
+    top: auto;
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+    justify-content: center;
+  }
+  .view-toggle__btn { flex: 1; padding: 10px 12px; }
 }
 .route-pin {
   background: var(--ink) !important;
@@ -1225,11 +1365,24 @@ footer .footer-cta {
   <!-- ═══════════════ MAP ═══════════════ -->
   <div class="map-card">
     <div class="map-head">
-      <h2>行程地图</h2>
-      <p>// 点击下方途经点 · 沿真实道路从上一站滑向目标</p>
+      <div class="map-head__title">
+        <h2>行程地图</h2>
+        <p>// 点击下方途经点 · 沿真实道路从上一站滑向目标</p>
+      </div>
+      <div class="map-head__actions">
+        <button type="button" class="map-btn" id="play-btn">
+          <span class="icon">▶</span><span class="label">播放行程</span>
+        </button>
+      </div>
     </div>
     <div id="map"></div>
     <div class="route-chips" id="route-chips"><!-- JS 生成 --></div>
+  </div>
+
+  <!-- ═══════════════ VIEW TOGGLE ═══════════════ -->
+  <div class="view-toggle" id="view-toggle">
+    <button type="button" class="view-toggle__btn active" data-mode="tabs">▤ 标签页</button>
+    <button type="button" class="view-toggle__btn" data-mode="timeline">≡ 时间轴</button>
   </div>
 
   <!-- ═══════════════ TIMELINE ═══════════════ -->
@@ -1241,6 +1394,7 @@ footer .footer-cta {
         <div class="section-subtitle">Day-by-Day Timeline</div>
       </div>
     </div>
+    <div class="tab-strip" id="day-tabs"><!-- JS 生成 · 标签页模式 --></div>
     <div id="timeline-container"><!-- JS 生成 --></div>
   </section>
 
@@ -1823,7 +1977,6 @@ var trip = JSON.parse(document.getElementById('trip-data').textContent);
 
 // ─── Map points ──────────────────────────────────
 var mapPoints = [
-  { lat: 23.3924, lng: 113.2988, name: "广州白云机场", time: "2026-10-02 06:30–10:00" },
   { lat: 40.0611, lng: 113.4822, name: "大同云冈国际机场", time: "2026-10-02 10:30" },
   { lat: 40.0936, lng: 113.2954, name: "大同古城（四牌楼）", time: "2026-10-02 11:30" },
   { lat: 40.1096, lng: 113.1469, name: "云冈石窟", time: "2026-10-02 13:30–17:00" },
@@ -2261,6 +2414,291 @@ function renderClosureAudit() {
   document.getElementById('closure-audit-list').innerHTML = html;
 }
 
+// ═══════════════ VIEW TOGGLE + TABBED TIMELINE ═══════════════
+var currentViewMode = 'tabs';
+var currentDayIdx = 0;
+
+function initViewToggle() {
+  document.getElementById('view-toggle').addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-mode]');
+    if (!btn) return;
+    var mode = btn.getAttribute('data-mode');
+    if (mode === currentViewMode) return;
+    setViewMode(mode);
+  });
+}
+
+function setViewMode(mode) {
+  currentViewMode = mode;
+  document.querySelectorAll('.view-toggle__btn').forEach(function (b) {
+    if (b.getAttribute('data-mode') === mode) b.classList.add('active');
+    else b.classList.remove('active');
+  });
+  renderDayTabs();
+  var container = document.getElementById('timeline-container');
+  if (mode === 'timeline') {
+    renderTimeline();
+    clearDayHighlights();
+  } else {
+    showDayTab(currentDayIdx);
+  }
+}
+
+function renderDayTabs() {
+  var strip = document.getElementById('day-tabs');
+  var html = '';
+  trip.days.forEach(function (day, i) {
+    var isPlaceholder = !day.slots || day.slots.length === 0;
+    var cls = 'day-tab' + (i === currentDayIdx ? ' active' : '');
+    html += '<button type="button" class="' + cls + '" data-day-idx="' + i + '">'
+      + '<div class="day-tab__num">Day ' + (i + 1) + '</div>'
+      + '<div class="day-tab__weekday">' + escapeHTML(day.weekday || '') + '</div>'
+      + '</button>';
+  });
+  strip.innerHTML = html;
+  if (currentViewMode !== 'tabs') return;
+  strip.addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-day-idx]');
+    if (!btn) return;
+    var idx = parseInt(btn.getAttribute('data-day-idx'), 10);
+    if (!isNaN(idx)) showDayTab(idx);
+  });
+}
+
+function showDayTab(idx) {
+  currentDayIdx = idx;
+  var container = document.getElementById('timeline-container');
+  var day = trip.days[idx];
+  var html = '';
+  html += '<div class="day-block day-' + (idx + 1) + '">';
+  html += '<div class="day-header">'
+    + '<div class="day-num">Day ' + (idx + 1) + '</div>'
+    + '<div class="day-title-row">'
+    +   '<div class="day-weekday">' + escapeHTML(day.date) + ' · ' + escapeHTML(day.weekday) + '</div>'
+    +   '<div class="day-theme">' + escapeHTML(day.theme) + '</div>'
+    + '</div>'
+    + '</div>';
+  if (day.tips && day.tips.length) {
+    day.tips.forEach(function (tip) {
+      html += '<div class="day-tips-banner">' + escapeHTML(tip) + '</div>';
+    });
+  }
+  if (day.slots && day.slots.length) {
+    html += '<div class="slots-grid">';
+    day.slots.forEach(function (slot) {
+      html += renderSlotCard(slot);
+    });
+    html += '</div>';
+    html += renderDining(day.dining);
+  } else {
+    html += '<div class="day-placeholder">'
+      + '<div class="day-placeholder__icon">⏳</div>'
+      + '<div class="day-placeholder__text">机动 · 待补充</div>'
+      + '<div class="day-placeholder__sub">FLEXIBLE · TO BE FILLED</div>'
+      + '</div>';
+  }
+  html += '</div>';
+  container.innerHTML = html;
+  document.querySelectorAll('.day-tab').forEach(function (el) {
+    var i = parseInt(el.getAttribute('data-day-idx'), 10);
+    if (i === idx) el.classList.add('active');
+    else el.classList.remove('active');
+  });
+  highlightDayOnMap(idx);
+}
+
+function highlightDayOnMap(idx) {
+  if (!travelMap) return;
+  var day = trip.days[idx];
+  var dayCoords = (day.slots || []).map(function (s) {
+    return L.latLng(s.lat, s.lng);
+  });
+  if (dayCoords.length === 0) {
+    clearDayHighlights();
+    return;
+  }
+  var mapEl = document.getElementById('map');
+  mapEl.classList.add('map-point-dim');
+  if (window.__dayHighlightLine) {
+    travelMap.removeLayer(window.__dayHighlightLine);
+    window.__dayHighlightLine = null;
+  }
+  window.__dayHighlightLine = L.polyline(dayCoords, {
+    color: '#b8392e',
+    weight: 4,
+    opacity: 0.85
+  }).addTo(travelMap);
+  travelMap.fitBounds(dayCoords, { padding: [60, 60], maxZoom: 13 });
+}
+
+function clearDayHighlights() {
+  var mapEl = document.getElementById('map');
+  if (mapEl) mapEl.classList.remove('map-point-dim');
+  if (travelMap && window.__dayHighlightLine) {
+    travelMap.removeLayer(window.__dayHighlightLine);
+    window.__dayHighlightLine = null;
+  }
+}
+
+// ═══════════════ PLAY BUTTON + WALKING ANIMATION ═══════════════
+var isPlaying = false;
+var walkerMarkers = [];
+var walkerAnimToken = null;
+
+function initPlayButton() {
+  var btn = document.getElementById('play-btn');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    if (isPlaying) {
+      pauseWalkingAnimation();
+    } else {
+      startWalkingAnimation();
+    }
+  });
+}
+
+function startWalkingAnimation() {
+  if (isPlaying) return;
+  isPlaying = true;
+  var btn = document.getElementById('play-btn');
+  btn.classList.add('playing');
+  btn.querySelector('.icon').textContent = '⏸';
+  btn.querySelector('.label').textContent = '暂停';
+  if (typeof animCancel !== 'undefined' && animCancel) animCancel.cancelled = true;
+  if (typeof walkerAnimToken !== 'undefined' && walkerAnimToken) walkerAnimToken.cancelled = true;
+  clearDayHighlights();
+  var allCoords = mapPoints.map(function (p) { return [p.lat, p.lng]; });
+  travelMap.fitBounds(allCoords, { padding: [40, 40] });
+  var segments = [];
+  var fetchPromises = [];
+  for (var i = 0; i < mapPoints.length - 1; i++) {
+    fetchPromises.push(fetchRoute(i, i + 1).then(function (idx) {
+      return function (coords) {
+        segments[idx] = coords;
+      };
+    }(i)));
+  }
+  Promise.all(fetchPromises).then(function () {
+    removeWalkerMarkers();
+    var startLatLng = mapPoints[0];
+    walkerMarkers.push(L.marker([startLatLng.lat, startLatLng.lng], {
+      icon: L.divIcon({ className: 'walker-marker', html: '👨', iconSize: [28, 28], iconAnchor: [14, 14] }),
+      interactive: false
+    }).addTo(travelMap));
+    walkerMarkers.push(L.marker([startLatLng.lat, startLatLng.lng], {
+      icon: L.divIcon({ className: 'walker-marker second', html: '👩', iconSize: [26, 26], iconAnchor: [13, 13] }),
+      interactive: false
+    }).addTo(travelMap));
+    runWalkingAnimation(segments);
+  });
+}
+
+function pauseWalkingAnimation() {
+  isPlaying = false;
+  if (walkerAnimToken) walkerAnimToken.cancelled = true;
+  var btn = document.getElementById('play-btn');
+  btn.classList.remove('playing');
+  btn.querySelector('.icon').textContent = '▶';
+  btn.querySelector('.label').textContent = '继续行程';
+}
+
+function stopWalkingAnimation() {
+  pauseWalkingAnimation();
+  removeWalkerMarkers();
+  var btn = document.getElementById('play-btn');
+  btn.classList.remove('playing');
+  btn.querySelector('.icon').textContent = '▶';
+  btn.querySelector('.label').textContent = '播放行程';
+}
+
+function removeWalkerMarkers() {
+  walkerMarkers.forEach(function (m) {
+    if (travelMap) travelMap.removeLayer(m);
+  });
+  walkerMarkers = [];
+}
+
+function runWalkingAnimation(segments) {
+  walkerAnimToken = { cancelled: false };
+  var token = walkerAnimToken;
+  var leaderDelay = 0;
+  var startTs = null;
+  var segmentMeta = segments.map(function (coords, i) {
+    var a = mapPoints[i], b = mapPoints[i + 1];
+    var km = haversineKm(a.lat, a.lng, b.lat, b.lng);
+    var dur = durationForDistance(km) * 1000;
+    return { coords: coords, dur: dur };
+  });
+  var totalMs = segmentMeta.reduce(function (s, m) { return s + m.dur; }, 0);
+
+  function step(ts) {
+    if (token.cancelled) return;
+    if (startTs === null) startTs = ts;
+    var elapsed = ts - startTs;
+    if (elapsed >= totalMs) {
+      var last = mapPoints[mapPoints.length - 1];
+      setWalkerPosition(0, last.lat, last.lng);
+      setWalkerPosition(1, last.lat, last.lng);
+      stopWalkingAnimation();
+      return;
+    }
+    var acc = 0, segIdx = 0, segT = 0;
+    for (var i = 0; i < segmentMeta.length; i++) {
+      if (elapsed < acc + segmentMeta[i].dur) {
+        segIdx = i;
+        segT = (elapsed - acc) / segmentMeta[i].dur;
+        break;
+      }
+      acc += segmentMeta[i].dur;
+    }
+    var coords = segmentMeta[segIdx].coords;
+    var idx = segT * (coords.length - 1);
+    var i0 = Math.floor(idx);
+    var i1 = Math.min(coords.length - 1, i0 + 1);
+    var frac = idx - i0;
+    var lng = coords[i0][0] + (coords[i1][0] - coords[i0][0]) * frac;
+    var lat = coords[i0][1] + (coords[i1][1] - coords[i0][1]) * frac;
+    setWalkerPosition(0, lat, lng);
+
+    var delayedElapsed = elapsed - leaderDelay;
+    if (delayedElapsed > 0) {
+      if (delayedElapsed >= totalMs) {
+        var last2 = mapPoints[mapPoints.length - 1];
+        setWalkerPosition(1, last2.lat, last2.lng);
+      } else {
+        var acc2 = 0, segIdx2 = 0, segT2 = 0;
+        for (var j = 0; j < segmentMeta.length; j++) {
+          if (delayedElapsed < acc2 + segmentMeta[j].dur) {
+            segIdx2 = j;
+            segT2 = (delayedElapsed - acc2) / segmentMeta[j].dur;
+            break;
+          }
+          acc2 += segmentMeta[j].dur;
+        }
+        var coords2 = segmentMeta[segIdx2].coords;
+        var idx2 = segT2 * (coords2.length - 1);
+        var i02 = Math.floor(idx2);
+        var i12 = Math.min(coords2.length - 1, i02 + 1);
+        var frac2 = idx2 - i02;
+        var lng2 = coords2[i02][0] + (coords2[i12][0] - coords2[i02][0]) * frac2;
+        var lat2 = coords2[i02][1] + (coords2[i12][1] - coords2[i02][1]) * frac2;
+        setWalkerPosition(1, lat2, lng2);
+      }
+    } else {
+      var start = mapPoints[0];
+      setWalkerPosition(1, start.lat, start.lng);
+    }
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function setWalkerPosition(idx, lat, lng) {
+  if (walkerMarkers[idx]) {
+    walkerMarkers[idx].setLatLng([lat, lng]);
+  }
+}
+
 (function init() {
   renderChecklist();
   renderPretrip();
@@ -2271,8 +2709,12 @@ function renderClosureAudit() {
   renderTips();
   renderTourismCard();
   renderClosureAudit();
+  initViewToggle();
+  renderDayTabs();
+  showDayTab(0);
   travelMap = initTravelMap('map', mapPoints);
   renderRouteChips();
+  initPlayButton();
 })();
 </script>
 
