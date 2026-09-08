@@ -2519,6 +2519,7 @@ var WEATHER_CACHE_KEY = 't6d_weather_v1';
 var WEATHER_CACHE_TTL = 6 * 60 * 60 * 1000;
 var WEATHER_FETCH_TIMEOUT = 4000;
 var liveWeatherResults = {};  // { key: { daily: {...} } }
+var weatherCellStatus = {};  // { key: 'ok' | 'error' } —— 'error' 才显示 ⚠ 实时不可用
 
 function buildDailyUrl(lat, lng, startDate, endDate) {
   return 'https://api.open-meteo.com/v1/forecast'
@@ -2552,22 +2553,7 @@ function fetchOneCell(lat, lng, startDate, endDate) {
 function getWeatherForRender(slot, targetDate) {
   if (!slot.weather) return null;
   var key = roundCoord(slot.weather.coords.lat) + ':' + roundCoord(slot.weather.coords.lng);
-  var live = liveWeatherResults[key];
-  if (live && live.daily) {
-    var i = live.daily.time.indexOf(targetDate);
-    if (i >= 0) {
-      var cond = wmoToText(live.daily.weather_code[i], live.daily.precipitation_probability_max[i]);
-      return {
-        source: 'live',
-        icon: cond.icon,
-        conditions: cond.conditions,
-        high: Math.round(live.daily.temperature_2m_max[i]),
-        low: Math.round(live.daily.temperature_2m_min[i]),
-        precipAdvice: precipAdvice(live.daily.precipitation_probability_max[i])
-      };
-    }
-  }
-  return Object.assign({ source: 'fallback' }, slot.weather.fallback);
+  return resolveWeather(liveWeatherResults, slot, targetDate, weatherCellStatus[key] === 'error');
 }
 
 function collectWeatherRequests() {
@@ -2600,13 +2586,18 @@ function fetchAllWeather() {
   reqs.forEach(function (r) {
     var cached = cache[r.key];
     if (cached && (now - cached.fetchedAt) < WEATHER_CACHE_TTL) {
-      liveWeatherResults[r.key] = cached.daily;
+      liveWeatherResults[r.key] = { daily: cached.daily };
+      weatherCellStatus[r.key] = 'ok';
       return;
     }
     if (fetches[r.key]) return;  // 同 cell 不重复 fetch
     fetches[r.key] = fetchOneCell(r.lat, r.lng, dateMin, dateMax).then(function (data) {
-      if (!data || !data.daily) return;
-      liveWeatherResults[r.key] = data.daily;
+      if (!data || !data.daily) {
+        weatherCellStatus[r.key] = 'error';
+        return;
+      }
+      liveWeatherResults[r.key] = { daily: data.daily };
+      weatherCellStatus[r.key] = 'ok';
       cache[r.key] = { fetchedAt: now, daily: data.daily };
     });
   });
@@ -2619,6 +2610,32 @@ function fetchAllWeather() {
 // ───────── 坐标 5km 网格去重（0.05° ≈ 5km）─────────
 function roundCoord(v) {
   return Math.round(v * 20) / 20;
+}
+
+// ───────── 从 live 数据 + fallback 解析出渲染用的天气结果 ─────────
+// liveResults: { key: { daily: {...} } }；unavailable: 该 cell 是否抓取失败（true 才显示 ⚠）
+// 返回 { source: 'live'|'fallback', icon, conditions, high, low, precipAdvice, [unavailable] }
+function resolveWeather(liveResults, slot, targetDate, unavailable) {
+  if (!slot.weather) return null;
+  var key = roundCoord(slot.weather.coords.lat) + ':' + roundCoord(slot.weather.coords.lng);
+  var live = liveResults[key];
+  if (live && live.daily) {
+    var i = live.daily.time.indexOf(targetDate);
+    if (i >= 0) {
+      var cond = wmoToText(live.daily.weather_code[i], live.daily.precipitation_probability_max[i]);
+      return {
+        source: 'live',
+        icon: cond.icon,
+        conditions: cond.conditions,
+        high: Math.round(live.daily.temperature_2m_max[i]),
+        low: Math.round(live.daily.temperature_2m_min[i]),
+        precipAdvice: precipAdvice(live.daily.precipitation_probability_max[i])
+      };
+    }
+  }
+  var fb = Object.assign({ source: 'fallback' }, slot.weather.fallback);
+  if (unavailable) fb.unavailable = true;
+  return fb;
 }
 
 // ───────── Node 导出守卫 ─────────
@@ -2813,7 +2830,7 @@ function renderSlotCard(slot) {
     }
     html += '</div>';
     html += '<div class="slot-weather-note">📡 Open-Meteo · 11km 网格 · 参考'
-          + (w.source === 'fallback' ? ' · <span class="slot-weather-error">⚠ 实时不可用</span>' : '')
+          + (w.unavailable === true ? ' · <span class="slot-weather-error">⚠ 实时不可用</span>' : '')
           + '</div>';
   }
 
@@ -3476,7 +3493,7 @@ function updateWeatherRows() {
           (w.source === 'live' ? '<span class="slot-weather-live-dot" title="实时数据"></span>' : '');
         if (noteRow) {
           noteRow.innerHTML = '📡 Open-Meteo · 11km 网格 · 参考'
-            + (w.source === 'fallback' ? ' · <span class="slot-weather-error">⚠ 实时不可用</span>' : '');
+            + (w.unavailable === true ? ' · <span class="slot-weather-error">⚠ 实时不可用</span>' : '');
         }
       });
     });

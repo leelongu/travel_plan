@@ -62,7 +62,33 @@ function roundCoord(v) {
   return Math.round(v * 20) / 20;
 }
 
+// ───────── 从 live 数据 + fallback 解析出渲染用的天气结果 ─────────
+// liveResults: { key: { daily: {...} } }；unavailable: 该 cell 是否抓取失败（true 才显示 ⚠）
+// 返回 { source: 'live'|'fallback', icon, conditions, high, low, precipAdvice, [unavailable] }
+function resolveWeather(liveResults, slot, targetDate, unavailable) {
+  if (!slot.weather) return null;
+  var key = roundCoord(slot.weather.coords.lat) + ':' + roundCoord(slot.weather.coords.lng);
+  var live = liveResults[key];
+  if (live && live.daily) {
+    var i = live.daily.time.indexOf(targetDate);
+    if (i >= 0) {
+      var cond = wmoToText(live.daily.weather_code[i], live.daily.precipitation_probability_max[i]);
+      return {
+        source: 'live',
+        icon: cond.icon,
+        conditions: cond.conditions,
+        high: Math.round(live.daily.temperature_2m_max[i]),
+        low: Math.round(live.daily.temperature_2m_min[i]),
+        precipAdvice: precipAdvice(live.daily.precipitation_probability_max[i])
+      };
+    }
+  }
+  var fb = Object.assign({ source: 'fallback' }, slot.weather.fallback);
+  if (unavailable) fb.unavailable = true;
+  return fb;
+}
+
 // ───────── Node 导出守卫 ─────────
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { wmoIconCN, wmoToText, precipAdvice, roundCoord, escapeHTML };
+  module.exports = { wmoIconCN, wmoToText, precipAdvice, roundCoord, escapeHTML, resolveWeather };
 }

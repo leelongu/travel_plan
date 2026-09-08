@@ -2,7 +2,7 @@
 // 项目约定单测用 `node --test test/*.test.js`（详见 CLAUDE.md）。
 const { test } = require('node:test');
 const assert = require('node:assert');
-const { wmoIconCN, wmoToText, precipAdvice, roundCoord } = require('../travel-plan-viz/assets/weather.js');
+const { wmoIconCN, wmoToText, precipAdvice, roundCoord, resolveWeather } = require('../travel-plan-viz/assets/weather.js');
 
 // ─────── wmoIconCN ───────
 test('wmoIconCN 覆盖晴天/多云/阴/雨/雪/雷暴主类', () => {
@@ -72,4 +72,43 @@ test('roundCoord 5km 网格去重精度（0.05°）', () => {
 
 test('roundCoord 处理负坐标', () => {
   assert.strictEqual(roundCoord(-30.03), -30.05);
+});
+
+// ─────── resolveWeather ───────
+test('resolveWeather 命中 live 日期返回 source=live', () => {
+  const slot = {
+    weather: {
+      coords: { lat: 40.09, lng: 113.29 },
+      fallback: { icon: '⛅', conditions: '多云', high: 22, low: 12, precipAdvice: '无需备伞' }
+    }
+  };
+  const liveResults = {
+    '40.1:113.3': { daily: {
+      time: ['2026-09-28'],
+      weather_code: [0],
+      temperature_2m_max: [18],
+      temperature_2m_min: [6],
+      precipitation_probability_max: [5]
+    } }
+  };
+  const r = resolveWeather(liveResults, slot, '2026-09-28', false);
+  assert.strictEqual(r.source, 'live');
+  assert.strictEqual(r.conditions, '晴');
+  assert.strictEqual(r.high, 18);
+  assert.strictEqual(r.low, 6);
+});
+
+test('resolveWeather 未命中返回 fallback，unavailable 时带标志', () => {
+  const slot = {
+    weather: {
+      coords: { lat: 40.09, lng: 113.29 },
+      fallback: { icon: '⛅', conditions: '多云', high: 22, low: 12, precipAdvice: '无需备伞' }
+    }
+  };
+  const r1 = resolveWeather({}, slot, '2026-09-28', false);
+  assert.strictEqual(r1.source, 'fallback');
+  assert.strictEqual(r1.unavailable, undefined);
+  const r2 = resolveWeather({}, slot, '2026-09-28', true);
+  assert.strictEqual(r2.source, 'fallback');
+  assert.strictEqual(r2.unavailable, true);
 });
