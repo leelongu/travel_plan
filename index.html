@@ -2696,8 +2696,26 @@ function renderSlotCard(slot) {
   if (slot.seasonal) {
     html += '<div class="seasonal-tag">🌸 ' + escapeHTML(slot.seasonal) + '</div>';
   }
-  html += '</div>';
-  html += '</div>';
+  html += '</div>';   // 关闭 slot-meta
+
+  // ── 天气行 ──
+  var dayDate = (slot._dayDate) || '';  // 临时标记（见 Task 7）
+  var w = dayDate ? getWeatherForRender(slot, dayDate) : null;
+  if (w) {
+    html += '<div class="slot-weather">';
+    html += '<span class="slot-weather-icon">' + escapeHTML(w.icon) + '</span>';
+    html += '<span class="slot-weather-text">天气  ' + escapeHTML(w.conditions) + ' · '
+          + w.high + '°/' + w.low + '° · 💧' + escapeHTML(w.precipAdvice) + '</span>';
+    if (w.source === 'live') {
+      html += '<span class="slot-weather-live-dot" title="实时数据"></span>';
+    }
+    html += '</div>';
+    html += '<div class="slot-weather-note">📡 Open-Meteo · 11km 网格 · 参考'
+          + (w.source === 'fallback' ? ' · <span class="slot-weather-error">⚠ 实时不可用</span>' : '')
+          + '</div>';
+  }
+
+  html += '</div>';   // 关闭 slot-body
   html += '</div>';
   return html;
 }
