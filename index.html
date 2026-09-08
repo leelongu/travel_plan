@@ -2514,6 +2514,108 @@ function precipAdvice(prob) {
   return '无需备伞';
 }
 
+// ──────────── 天气引擎 ────────────
+var WEATHER_CACHE_KEY = 't6d_weather_v1';
+var WEATHER_CACHE_TTL = 6 * 60 * 60 * 1000;
+var WEATHER_FETCH_TIMEOUT = 4000;
+var liveWeatherResults = {};  // { key: { daily: {...} } }
+
+function buildDailyUrl(lat, lng, startDate, endDate) {
+  return 'https://api.open-meteo.com/v1/forecast'
+    + '?latitude=' + lat + '&longitude=' + lng
+    + '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max'
+    + '&timezone=Asia/Shanghai'
+    + '&start_date=' + startDate + '&end_date=' + endDate;
+}
+
+function loadWeatherCache() {
+  try {
+    var raw = sessionStorage.getItem(WEATHER_CACHE_KEY);
+    if (!raw) return {};
+    return JSON.parse(raw);
+  } catch (e) { return {}; }
+}
+
+function saveWeatherCache(cache) {
+  try { sessionStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify(cache)); }
+  catch (e) { /* 隐私模式/容量满静默 */ }
+}
+
+function fetchOneCell(lat, lng, startDate, endDate) {
+  var url = buildDailyUrl(lat, lng, startDate, endDate);
+  return Promise.race([
+    fetch(url).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }),
+    new Promise(function (resolve) { setTimeout(function () { resolve(null); }, WEATHER_FETCH_TIMEOUT); })
+  ]);
+}
+
+function getWeatherForRender(slot, targetDate) {
+  if (!slot.weather) return null;
+  var key = roundCoord(slot.weather.coords.lat) + ':' + roundCoord(slot.weather.coords.lng);
+  var live = liveWeatherResults[key];
+  if (live && live.daily) {
+    var i = live.daily.time.indexOf(targetDate);
+    if (i >= 0) {
+      var cond = wmoToText(live.daily.weather_code[i], live.daily.precipitation_probability_max[i]);
+      return {
+        source: 'live',
+        icon: cond.icon,
+        conditions: cond.conditions,
+        high: Math.round(live.daily.temperature_2m_max[i]),
+        low: Math.round(live.daily.temperature_2m_min[i]),
+        precipAdvice: precipAdvice(live.daily.precipitation_probability_max[i])
+      };
+    }
+  }
+  return Object.assign({ source: 'fallback' }, slot.weather.fallback);
+}
+
+function collectWeatherRequests() {
+  var seen = {};
+  var reqs = [];
+  trip.days.forEach(function (day) {
+    day.slots.forEach(function (slot) {
+      if (!slot.weather || !slot.weather.coords) return;
+      var lat = slot.weather.coords.lat;
+      var lng = slot.weather.coords.lng;
+      var key = roundCoord(lat) + ':' + roundCoord(lng);
+      var composite = key + ':' + day.date;
+      if (seen[composite]) return;
+      seen[composite] = true;
+      reqs.push({ key: key, lat: lat, lng: lng, date: day.date });
+    });
+  });
+  return reqs;
+}
+
+function fetchAllWeather() {
+  var reqs = collectWeatherRequests();
+  if (!reqs.length) return Promise.resolve();
+  var cache = loadWeatherCache();
+  var now = Date.now();
+  var dateMin = reqs.reduce(function (a, r) { return r.date < a ? r.date : a; }, reqs[0].date);
+  var dateMax = reqs.reduce(function (a, r) { return r.date > a ? r.date : a; }, reqs[0].date);
+
+  var fetches = {};
+  reqs.forEach(function (r) {
+    var cached = cache[r.key];
+    if (cached && (now - cached.fetchedAt) < WEATHER_CACHE_TTL) {
+      liveWeatherResults[r.key] = cached.daily;
+      return;
+    }
+    if (fetches[r.key]) return;  // 同 cell 不重复 fetch
+    fetches[r.key] = fetchOneCell(r.lat, r.lng, dateMin, dateMax).then(function (data) {
+      if (!data || !data.daily) return;
+      liveWeatherResults[r.key] = data.daily;
+      cache[r.key] = { fetchedAt: now, daily: data.daily };
+    });
+  });
+
+  return Promise.all(Object.values(fetches)).then(function () {
+    saveWeatherCache(cache);
+  });
+}
+
 // ───────── 坐标 5km 网格去重（0.05° ≈ 5km）─────────
 function roundCoord(v) {
   return Math.round(v * 20) / 20;
