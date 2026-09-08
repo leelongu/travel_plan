@@ -308,6 +308,158 @@ img { display: block; max-width: 100%; }
 @media (min-width: 768px) { .disclaimer-box { margin: 0 0 24px; } }
 .disclaimer-box strong { color: var(--cinnabar); font-weight: 700; }
 
+/* ─── Tourism card block ──────────────────────── */
+.tourism-card {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
+  color: var(--ink);
+  border-radius: var(--radius-lg);
+  padding: 22px 22px 24px;
+  margin: 16px 12px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+@media (min-width: 768px) { .tourism-card { margin: 0 0 24px; } }
+.tourism-card::before {
+  content: '年';
+  position: absolute;
+  top: -20px; right: -10px;
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 140px;
+  color: rgba(26,20,16,0.08);
+  line-height: 1;
+  pointer-events: none;
+}
+.tourism-card__head {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px;
+}
+.tourism-card__icon { font-size: 24px; }
+.tourism-card__title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--ink);
+}
+.tourism-card__rows { display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1; }
+.tourism-card__row { display: flex; gap: 10px; font-size: 12px; line-height: 1.6; align-items: flex-start; }
+.tourism-card__label {
+  flex-shrink: 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  background: rgba(26,20,16,0.18);
+  padding: 3px 8px;
+  border-radius: 3px;
+  min-width: 56px;
+  text-align: center;
+}
+.tourism-card__value { flex: 1; color: var(--ink); }
+.tourism-card__savings {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: rgba(26,20,16,0.08);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--ink);
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+.tourism-card__savings strong { color: var(--cinnabar); }
+
+/* ─── Closure audit block ─────────────────────── */
+.closure-audit {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  margin: 16px 12px;
+}
+@media (min-width: 768px) { .closure-audit { margin: 0 0 24px; } }
+.closure-audit__head {
+  display: flex; align-items: center; gap: 12px;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.closure-audit__icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: rgba(31,58,110,0.12);
+  color: var(--indigo);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.closure-audit__title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+}
+.closure-audit__subtitle {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.closure-audit__summary {
+  padding: 12px 22px;
+  background: rgba(184,134,46,0.06);
+  font-size: 12px;
+  color: var(--ink-mid);
+  border-bottom: 1px solid var(--border);
+  line-height: 1.6;
+}
+.closure-audit__list { padding: 8px 0; }
+.closure-item {
+  padding: 12px 22px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.closure-item:last-child { border-bottom: none; }
+.closure-item__status {
+  flex-shrink: 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 4px 9px;
+  border-radius: 3px;
+  white-space: nowrap;
+  margin-top: 1px;
+}
+.closure-item__status.ok { color: var(--jade); background: rgba(42,111,95,0.10); border: 1px solid rgba(42,111,95,0.25); }
+.closure-item__status.warn { color: var(--cinnabar); background: rgba(184,57,46,0.08); border: 1px solid rgba(184,57,46,0.22); }
+.closure-item__body { flex: 1; min-width: 0; }
+.closure-item__name {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.closure-item__date {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+.closure-item__detail {
+  font-size: 11px;
+  color: var(--ink-mid);
+  line-height: 1.6;
+}
+
 /* ─── Flight candidates ──────────────────────────── */
 .flight-block-label {
   font-family: 'DM Mono', monospace;
@@ -1014,6 +1166,29 @@ footer .footer-cta {
   </section>
 
   <!-- ═══════════════ DISCLAIMER ═══════════════ -->
+  <!-- ═══════════════ TOURISM CARD ═══════════════ -->
+  <div class="tourism-card" id="tourism-card">
+    <div class="tourism-card__head">
+      <span class="tourism-card__icon">🎫</span>
+      <span class="tourism-card__title">山西文旅年卡 · 晋游卡</span>
+    </div>
+    <div class="tourism-card__rows" id="tourism-card-rows"><!-- JS 生成 --></div>
+    <div class="tourism-card__savings" id="tourism-card-savings"><!-- JS 生成 --></div>
+  </div>
+
+  <!-- ═══════════════ CLOSURE AUDIT ═══════════════ -->
+  <div class="closure-audit">
+    <div class="closure-audit__head">
+      <div class="closure-audit__icon">🔍</div>
+      <div>
+        <div class="closure-audit__title">参观日修缮/封闭核查</div>
+        <div class="closure-audit__subtitle" id="closure-audit-date">// Site Closure Audit</div>
+      </div>
+    </div>
+    <div class="closure-audit__summary" id="closure-audit-summary"><!-- JS 生成 --></div>
+    <div class="closure-audit__list" id="closure-audit-list"><!-- JS 生成 --></div>
+  </div>
+
   <div class="disclaimer-box">
     <strong>免责声明 · </strong><span id="disclaimer-text">本页全部信息（天气、航班、酒店、餐厅、景点、门票、价格、营业时间、评分、活动等）均为 AI 基于公开资料整理的参考建议，可能不准确或已过时，不保证与实时情况一致；请务必在官方渠道 / 订票订房 / 地图等 App 上核实后再做决定或前往。山西古建文物以官方最新通知为准；悬空寺登临票和云冈预约以景区当日公告为准。</span>
   </div>
@@ -1241,7 +1416,59 @@ function reminderBadgeHTML(leadDays) {
     "packing": "户外：抓绒/薄羽绒 + 防风外套 + 围巾；步行多：防滑徒步鞋必备；寺庙内禁止短裤/拖鞋/帽；保温杯、润唇膏、暖宝宝（夜间/悬空寺登临风大）。",
     "payment": "全国通用：微信/支付宝在大同/悬空寺/应县/景区附近几乎全覆盖；老字号面馆偶有只收现金/微信，可备 200–500 元现金。",
     "apps": ["高德地图（境内导航）", "12306（备选高铁）", "云冈石窟官方公众号（实时预约/限流）", "大同文旅（古城活动）"],
-    "ticketTip": "云冈石窟、悬空寺登临票需提前 3–7 天官方公众号实名预约（旺季尤甚）；佛光寺可选版本。10 月为平季，但仍建议出发前 7 天确认。"
+    "ticketTip": "云冈石窟、悬空寺登临票需提前 3–7 天官方公众号实名预约（旺季尤甚）；佛光寺可选版本。10 月为平季，但仍建议出发前 7 天确认。山西文旅年卡（晋游卡）258 元/年含云冈/华严寺等 120+ 景区（见下文）。"
+  },
+  "tourismCard": {
+    "name": "山西文旅年卡（晋游卡）",
+    "price": "标准版 258 元/年（工会普惠卡 100 元、亲子卡 599 元）",
+    "validity": "激活起 365 天（购买 3 个月内未激活将自动激活）",
+    "covers": "120+ 山西景区，含 6 家 5A 级（云冈石窟/晋祠/平遥古城/雁门关/乔家大院/八泉峡）+ 40+ 4A 级",
+    "coversYourTrip": "云冈石窟（5A · 单门票 ¥120）+ 华严寺（4A · ¥50）+ 悬空寺（视年卡版本，含恒山十八景）+ 九龙壁（¥10）+ 善化寺（¥35）= 单购票共约 ¥215，标准年卡 258 元回本临界",
+    "limitations": "部分热门景区限 3 次/年；悬空寺属恒山十八景，需核实是否含在年卡中",
+    "how": "微信公众号「山西文旅年卡」或「票通天下发布」实名购买，人脸识别入园，无需实体卡",
+    "savingsHint": "如本行程游玩云冈 + 华严寺 + 善化寺等 3+ 收费景区，单独购票已接近年卡价；如想多次进山（云冈深度游或加悬空寺登临），年卡性价比显著。"
+  },
+  "closureAudit": {
+    "auditDate": "2026-10",
+    "summary": "本表基于 2026 年 9–10 月公开公告整理，出发前仍需电话核实",
+    "sites": [
+      {
+        "name": "云冈石窟",
+        "visitDate": "Day 1（具体日期待定，10 月上旬）",
+        "status": "✅ 正常开放",
+        "detail": "未检索到 2026 年 10 月封闭修缮公告。世界文化遗产，部分洞窟长期轮换封闭保护属常态（不影响参观主线）。"
+      },
+      {
+        "name": "悬空寺",
+        "visitDate": "Day 2",
+        "status": "⚠️ 严重 · 出发前必须电话核实",
+        "detail": "2025-09-19 起闭馆启动全面修缮工程，工期约 3 个月（公告约至 2025-12 恢复）。10 月距公告已超 10 个月，是否延期或继续封闭未在公开渠道确认。出发前必须拨打景区电话核实；如未恢复，Day 2 行程需临时调整为应县木塔+返大同市区。"
+      },
+      {
+        "name": "应县木塔",
+        "visitDate": "Day 2",
+        "status": "✅ 正常开放（落架大修系谣言）",
+        "detail": "2026 年 3 月网传'应县木塔即将落架大修'已被国家文物局、山西省文物局、应县文旅局集体辟谣。2026 年实际仅做变形监测/全面测绘，无大修计划。木塔禁止登塔，仅外围参观。"
+      },
+      {
+        "name": "华严寺",
+        "visitDate": "Day 2 晚（古城游）",
+        "status": "✅ 正常开放",
+        "detail": "未检索到 2026 年封闭修缮公告。亮灯夜景正常开放（仅外部夜景免门票；入殿需门票 ¥50）。"
+      },
+      {
+        "name": "善化寺",
+        "visitDate": "Day 3",
+        "status": "✅ 正常开放",
+        "detail": "未检索到 2026 年封闭修缮公告。游客密度远低于华严寺，安静。"
+      },
+      {
+        "name": "九龙壁",
+        "visitDate": "Day 1 晚 / Day 3",
+        "status": "✅ 正常开放",
+        "detail": "未检索到 2026 年封闭修缮公告。夜景灯光下色彩尤为惊艳。"
+      }
+    ]
   },
   "flights": {
     "booked": [],
@@ -1992,6 +2219,48 @@ function renderRouteChips() {
   });
 }
 
+function renderTourismCard() {
+  if (!trip.tourismCard) return;
+  var t = trip.tourismCard;
+  var rows = [
+    { label: '价格', value: t.price },
+    { label: '有效期', value: t.validity },
+    { label: '覆盖', value: t.covers },
+    { label: '行程', value: t.coversYourTrip },
+    { label: '限制', value: t.limitations },
+    { label: '办理', value: t.how }
+  ];
+  var html = rows.map(function (r) {
+    return '<div class="tourism-card__row">'
+      + '<span class="tourism-card__label">' + escapeHTML(r.label) + '</span>'
+      + '<span class="tourism-card__value">' + escapeHTML(r.value) + '</span>'
+      + '</div>';
+  }).join('');
+  document.getElementById('tourism-card-rows').innerHTML = html;
+  document.getElementById('tourism-card-savings').innerHTML =
+    '💡 <strong>性价比</strong>：' + escapeHTML(t.savingsHint);
+}
+
+function renderClosureAudit() {
+  if (!trip.closureAudit) return;
+  var ca = trip.closureAudit;
+  document.getElementById('closure-audit-date').textContent =
+    '// ' + ca.auditDate + ' · Site Closure Audit';
+  document.getElementById('closure-audit-summary').textContent = ca.summary;
+  var html = ca.sites.map(function (s) {
+    var statusClass = s.status.indexOf('⚠') >= 0 ? 'warn' : 'ok';
+    return '<div class="closure-item">'
+      + '<span class="closure-item__status ' + statusClass + '">' + escapeHTML(s.status) + '</span>'
+      + '<div class="closure-item__body">'
+      +   '<div class="closure-item__name">' + escapeHTML(s.name) + '</div>'
+      +   '<div class="closure-item__date">参观日：' + escapeHTML(s.visitDate) + '</div>'
+      +   '<div class="closure-item__detail">' + escapeHTML(s.detail) + '</div>'
+      + '</div>'
+      + '</div>';
+  }).join('');
+  document.getElementById('closure-audit-list').innerHTML = html;
+}
+
 (function init() {
   renderChecklist();
   renderPretrip();
@@ -2000,6 +2269,8 @@ function renderRouteChips() {
   renderHotels();
   renderTimeline();
   renderTips();
+  renderTourismCard();
+  renderClosureAudit();
   travelMap = initTravelMap('map', mapPoints);
   renderRouteChips();
 })();
