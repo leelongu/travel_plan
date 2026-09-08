@@ -1604,8 +1604,17 @@ function initTravelMap(elementId, points, opts) {
     maxZoom: 19,
   }).addTo(map);
   var ua = (typeof navigator !== 'undefined' && navigator.userAgent) || '';
+  window.routeMarkers = [];
   points.forEach(function (p, i) {
     var sLat = _sanitizeLat(p.lat), sLng = _sanitizeLng(p.lng);
+    // 与前一途经点距离过近（约 1km 内）时，popup 垂直错开避免重叠
+    var popupOffset = null;
+    if (i > 0) {
+      var prev = points[i - 1];
+      if (Math.abs(p.lat - prev.lat) < 0.01 && Math.abs(p.lng - prev.lng) < 0.01) {
+        popupOffset = L.point(0, -72);
+      }
+    }
     var icon = L.divIcon({
       className: 'route-pin',
       html: '<span class="route-pin__num">' + (i + 1) + '</span>',
@@ -1614,13 +1623,16 @@ function initTravelMap(elementId, points, opts) {
     });
     var navLinks = [{ label: '导航', url: buildNavLink(sLat, sLng, p.name, ua) }]
       .concat(buildMapAppLinks(sLat, sLng, p.name));
-    L.marker([sLat, sLng], { icon: icon }).addTo(map).bindPopup(
+    var marker = L.marker([sLat, sLng], { icon: icon }).addTo(map);
+    marker.bindPopup(
       '<b>' + (i + 1) + '. ' + escapeHTML(String(p.name)) + '</b><br>'
       + (p.time ? escapeHTML(String(p.time)) + '<br>' : '')
       + navLinks.map(function (l) {
           return '<a href="' + l.url + '" target="_blank">' + escapeHTML(l.label) + '</a>';
-        }).join(' · ')
+        }).join(' · '),
+      popupOffset ? { offset: popupOffset } : {}
     );
+    window.routeMarkers.push(marker);
   });
   var coords = routeCoordinates(points);
   if (coords.length > 1) {
@@ -2954,6 +2966,7 @@ function clearDayHighlights() {
 var isPlaying = false;
 var walkerMarkers = [];
 var walkerAnimToken = null;
+var walkerPopupTimer = null;
 
 function initPlayButton() {
   var btn = document.getElementById('play-btn');
@@ -3014,6 +3027,8 @@ function startWalkingAnimation() {
 function pauseWalkingAnimation() {
   isPlaying = false;
   if (walkerAnimToken) walkerAnimToken.cancelled = true;
+  if (walkerPopupTimer) { clearTimeout(walkerPopupTimer); walkerPopupTimer = null; }
+  if (travelMap) travelMap.closePopup();
   var btn = document.getElementById('play-btn');
   btn.classList.remove('playing');
   btn.querySelector('.icon').textContent = '▶';
@@ -3042,6 +3057,7 @@ function runWalkingAnimation(segments) {
   var leaderDelay = 0;        // ms before second walker starts
   var startTs = null;
   var firstSegmentMs = 0;      // accumulated time before each segment
+  var lastSegIdx = -1;         // 检测 walker 到达途经点
 
   // Compute total duration based on haversine distance per segment
   var segmentMeta = segments.map(function (coords, i) {
@@ -3075,6 +3091,10 @@ function runWalkingAnimation(segments) {
         break;
       }
       acc += segmentMeta[i].dur;
+    }
+    if (segIdx !== lastSegIdx) {
+      lastSegIdx = segIdx;
+      flashPoint(segIdx);
     }
     var coords = segmentMeta[segIdx].coords;
     var idx = segT * (coords.length - 1);
@@ -3128,6 +3148,17 @@ function setWalkerPosition(idx, lat, lng) {
   if (walkerMarkers[idx]) {
     walkerMarkers[idx].setLatLng([lat, lng]);
   }
+}
+
+function flashPoint(i) {
+  var m = window.routeMarkers && window.routeMarkers[i];
+  if (!m || !travelMap) return;
+  m.openPopup();
+  if (walkerPopupTimer) clearTimeout(walkerPopupTimer);
+  walkerPopupTimer = setTimeout(function () {
+    walkerPopupTimer = null;
+    if (m && travelMap) m.closePopup();
+  }, 3000);
 }
 
 (function init() {
