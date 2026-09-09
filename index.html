@@ -175,6 +175,14 @@ img { display: block; max-width: 100%; }
   overflow: hidden;
   border: 1px solid var(--border);
 }
+.section--sticky-tabs {
+  /* 子元素 .tab-strip 用 position: sticky 须相对视口；祖先 overflow:hidden 会把它圈在 section 内 */
+  overflow: visible;
+}
+#timeline-section {
+  /* scrollIntoView 时给吸顶的 .tab-strip（~65px）留出空间，避免 Day 标题被遮挡 */
+  scroll-margin-top: 72px;
+}
 @media (min-width: 768px) {
   .section { margin: 0 0 24px; }
 }
@@ -814,6 +822,12 @@ img { display: block; max-width: 100%; }
   border-bottom: 1px solid var(--border);
   scrollbar-width: thin;
   scrollbar-color: rgba(184,134,46,0.3) transparent;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.tab-strip.is-stuck {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 .tab-strip::-webkit-scrollbar { height: 4px; }
 .tab-strip::-webkit-scrollbar-thumb {
@@ -853,6 +867,42 @@ img { display: block; max-width: 100%; }
   margin-top: 2px;
 }
 .day-tab.active .day-tab__weekday { color: rgba(212,160,76,0.7); }
+
+/* ─── Timeline bookmarks (right-edge rail, timeline mode only) ─── */
+#timeline-bookmarks {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1099;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.bookmark {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--ink);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+  transition: all 0.18s;
+  padding: 0;
+}
+.bookmark:hover { border-color: var(--gold); transform: scale(1.08); }
+.bookmark.is-current-day {
+  background: var(--ink);
+  color: var(--gold-lt);
+  border-color: var(--gold);
+  font-weight: 700;
+}
+@media (max-width: 767px) {
+  #timeline-bookmarks { display: none; }
+}
 
 /* ─── Toggle switch (tab vs timeline) ──────────── */
 .view-toggle {
@@ -1522,7 +1572,7 @@ footer .footer-cta {
   </div>
 
   <!-- ═══════════════ TIMELINE ═══════════════ -->
-  <section class="section">
+  <section class="section section--sticky-tabs" id="timeline-section">
     <div class="section-header">
       <div class="section-icon jade">🗓</div>
       <div>
@@ -2646,8 +2696,8 @@ var trip = JSON.parse(document.getElementById('trip-data').textContent);
 
 var mapPoints = [
   { lat: 37.7398, lng: 112.6286, name: "太原武宿国际机场", time: "2026-09-26 上午" },
-  { lat: 37.7060, lng: 112.4459, name: "晋祠", time: "2026-09-26 12:00–15:00" },
-  { lat: 37.8755, lng: 112.5512, name: "山西博物院", time: "2026-09-26 15:30–18:00" },
+  { lat: 37.8755, lng: 112.5512, name: "山西博物院", time: "2026-09-26 11:00–13:00" },
+  { lat: 37.7060, lng: 112.4459, name: "晋祠", time: "2026-09-26 14:00–17:00" },
   { lat: 37.8750, lng: 112.5640, name: "太原食品街（晚餐）", time: "2026-09-26 18:30" },
   { lat: 38.7250, lng: 113.3706, name: "佛光寺", time: "2026-09-27 10:00–12:30" },
   { lat: 38.7013, lng: 113.1138, name: "南禅寺", time: "2026-09-27 13:00–15:00" },
@@ -2883,7 +2933,7 @@ function renderTimeline() {
   var html = '';
   trip.days.forEach(function (day, di) {
     var dateLabel = 'Day ' + (di + 1);
-    html += '<div class="day-block day-' + (di + 1) + '">';
+    html += '<div class="day-block day-' + (di + 1) + '" id="day-block-' + di + '">';
     html += '<div class="day-header">'
       + '<div class="day-num">' + dateLabel + '</div>'
       + '<div class="day-title-row">'
@@ -3146,10 +3196,66 @@ function setViewMode(mode) {
   if (mode === 'timeline') {
     renderTimeline();
     clearDayHighlights();
+    buildTimelineBookmarks();
   } else {
     // tabs mode
     showDayTab(currentDayIdx);
+    teardownTimelineBookmarks();
   }
+}
+
+function buildTimelineBookmarks() {
+  if (document.getElementById('timeline-bookmarks')) return;
+  var rail = document.createElement('aside');
+  rail.id = 'timeline-bookmarks';
+  rail.setAttribute('aria-label', '快速跳转到某一天');
+  trip.days.forEach(function (day, di) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'bookmark';
+    btn.setAttribute('data-day-idx', String(di));
+    btn.textContent = String(di + 1);
+    rail.appendChild(btn);
+  });
+  document.body.appendChild(rail);
+  // Current-day highlight via IntersectionObserver
+  if ('IntersectionObserver' in window) {
+    var dayObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var idx = parseInt(e.target.id.replace('day-block-', ''), 10);
+        if (isNaN(idx)) return;
+        document.querySelectorAll('#timeline-bookmarks .bookmark').forEach(function (b) {
+          b.classList.toggle('is-current-day',
+            parseInt(b.getAttribute('data-day-idx'), 10) === idx);
+        });
+      });
+    }, { rootMargin: '-10% 0px -70% 0px', threshold: 0 });
+    document.querySelectorAll('.day-block').forEach(function (b) { dayObs.observe(b); });
+  }
+}
+
+function teardownTimelineBookmarks() {
+  var rail = document.getElementById('timeline-bookmarks');
+  if (rail) rail.parentNode.removeChild(rail);
+}
+
+// Delegated click handler — set up once on init.
+function initBookmarkClickHandler() {
+  document.body.addEventListener('click', function (e) {
+    var btn = e.target.closest('.bookmark');
+    if (!btn) return;
+    var idx = parseInt(btn.getAttribute('data-day-idx'), 10);
+    if (isNaN(idx)) return;
+    var target = document.getElementById('day-block-' + idx);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelectorAll('#timeline-bookmarks .bookmark').forEach(function (b) {
+        b.classList.toggle('is-current-day',
+          parseInt(b.getAttribute('data-day-idx'), 10) === idx);
+      });
+    }
+  });
 }
 
 function renderDayTabs() {
@@ -3171,8 +3277,10 @@ function renderDayTabs() {
     var idx = parseInt(btn.getAttribute('data-day-idx'), 10);
     if (isNaN(idx)) return;
     if (currentViewMode === 'tabs') {
-      // tabs 模式：过滤日程到单日 + 地图高亮
+      // tabs 模式：过滤日程到单日 + 地图高亮 + 滚到 section 顶
       showDayTab(idx);
+      var sectionEl = document.getElementById('timeline-section');
+      if (sectionEl) sectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
       // timeline 模式：只地图高亮 + 标签页 active 切换，日程保持所有天
       currentDayIdx = idx;
@@ -3518,6 +3626,23 @@ function updateWeatherRows() {
   initPlayButton();
   // ── 启动天气抓取（不阻塞首屏）──
   fetchAllWeather().then(updateWeatherRows);
+
+  // ── Sticky tab-strip shadow toggle (sentinel pattern, avoids scroll thrash) ──
+  if ('IntersectionObserver' in window) {
+    var tabStrip = document.querySelector('.tab-strip');
+    if (tabStrip) {
+      var sentinel = document.createElement('div');
+      sentinel.className = 'sticky-sentinel';
+      sentinel.style.cssText = 'height:1px;margin-bottom:-1px;';
+      tabStrip.parentNode.insertBefore(sentinel, tabStrip);
+      var stickyObs = new IntersectionObserver(function (entries) {
+        tabStrip.classList.toggle('is-stuck', entries[0].intersectionRatio < 1);
+      }, { threshold: [1] });
+      stickyObs.observe(sentinel);
+    }
+  }
+
+  initBookmarkClickHandler();
 })();
 </script>
 
