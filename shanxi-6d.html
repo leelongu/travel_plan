@@ -1503,6 +1503,50 @@ footer .footer-cta {
   padding: 6px 10px;
   margin-top: 10px;
 }
+
+/* ─── Expenses table (cost estimate folding module) ─── */
+.expenses-note {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+.expenses-h4 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 16px 0 8px;
+}
+.expenses-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+.expenses-table thead th {
+  background: rgba(184, 134, 46, 0.10);
+  color: var(--ink);
+  font-weight: 700;
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.04em;
+}
+.expenses-table tbody td {
+  padding: 8px 10px;
+  border-bottom: 1px dashed var(--border);
+  vertical-align: top;
+  color: var(--ink-soft);
+}
+.expenses-table tbody tr:last-child td { border-bottom: none; }
+@media (max-width: 600px) {
+  .expenses-table { font-size: 11px; }
+  .expenses-table thead th,
+  .expenses-table tbody td { padding: 6px 6px; }
+}
 </style>
 </head>
 <body>
