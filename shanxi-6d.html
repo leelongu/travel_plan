@@ -179,6 +179,10 @@ img { display: block; max-width: 100%; }
   /* 子元素 .tab-strip 用 position: sticky 须相对视口；祖先 overflow:hidden 会把它圈在 section 内 */
   overflow: visible;
 }
+#timeline-section {
+  /* scrollIntoView 时给吸顶的 .tab-strip（~65px）留出空间，避免 Day 标题被遮挡 */
+  scroll-margin-top: 72px;
+}
 @media (min-width: 768px) {
   .section { margin: 0 0 24px; }
 }
@@ -1568,7 +1572,7 @@ footer .footer-cta {
   </div>
 
   <!-- ═══════════════ TIMELINE ═══════════════ -->
-  <section class="section section--sticky-tabs">
+  <section class="section section--sticky-tabs" id="timeline-section">
     <div class="section-header">
       <div class="section-icon jade">🗓</div>
       <div>
@@ -3273,8 +3277,10 @@ function renderDayTabs() {
     var idx = parseInt(btn.getAttribute('data-day-idx'), 10);
     if (isNaN(idx)) return;
     if (currentViewMode === 'tabs') {
-      // tabs 模式：过滤日程到单日 + 地图高亮
+      // tabs 模式：过滤日程到单日 + 地图高亮 + 滚到 section 顶
       showDayTab(idx);
+      var sectionEl = document.getElementById('timeline-section');
+      if (sectionEl) sectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
       // timeline 模式：只地图高亮 + 标签页 active 切换，日程保持所有天
       currentDayIdx = idx;
