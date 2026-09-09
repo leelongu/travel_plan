@@ -1,0 +1,701 @@
+[
+  {
+    "date": "2026-09-25",
+    "weekday": "周五",
+    "theme": "抵达太原 · 自由活动",
+    "tips": ["酒店 14:00 后入住；可先寄存行李去周边逛"],
+    "slots": [
+      {
+        "period": "evening",
+        "name": "太原武宿国际机场 → 太原市区酒店",
+        "time": "全天接机/站",
+        "lat": 37.7398,
+        "lng": 112.6286,
+        "photo": "",
+        "rating": 0,
+        "review": "跟团含抵达日接机/站。提前向客服提供航班/车次。",
+        "openingHours": "全天",
+        "ticketPrice": "—",
+        "transport": {
+          "mode": "跟团包车",
+          "distance": "约 15 km",
+          "highway": "城市快速路",
+          "duration": "约 30 分钟",
+          "fare": "含"
+        },
+        "needsBooking": false,
+        "leadDays": 0,
+        "weather": {
+          "coords": {
+            "lat": 37.7398,
+            "lng": 112.6286
+          },
+          "fallback": {
+            "icon": "⛅",
+            "conditions": "多云",
+            "high": 22,
+            "low": 12,
+            "precipAdvice": "无需备伞",
+            "updatedAt": "2026-09-09"
+          }
+        }
+      }
+    ],
+    "dining": [
+      {
+        "meal": "晚餐",
+        "place": "推荐：林香斋（清和元店）/ 认一力饭庄 / 郝刚刚羊杂割",
+        "hours": "17:00–21:30",
+        "note": "AI 整理参考 · 价格可能变动 · 现场核实",
+        "dishes": [
+          {"name": "太原头脑（清真早点+晚餐都有）", "price": "约 ¥25–35 · 参考"},
+          {"name": "林香斋什锦面", "price": "约 ¥35 · 参考"},
+          {"name": "郝刚刚羊杂割 + 油酥饼", "price": "约 ¥25 · 参考"}
+        ]
+      }
+    ],
+    "backupSpots": []
+  },
+  {
+    "date": "2026-09-26",
+    "weekday": "周六",
+    "theme": "山西博物院 → 佛光寺（斗拱体验）→ 五台山住",
+    "tips": ["山西博物院提前 3 天公众号预约；五台山山上住宿条件偏简陋"],
+    "slots": [
+      {
+        "period": "noon",
+        "name": "山西博物院",
+        "time": "09:30–12:00",
+        "lat": 37.8755,
+        "lng": 112.5512,
+        "photo": "assets/img/shanxi-museum.jpg",
+        "rating": 4.8,
+        "review": "国家一级博物馆。主题「晋魂」7 个历史文化专题 + 5 个艺术专题。一座博物院承载三晋大地千年文明。",
+        "openingHours": "9:00–17:00（周一闭馆）",
+        "ticketPrice": "免费（需预约，跟团由导游统一购票）",
+        "transport": {
+          "mode": "跟团包车",
+          "distance": "约 5 km",
+          "highway": "城市道路",
+          "duration": "约 30 分钟",
+          "fare": "含"
+        },
+        "needsBooking": true,
+        "leadDays": 3,
+        "weather": {
+          "coords": {
+            "lat": 37.8755,
+            "lng": 112.5512
+          },
+          "fallback": {
+            "icon": "🌤",
+            "conditions": "晴间多云",
+            "high": 22,
+            "low": 12,
+            "precipAdvice": "无需备伞",
+            "updatedAt": "2026-09-09"
+          }
+        }
+      },
+      {
+        "period": "evening",
+        "name": "佛光寺（斗拱拼搭体验）",
+        "time": "15:30–17:00",
+        "lat": 38.7250,
+        "lng": 113.3706,
+        "photo": "assets/img/foguang-temple.jpg",
+        "rating": 4.9,
+        "review": "「四绝」：唐代建筑/雕塑/壁画/题记。跟团含 30 分钟斗拱拼搭体验（2 人一组）。",
+        "openingHours": "约 8:30–17:30（17:00 停止入园）",
+        "ticketPrice": "约 ¥40（跟团含）",
+        "transport": {
+          "mode": "跟团包车",
+          "distance": "约 240 km",
+          "highway": "二广 G55 + 沧榆 G1812",
+          "duration": "约 2.5 小时",
+          "fare": "含"
+        },
+        "needsBooking": false,
+        "leadDays": 0,
+        "weather": {
+          "coords": {
+            "lat": 38.7250,
+            "lng": 113.3706
+          },
+          "fallback": {
+            "icon": "☀",
+            "conditions": "晴",
+            "high": 18,
+            "low": 6,
+            "precipAdvice": "无需备伞",
+            "updatedAt": "2026-09-09"
+          }
+        }
+      }
+    ],
+    "dining": [
+      {
+        "meal": "早餐",
+        "place": "酒店自助",
+        "hours": "07:00–08:30",
+        "note": "团餐",
+        "dishes": [
+          {"name": "团餐（菜单由导游安排）", "price": "含"}
+        ]
+      },
+      {
+        "meal": "午餐",
+        "place": "佛光寺村口农家乐 / 当地小馆",
+        "hours": "13:00–14:30",
+        "note": "跟团含 · 餐标 60 元/人",
+        "dishes": [
+          {"name": "团餐（菜单由导游安排）", "price": "含"}
+        ]
+      },
+      {
+        "meal": "晚餐",
+        "place": "五台山一盏明灯·禅心殊院（龙泉寺店）/ 花卉山庄 餐厅",
+        "hours": "18:30–20:00",
+        "note": "跟团含 · 餐标 60 元/人",
+        "dishes": [
+          {"name": "团餐（菜单由导游安排）", "price": "含"}
+        ]
+      }
+    ],
+    "backupSpots": []
+  },
+  {
+    "date": "2026-09-27",
+    "weekday": "周日",
+    "theme": "五台山寺庙群 → 大同古城",
+    "tips": ["塔院寺大白塔维修中，只能看局部"],
+    "slots": [
+      {
+        "period": "morning",
+        "name": "殊像寺",
+        "time": "08:30–09:30",
+        "lat": 39.0074,
+        "lng": 113.5919,
+        "photo": "",
+        "rating": 4.7,
+        "review": "五台山求智慧学业最灵验的文殊祖庭；当地人多清晨空腹前往。",
+        "openingHours": "约 8:00–17:00",
+        "ticketPrice": "免费（进山费含）",
+        "transport": {
+          "mode": "跟团包车",
+          "distance": "约 20 分钟",
+          "highway": "景区道路",
+          "duration": "—",
+          "fare": "含"
+        },
+        "needsBooking": false,
+        "leadDays": 0,
+        "weather": {
+          "coords": {"lat": 39.0074, "lng": 113.5919},
+          "fallback": {"icon": "☀", "conditions": "晴", "high": 16, "low": 4, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09"}
+        }
+      },
+      {
+        "period": "morning",
+        "name": "菩萨顶",
+        "time": "09:30–10:30",
+        "lat": 39.0073,
+        "lng": 113.5921,
+        "photo": "",
+        "rating": 4.7,
+        "review": "金碧辉煌，清朝皇帝朝台行宫；康熙/乾隆多处亲笔题字。",
+        "openingHours": "约 8:00–17:00",
+        "ticketPrice": "免费（进山费含）",
+        "transport": {"mode": "步行", "distance": "—", "highway": "—", "duration": "约 10 分钟", "fare": "—"},
+        "needsBooking": false,
+        "leadDays": 0,
+        "weather": {
+          "coords": {"lat": 39.0073, "lng": 113.5921},
+          "fallback": {"icon": "☀", "conditions": "晴", "high": 16, "low": 4, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09"}
+        }
+      },
+      {
+        "period": "noon",
+        "name": "显通寺",
+        "time": "10:30–11:30",
+        "lat": 39.0069,
+        "lng": 113.5904,
+        "photo": "",
+        "rating": 4.7,
+        "review": "五台山「开山祖寺」，规模最大、历史最悠久的寺院。",
+        "openingHours": "约 8:00–17:00",
+        "ticketPrice": "免费（进山费含）",
+        "transport": {"mode": "步行", "distance": "—", "highway": "—", "duration": "约 10 分钟", "fare": "—"},
+        "needsBooking": false,
+        "leadDays": 0,
+        "weather": {
+          "coords": {"lat": 39.0069, "lng": 113.5904},
+          "fallback": {"icon": "☀", "conditions": "晴", "high": 16, "low": 4, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09"}
+        }
+      },
+      {
+        "period": "noon",
+        "name": "塔院寺",
+        "time": "11:30–12:00",
+        "lat": 39.0081,
+        "lng": 113.5893,
+        "photo": "",
+        "rating": 4.6,
+        "review": "五台山标志性建筑。大白塔为朝圣信徒偶像；目前维修中只能看局部。",
+        "openingHours": "约 8:00–17:00",
+        "ticketPrice": "免费（进山费含）",
+        "transport": {"mode": "步行", "distance": "—", "highway": "—", "duration": "约 5 分钟", "fare": "—"},
+        "needsBooking": false,
+        "leadDays": 0,
+        "weather": {
+          "coords": {"lat": 39.0081, "lng": 113.5893},
+          "fallback": {"icon": "☀", "conditions": "晴", "high": 16, "low": 4, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09"}
+        }
+      },
+      {
+        "period": "evening",
+        "name": "大同古城 Citywalk",
+        "time": "17:30–18:30",
+        "lat": 40.0936,
+        "lng": 113.2954,
+        "photo": "",
+        "rating": 4.6,
+        "review": "「四大街、八小巷、七十二条绵绵巷」棋盘里坊；青石板路被岁月磨得温润。",
+        "openingHours": "全天",
+        "ticketPrice": "古城免费",
+        "transport": {
+          "mode": "跟团包车",
+          "distance": "约 240 km",
+          "highway": "沧榆 G1812 + S40 繁河",
+          "duration": "约 4 小时",
+          "fare": "含"
+        },
+        "needsBooking": false,
+        "leadDays": 0,
+        "weather": {
+          "coords": {"lat": 40.0936, "lng": 113.2954},
+          "fallback": {"icon": "⛅", "conditions": "多云", "high": 19, "low": 8, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09"}
+        }
+      }
+    ],
+    "dining": [
+      {
+        "meal": "早餐",
+        "place": "五台山酒店",
+        "hours": "07:00–08:00",
+        "note": "团餐 · 多为素食",
+        "dishes": [
+          {"name": "团餐（菜单由导游安排）", "price": "含"}
+        ]
+      },
+      {
+        "meal": "午餐",
+        "place": "五台山 / 当地小馆",
+        "hours": "12:30–13:30",
+        "note": "跟团含 · 餐标 60 元/人",
+        "dishes": [
+          {"name": "团餐（菜单由导游安排）", "price": "含"}
+        ]
+      },
+      {
+        "meal": "晚餐",
+        "place": "推荐：大同老菜馆 / 凯歌酒楼 / 紫泥 369 粗粮季（古城内）",
+        "hours": "18:30–21:00",
+        "note": "AI 整理参考 · 价格可能变动 · 现场核实",
+        "dishes": [
+          {"name": "大同铜锅（什锦锅）", "price": "约 ¥98–138 · 参考"},
+          {"name": "浑源凉粉", "price": "约 ¥15 · 参考"},
+          {"name": "莜面（栲栳栳/顿顿）", "price": "约 ¥28 · 参考"}
+        ]
+      }
+    ],
+    "backupSpots": []
+  },
+  {
+    "date": "2026-09-28",
+    "weekday": "周一",
+    "theme": "云冈石窟 → 华严寺 → 善化寺 → 大同住",
+    "tips": ["根据景区当日人流量调整参观顺序"],
+    "slots": [
+      {
+        "period": "morning",
+        "name": "云冈石窟",
+        "time": "09:00–11:30",
+        "lat": 40.1096,
+        "lng": 113.1469,
+        "photo": "assets/img/yungang-grottoes.jpg",
+        "rating": 4.8,
+        "review": "武州山南麓崖壁上 1 公里的北魏史诗；印度佛教艺术与中华传统美学融合的丰碑。",
+        "openingHours": "约 8:30–17:00",
+        "ticketPrice": "约 ¥120（跟团含 + 景交车）",
+        "transport": {
+          "mode": "跟团包车",
+          "distance": "约 16 km",
+          "highway": "城市道路",
+          "duration": "约 1 小时",
+          "fare": "含"
+        },
+        "needsBooking": false,
+        "leadDays": 0,
+        "weather": {
+          "coords": {"lat": 40.1096, "lng": 113.1469},
+          "fallback": {"icon": "☀", "conditions": "晴", "high": 20, "low": 7, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09"}
+        }
+      },
+      {
+        "period": "noon",
+        "name": "华严寺",
+        "time": "14:00–15:30",
+        "lat": 40.0941,
+        "lng": 113.3003,
+        "photo": "",
+        "rating": 4.7,
+        "review": "辽重熙七年依《华严经》命名；辽金寺庙建筑群，中国现存年代较早保存较完整者。",
+        "openingHours": "约 8:00–17:30",
+        "ticketPrice": "约 ¥50（跟团含）",
+        "transport": {
+          "mode": "跟团包车",
+          "distance": "约 16 km",
+          "highway": "城市道路",
+          "duration": "约 30 分钟",
+          "fare": "含"
+        },
+        "needsBooking": false,
+        "leadDays": 0,
+        "weather": {
+          "coords": {"lat": 40.0941, "lng": 113.3003},
+          "fallback": {"icon": "☀", "conditions": "晴", "high": 20, "low": 7, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09"}
+        }
+      },
+      {
+        "period": "evening",
+        "name": "善化寺",
+        "time": "16:00–17:00",
+        "lat": 40.0962,
+        "lng": 113.2958,
+        "photo": "",
+        "rating": 4.7,
+        "review": "唐开元年间始建；首批全国重点文保单位；二十四诸天像栩栩如生。",
+        "openingHours": "约 8:00–17:30",
+        "ticketPrice": "免费（跟团含）",
+        "transport": {"mode": "步行", "distance": "—", "highway": "—", "duration": "约 10 分钟", "fare": "—"},
+        "needsBooking": false,
+        "leadDays": 0,
+        "weather": {
+          "coords": {"lat": 40.0962, "lng": 113.2958},
+          "fallback": {"icon": "☀", "conditions": "晴", "high": 20, "low": 7, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09"}
+        }
+      }
+    ],
+    "dining": [
+      {
+        "meal": "早餐",
+        "place": "大同酒店",
+        "hours": "07:00–08:30",
+        "note": "团餐",
+        "dishes": [
+          {"name": "团餐（菜单由导游安排）", "price": "含"}
+        ]
+      },
+      {
+        "meal": "午餐",
+        "place": "云冈石窟附近",
+        "hours": "12:00–13:30",
+        "note": "跟团含 · 餐标 80 元/人（行程升级正餐）",
+        "dishes": [
+          {"name": "团餐（菜单由导游安排）", "price": "含"}
+        ]
+      },
+      {
+        "meal": "晚餐",
+        "place": "推荐：凤临阁（大同鼓楼东街总店，近华严寺）/ 老大同饭庄",
+        "hours": "18:30–21:00",
+        "note": "AI 整理参考 · 价格可能变动 · 现场核实",
+        "dishes": [
+          {"name": "凤临阁百花烧麦", "price": "约 ¥88 · 参考"},
+          {"name": "大同黄米凉糕", "price": "约 ¥18 · 参考"},
+          {"name": "过油肉（小份）", "price": "约 ¥48 · 参考"}
+        ]
+      }
+    ],
+    "backupSpots": []
+  },
+  {
+    "date": "2026-09-29",
+    "weekday": "周二",
+    "theme": "悬空寺 → 永安寺 → 应县木塔 → 净土寺 → 桐悦住",
+    "tips": ["悬空寺跟团不登临；如时间紧张净土寺可调次日上午"],
+    "slots": [
+      {
+        "period": "morning",
+        "name": "悬空寺",
+        "time": "09:00–10:30",
+        "lat": 39.6792,
+        "lng": 113.7369,
+        "photo": "assets/img/xuankong-temple.jpg",
+        "rating": 4.8,
+        "review": "1500 多年历史的悬崖寺庙；跟团行程不登临（综合登临排队时长与节奏）。",
+        "openingHours": "约 8:00–17:00",
+        "ticketPrice": "约 ¥115（首道 + 景交，跟团含 · 不含登临费）",
+        "transport": {
+          "mode": "跟团包车",
+          "distance": "约 80 km",
+          "highway": "二广 G55",
+          "duration": "约 1.5 小时",
+          "fare": "含"
+        },
+        "needsBooking": false,
+        "leadDays": 0,
+        "weather": {
+          "coords": {"lat": 39.6792, "lng": 113.7369},
+          "fallback": {"icon": "☀", "conditions": "晴", "high": 18, "low": 6, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09"}
+        }
+      },
+      {
+        "period": "noon",
+        "name": "永安寺（浑源）",
+        "time": "11:30–12:30",
+        "lat": 39.6897,
+        "lng": 113.6858,
+        "photo": "",
+        "rating": 4.7,
+        "review": "金代始建元代遗存。传法正宗殿明代水陆壁画「三绝」，含全国仅此一处的「揭面明王」。",
+        "openingHours": "约 8:30–17:00",
+        "ticketPrice": "约 ¥30（跟团含）",
+        "transport": {
+          "mode": "跟团包车",
+          "distance": "约 5 km",
+          "highway": "县城道路",
+          "duration": "约 20 分钟",
+          "fare": "含"
+        },
+        "needsBooking": false,
+        "leadDays": 0,
+        "weather": {
+          "coords": {"lat": 39.6897, "lng": 113.6858},
+          "fallback": {"icon": "☀", "conditions": "晴", "high": 18, "low": 6, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09"}
+        }
+      },
+      {
+        "period": "evening",
+        "name": "应县木塔",
+        "time": "14:30–15:30",
+        "lat": 39.5572,
+        "lng": 113.1847,
+        "photo": "",
+        "rating": 4.8,
+        "review": "中国现存较高大、古老的纯木结构楼阁式建筑；全木榫卯无铁钉，耸立千年。",
+        "openingHours": "约 8:00–18:00",
+        "ticketPrice": "约 ¥50（跟团含）",
+        "transport": {
+          "mode": "跟团包车",
+          "distance": "约 60 km",
+          "highway": "国道",
+          "duration": "约 1 小时",
+          "fare": "含"
+        },
+        "needsBooking": false,
+        "leadDays": 0,
+        "weather": {
+          "coords": {"lat": 39.5572, "lng": 113.1847},
+          "fallback": {"icon": "☀", "conditions": "晴", "high": 18, "low": 6, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09"}
+        }
+      },
+      {
+        "period": "evening",
+        "name": "净土寺（应县）",
+        "time": "16:00–16:30",
+        "lat": 39.5572,
+        "lng": 113.1863,
+        "photo": "",
+        "rating": 4.6,
+        "review": "金天会二年（1124）遗构。镇寺之宝为木雕天宫藻井（金代原物），九方藻井花样各异。",
+        "openingHours": "约 8:30–17:00",
+        "ticketPrice": "约 ¥20（跟团含）",
+        "transport": {"mode": "步行", "distance": "—", "highway": "—", "duration": "约 5 分钟", "fare": "—"},
+        "needsBooking": false,
+        "leadDays": 0,
+        "weather": {
+          "coords": {"lat": 39.5572, "lng": 113.1863},
+          "fallback": {"icon": "☀", "conditions": "晴", "high": 18, "low": 6, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09"}
+        }
+      }
+    ],
+    "dining": [
+      {
+        "meal": "早餐",
+        "place": "大同酒店",
+        "hours": "07:00–08:30",
+        "note": "团餐",
+        "dishes": [
+          {"name": "团餐（菜单由导游安排）", "price": "含"}
+        ]
+      },
+      {
+        "meal": "午餐",
+        "place": "浑源 / 应县 当地小馆",
+        "hours": "13:00–14:00",
+        "note": "跟团含 · 餐标 60 元/人",
+        "dishes": [
+          {"name": "团餐（菜单由导游安排）", "price": "含"}
+        ]
+      },
+      {
+        "meal": "晚餐",
+        "place": "推荐：应县牛腰（应县老店）/ 桐悦臻选酒店餐厅",
+        "hours": "18:30–20:30",
+        "note": "AI 整理参考 · 价格可能变动 · 现场核实",
+        "dishes": [
+          {"name": "应县牛腰（传统清真小吃）", "price": "约 ¥10–15/个 · 参考"},
+          {"name": "浑源凉粉", "price": "约 ¥15 · 参考"}
+        ]
+      }
+    ],
+    "backupSpots": []
+  },
+  {
+    "date": "2026-09-30",
+    "weekday": "周三",
+    "theme": "广武明长城 → 晋祠 → 太原住",
+    "tips": ["广武长城为山西境内明代长城代表作"],
+    "slots": [
+      {
+        "period": "morning",
+        "name": "广武明长城",
+        "time": "09:00–10:30",
+        "lat": 39.4510,
+        "lng": 112.8780,
+        "photo": "",
+        "rating": 4.5,
+        "review": "山阴县境内砖石结构长城；敌楼 16 座（5 座较完整）；东临雁门关西瞰宁武。",
+        "openingHours": "全天",
+        "ticketPrice": "免费",
+        "transport": {
+          "mode": "跟团包车",
+          "distance": "约 60 km",
+          "highway": "国道",
+          "duration": "约 1 小时",
+          "fare": "含"
+        },
+        "needsBooking": false,
+        "leadDays": 0,
+        "weather": {
+          "coords": {"lat": 39.4510, "lng": 112.8780},
+          "fallback": {"icon": "☀", "conditions": "晴", "high": 22, "low": 12, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09"}
+        }
+      },
+      {
+        "period": "evening",
+        "name": "晋祠博物馆",
+        "time": "15:00–17:00",
+        "lat": 37.7060,
+        "lng": 112.4459,
+        "photo": "assets/img/jinci-temple.jpg",
+        "rating": 4.7,
+        "review": "中国现存较古老的祠庙建筑群；一祠看六代（宋/金/元/明/清/民国）；晋祠三绝 + 自然山水人文巧妙结合。",
+        "openingHours": "约 8:00–18:00",
+        "ticketPrice": "成人 ¥80（跟团含 + 景交车）",
+        "transport": {
+          "mode": "跟团包车",
+          "distance": "约 280 km",
+          "highway": "二广 G55 + G5 京昆",
+          "duration": "约 4 小时（含午餐）",
+          "fare": "含"
+        },
+        "needsBooking": false,
+        "leadDays": 0,
+        "weather": {
+          "coords": {"lat": 37.7060, "lng": 112.4459},
+          "fallback": {"icon": "🌤", "conditions": "晴间多云", "high": 22, "low": 12, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09"}
+        }
+      }
+    ],
+    "dining": [
+      {
+        "meal": "早餐",
+        "place": "桐悦 / 应县 酒店",
+        "hours": "07:00–08:30",
+        "note": "团餐",
+        "dishes": [
+          {"name": "团餐（菜单由导游安排）", "price": "含"}
+        ]
+      },
+      {
+        "meal": "午餐",
+        "place": "沿途 / 山阴 当地小馆",
+        "hours": "12:30–13:30",
+        "note": "跟团含 · 餐标 60 元/人",
+        "dishes": [
+          {"name": "团餐（菜单由导游安排）", "price": "含"}
+        ]
+      },
+      {
+        "meal": "晚餐",
+        "place": "推荐：晋祠宾馆餐厅（近晋祠）/ 太原食品街（认一力 / 林香斋）",
+        "hours": "18:30–21:00",
+        "note": "AI 整理参考 · 价格可能变动 · 现场核实",
+        "dishes": [
+          {"name": "过油肉", "price": "约 ¥48 · 参考"},
+          {"name": "山西刀削面", "price": "约 ¥18 · 参考"},
+          {"name": "太原头脑（晚餐也有）", "price": "约 ¥35 · 参考"}
+        ]
+      }
+    ],
+    "backupSpots": []
+  },
+  {
+    "date": "2026-10-01",
+    "weekday": "周四",
+    "theme": "太原送机/站",
+    "tips": ["跟团含散团日送机/站；根据航班/高铁时间安排"],
+    "slots": [
+      {
+        "period": "morning",
+        "name": "太原市区酒店 → 太原武宿国际机场",
+        "time": "按航班/车次安排",
+        "lat": 37.8556,
+        "lng": 112.5614,
+        "photo": "",
+        "rating": 0,
+        "review": "跟团含送机/站。提前向客服提供航班或车次。",
+        "openingHours": "全天",
+        "ticketPrice": "—",
+        "transport": {
+          "mode": "跟团包车",
+          "distance": "约 15 km",
+          "highway": "城市快速路",
+          "duration": "约 30–40 分钟",
+          "fare": "含"
+        },
+        "needsBooking": false,
+        "leadDays": 0,
+        "weather": {
+          "coords": {"lat": 37.8556, "lng": 112.5614},
+          "fallback": {"icon": "⛅", "conditions": "多云", "high": 22, "low": 12, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09"}
+        }
+      }
+    ],
+    "dining": [
+      {
+        "meal": "早餐",
+        "place": "太原酒店",
+        "hours": "07:00–08:30",
+        "note": "团餐",
+        "dishes": [
+          {"name": "团餐（菜单由导游安排）", "price": "含"}
+        ]
+      },
+      {
+        "meal": "自由用餐",
+        "place": "推荐：太原食品街 / 柳巷（市内老字号）",
+        "hours": "—",
+        "note": "按航班时间灵活安排 · 离开太原前最后一餐",
+        "dishes": [
+          {"name": "六味斋酱肉（伴手礼亦可）", "price": "约 ¥48/斤 · 参考"},
+          {"name": "认一力饺子", "price": "约 ¥60/份 · 参考"}
+        ]
+      }
+    ],
+    "backupSpots": []
+  }
+]
