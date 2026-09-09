@@ -3188,10 +3188,66 @@ function setViewMode(mode) {
   if (mode === 'timeline') {
     renderTimeline();
     clearDayHighlights();
+    buildTimelineBookmarks();
   } else {
     // tabs mode
     showDayTab(currentDayIdx);
+    teardownTimelineBookmarks();
   }
+}
+
+function buildTimelineBookmarks() {
+  if (document.getElementById('timeline-bookmarks')) return;
+  var rail = document.createElement('aside');
+  rail.id = 'timeline-bookmarks';
+  rail.setAttribute('aria-label', '快速跳转到某一天');
+  trip.days.forEach(function (day, di) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'bookmark';
+    btn.setAttribute('data-day-idx', String(di));
+    btn.textContent = String(di + 1);
+    rail.appendChild(btn);
+  });
+  document.body.appendChild(rail);
+  // Current-day highlight via IntersectionObserver
+  if ('IntersectionObserver' in window) {
+    var dayObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var idx = parseInt(e.target.id.replace('day-block-', ''), 10);
+        if (isNaN(idx)) return;
+        document.querySelectorAll('#timeline-bookmarks .bookmark').forEach(function (b) {
+          b.classList.toggle('is-current-day',
+            parseInt(b.getAttribute('data-day-idx'), 10) === idx);
+        });
+      });
+    }, { rootMargin: '-10% 0px -70% 0px', threshold: 0 });
+    document.querySelectorAll('.day-block').forEach(function (b) { dayObs.observe(b); });
+  }
+}
+
+function teardownTimelineBookmarks() {
+  var rail = document.getElementById('timeline-bookmarks');
+  if (rail) rail.parentNode.removeChild(rail);
+}
+
+// Delegated click handler — set up once on init.
+function initBookmarkClickHandler() {
+  document.body.addEventListener('click', function (e) {
+    var btn = e.target.closest('.bookmark');
+    if (!btn) return;
+    var idx = parseInt(btn.getAttribute('data-day-idx'), 10);
+    if (isNaN(idx)) return;
+    var target = document.getElementById('day-block-' + idx);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelectorAll('#timeline-bookmarks .bookmark').forEach(function (b) {
+        b.classList.toggle('is-current-day',
+          parseInt(b.getAttribute('data-day-idx'), 10) === idx);
+      });
+    }
+  });
 }
 
 function renderDayTabs() {
@@ -3575,6 +3631,8 @@ function updateWeatherRows() {
       stickyObs.observe(sentinel);
     }
   }
+
+  initBookmarkClickHandler();
 })();
 </script>
 
