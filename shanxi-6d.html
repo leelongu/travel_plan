@@ -175,6 +175,10 @@ img { display: block; max-width: 100%; }
   overflow: hidden;
   border: 1px solid var(--border);
 }
+.section--sticky-tabs {
+  /* 子元素 .tab-strip 用 position: sticky 须相对视口；祖先 overflow:hidden 会把它圈在 section 内 */
+  overflow: visible;
+}
 @media (min-width: 768px) {
   .section { margin: 0 0 24px; }
 }
@@ -1564,7 +1568,7 @@ footer .footer-cta {
   </div>
 
   <!-- ═══════════════ TIMELINE ═══════════════ -->
-  <section class="section">
+  <section class="section section--sticky-tabs">
     <div class="section-header">
       <div class="section-icon jade">🗓</div>
       <div>
