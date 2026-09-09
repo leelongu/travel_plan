@@ -1462,6 +1462,54 @@ footer .footer-cta {
   margin-left: 8px;
 }
 .slot-weather-loading { color: #999; }
+
+/* ─── Adjustments folding module ───────────── */
+.adjustments-wrap { margin: 12px; }
+@media (min-width: 768px) {
+  .adjustments-wrap { margin: 0 0 24px; }
+}
+.adjustments {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 14px 18px;
+}
+.adjustments__summary {
+  cursor: pointer;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  list-style: none;
+  user-select: none;
+}
+.adjustments__summary::-webkit-details-marker { display: none; }
+.adjustments__summary::before {
+  content: '▸ ';
+  display: inline-block;
+  transition: transform 0.2s;
+  color: var(--gold);
+}
+.adjustments[open] .adjustments__summary::before { content: '▾ '; }
+.adjustments__body {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+.adjustments__body ul { padding-left: 20px; margin: 6px 0 10px; }
+.adjustments__body li { margin-bottom: 4px; }
+.adjustments__note {
+  font-size: 12px;
+  color: var(--cinnabar);
+  background: rgba(184, 57, 46, 0.06);
+  border-left: 3px solid var(--cinnabar);
+  padding: 6px 10px;
+  margin-top: 10px;
+}
 </style>
 </head>
 <body>
@@ -1597,6 +1645,22 @@ footer .footer-cta {
     <h2 class="tips-title">全程实用贴士</h2>
     <div id="tips-container"><!-- JS 生成 --></div>
   </div>
+
+  <!-- ═══════════════ ADJUSTMENTS (optional extensions) ═══════════════ -->
+  <section class="adjustments-wrap">
+    <details class="adjustments">
+      <summary class="adjustments__summary">▸ 跟团途中加入雁门关 / 壶口瀑布的可行节点</summary>
+      <div class="adjustments__body">
+        <p>跟团固定行程不含这两处，但可以临时脱团或散团后自行安排：</p>
+        <ul>
+          <li>雁门关：紧邻 Day 3 代县古城北，自驾约 30 分钟。可与「代县古城 Citywalk」合并半日延伸（提前与导游沟通、可临时脱团半日）。</li>
+          <li>壶口瀑布：与原路线偏离较大；推荐散团后（10/1 当晚或 10/2 上午）自行前往临汾壶口一日游，再从临汾机场飞广州。</li>
+          <li>自行衔接方案（散团后）：Day 7 散团日从太原 → 临汾（动车约 1.5h）→ 壶口（包车约 2h）→ 临汾机场（包车约 3h）→ 飞广州。</li>
+        </ul>
+        <p class="adjustments__note">⚠ 临时脱团涉及跟团协议变更，需提前与旅行社沟通；壶口景区需提前预约。以上请自行核实。</p>
+      </div>
+    </details>
+  </section>
 
   <!-- ═══════════════ NAV JUMP ═══════════════ -->
   <div class="nav-jump">
