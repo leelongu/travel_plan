@@ -2925,7 +2925,7 @@ function renderTimeline() {
   var html = '';
   trip.days.forEach(function (day, di) {
     var dateLabel = 'Day ' + (di + 1);
-    html += '<div class="day-block day-' + (di + 1) + '">';
+    html += '<div class="day-block day-' + (di + 1) + '" id="day-block-' + di + '">';
     html += '<div class="day-header">'
       + '<div class="day-num">' + dateLabel + '</div>'
       + '<div class="day-title-row">'
@@ -3560,6 +3560,21 @@ function updateWeatherRows() {
   initPlayButton();
   // ── 启动天气抓取（不阻塞首屏）──
   fetchAllWeather().then(updateWeatherRows);
+
+  // ── Sticky tab-strip shadow toggle (sentinel pattern, avoids scroll thrash) ──
+  if ('IntersectionObserver' in window) {
+    var tabStrip = document.querySelector('.tab-strip');
+    if (tabStrip) {
+      var sentinel = document.createElement('div');
+      sentinel.className = 'sticky-sentinel';
+      sentinel.style.cssText = 'height:1px;margin-bottom:-1px;';
+      tabStrip.parentNode.insertBefore(sentinel, tabStrip);
+      var stickyObs = new IntersectionObserver(function (entries) {
+        tabStrip.classList.toggle('is-stuck', entries[0].intersectionRatio < 1);
+      }, { threshold: [1] });
+      stickyObs.observe(sentinel);
+    }
+  }
 })();
 </script>
 
