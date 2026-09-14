@@ -624,14 +624,15 @@ img { display: block; max-width: 100%; }
 /* ── 实景图 / 路线图 双面轮换 ── */
 .slot-face {
   position: absolute; inset: 0;
-  opacity: 0; visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
   transition: opacity .55s ease;
 }
-.slot-face.is-active { opacity: 1; visibility: visible; }
+.slot-face.is-active { opacity: 1; pointer-events: auto; }
 @media (prefers-reduced-motion: reduce) { .slot-face { transition: none; } }
 
-.slot-minimap { position: absolute; inset: 0; background: #1d1710; }
-.slot-minimap .leaflet-container { background: #1d1710; font-family: inherit; }
+.slot-minimap { position: absolute; inset: 0; background: #e8e4d8; }
+.slot-minimap .leaflet-container { background: #e8e4d8; font-family: inherit; }
 
 .slot-map-caption {
   position: absolute; left: 0; right: 0; bottom: 0;
@@ -33421,25 +33422,40 @@ function initSlotRotators() {
         if (!data || !data.line || data.line.length < 2) return;
         var el = mapFace.querySelector('.slot-minimap');
         if (!el) return;
+        // 强制容器尺寸（visibility:hidden 时容器尺寸可能为 0）
+        if (!el.style.height) el.style.height = '100%';
+        if (!el.style.width) el.style.width = '100%';
         var m = L.map(el, {
           attributionControl: false, zoomControl: false,
           dragging: false, scrollWheelZoom: false, doubleClickZoom: false,
-          touchZoom: false, boxZoom: false, keyboard: false, tap: false
+          touchZoom: false, boxZoom: false, keyboard: false, tap: false,
+          fadeAnimation: false, zoomAnimation: false, markerZoomAnimation: false
         });
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
-          { maxZoom: 17 }).addTo(m);
-        var line = L.polyline(data.line,
-          { color: '#2a7a5e', weight: 3, opacity: 0.95 }).addTo(m);
-        L.circleMarker(data.line[0], { radius: 4, weight: 2,
-          color: '#faf6ec', fillColor: '#7a6a52', fillOpacity: 1 }).addTo(m);
-        L.circleMarker(data.line[data.line.length - 1], { radius: 5, weight: 2,
-          color: '#faf6ec', fillColor: '#c0392b', fillOpacity: 1 }).addTo(m);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png', {
+          maxZoom: 17,
+          minZoom: 3,
+          subdomains: 'abcd',
+          crossOrigin: true
+        }).addTo(m);
+        // OSRM 返回 [lng, lat]；Leaflet 默认要 [lat, lng]——未 swap 会让 lat=113+ 被夹到 90，整条线变成水平直线
+        var latlng = data.line.map(function (c) { return [c[1], c[0]]; });
+        L.polyline(latlng, {
+          color: '#ffffff', weight: 6, opacity: 1, lineCap: 'round'
+        }).addTo(m);
+        var line = L.polyline(latlng, {
+          color: '#c0392b', weight: 3, opacity: 1, lineCap: 'round'
+        }).addTo(m);
+        L.circleMarker(latlng[0], { radius: 5, weight: 2,
+          color: '#15241c', fillColor: '#faf6ec', fillOpacity: 1 }).addTo(m);
+        L.circleMarker(latlng[latlng.length - 1], { radius: 6, weight: 2,
+          color: '#15241c', fillColor: '#c0392b', fillOpacity: 1 }).addTo(m);
         var fit = function () {
           m.invalidateSize();
-          m.fitBounds(line.getBounds(), { padding: [22, 22] });
+          m.fitBounds(line.getBounds(), { padding: [24, 24] });
         };
         fit();
         setTimeout(fit, 80);
+        setTimeout(fit, 300);  // 二次补 fit，应对容器尺寸延迟生效
         rec.map = m;
       }
 
@@ -33452,7 +33468,21 @@ function initSlotRotators() {
         for (var j = 0; j < dots.length; j++) {
           dots[j].classList.toggle('is-on', j === i);
         }
-        if (i === 1) ensureMap();
+        if (i === 1) {
+          ensureMap();
+          // 双保险：切换到路线面时再 refresh 一次尺寸（visibility/opacity 切换后 Leaflet 需重新测量）
+          setTimeout(function () {
+            if (rec.map) {
+              rec.map.invalidateSize();
+              var layers = rec.map._layers;
+              for (var key in layers) {
+                if (layers[key] && layers[key].getBounds) {
+                  try { rec.map.fitBounds(layers[key].getBounds(), { padding: [24, 24] }); break; } catch (e) {}
+                }
+              }
+            }
+          }, 100);
+        }
       }
 
       function start() {
