@@ -1,0 +1,2369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>清远 4 天 3 晚 · 山江瑶寨四日记</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=ZCOOL+XiaoWei&family=DM+Mono:wght@300;400;500&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+
+<style>
+/* ─── Design Tokens · 清远 山江瑶寨 ──────────────── */
+:root {
+  --bg:         #f4f1ea;
+  --bg-card:    #ffffff;
+  --bg-section: #e8e3d5;
+  --ink:        #15241c;
+  --ink-mid:    #2c3e30;
+  --ink-soft:   #5e6f5c;
+  --parchment:  #faf6ec;
+  --jade:       #2a7a5e;
+  --jade-lt:    #4ca284;
+  --emerald:    #1f5d4a;
+  --river:      #3a7ca5;
+  --river-lt:   #5e9bc2;
+  --rice:       #d4a04c;
+  --rice-lt:    #e8c478;
+  --cinnabar:   #b8392e;
+  --bronze:     #6b4a2b;
+  --bronze-lt:  #a07644;
+  --yao:        #8a3f7e;
+  --yao-lt:     #b566a0;
+  --celadon:    #5a8a7f;
+
+  --day1: #2a7a5e;  /* 翡翠绿 - Day 1 清新区古龙峡 */
+  --day2: #3a7ca5;  /* 江蓝 - Day 2 连州地下河 */
+  --day3: #8a3f7e;  /* 瑶紫 - Day 3 千年瑶寨 */
+  --day4: #d4a04c;  /* 稻黄 - Day 4 返程 */
+
+  --morning:    #e3f2fd;
+  --noon:       #fce4ec;
+  --evening:    #e8f0e5;
+
+  --border:     rgba(42,122,94,0.18);
+  --shadow:     0 2px 16px rgba(21,36,28,0.08);
+  --shadow-hover: 0 8px 32px rgba(21,36,28,0.16);
+  --radius:     14px;
+  --radius-sm:  8px;
+  --radius-lg:  22px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Serif SC', serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.7;
+  background-image:
+    linear-gradient(rgba(42,122,94,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42,122,94,0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; }
+
+/* ─── Layout ──────────────────────────────────── */
+.page-wrap {
+  max-width: 460px;
+  margin: 0 auto;
+  padding: 0 0 60px;
+}
+
+@media (min-width: 768px) {
+  .page-wrap {
+    max-width: 920px;
+    padding: 0 24px 80px;
+  }
+  .section { margin: 0 0 24px; }
+}
+
+/* ─── Hero ──────────────────────────────────────── */
+.hero {
+  background: linear-gradient(160deg, #15241c 0%, #1f3a2e 60%, #2a4a3a 100%);
+  color: #faf6ec;
+  padding: 56px 24px 44px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '清';
+  position: absolute;
+  top: -30px; right: -20px;
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 280px;
+  color: rgba(76,162,132,0.06);
+  line-height: 1;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(212,160,76,0.18) 0%, transparent 50%),
+    radial-gradient(circle at 10% 90%, rgba(58,124,165,0.12) 0%, transparent 45%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--jade-lt);
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: '·'; margin: 0 8px;
+}
+.hero-title {
+  font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+  font-size: 42px;
+  line-height: 1.1;
+  color: var(--parchment);
+  margin-bottom: 14px;
+  position: relative; z-index: 1;
+  letter-spacing: 0.04em;
+}
+.hero-title .accent {
+  color: var(--rice-lt);
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 0.6em;
+  vertical-align: middle;
+  margin-left: 6px;
+  letter-spacing: 0;
+}
+.hero-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgba(250,246,236,0.55);
+  text-transform: uppercase;
+  position: relative; z-index: 1;
+}
+.hero-dates {
+  margin-top: 22px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(76,162,132,0.12);
+  border: 1px solid rgba(76,162,132,0.30);
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: var(--jade-lt);
+  letter-spacing: 0.04em;
+}
+
+/* ─── Section ──────────────────────────────────────── */
+.section {
+  margin: 16px 12px;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.section-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.section-icon.gold     { background: rgba(212,160,76,0.14); color: var(--rice); }
+.section-icon.cinnabar { background: rgba(184,57,46,0.12);  color: var(--cinnabar); }
+.section-icon.jade     { background: rgba(42,122,94,0.12);  color: var(--jade); }
+.section-icon.bronze   { background: rgba(160,118,68,0.14); color: var(--bronze-lt); }
+.section-icon.indigo   { background: rgba(58,124,165,0.12); color: var(--river); }
+.section-icon.celadon  { background: rgba(90,138,127,0.14); color: var(--celadon); }
+.section-icon.yao      { background: rgba(138,63,126,0.14); color: var(--yao); }
+.section-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+}
+.section-subtitle {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.section-body { padding: 16px 22px 20px; }
+
+/* ─── Checklist ───────────────────────────────────── */
+.checklist-wrap {
+  background: linear-gradient(135deg, #15241c 0%, #1f3a2e 100%);
+  border-radius: var(--radius-lg);
+  padding: 22px 22px 24px;
+  margin: 16px 12px;
+  box-shadow: 0 4px 24px rgba(21,36,28,0.18);
+  color: var(--parchment);
+  position: relative;
+  overflow: hidden;
+}
+@media (min-width: 768px) { .checklist-wrap { margin: 0 0 24px; padding: 28px 32px 30px; } }
+.checklist-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--jade) 0%, var(--jade-lt) 50%, var(--rice) 100%);
+}
+.checklist-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 14px;
+  color: var(--parchment);
+  display: flex; align-items: center; gap: 8px;
+}
+.checklist-title::before {
+  content: '✓';
+  font-size: 16px;
+  color: var(--rice-lt);
+}
+.pretrip-todo { list-style: none; display: flex; flex-direction: column; }
+.todo-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 10px 12px; margin-bottom: 6px;
+  background: rgba(250,246,236,0.04);
+  border: 1px solid rgba(250,246,236,0.08);
+  border-radius: 6px;
+  font-size: 12px;
+  color: rgba(250,246,236,0.82);
+  line-height: 1.55;
+}
+.todo-item input { flex-shrink: 0; width: 15px; height: 15px; margin-top: 2px; accent-color: var(--jade); cursor: pointer; }
+.todo-deadline {
+  flex-shrink: 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--rice-lt);
+  background: rgba(212,160,76,0.18);
+  padding: 2px 8px;
+  border-radius: 3px;
+  letter-spacing: 0.06em;
+}
+.todo-text { flex: 1; }
+.todo-text small { color: rgba(250,246,236,0.5); }
+
+/* ─── Pretrip info ───────────────────────────────── */
+.pretrip-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+@media (min-width: 600px) { .pretrip-grid { grid-template-columns: 1fr 1fr; } }
+.pretrip-item {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+@media (min-width: 600px) {
+  .pretrip-item:nth-child(odd)  { padding-right: 14px; border-right: 1px solid var(--border); }
+  .pretrip-item:nth-child(even) { padding-left: 14px; }
+  .pretrip-item:nth-last-child(-n+2) { border-bottom: none; }
+}
+.pretrip-item:last-child { border-bottom: none; }
+.pretrip-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--jade);
+  margin-bottom: 6px;
+}
+.pretrip-text {
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.65;
+}
+.pretrip-typhoon {
+  background: rgba(184,57,46,0.06);
+  border-left: 3px solid var(--cinnabar);
+  padding: 12px 14px;
+  margin-top: 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.65;
+}
+.pretrip-typhoon strong { color: var(--cinnabar); }
+.apps-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.app-pill {
+  font-size: 10px;
+  padding: 3px 10px;
+  background: rgba(42,122,94,0.10);
+  border: 1px solid rgba(42,122,94,0.22);
+  border-radius: 100px;
+  color: var(--jade);
+}
+
+/* ─── Disclaimer ─────────────────────────────────── */
+.disclaimer-box {
+  margin: 0 12px 20px;
+  padding: 14px 18px;
+  background: rgba(184,57,46,0.05);
+  border: 1px solid rgba(184,57,46,0.18);
+  border-left: 3px solid var(--cinnabar);
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  color: var(--ink-mid);
+  line-height: 1.7;
+}
+@media (min-width: 768px) { .disclaimer-box { margin: 0 0 24px; } }
+.disclaimer-box strong { color: var(--cinnabar); font-weight: 700; }
+
+/* ─── Transport section ──────────────────────────── */
+.transport-block-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.transport-block-label + .transport-block-label { margin-top: 18px; }
+.candidates-grid {
+  display: flex; flex-direction: column;
+  gap: 10px; margin-bottom: 8px;
+}
+.transport-candidate {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.transport-candidate:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-1px);
+}
+.transport-top {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px;
+}
+.transport-label {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+}
+.transport-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: rgba(94,111,92,0.10);
+  border: 1px solid rgba(94,111,92,0.20);
+  padding: 3px 9px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+.transport-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-mid);
+  letter-spacing: 0.04em;
+}
+.transport-note {
+  font-size: 11px;
+  color: var(--ink-soft);
+  background: rgba(21,36,28,0.04);
+  border-radius: 4px;
+  padding: 4px 9px;
+  letter-spacing: 0.04em;
+  line-height: 1.55;
+}
+
+/* ─── Hotel areas ────────────────────────────────── */
+.hotel-area {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.hotel-area:last-child { border-bottom: none; }
+.hotel-area-name {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.hotel-area-reason {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+.hotel-options { display: flex; flex-direction: column; gap: 10px; }
+.hotel-option {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.hotel-tier {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 2px 9px;
+  border-radius: 3px;
+  margin-bottom: 4px;
+}
+.hotel-tier.tier-economy { color: var(--jade);     background: rgba(42,122,94,0.10);  border: 1px solid rgba(42,122,94,0.25); }
+.hotel-tier.tier-mid     { color: var(--rice);     background: rgba(212,160,76,0.10); border: 1px solid rgba(212,160,76,0.25); }
+.hotel-tier.tier-luxury  { color: var(--river);   background: rgba(58,124,165,0.10);  border: 1px solid rgba(58,124,165,0.25); }
+.hotel-name {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+}
+.hotel-price {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--rice);
+}
+.hotel-note {
+  font-size: 11px;
+  color: var(--ink-mid);
+  line-height: 1.6;
+}
+
+/* ─── Map ────────────────────────────────────────── */
+.map-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  margin: 0 12px 16px;
+}
+@media (min-width: 768px) { .map-card { margin: 0 0 24px; } }
+.map-head {
+  padding: 18px 22px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.map-head__title { flex: 1; min-width: 0; }
+.map-head h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.map-head p {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-soft);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+#map {
+  height: 380px;
+  width: 100%;
+  border-top: 1px solid var(--border);
+}
+.route-pin {
+  background: var(--ink) !important;
+  border: 2px solid var(--jade) !important;
+  border-radius: 50%;
+  display: flex !important;
+  align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.route-pin__num {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  color: var(--jade-lt);
+  line-height: 1;
+}
+
+/* ─── Day sections ───────────────────────────────── */
+.day-block { padding: 22px 0; border-bottom: 1px solid var(--border); }
+.day-block:last-child { border-bottom: none; }
+.day-header {
+  padding: 0 22px 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  border-bottom: 1px dashed var(--border);
+  margin-bottom: 18px;
+}
+.day-num {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 42px;
+  color: var(--jade);
+  line-height: 1;
+  flex-shrink: 0;
+}
+.day-1 .day-num { color: var(--day1); }
+.day-2 .day-num { color: var(--day2); }
+.day-3 .day-num { color: var(--day3); }
+.day-4 .day-num { color: var(--day4); }
+.day-title-row { flex: 1; min-width: 0; }
+.day-weekday {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.day-theme {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--ink);
+  margin-top: 2px;
+  line-height: 1.3;
+}
+.day-tips-banner {
+  margin: 0 22px 14px;
+  padding: 10px 14px;
+  background: rgba(42,122,94,0.07);
+  border: 1px solid rgba(42,122,94,0.18);
+  border-left: 3px solid var(--jade);
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.6;
+}
+.day-tips-banner::before { content: '💡 '; color: var(--jade); }
+
+/* ─── Slot cards ─────────────────────────────────── */
+.slots-grid { padding: 0 14px; display: flex; flex-direction: column; gap: 14px; }
+.slot-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.25s, transform 0.25s;
+  position: relative;
+}
+.slot-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+
+.slot-img-wrap {
+  position: relative;
+  width: 100%; height: 200px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1f3a2e 0%, #2a4a3a 100%);
+}
+.slot-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.slot-img-fallback {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-size: 56px; color: rgba(250,246,236,0.32);
+}
+.slot-img-fallback-text {
+  margin-top: 8px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px; font-weight: 600;
+  color: rgba(250,246,236,0.55);
+  letter-spacing: 0.08em;
+}
+.slot-period-label {
+  position: absolute; top: 12px; left: 12px;
+  z-index: 850;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 100px;
+  backdrop-filter: blur(8px);
+}
+.slot-period-label.period-morning { background: rgba(227,242,253,0.85); color: #0d47a1; }
+.slot-period-label.period-noon    { background: rgba(252,228,236,0.85); color: #c2185b; }
+.slot-period-label.period-evening { background: rgba(232,240,229,0.85); color: var(--emerald); }
+
+.slot-body {
+  padding: 16px 16px 16px;
+}
+.slot-name-row {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 10px; margin-bottom: 4px;
+}
+.slot-name {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.35;
+  flex: 1;
+}
+.slot-rating {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--rice);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.slot-rating-star { font-size: 12px; }
+.slot-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+.slot-review {
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.65;
+  margin-bottom: 8px;
+}
+.slot-meta { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+.meta-row {
+  display: flex; align-items: flex-start; gap: 6px;
+  font-size: 11px; color: var(--ink-mid);
+  line-height: 1.55;
+}
+.meta-icon { flex-shrink: 0; margin-top: 1px; }
+.meta-label {
+  color: var(--jade);
+  font-weight: 600;
+  margin-right: 4px;
+}
+.seasonal-tag {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--cinnabar);
+  background: rgba(184,57,46,0.07);
+  padding: 4px 10px;
+  border-radius: 100px;
+  display: inline-block;
+  border: 1px solid rgba(184,57,46,0.18);
+}
+
+/* ─── Reminder badge ─────────────────────────────── */
+.reminder-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 600;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: var(--cinnabar);
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+/* ─── Dining ─────────────────────────────────────── */
+.dining-section {
+  margin: 18px 22px 0;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+}
+.dining-header {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.dining-item {
+  background: linear-gradient(135deg, #15241c 0%, #1f3a2e 100%);
+  color: var(--parchment);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+}
+.dining-meal-row {
+  display: flex; align-items: baseline; gap: 10px;
+  margin-bottom: 6px;
+}
+.dining-meal-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--rice-lt);
+  background: rgba(212,160,76,0.18);
+  padding: 3px 9px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.dining-place {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--parchment);
+}
+.dining-hours {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: rgba(250,246,236,0.5);
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+}
+.dish-list {
+  display: flex; flex-direction: column;
+  gap: 4px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(250,246,236,0.08);
+}
+.dish-row {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 11px;
+  color: rgba(250,246,236,0.78);
+}
+.dish-name { flex: 1; }
+.dish-price {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--rice-lt);
+  background: rgba(212,160,76,0.14);
+  padding: 2px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+  margin-left: 8px;
+}
+
+/* ─── Tips section ──────────────────────────────── */
+.tips-wrap {
+  background: linear-gradient(135deg, #15241c 0%, #1f3a2e 100%);
+  border-radius: var(--radius-lg);
+  padding: 22px 22px 24px;
+  margin: 16px 12px;
+  box-shadow: var(--shadow);
+  color: var(--parchment);
+  position: relative;
+  overflow: hidden;
+}
+@media (min-width: 768px) { .tips-wrap { margin: 0 0 24px; padding: 28px 32px 30px; } }
+.tips-wrap::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--jade) 0%, var(--rice-lt) 50%, var(--river) 100%);
+}
+.tips-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 17px;
+  margin-bottom: 14px;
+  color: var(--parchment);
+  display: flex; align-items: center; gap: 8px;
+}
+.tips-title::before { content: '◇'; color: var(--rice-lt); }
+.tip-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 12px;
+  color: rgba(250,246,236,0.78);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.tip-item:last-child { margin-bottom: 0; }
+.tip-num {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: rgba(212,160,76,0.18);
+  border: 1px solid rgba(212,160,76,0.32);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--rice-lt);
+  margin-top: 1px;
+}
+
+/* ─── Adjustments folding module ───────────── */
+.adjustments-wrap { margin: 12px; }
+@media (min-width: 768px) {
+  .adjustments-wrap { margin: 0 0 24px; }
+}
+.adjustments {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 14px 18px;
+}
+.adjustments__summary {
+  cursor: pointer;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  list-style: none;
+  user-select: none;
+}
+.adjustments__summary::-webkit-details-marker { display: none; }
+.adjustments__summary::before {
+  content: '▸ ';
+  display: inline-block;
+  transition: transform 0.2s;
+  color: var(--jade);
+}
+.adjustments[open] .adjustments__summary::before { content: '▾ '; }
+.adjustments__body {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+.adjustments__body ul { padding-left: 20px; margin: 6px 0 10px; }
+.adjustments__body li { margin-bottom: 4px; }
+.adjustments__note {
+  font-size: 12px;
+  color: var(--cinnabar);
+  background: rgba(184, 57, 46, 0.06);
+  border-left: 3px solid var(--cinnabar);
+  padding: 6px 10px;
+  margin-top: 10px;
+}
+
+/* ─── Expenses table ──────────────────────────── */
+.expenses-note {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+.expenses-h4 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 16px 0 8px;
+}
+.expenses-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+.expenses-table thead th {
+  background: rgba(42, 122, 94, 0.10);
+  color: var(--ink);
+  font-weight: 700;
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.04em;
+}
+.expenses-table tbody td {
+  padding: 8px 10px;
+  border-bottom: 1px dashed var(--border);
+  vertical-align: top;
+  color: var(--ink-soft);
+}
+.expenses-table tbody tr:last-child td { border-bottom: none; }
+@media (max-width: 600px) {
+  .expenses-table { font-size: 11px; }
+  .expenses-table thead th,
+  .expenses-table tbody td { padding: 6px 6px; }
+}
+
+/* ─── Summary table ─────────────────────────── */
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.summary-table thead th {
+  background: rgba(42, 122, 94, 0.10);
+  color: var(--ink);
+  font-weight: 700;
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.summary-table tbody td {
+  padding: 10px;
+  border-bottom: 1px dashed var(--border);
+  vertical-align: top;
+  color: var(--ink-soft);
+}
+.summary-table tbody tr:last-child td { border-bottom: none; }
+.summary-table tbody tr:hover { background: rgba(42, 122, 94, 0.03); }
+.summary-table .day-cell {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 18px;
+  white-space: nowrap;
+  font-weight: 700;
+}
+.summary-table tbody tr.day-1 .day-cell { color: var(--day1); }
+.summary-table tbody tr.day-2 .day-cell { color: var(--day2); }
+.summary-table tbody tr.day-3 .day-cell { color: var(--day3); }
+.summary-table tbody tr.day-4 .day-cell { color: var(--day4); }
+.summary-table .date-cell { white-space: nowrap; }
+.summary-table .date-cell small { color: var(--ink-soft); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.06em; }
+.summary-table .theme-cell {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.summary-table .km-cell,
+.summary-table .stay-cell {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--rice);
+  white-space: nowrap;
+}
+.summary-table .stay-cell { color: var(--jade); }
+@media (max-width: 600px) {
+  .summary-table { font-size: 11px; }
+  .summary-table thead th,
+  .summary-table tbody td { padding: 6px 5px; }
+  .summary-table .theme-cell { font-size: 12px; }
+  .summary-table .day-cell { font-size: 16px; }
+}
+
+/* ─── Footer ─────────────────────────────────────── */
+footer {
+  background: #15241c;
+  color: rgba(250,246,236,0.55);
+  padding: 36px 24px 28px;
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+footer .footer-line { margin-bottom: 8px; }
+footer .footer-cta {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 18px;
+  color: var(--rice-lt);
+  letter-spacing: 0.12em;
+  margin-bottom: 16px;
+}
+
+/* ─── Responsive ────────────────────────────────── */
+@media (max-width: 480px) {
+  .hero { padding: 40px 20px 32px; }
+  .hero-title { font-size: 36px; }
+  .section { margin: 12px; }
+  .checklist-wrap, .tips-wrap { margin: 12px; padding: 18px 18px 20px; }
+  .map-card { margin: 0 12px 12px; }
+  .day-header { padding: 0 16px 12px; }
+  .day-tips-banner { margin: 0 16px 12px; }
+  .slots-grid { padding: 0 12px; }
+  .dining-section { margin: 14px 16px 0; }
+}
+
+/* ─── Weather row ────────────────────────────── */
+.slot-weather {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(0,0,0,.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.slot-weather-icon { font-size: 16px; }
+.slot-weather-text { flex: 1; color: #2a2a2a; }
+.slot-weather-live-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #4caf50;
+  flex-shrink: 0;
+}
+.slot-weather-note {
+  font-size: 11px;
+  color: #999;
+  margin-top: 4px;
+  padding-left: 4px;
+}
+.slot-weather-error { color: #c62828; font-size: 12px; margin-left: 8px; }
+.slot-weather-loading { color: #999; }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <header class="hero">
+    <div class="hero-eyebrow">Guangzhou → Qingyuan</div>
+    <h1 class="hero-title">清远<span class="accent">山江瑶寨</span></h1>
+    <p class="hero-sub">古龙峡谷 · 连州地下河 · 千年瑶寨 · 山江四日记</p>
+    <div class="hero-dates">
+      <span class="hero-badge">📅 出发 9/25 周五</span>
+      <span class="hero-badge">🛬 返程 9/28 周一</span>
+      <span class="hero-badge">⏱ 4 天 3 晚</span>
+      <span class="hero-badge">🚗 自驾约 600 km</span>
+    </div>
+  </header>
+
+  <!-- ═══════════════ CHECKLIST ═══════════════ -->
+  <div class="checklist-wrap">
+    <h2 class="checklist-title">出发前待办清单</h2>
+    <div id="checklist-container"><!-- JS 生成 --></div>
+  </div>
+
+  <!-- ═══════════════ PRE-TRIP ═══════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon bronze">⚠️</div>
+      <div>
+        <div class="section-title">行前须知</div>
+        <div class="section-subtitle">Pre-Trip · 9 月末清远定制</div>
+      </div>
+    </div>
+    <div class="section-body" id="pretrip-info"><!-- JS 生成 --></div>
+  </section>
+
+  <!-- ═══════════════ DISCLAIMER ═══════════════ -->
+  <div class="disclaimer-box">
+    <strong>免责声明 · </strong><span id="disclaimer-text">本页全部信息（天气、交通、酒店、餐厅、景点、门票、价格、营业时间、评分、活动等）均为 AI 基于公开资料整理的参考建议，可能不准确或已过时，不保证与实时情况一致；请务必在官方渠道 / 订票订房 / 地图等 App 上核实后再做决定或前往。9 月底仍处台风活跃期，出发前 3 天起关注清远天气预警；漂流季节尾声以景区当日公告为准。</span>
+  </div>
+
+  <!-- ═══════════════ TRANSPORT ═══════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon jade">🚗</div>
+      <div>
+        <div class="section-title">推荐交通方式</div>
+        <div class="section-subtitle">Transport · 自驾首选 · 高铁备选</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="transport-block-label">🚄 高铁 / 动车 · 广州 → 清远（备选）</div>
+      <div class="candidates-grid" id="outbound-flights"></div>
+      <div class="transport-block-label">🚗 自驾里程参考（广州 ⇄ 清远 ⇄ 连州）</div>
+      <div class="candidates-grid" id="return-flights"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ HOTELS ═══════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon gold">🏨</div>
+      <div>
+        <div class="section-title">住宿推荐 · 按片区价位</div>
+        <div class="section-subtitle">Hotel Areas · 清新区 / 连州 / 清城区</div>
+      </div>
+    </div>
+    <div class="section-body" id="hotels-container"><!-- JS 生成 --></div>
+  </section>
+
+  <!-- ═══════════════ SUMMARY ═══════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon jade">📋</div>
+      <div>
+        <div class="section-title">行程概要</div>
+        <div class="section-subtitle">At a Glance · 4 天 3 晚 · 自驾约 600 km</div>
+      </div>
+    </div>
+    <div class="section-body" id="summary-container"><!-- JS 生成 --></div>
+  </section>
+
+  <!-- ═══════════════ MAP ═══════════════ -->
+  <div class="map-card">
+    <div class="map-head">
+      <div class="map-head__title">
+        <h2>行程地图</h2>
+        <p>// 点击标记查看导航 · 虚线为行程顺序</p>
+      </div>
+    </div>
+    <div id="map"></div>
+  </div>
+
+  <!-- ═══════════════ TIMELINE ═══════════════ -->
+  <section class="section" id="timeline-section">
+    <div class="section-header">
+      <div class="section-icon celadon">🗓</div>
+      <div>
+        <div class="section-title">四日时间轴</div>
+        <div class="section-subtitle">Day-by-Day Timeline</div>
+      </div>
+    </div>
+    <div id="timeline-container"><!-- JS 生成 --></div>
+  </section>
+
+  <!-- ═══════════════ TIPS ═══════════════ -->
+  <div class="tips-wrap">
+    <h2 class="tips-title">全程实用贴士</h2>
+    <div id="tips-container"><!-- JS 生成 --></div>
+  </div>
+
+  <!-- ═══════════════ ADJUSTMENTS ═══════════════ -->
+  <section class="adjustments-wrap">
+    <details class="adjustments">
+      <summary class="adjustments__summary">▸ 如果想加笔架山 / 银盏温泉 / 飞来峡，应该在哪些地方调整行程？</summary>
+      <div class="adjustments__body">
+        <p>本行程主轴已含 1 个 5A（连州地下河）+ 1 个经典漂流（古龙峡）+ 1 个少数民族风情（千年瑶寨）。下面三处仍在主推之外，按下面方式可加入：</p>
+        <ul>
+          <li><strong>笔架山</strong>（清城区，距市中心 5 km）：距 Day 4 上午行程仅 15 分钟车程，可直接替换飞来峡作为 Day 4 上午的轻松收尾项目（登山+竹漂流+瀑布，约 2 小时）。</li>
+          <li><strong>飞来峡</strong>（清城区北江三峡）：江滨免费+游船约 ¥100–150。Day 4 上午可沿北江滨散步 + 坐一段游船看峡谷，约 1.5–2 小时。</li>
+          <li><strong>银盏温泉</strong>（清新区）：距 Day 1 古龙峡仅约 20 km。Day 1 晚上可去泡温泉解乏（约 ¥128–158），但当晚返清新区酒店会多花 30 分钟车程；也可改在 Day 4 返广州前绕道泡半小时。</li>
+          <li><strong>牛鱼嘴</strong>（清城区）：原生态山林溪流，距 Day 4 上午约 30 分钟。可作为 Day 4 的「B 方案」，替换飞霞/笔架山。</li>
+          <li><strong>建议方案 A（自然+温泉双收尾）</strong>：Day 1 晚上加银盏温泉；Day 4 上午改牛鱼嘴。需调整 Day 1 晚餐时间、Day 4 早上提前 30 分钟出发。</li>
+          <li><strong>建议方案 B（人文+水韵）</strong>：Day 4 上午改飞来峡游船+笔架山登山二选一；如喜欢看江选飞霞，喜欢登高选笔架山。</li>
+        </ul>
+        <p class="adjustments__note">⚠ 上述为行程调整参考；景区预约、温泉营业时间、自驾里程请自行核实。</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ═══════════════ EXPENSES ═══════════════ -->
+  <section class="adjustments-wrap">
+    <details class="adjustments">
+      <summary class="adjustments__summary">▸ 4 天花费预估（参考 · 需自核）</summary>
+      <div class="adjustments__body">
+        <p class="expenses-note">所有金额为参考区间，按"交通 / 饮食 / 住宿 / 门票 / 杂费"分类，按日期顺序排列。⚠ 最终以个人实际预订/消费为准。</p>
+
+        <table class="expenses-table">
+          <thead>
+            <tr>
+              <th>日期</th>
+              <th>分类</th>
+              <th>项目</th>
+              <th>金额（参考）</th>
+              <th>备注</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td rowspan="3">2026-09-25<br>周五</td><td>交通</td><td>广州 → 清新区（自驾油费+过路+停车）</td><td>约 ¥150–220</td><td>约 100 km，过路约 ¥35，停车约 ¥20</td></tr>
+            <tr><td>饮食</td><td>清新区晚餐 + 夜宵</td><td>约 ¥80–150 / 人</td><td>2 餐，按中端估算</td></tr>
+            <tr><td>门票</td><td>古龙峡（云天玻霸+漂流/瀑布）</td><td>约 ¥180–280 / 人</td><td>含玻璃桥+漂流联票，参考价</td></tr>
+            <tr><td></td><td>住宿</td><td>清新区酒店（中档）</td><td>约 ¥280–450 / 晚</td><td>D1 共 1 晚</td></tr>
+
+            <tr><td rowspan="3">2026-09-26<br>周六</td><td>交通</td><td>清新区 → 连州（自驾油费+过路）</td><td>约 ¥120–180</td><td>约 180 km，过路约 ¥50</td></tr>
+            <tr><td>饮食</td><td>连州/连南 当日餐</td><td>约 ¥80–150 / 人</td><td>3 餐，连州菜+瑶族风味</td></tr>
+            <tr><td>门票</td><td>连州地下河（5A）</td><td>约 ¥108–130 / 人</td><td>含游船，参考价</td></tr>
+            <tr><td></td><td>住宿</td><td>连州酒店（中档）</td><td>约 ¥260–450 / 晚</td><td>D2 共 1 晚</td></tr>
+
+            <tr><td rowspan="3">2026-09-27<br>周日</td><td>交通</td><td>连州 → 清城区（自驾油费+过路）</td><td>约 ¥120–180</td><td>约 180 km，过路约 ¥50</td></tr>
+            <tr><td>饮食</td><td>瑶寨午餐 + 清远晚餐</td><td>约 ¥80–150 / 人</td><td>瑶寨擂茶+清远牛杂/烧肉</td></tr>
+            <tr><td>门票</td><td>南岗千年瑶寨</td><td>约 ¥80–120 / 人</td><td>参考价</td></tr>
+            <tr><td></td><td>住宿</td><td>清城区酒店（中档）</td><td>约 ¥280–450 / 晚</td><td>D3 共 1 晚</td></tr>
+
+            <tr><td rowspan="2">2026-09-28<br>周一</td><td>交通</td><td>清城区 → 广州（自驾油费+过路）</td><td>约 ¥60–100</td><td>约 80 km，过路约 ¥25</td></tr>
+            <tr><td>饮食</td><td>清远早茶 + 广州午餐</td><td>约 ¥80–150 / 人</td><td>刀切糍/肠粉+早茶</td></tr>
+
+            <tr><td colspan="3">合计（2 人自驾）</td><td colspan="2">约 ¥4,000–5,500 / 2 人（含油+过路+3 晚住宿+门票+餐）</td></tr>
+          </tbody>
+        </table>
+        <p class="expenses-note">💡 自驾里程总计约 600 km（广州→清远→连州→清远→广州），含往返过路费约 ¥160，油费约 ¥350（按 SUV 1 元/km 估算）。若改高铁+当地租车，可省过路+省体力但增加接驳成本。</p>
+      </div>
+    </details>
+  </section>
+
+</div>
+
+<!-- ═══════════════ LEAFLET ═══════════════ -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- ═══════════════ ENGINE: MAP ═══════════════ -->
+<script>
+function escapeHTML(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+function _sanitizeLat(v) { var n = Number(v); if (!isFinite(n)) return 0; return Math.max(-90, Math.min(90, n)); }
+function _sanitizeLng(v) { var n = Number(v); if (!isFinite(n)) return 0; return Math.max(-180, Math.min(180, n)); }
+function buildNavLink(lat, lng, label, ua) {
+  var sLat = _sanitizeLat(lat), sLng = _sanitizeLng(lng);
+  var encLabel = encodeURIComponent(String(label));
+  if (ua && /iPhone|iPad|iPod/.test(ua)) {
+    return 'https://maps.apple.com/?ll=' + sLat + ',' + sLng + '&q=' + encLabel;
+  }
+  return 'geo:' + sLat + ',' + sLng + '?q=' + sLat + ',' + sLng + '(' + encLabel + ')';
+}
+function buildMapAppLinks(lat, lng, label) {
+  var sLat = _sanitizeLat(lat), sLng = _sanitizeLng(lng);
+  var encLabel = encodeURIComponent(String(label));
+  var amap = {
+    label: '高德地图',
+    url: 'https://uri.amap.com/marker?position=' + sLng + ',' + sLat
+      + '&name=' + encLabel + '&coordinate=wgs84&callnative=1&src=travel-plan-viz',
+  };
+  var google = {
+    label: 'Google 地图',
+    url: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(sLat + ',' + sLng),
+  };
+  return isInChinaBBox(sLat, sLng) ? [amap] : [google, amap];
+}
+var GCJ_A = 6378245.0;
+var GCJ_EE = 0.00669342162296594323;
+function isInChinaBBox(lat, lng) {
+  return lng >= 72.004 && lng <= 137.8347 && lat >= 0.8293 && lat <= 55.8271;
+}
+function gcjTransformLat(x, y) {
+  var ret = -100.0 + 2.0 * x + 3.0 * y + 0.2 * y * y + 0.1 * x * y + 0.2 * Math.sqrt(Math.abs(x));
+  ret += (20.0 * Math.sin(6.0 * x * Math.PI) + 20.0 * Math.sin(2.0 * x * Math.PI)) * 2.0 / 3.0;
+  ret += (20.0 * Math.sin(y * Math.PI) + 40.0 * Math.sin(y / 3.0 * Math.PI)) * 2.0 / 3.0;
+  ret += (160.0 * Math.sin(y / 12.0 * Math.PI) + 320.0 * Math.sin(y * Math.PI / 30.0)) * 2.0 / 3.0;
+  return ret;
+}
+function gcjTransformLng(x, y) {
+  var ret = 300.0 + x + 2.0 * y + 0.1 * x * x + 0.1 * x * y + 0.1 * Math.sqrt(Math.abs(x));
+  ret += (20.0 * Math.sin(6.0 * x * Math.PI) + 20.0 * Math.sin(2.0 * x * Math.PI)) * 2.0 / 3.0;
+  ret += (20.0 * Math.sin(y * Math.PI) + 40.0 * Math.sin(y / 3.0 * Math.PI)) * 2.0 / 3.0;
+  ret += (150.0 * Math.sin(x / 12.0 * Math.PI) + 300.0 * Math.sin(x / 30.0 * Math.PI)) * 2.0 / 3.0;
+  return ret;
+}
+function gcj02ToWgs84(lat, lng) {
+  if (!isInChinaBBox(lat, lng)) return { lat: lat, lng: lng };
+  var dLat = gcjTransformLat(lng - 105.0, lat - 35.0);
+  var dLng = gcjTransformLng(lng - 105.0, lat - 35.0);
+  var radLat = lat / 180.0 * Math.PI;
+  var magic = Math.sin(radLat);
+  magic = 1 - GCJ_EE * magic * magic;
+  var sqrtMagic = Math.sqrt(magic);
+  dLat = (dLat * 180.0) / ((GCJ_A * (1 - GCJ_EE)) / (magic * sqrtMagic) * Math.PI);
+  dLng = (dLng * 180.0) / (GCJ_A / sqrtMagic * Math.cos(radLat) * Math.PI);
+  return { lat: lat - dLat, lng: lng - dLng };
+}
+function routeCoordinates(points) {
+  return points.map(function (p) { return [p.lat, p.lng]; });
+}
+function initTravelMap(elementId, points, opts) {
+  opts = opts || {};
+  var map = L.map(elementId);
+  L.tileLayer(opts.tileUrl || 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: opts.attribution || '© OpenStreetMap contributors',
+    maxZoom: 19,
+  }).addTo(map);
+  var ua = (typeof navigator !== 'undefined' && navigator.userAgent) || '';
+  points.forEach(function (p, i) {
+    var sLat = _sanitizeLat(p.lat), sLng = _sanitizeLng(p.lng);
+    var icon = L.divIcon({
+      className: 'route-pin',
+      html: '<span class="route-pin__num">' + (i + 1) + '</span>',
+      iconSize: [28, 28],
+      iconAnchor: [14, 14],
+    });
+    var navLinks = [{ label: '导航', url: buildNavLink(sLat, sLng, p.name, ua) }]
+      .concat(buildMapAppLinks(sLat, sLng, p.name));
+    var marker = L.marker([sLat, sLng], { icon: icon }).addTo(map);
+    marker.bindPopup(
+      '<b>' + (i + 1) + '. ' + escapeHTML(String(p.name)) + '</b><br>'
+      + (p.time ? escapeHTML(String(p.time)) + '<br>' : '')
+      + navLinks.map(function (l) {
+          return '<a href="' + l.url + '" target="_blank">' + escapeHTML(l.label) + '</a>';
+        }).join(' · ')
+    );
+  });
+  var coords = routeCoordinates(points);
+  if (coords.length > 1) {
+    L.polyline(coords, { dashArray: '6 8', weight: 2, color: '#2a7a5e' }).addTo(map);
+  }
+  map.fitBounds(coords.length ? coords : [[0, 0]], { padding: [30, 30] });
+  return map;
+}
+</script>
+
+<!-- ═══════════════ ENGINE: REMINDERS ═══════════════ -->
+<script>
+function computeReminders(startDateISO, items) {
+  return items.map(function (it) {
+    var d = new Date(startDateISO + 'T00:00:00Z');
+    d.setUTCDate(d.getUTCDate() - it.leadDays);
+    return { item: it.item, leadDays: it.leadDays, deadline: d.toISOString().slice(0, 10) };
+  }).sort(function (a, b) { return a.deadline < b.deadline ? -1 : a.deadline > b.deadline ? 1 : 0; });
+}
+function renderChecklistHTML(reminders) {
+  var lis = reminders.map(function (r) {
+    var ld = Math.max(0, Math.floor(Number(r.leadDays) || 0));
+    var dd = (typeof r.deadline === 'string' || typeof r.deadline === 'number')
+      ? escapeHTML(String(r.deadline)) : '';
+    return '<li class="todo-item">'
+      + '<input type="checkbox"> '
+      + '<span class="todo-deadline">' + dd + '前</span> '
+      + '<span class="todo-text">' + escapeHTML(String(r.item)) + ' <small>（建议提前' + ld + '天）</small></span>'
+      + '</li>';
+  }).join('');
+  return '<ul class="pretrip-todo">' + lis + '</ul>';
+}
+function reminderBadgeHTML(leadDays) {
+  var ld = Math.max(0, Math.floor(Number(leadDays) || 0));
+  return '<span class="reminder-badge">⚠️ 建议提前' + ld + '天订</span>';
+}
+</script>
+
+<!-- ═══════════════ ENGINE: WEATHER (Open-Meteo + fallback) ═══════════════ -->
+<script>
+var wmoIconCN = {
+  0: ['☀', '晴'], 1: ['🌤', '晴间多云'], 2: ['⛅', '多云'], 3: ['☁', '阴'],
+  45: ['🌫', '雾'], 48: ['🌫', '雾凇'],
+  51: ['🌦', '毛毛雨'], 53: ['🌦', '毛毛雨'], 55: ['🌦', '毛毛雨'],
+  61: ['🌧', '小雨'], 63: ['🌧', '中雨'], 65: ['🌧', '大雨'],
+  71: ['🌨', '小雪'], 73: ['🌨', '中雪'], 75: ['🌨', '大雪'],
+  80: ['🌦', '阵雨'], 81: ['🌦', '阵雨'], 82: ['⛈', '强阵雨'], 95: ['⛈', '雷暴']
+};
+function wmoToText(code, prob) {
+  var entry = wmoIconCN[code] || ['🌤', '多云'];
+  var cond = entry[1];
+  if (prob >= 50) cond += '（有雨）';
+  else if (prob >= 20) cond += '（可能有阵雨）';
+  return { icon: entry[0], conditions: cond };
+}
+function precipAdvice(prob) {
+  if (prob > 50) return '必带雨具';
+  if (prob >= 20) return '建议备伞';
+  return '无需备伞';
+}
+function roundCoord(v) { return Math.round(v * 20) / 20; }
+function resolveWeather(liveResults, slot, targetDate, unavailable) {
+  if (!slot.weather) return null;
+  var key = roundCoord(slot.weather.coords.lat) + ':' + roundCoord(slot.weather.coords.lng);
+  var live = liveResults[key];
+  if (live && live.daily) {
+    var i = live.daily.time.indexOf(targetDate);
+    if (i >= 0) {
+      var cond = wmoToText(live.daily.weather_code[i], live.daily.precipitation_probability_max[i]);
+      return {
+        source: 'live',
+        icon: cond.icon,
+        conditions: cond.conditions,
+        high: Math.round(live.daily.temperature_2m_max[i]),
+        low: Math.round(live.daily.temperature_2m_min[i]),
+        precipAdvice: precipAdvice(live.daily.precipitation_probability_max[i])
+      };
+    }
+  }
+  var fb = Object.assign({ source: 'fallback' }, slot.weather.fallback);
+  if (unavailable) fb.unavailable = true;
+  return fb;
+}
+function buildDailyUrl(lat, lng, startDate, endDate) {
+  var p = [
+    'latitude=' + lat,
+    'longitude=' + lng,
+    'daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max',
+    'timezone=Asia%2FShanghai',
+    'start_date=' + startDate,
+    'end_date=' + endDate
+  ].join('&');
+  return 'https://api.open-meteo.com/v1/forecast?' + p;
+}
+var WEATHER_FETCH_TIMEOUT = 4000;
+var WEATHER_CACHE_TTL = 1000 * 60 * 60 * 6;
+var liveWeatherResults = {};
+var weatherCellStatus = {};
+function fetchOneCell(lat, lng, startDate, endDate) {
+  var url = buildDailyUrl(lat, lng, startDate, endDate);
+  return Promise.race([
+    fetch(url).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }),
+    new Promise(function (resolve) { setTimeout(function () { resolve(null); }, WEATHER_FETCH_TIMEOUT); })
+  ]);
+}
+function getWeatherForRender(slot, targetDate) {
+  if (!slot.weather) return null;
+  var key = roundCoord(slot.weather.coords.lat) + ':' + roundCoord(slot.weather.coords.lng);
+  return resolveWeather(liveWeatherResults, slot, targetDate, weatherCellStatus[key] === 'error');
+}
+function collectWeatherRequests() {
+  var seen = {};
+  var reqs = [];
+  trip.days.forEach(function (day) {
+    day.slots.forEach(function (slot) {
+      if (!slot.weather || !slot.weather.coords) return;
+      var lat = slot.weather.coords.lat;
+      var lng = slot.weather.coords.lng;
+      var key = roundCoord(lat) + ':' + roundCoord(lng);
+      var composite = key + ':' + day.date;
+      if (seen[composite]) return;
+      seen[composite] = true;
+      reqs.push({ key: key, lat: lat, lng: lng, date: day.date });
+    });
+  });
+  return reqs;
+}
+function loadWeatherCache() {
+  try {
+    var raw = localStorage.getItem('tpv-weather-' + trip.startDate);
+    return raw ? JSON.parse(raw) : {};
+  } catch (e) { return {}; }
+}
+function saveWeatherCache(cache) {
+  try { localStorage.setItem('tpv-weather-' + trip.startDate, JSON.stringify(cache)); } catch (e) {}
+}
+function fetchAllWeather() {
+  var reqs = collectWeatherRequests();
+  if (!reqs.length) return Promise.resolve();
+  var cache = loadWeatherCache();
+  var now = Date.now();
+  var dateMin = reqs.reduce(function (a, r) { return r.date < a ? r.date : a; }, reqs[0].date);
+  var dateMax = reqs.reduce(function (a, r) { return r.date > a ? r.date : a; }, reqs[0].date);
+  var fetches = {};
+  reqs.forEach(function (r) {
+    var cached = cache[r.key];
+    if (cached && (now - cached.fetchedAt) < WEATHER_CACHE_TTL) {
+      liveWeatherResults[r.key] = { daily: cached.daily };
+      weatherCellStatus[r.key] = 'ok';
+      return;
+    }
+    if (fetches[r.key]) return;
+    fetches[r.key] = fetchOneCell(r.lat, r.lng, dateMin, dateMax).then(function (data) {
+      if (!data || !data.daily) {
+        weatherCellStatus[r.key] = 'error';
+        return;
+      }
+      liveWeatherResults[r.key] = { daily: data.daily };
+      weatherCellStatus[r.key] = 'ok';
+      cache[r.key] = { fetchedAt: now, daily: data.daily };
+    });
+  });
+  return Promise.all(Object.values(fetches)).then(function () {
+    saveWeatherCache(cache);
+  });
+}
+</script>
+
+<!-- ═══════════════ TRIP DATA ═══════════════ -->
+<script id="trip-data" type="application/json">
+{
+  "title": "清远 4 天 3 晚 · 山江瑶寨四日记",
+  "startDate": "2026-09-25",
+  "colorScheme": "qingyuan-jade-river-yao-4d",
+  "preTrip": {
+    "weather": {
+      "summary": "9 月底清远仍处'秋老虎'高温期：白天 33–36°C、夜晚 25–27°C，午后至傍晚常有短时雷阵雨，湿度大、闷热感强；偶有台风外围影响。漂流/瀑布安排上午最佳；溶洞/温泉作雨天备选。",
+      "typhoon": "9 月为广东台风活跃期；出发前 3 天起关注「清远天气」「广东天气」公众号及台风预警（黄色/红色暴雨预警可能临时关闭漂流/山区景区）。"
+    },
+    "packing": "轻薄短袖+防晒衣（午间）；薄外套（早晚、漂流后防寒）；透气长裤；防滑凉鞋或溯溪鞋（漂流必备）；遮阳帽；太阳镜；防水袋；驱蚊液；至少 2 套换洗衣物（漂流必湿）；小型抽绳背包；雨具。",
+    "payment": "微信/支付宝全场景覆盖；山区信号弱时备用 ¥200 现金；漂流/门票均可在平台提前预付。",
+    "apps": ["高德地图 / 腾讯地图（导航）", "铁路 12306（高铁备选）", "携程 / 美团（门票）", "大众点评（餐饮）", "清远天气 / 广东天气公众号（台风预警）", "古龙峡官方公众号（漂流季节确认）"],
+    "ticketTip": "古龙峡周末/中秋易售罄，建议提前 3–7 天网上购票（玻璃桥+漂流联票）；连州地下河可现场购票或提前 1 天；千年瑶寨现场购票即可；高铁票若选铁路出行建议提前 15 天。9 月底已入漂流尾声，出行前 1 天务必致电景区或查官方公众号确认开放状态。"
+  },
+  "flights": {
+    "booked": [],
+    "candidates": {
+      "outbound": [
+        {
+          "label": "广州南 → 清远站（高铁/动车）",
+          "code": "城际动车 D 字头 / G 字头",
+          "time": "9/25 周五 约 22–40 分钟车程",
+          "note": "推荐：广州南/广州北 → 清远站，最快约 22 分钟；每日 14–19 趟班次，二等座约 ¥30–42；适合不想自驾的旅客。清远站转当地网约车/租车到清新区古龙峡约 30–50 分钟。"
+        },
+        {
+          "label": "广州 → 清远（自驾·推荐）",
+          "code": "广清高速 / 许广高速",
+          "time": "9/25 周五 约 1–1.5 小时车程",
+          "note": "推荐：广州市区 → 清远清新区约 80–110 km，走 G4W3 广清高速或许广高速；过路费约 ¥35，停车费约 ¥20/次。本行程含多日异地自驾，强烈建议自驾以灵活机动；如不自驾可当地租 SUV（约 ¥200–350/天 + 油费）。"
+        }
+      ],
+      "return": [
+        {
+          "label": "连州 → 清远 → 广州（自驾返程）",
+          "code": "连州 → 清远 → 广州",
+          "time": "Day 4 上午约 3 小时总车程",
+          "note": "Day 4 连州 → 清城区约 180 km / 2.5 h；早餐后出发 → 清远早茶或飞来峡 → 广州约 80 km / 1.5 h。如 Day 4 不想去飞来峡，可直接连州 → 广州走汕昆/许广高速约 3 h（无绕道）。"
+        },
+        {
+          "label": "清远 → 广州南（高铁备选）",
+          "code": "清远站 → 广州南/广州",
+          "time": "约 22–40 分钟车程",
+          "note": "如 Day 4 中途想弃车改高铁：清远站 → 广州南 22–40 分钟，二等座 ¥30–42，每日多趟。须提前把车停清远站过夜（停车约 ¥15–25/天）或取车异地还。"
+        }
+      ]
+    }
+  },
+  "hotelAreas": [
+    {
+      "area": "清远清新区（古龙峡/黄腾峡周边）",
+      "reason": "Day 1 入住：紧贴 Day 1 古龙峡行程，避免当天从清远市区往返古龙峡（约 30–40 km）浪费时间；晚上可加泡银盏温泉。",
+      "options": [
+        { "tier": "经济", "name": "森联城市快捷酒店（清新大道店）/ 7 天连锁清新店", "priceRange": "约 ¥100–180/晚", "note": "清新大道核心位置，距古龙峡约 30 分钟车程，停车免费" },
+        { "tier": "中档", "name": "清远清新希尔顿欢朋酒店 / 金顺印象酒店", "priceRange": "约 ¥280–500/晚", "note": "国际品牌/中档精品，距古龙峡/黄腾峡约 15–25 分钟车程，含早" },
+        { "tier": "高端", "name": "清远狮子湖喜来登度假酒店", "priceRange": "约 ¥800–1500/晚", "note": "高尔夫景观、私汤温泉；适合度假感强、商务出行" }
+      ]
+    },
+    {
+      "area": "连州/连南（地下河+千年瑶寨周边）",
+      "reason": "Day 2 入住：连州市区，距连州地下河约 30 km、距千年瑶寨约 50 km。次日可轻松衔接两景点，避免清远 ↔ 连州往返奔波。",
+      "options": [
+        { "tier": "经济", "name": "连州禾枫源假日酒店 / 7 天连锁连州店", "priceRange": "约 ¥120–220/晚", "note": "连州市区经济选择，距连州地下河约 30 分钟车程" },
+        { "tier": "中档", "name": "维也纳国际酒店（连州顺盈广场店）/ 燕喜大酒店", "priceRange": "约 ¥260–450/晚", "note": "连州本地中档代表，位置好、餐饮便利" },
+        { "tier": "高端", "name": "清远连州温德姆温泉度假酒店 / 广东瑶族文化大酒店", "priceRange": "约 ¥500–900/晚", "note": "五星级+温泉；含户外泳池、瑶药浴，距地下河约 8 km、距瑶寨约 60 km" }
+      ]
+    },
+    {
+      "area": "清远清城区（市区中心/清远站附近）",
+      "reason": "Day 3 入住：清城区为清远政治经济中心，餐饮（洲心烧肉/清远鸡/牛杂）选择最多；离 Day 4 飞来峡/笔架山近；距清远站近便于高铁返程。",
+      "options": [
+        { "tier": "经济", "name": "汉庭酒店（清远连江路店）/ 7 天连锁（连江路店）", "priceRange": "约 ¥120–200/晚", "note": "市区核心位置，下廓街/洲心美食圈步行可达" },
+        { "tier": "中档", "name": "清远希尔顿欢朋酒店（凤城店）/ 清远雅阁酒店", "priceRange": "约 ¥280–450/晚", "note": "国际品牌中档，硬件新、商旅/亲子都合适" },
+        { "tier": "高端", "name": "清远国际酒店（沿江路 1 号）", "priceRange": "约 ¥400–700/晚", "note": "清远市区头部五星，江景房+国际会议中心配置" }
+      ]
+    }
+  ],
+  "disclaimer": "本页全部信息（天气、交通、酒店、餐厅、景点、门票、价格、营业时间、评分、活动等）均为 AI 基于公开资料整理的参考建议，可能不准确或已过时，不保证与实时情况一致；请务必在官方渠道 / 订票订房 / 地图等 App 上核实后再做决定或前往。9 月底仍处台风活跃期，出发前 3 天起关注清远天气预警；漂流季节尾声以景区当日公告为准。本行程涉及自驾，请提前检查车况、备齐证件；雨雾天气山区路段注意安全。",
+  "tips": [
+    "全程自驾约 600 km（广州 ⇄ 清远约 200 km、清远 ⇄ 连州约 360 km、清远 ⇄ 广州约 100 km），含往返过路费约 ¥160、油费约 ¥350（按 SUV 估算）。如自驾，出发前检查胎压、备齐加油卡/粤通卡；山区加油站间隔大，见站必加。",
+    "古龙峡 9 月底仍为漂流尾声，水温偏凉（约 18–20°C），漂流后及时擦干换衣防感冒。手机/钱包放防水袋，景区有售。玻璃桥与漂流分开排队，联票免二次入园费。",
+    "连州地下河内恒温 18–22°C，全年开放。溶洞游船段约 30 分钟，全程含步道约 1.5–2 小时。洞内潮湿，地面湿滑，建议穿防滑鞋。",
+    "千年瑶寨海拔约 800 米，盘山路弯多坡陡；如自驾需熟练山路驾驶；亦可在连州市区参加当地瑶寨一日游（包接送+讲解，约 ¥150–200/人，免自驾烦恼）。瑶寨演出（如有）约 ¥30–60/人。",
+    "Day 1 晚上如想泡温泉，可加去银盏温泉（距清新区酒店约 30 分钟车程，门票约 ¥128–158）；但当晚返酒店会多花 30 分钟，且泡泉时间不宜超过 1 小时。",
+    "Day 4 上午如不想去飞来峡/笔架山，可改去牛鱼嘴（原生态山林，距市区约 30 分钟）或下廓街早茶 + 洲心烧肉打包回广州。",
+    "9 月底清远仍属台风活跃期，出发前 3 天查「广东天气」「清远天气」公众号；如挂黄色以上暴雨预警，山区景区可能临时关闭；备好雨天室内备选（商场/温泉/溶洞）。",
+    "清远鸡、洲心烧肉、清远牛杂建议现场寻访老字号（不预订热门餐厅）：洲心烧肉看洲心市场周边；清远鸡看清城区下廓街；连州星子扣肉看星子镇老街。",
+    "山区路段（连州/连南）导航首选高德地图，比百度更准确；广州 ⇄ 清远高速段两地图差距不大。",
+    "若带小孩/老人，Day 2 连州地下河+Day 3 瑶寨强度大，可拆为 2 天各 1 景点，或把瑶寨改为半日游下午直接回清远。"
+  ],
+  "reminders": [
+    { "item": "广州 ↔ 清新区/连州 高铁票（如选铁路出行）", "leadDays": 15 },
+    { "item": "清新区酒店（Day 1，9/25）", "leadDays": 14 },
+    { "item": "连州酒店（Day 2，9/26）", "leadDays": 14 },
+    { "item": "清城区酒店（Day 3，9/27）", "leadDays": 14 },
+    { "item": "古龙峡门票（云天玻霸+漂流/瀑布）", "leadDays": 3 },
+    { "item": "连州地下河门票（5A）", "leadDays": 1 },
+    { "item": "千年瑶寨门票", "leadDays": 1 },
+    { "item": "银盏温泉（如 Day 1 晚上加泡）", "leadDays": 1 },
+    { "item": "出发前 1 天致电古龙峡 / 看官方公众号确认漂流开放", "leadDays": 1 },
+    { "item": "出发前 3 天关注台风/暴雨预警", "leadDays": 3 }
+  ],
+  "days": [
+    {
+      "date": "2026-09-25",
+      "weekday": "周五",
+      "theme": "广州 → 清新区 · 古龙峡玻璃桥+漂流",
+      "tips": [
+        "9 月底仍为清远漂流尾声，水温偏凉（约 18–20°C），漂流后及时擦干换衣防感冒。",
+        "古龙峡周末/中秋票紧张，建议提前 3–7 天网上购票联票；现场票可能售罄。",
+        "玻璃桥+漂流分开排队，联票免二次入园费；建议下午 1 点前入园错开高峰。",
+        "9 月底午后常有雷阵雨，户外活动安排在上午/下午前半段；雷雨时立即终止漂流（景区会通知）。",
+        "Day 1 晚上可加去银盏温泉（距清新区酒店约 30 分钟车程，门票约 ¥128–158），解乏助眠。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "广州市区 → 清远清新区",
+          "time": "08:30–10:00",
+          "lat": 23.1291,
+          "lng": 113.2644,
+          "photo": "",
+          "rating": 0,
+          "review": "广州天河出发，经广清高速/许广高速约 1–1.5 h 抵达清远清新区。建议 8:30 出发，避开早高峰；走 G4W3 广清高速最稳，过路费约 ¥35。抵达后可在太和镇或清新大道附近吃个早午餐再上山。",
+          "openingHours": "全天",
+          "ticketPrice": "油费约 ¥60 / 过路 ¥35",
+          "transport": { "mode": "自驾", "distance": "约 95 km", "highway": "G4W3 广清高速 / 许广高速", "duration": "约 1–1.5 小时", "fare": "— 油费 + 过路" },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": { "lat": 23.1291, "lng": 113.2644 },
+            "fallback": { "icon": "🌤", "conditions": "晴间多云", "high": 35, "low": 26, "precipAdvice": "建议备伞", "updatedAt": "2026-09-09" }
+          }
+        },
+        {
+          "period": "noon",
+          "name": "古龙峡（云天玻霸+瀑布+漂流）",
+          "time": "11:00–17:00",
+          "lat": 23.7758,
+          "lng": 112.9611,
+          "photo": "",
+          "rating": 4.7,
+          "review": "广东顶级玻璃桥+漂流景区。云天玻霸玻璃观景平台悬于峡谷 500 米高空，长 1.3 公里；九霄瀑布落差 110 米；漂流河道 4.8 公里、落差 168 米。9 月底漂流尾声，建议只走玻璃桥+瀑布观景（体力允许再上漂流）。",
+          "openingHours": "09:00–17:30（漂流 11:00 起）",
+          "ticketPrice": "云天玻霸 + 漂流 联票约 ¥180–280（参考）",
+          "transport": { "mode": "自驾", "distance": "约 25 km", "highway": "清远大道 → S253", "duration": "约 40–50 分钟", "fare": "景区停车 ¥20/次" },
+          "needsBooking": true,
+          "leadDays": 3,
+          "seasonal": "9 月底仍为漂流尾声；水温偏凉（约 18–20°C），具体是否开放请致电景区或查官方公众号。",
+          "weather": {
+            "coords": { "lat": 23.7758, "lng": 112.9611 },
+            "fallback": { "icon": "⛅", "conditions": "多云转阵雨", "high": 33, "low": 25, "precipAdvice": "建议备伞", "updatedAt": "2026-09-09" }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "清新区酒店入住 + 当地晚餐",
+          "time": "18:30–21:00",
+          "lat": 23.7547,
+          "lng": 113.0175,
+          "photo": "",
+          "rating": 0,
+          "review": "古龙峡下山后约 30–40 分钟车程回到清新区酒店。建议在清新大道/太和镇一带找当地小馆吃清远鸡或洲心烧肉；如时间充裕可加去银盏温泉（距酒店约 30 分钟）。早休息，为 Day 2 长途自驾（清远 → 连州约 180 km / 2.5 h）养精蓄锐。",
+          "openingHours": "全天",
+          "ticketPrice": "—",
+          "transport": { "mode": "自驾", "distance": "约 25 km", "highway": "S253 → 清远大道", "duration": "约 35 分钟", "fare": "— 短途" },
+          "needsBooking": true,
+          "leadDays": 14,
+          "weather": {
+            "coords": { "lat": 23.7547, "lng": 113.0175 },
+            "fallback": { "icon": "🌤", "conditions": "晴间多云", "high": 32, "low": 25, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09" }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "晚餐",
+          "place": "根记烧猪吊烧鸡（洲心镇洲心市场）",
+          "hours": "08:00–19:00",
+          "dishes": [
+            { "name": "砖窑柴火吊烧鸡", "price": "约 ¥90–128/只" },
+            { "name": "洲心烧肉拼盘", "price": "约 ¥68–98" }
+          ]
+        }
+      ],
+      "backupSpots": [
+        { "name": "银盏温泉", "distance": "距清新区酒店约 20 km / 30 分钟车程", "description": "4A 温泉度假区，64°C 氟化硅温泉，80+ 户外泡池；门票约 ¥128–158。Day 1 晚上可作解乏备选。" },
+        { "name": "笔架山", "distance": "距清新区酒店约 25 km / 40 分钟车程", "description": "4A 山岳景区，主峰千米，竹漂流+瀑布+登山；门票约 ¥30–50。如 Day 1 下午雷雨无法漂流，可改去笔架山登山观瀑。" }
+      ]
+    },
+    {
+      "date": "2026-09-26",
+      "weekday": "周六",
+      "theme": "清新区 → 连州 · 连州地下河 5A",
+      "tips": [
+        "Day 2 上午长途约 180 km / 2.5 h，建议 8:00 前出发，避开清远市区早高峰；中途服务区休息一次。",
+        "连州地下河内恒温 18–22°C，全年开放；游船段约 30 分钟，全程含步道约 1.5–2 小时。",
+        "溶洞内潮湿、地面湿滑，建议穿防滑鞋；带件薄外套防寒。",
+        "Day 2 抵达连州已是下午，先去地下河再回酒店，避免错过地下河末班船（16:30 前入园）。",
+        "连州/连南为粤北小城，9 月底夜间凉爽（约 18–22°C），需备薄外套。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "清新区 → 连州市区",
+          "time": "08:00–10:30",
+          "lat": 23.7547,
+          "lng": 113.0175,
+          "photo": "",
+          "rating": 0,
+          "review": "清新区酒店早餐后出发，经许广高速/汕昆高速 G55 转 G78，约 180 km / 2.5 h。中途可在清远/阳山服务区休息一次；抵达连州后先去酒店寄存行李或直接午餐。",
+          "openingHours": "全天",
+          "ticketPrice": "油费约 ¥100 / 过路 ¥50",
+          "transport": { "mode": "自驾", "distance": "约 180 km", "highway": "许广高速 G55 → 汕昆高速 G78", "duration": "约 2.5 小时", "fare": "过路费约 ¥50" },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": { "lat": 23.7547, "lng": 113.0175 },
+            "fallback": { "icon": "🌤", "conditions": "晴间多云", "high": 33, "low": 25, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09" }
+          }
+        },
+        {
+          "period": "noon",
+          "name": "连州市区午餐（星子扣肉/连州牛杂）",
+          "time": "11:30–13:00",
+          "lat": 24.7803,
+          "lng": 112.3774,
+          "photo": "",
+          "rating": 0,
+          "review": "连州本地午餐推荐：滋味馆（北山路 95 号附近）的星子扣肉、香芋扣肉为当地宴席之王；亦可试连州牛杂、东陂腊味、连州菜心。提前查大众点评就近餐厅。",
+          "openingHours": "约 11:00–14:00，17:30–21:00",
+          "ticketPrice": "人均约 ¥60–100",
+          "transport": { "mode": "自驾", "distance": "— 市区内", "highway": "—", "duration": "—", "fare": "— 短途" },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": { "lat": 24.7803, "lng": 112.3774 },
+            "fallback": { "icon": "⛅", "conditions": "多云", "high": 32, "low": 23, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09" }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "连州地下河（5A 景区）",
+          "time": "14:30–17:30",
+          "lat": 24.6856,
+          "lng": 112.4328,
+          "photo": "",
+          "rating": 4.6,
+          "review": "粤北最大喀斯特溶洞，5A 景区。游船穿行地下银河，全程含步道约 1.5–2 小时。恒温 18–22°C，全年开放。洞内有卖雨衣/储物柜（自费）。建议 14:30 入园，赶在 16:30 前完成主游船段。",
+          "openingHours": "旺季 08:30–17:30（4–10 月）",
+          "ticketPrice": "成人 ¥108–130（提前订 ¥108，现场 ¥120）",
+          "transport": { "mode": "自驾", "distance": "约 30 km", "highway": "G55 二广高速 → 连州东陂镇", "duration": "约 40–50 分钟", "fare": "景区停车 ¥15/次" },
+          "needsBooking": true,
+          "leadDays": 1,
+          "weather": {
+            "coords": { "lat": 24.6856, "lng": 112.4328 },
+            "fallback": { "icon": "⛅", "conditions": "多云", "high": 31, "low": 22, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09" }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "连州市区酒店入住 + 连州晚餐",
+          "time": "18:30–21:00",
+          "lat": 24.7803,
+          "lng": 112.3774,
+          "photo": "",
+          "rating": 0,
+          "review": "地下河返回连州市区约 40 分钟车程。晚餐推荐湟川北路美食一条街，连州菜心、东陂腊味、连州牛杂、星子扣肉；或直接酒店附近吃。粤北 9 月底夜间凉爽（约 18–22°C），需薄外套。",
+          "openingHours": "全天",
+          "ticketPrice": "—",
+          "transport": { "mode": "自驾", "distance": "约 30 km", "highway": "G55 二广高速", "duration": "约 40 分钟", "fare": "— 短途" },
+          "needsBooking": true,
+          "leadDays": 14,
+          "weather": {
+            "coords": { "lat": 24.7803, "lng": 112.3774 },
+            "fallback": { "icon": "🌙", "conditions": "夜间清凉", "high": 30, "low": 20, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09" }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "滋味馆（北山路 95 号附近）",
+          "hours": "11:00–14:00，17:30–21:00",
+          "dishes": [
+            { "name": "星子扣肉（香芋扣肉）", "price": "约 ¥48–78/份" },
+            { "name": "星子河鱼仔", "price": "约 ¥35–55" },
+            { "name": "星子米粉", "price": "约 ¥15–25" }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "湟川北路美食一条街（连州本地餐厅）",
+          "hours": "约 17:00–22:00",
+          "dishes": [
+            { "name": "连州牛杂煲", "price": "约 ¥40–70" },
+            { "name": "连州菜心", "price": "约 ¥25–35" },
+            { "name": "东陂腊味煲仔饭", "price": "约 ¥35–55" }
+          ]
+        }
+      ],
+      "backupSpots": [
+        { "name": "连州刘禹锡纪念馆", "distance": "连州市区中心，免费开放", "description": "纪念唐代诗人刘禹锡（连州第一任刺史），馆藏文物 + 古园林，免费，适合雨天下午备选。" },
+        { "name": "连州燕喜塔", "distance": "连州市区连州中学内，免费", "description": "宋代古塔（始建于 1133 年），为连州现存最古老的砖塔；雨天可登塔避雨观连州古城。" }
+      ]
+    },
+    {
+      "date": "2026-09-27",
+      "weekday": "周日",
+      "theme": "千年瑶寨 → 清远清城区 · 瑶族风情+返程",
+      "tips": [
+        "千年瑶寨海拔约 800 米，盘山路弯多坡陡；如自驾需熟练山路驾驶，建议慢行+会车避让。",
+        "瑶寨演出（如有）约 ¥30–60/人，可向寨门口工作人员确认场次。",
+        "Day 3 午餐可在瑶寨景区内吃（擂茶套餐）或回连州市区吃；建议先在寨内吃，节省时间。",
+        "下午返程约 180 km / 2.5 h，建议 14:00 前从瑶寨出发，避免夜路山区。",
+        "抵达清城区后晚餐推荐下廓街（洲心烧肉/清远鸡）或北江路河鲜。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "南岗千年瑶寨",
+          "time": "09:00–13:00",
+          "lat": 24.5817,
+          "lng": 112.3004,
+          "photo": "",
+          "rating": 4.5,
+          "review": "中国最大瑶寨，海拔 800 米，398 座明清古建筑，被誉为'世界瑶寨第一村'。石板路层层叠叠，可看瑶族长鼓舞、瑶族银饰、瑶族织锦；寨内有瑶胞讲解服务。建议 9:00 入寨，先看寨门歌舞（上午常有迎客仪式），沿石板路上山到观景台俯瞰整个瑶寨。",
+          "openingHours": "08:30–17:30",
+          "ticketPrice": "成人 ¥80–120",
+          "transport": { "mode": "自驾", "distance": "约 50 km", "highway": "S261 省道 → 县道 X397", "duration": "约 1 小时", "fare": "景区停车 ¥10/次" },
+          "needsBooking": true,
+          "leadDays": 1,
+          "weather": {
+            "coords": { "lat": 24.5817, "lng": 112.3004 },
+            "fallback": { "icon": "⛅", "conditions": "多云", "high": 28, "low": 19, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09" }
+          }
+        },
+        {
+          "period": "noon",
+          "name": "瑶寨午餐 · 擂茶+瑶族风味",
+          "time": "13:00–14:00",
+          "lat": 24.5817,
+          "lng": 112.3004,
+          "photo": "",
+          "rating": 0,
+          "review": "瑶寨景区内的公社饭堂或瑶家豆腐坊可体验正宗的瑶族擂茶（茶叶+炒米+花生+芝麻擂碎冲泡）。擂茶套餐约 ¥35–55/人，含擂茶+瑶家小吃；可加香煎山水豆腐、瑶家特色猪手、五花肉炒鲜笋。",
+          "openingHours": "约 09:00–20:00",
+          "ticketPrice": "人均约 ¥50–80",
+          "transport": { "mode": "步行", "distance": "寨内", "highway": "—", "duration": "—", "fare": "— 寨内" },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": { "lat": 24.5817, "lng": 112.3004 },
+            "fallback": { "icon": "⛅", "conditions": "多云", "high": 28, "low": 19, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09" }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "连南 → 清远清城区（返程）",
+          "time": "14:00–16:30",
+          "lat": 23.6817,
+          "lng": 113.0564,
+          "photo": "",
+          "rating": 0,
+          "review": "从瑶寨返清城区约 180 km / 2.5 h，走 G55 二广高速转 G0421 广清高速。建议 14:00 前出发，避免夜路山区；中途可在清新服务区休息一次。抵达清城区后晚餐推荐下廓街/北江路美食圈。",
+          "openingHours": "全天",
+          "ticketPrice": "油费约 ¥100 / 过路 ¥50",
+          "transport": { "mode": "自驾", "distance": "约 180 km", "highway": "G55 → G0421 广清高速", "duration": "约 2.5 小时", "fare": "过路费约 ¥50" },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": { "lat": 23.6817, "lng": 113.0564 },
+            "fallback": { "icon": "🌤", "conditions": "晴间多云", "high": 34, "low": 26, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09" }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "清城区晚餐（下廓街/洲心烧肉）",
+          "time": "18:30–21:00",
+          "lat": 23.6817,
+          "lng": 113.0564,
+          "photo": "",
+          "rating": 0,
+          "review": "清城区核心美食圈——下廓街：老字号清远鸡、竹筒饭、猪肚鸡；洲心市场周边：洲心烧肉（1983 年开业，非遗，CCTV 报道）；北江路：北江河虾、黄骨鱼豆腐汤。任选其一即可感受清远地道风味。",
+          "openingHours": "约 11:00–22:00（洲心烧肉 05:30–20:00）",
+          "ticketPrice": "人均约 ¥60–120",
+          "transport": { "mode": "自驾", "distance": "— 市区内", "highway": "—", "duration": "—", "fare": "— 短途" },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": { "lat": 23.6817, "lng": 113.0564 },
+            "fallback": { "icon": "🌙", "conditions": "夜间舒适", "high": 32, "low": 25, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09" }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "清城区酒店入住",
+          "time": "21:00 后",
+          "lat": 23.6817,
+          "lng": 113.0564,
+          "photo": "",
+          "rating": 0,
+          "review": "清城区住宿推荐希尔顿欢朋（凤城店）或雅阁酒店（太和路）；如想江景可住清远国际酒店（沿江路 1 号）。",
+          "openingHours": "全天",
+          "ticketPrice": "—",
+          "transport": { "mode": "—", "distance": "—", "highway": "—", "duration": "—", "fare": "— 短途" },
+          "needsBooking": true,
+          "leadDays": 14,
+          "weather": {
+            "coords": { "lat": 23.6817, "lng": 113.0564 },
+            "fallback": { "icon": "🌙", "conditions": "夜间舒适", "high": 31, "low": 25, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09" }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "公社饭堂（千年瑶寨景区内）",
+          "hours": "约 09:00–20:00",
+          "dishes": [
+            { "name": "擂茶套餐（含擂茶+瑶家小吃）", "price": "约 ¥35–55/人" },
+            { "name": "瑶家特色猪手", "price": "约 ¥48–68" },
+            { "name": "五花肉炒鲜笋", "price": "约 ¥38–58" }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "下廓街老字号 / 洲心明记烧肉大粥",
+          "hours": "约 17:00–22:00",
+          "dishes": [
+            { "name": "白切清远鸡", "price": "约 ¥80–120/只" },
+            { "name": "洲心烧肉（例牌）", "price": "约 ¥50–100/例牌" },
+            { "name": "清远牛杂煲", "price": "约 ¥40–70" }
+          ]
+        }
+      ],
+      "backupSpots": [
+        { "name": "连南金瑶峰度假村", "distance": "距瑶寨约 5 km", "description": "瑶族文化主题度假村，含瑶药浴/瑶族歌舞表演；如时间充裕可改 Day 3 住这里深度体验。" },
+        { "name": "油岭民俗瑶寨", "distance": "距连州市区约 25 km", "description": "未完全商业化的瑶寨原生态村落；游客少、保留瑶族原貌。如对'千年瑶寨'商业化不满意，可改去这里。" }
+      ]
+    },
+    {
+      "date": "2026-09-28",
+      "weekday": "周一",
+      "theme": "飞来峡/笔架山二选一 → 广州 · 轻松收尾",
+      "tips": [
+        "Day 4 上午是行程收尾，根据天气和体力选飞霞或笔架山。",
+        "如天气晴朗无雷阵雨 → 选飞来峡游船看北江三峡；如想登高看市区 → 选笔架山。",
+        "9 月底为周一（非节假日），景点人少；返程建议 13:00 前从清城区出发，避开广州晚高峰。",
+        "清远早茶推荐下廓街 / 江滨公园附近茶楼，刀切糍/凤城粉为本地早餐特色。",
+        "返程可绕道太和镇打包洲心烧肉/清远鸡回广州（真空包装可保存 1–2 天）。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "飞来峡（北江三峡·游船）",
+          "time": "08:30–10:30",
+          "lat": 23.8069,
+          "lng": 113.2579,
+          "photo": "",
+          "rating": 4.4,
+          "review": "北江三峡之最，9 公里峡谷，唐诗意境；江滨免费、游船约 ¥100–150。建议早上 8:30 抵达码头，赶在 9:00 头班船；游船看两岸悬崖峭壁+古寺，约 1 小时；回程顺路可在江滨公园散步。",
+          "openingHours": "全天（游船需预约）",
+          "ticketPrice": "江滨免费 / 游船约 ¥100–150",
+          "transport": { "mode": "自驾", "distance": "约 25 km", "highway": "G0421 广清高速 → 清远东出口", "duration": "约 35–45 分钟", "fare": "— 油费" },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": { "lat": 23.8069, "lng": 113.2579 },
+            "fallback": { "icon": "🌤", "conditions": "晴间多云", "high": 33, "low": 25, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09" }
+          }
+        },
+        {
+          "period": "noon",
+          "name": "清城区早茶 / 刀切糍",
+          "time": "10:30–12:00",
+          "lat": 23.6817,
+          "lng": 113.0564,
+          "photo": "",
+          "rating": 0,
+          "review": "清城区老字号何姨窝仔粉（环城二路老店，1978 年开业，四代传承）或龙姨粉角铺（下廓一街店）。刀切糍（汤/捞）¥12–20；粉角（芋头+猪肉+蘑菇）¥12–18；鹅杂粉 ¥15–22。",
+          "openingHours": "约 06:00–14:00（早餐店，下午售完即止）",
+          "ticketPrice": "人均约 ¥20–40",
+          "transport": { "mode": "自驾", "distance": "— 市区内", "highway": "—", "duration": "—", "fare": "— 短途" },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": { "lat": 23.6817, "lng": 113.0564 },
+            "fallback": { "icon": "🌤", "conditions": "晴间多云", "high": 34, "low": 26, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09" }
+          }
+        },
+        {
+          "period": "noon",
+          "name": "清城区 → 广州（返程）",
+          "time": "12:30–14:30",
+          "lat": 23.1291,
+          "lng": 113.2644,
+          "photo": "",
+          "rating": 0,
+          "review": "清城区 → 广州约 80 km / 1.5 h，走 G0421 广清高速，过路费约 ¥25。建议 12:30 前出发，避开广州晚高峰；可绕道太和镇打包洲心烧肉/清远鸡回广州。抵达广州后行程结束。",
+          "openingHours": "全天",
+          "ticketPrice": "油费约 ¥50 / 过路 ¥25",
+          "transport": { "mode": "自驾", "distance": "约 80 km", "highway": "G0421 广清高速 → 广州市区", "duration": "约 1.5 小时", "fare": "过路费约 ¥25" },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": { "lat": 23.1291, "lng": 113.2644 },
+            "fallback": { "icon": "⛅", "conditions": "多云", "high": 35, "low": 27, "precipAdvice": "无需备伞", "updatedAt": "2026-09-09" }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "早茶",
+          "place": "何姨窝仔粉（环城二路老店） / 龙姨粉角铺",
+          "hours": "约 06:00–14:00",
+          "dishes": [
+            { "name": "刀切糍（汤/捞）", "price": "约 ¥12–20" },
+            { "name": "传统竹笼蒸米浆粉", "price": "约 ¥10–18" },
+            { "name": "鹅杂粉", "price": "约 ¥15–22" }
+          ]
+        }
+      ],
+      "backupSpots": [
+        { "name": "笔架山（清远市区）", "distance": "距清城区酒店约 8 km / 20 分钟车程", "description": "4A 山岳景区，距市中心 5 km，主峰千米，竹漂流+瀑布+登山；门票约 ¥30–50。如 Day 4 不想去飞来峡，可改去笔架山登山观瀑作收尾。" },
+        { "name": "牛鱼嘴（原生态山林）", "distance": "距清城区酒店约 15 km / 30 分钟车程", "description": "千年古榕群+溯溪+野果采摘，门票约 ¥60–80。如对飞来峡游船兴趣不大，可改去牛鱼嘴走原生态山道。" }
+      ]
+    }
+  ]
+}
+</script>
+
+<!-- ═══════════════ RENDER ═══════════════ -->
+<script>
+var trip = JSON.parse(document.getElementById('trip-data').textContent);
+
+// 合并所有 slot 顺序点为地图 markers
+var mapPoints = [];
+trip.days.forEach(function (day, di) {
+  (day.slots || []).forEach(function (slot) {
+    mapPoints.push({
+      lat: slot.lat,
+      lng: slot.lng,
+      name: slot.name,
+      time: day.date + ' ' + slot.time
+    });
+  });
+});
+
+var periodLabel = { morning: '上午', noon: '下午', evening: '晚间' };
+var periodEmoji = { morning: '🌅', noon: '☀️', evening: '🌙' };
+
+function slotFallbackEmoji(name) {
+  if (!name) return '📍';
+  if (name.includes('广州')) return '✈️';
+  if (name.includes('清远') || name.includes('清新')) return '🏙';
+  if (name.includes('连州')) return '🏯';
+  if (name.includes('瑶寨')) return '🏘️';
+  if (name.includes('古龙峡')) return '🏞';
+  if (name.includes('地下河')) return '🕳';
+  if (name.includes('飞来峡')) return '⛰';
+  if (name.includes('笔架山')) return '🗻';
+  if (name.includes('牛鱼嘴')) return '🌿';
+  if (name.includes('银盏')) return '♨';
+  if (name.includes('酒店') || name.includes('入住')) return '🏨';
+  if (name.includes('午餐') || name.includes('晚餐') || name.includes('早茶')) return '🍜';
+  return '📍';
+}
+
+function renderChecklist() {
+  var reminders = computeReminders(trip.startDate, trip.reminders);
+  document.getElementById('checklist-container').innerHTML = renderChecklistHTML(reminders);
+}
+
+function renderPretrip() {
+  var p = trip.preTrip;
+  var html = '<div class="pretrip-grid">';
+  html += '<div class="pretrip-item"><div class="pretrip-label">气候</div><div class="pretrip-text">' + escapeHTML(p.weather.summary) + '</div></div>';
+  html += '<div class="pretrip-item"><div class="pretrip-label">穿搭</div><div class="pretrip-text">' + escapeHTML(p.packing) + '</div></div>';
+  html += '<div class="pretrip-item"><div class="pretrip-label">支付</div><div class="pretrip-text">' + escapeHTML(p.payment) + '</div></div>';
+  html += '<div class="pretrip-item"><div class="pretrip-label">必备 App</div><div class="pretrip-text"><div class="apps-list">';
+  p.apps.forEach(function (a) { html += '<span class="app-pill">' + escapeHTML(a) + '</span>'; });
+  html += '</div></div></div>';
+  html += '<div class="pretrip-item" style="grid-column:1/-1;"><div class="pretrip-label">购票时机</div><div class="pretrip-text">' + escapeHTML(p.ticketTip) + '</div></div>';
+  html += '</div>';
+  var ty = p.weather.typhoon.split('；');
+  html += '<div class="pretrip-typhoon"><strong>⚠ ' + escapeHTML(ty[0]) + '：</strong>' + escapeHTML(ty.slice(1).join('；') || p.weather.typhoon) + '</div>';
+  document.getElementById('pretrip-info').innerHTML = html;
+}
+
+function renderDisclaimer() {
+  document.getElementById('disclaimer-text').textContent = trip.disclaimer;
+}
+
+function renderTransport() {
+  function renderList(arr, isBookedSection) {
+    var html = '';
+    arr.forEach(function (f) {
+      var cardClass = isBookedSection ? 'transport-candidate booked' : 'transport-candidate';
+      var tagText = isBookedSection ? '已确定' : '待选 · 自行核实';
+      html += '<div class="' + cardClass + '">'
+        + '<div class="transport-top">'
+        +   '<span class="transport-label">' + escapeHTML(f.label) + '</span>'
+        +   '<span class="transport-tag">' + tagText + '</span>'
+        + '</div>'
+        + '<div class="transport-time">' + escapeHTML(f.code) + ' · ' + escapeHTML(f.time) + '</div>'
+        + '<div class="transport-note">' + escapeHTML(f.note) + '</div>'
+        + '</div>';
+    });
+    return html;
+  }
+  document.getElementById('outbound-flights').innerHTML = renderList(trip.flights.candidates.outbound, false);
+  document.getElementById('return-flights').innerHTML = renderList(trip.flights.candidates.return, false);
+}
+
+function renderHotels() {
+  var tierMap = { '经济': 'tier-economy', '中档': 'tier-mid', '高端': 'tier-luxury' };
+  var html = '';
+  trip.hotelAreas.forEach(function (area, ai) {
+    if (ai > 0) html += '<div style="height:1px;background:var(--border);margin:0;"></div>';
+    html += '<div class="hotel-area">'
+      + '<div class="hotel-area-name">📍 ' + escapeHTML(area.area) + '</div>'
+      + '<div class="hotel-area-reason">' + escapeHTML(area.reason) + '</div>'
+      + '<div class="hotel-options">';
+    area.options.forEach(function (opt) {
+      var cls = tierMap[opt.tier] || 'tier-economy';
+      html += '<div class="hotel-option">'
+        + '<span class="hotel-tier ' + cls + '">' + escapeHTML(opt.tier) + '</span>'
+        + '<div class="hotel-name">' + escapeHTML(opt.name) + '</div>'
+        + '<div class="hotel-price">' + escapeHTML(opt.priceRange) + '</div>'
+        + '<div class="hotel-note">' + escapeHTML(opt.note) + '</div>'
+        + '</div>';
+    });
+    html += '</div></div>';
+  });
+  document.getElementById('hotels-container').innerHTML = html;
+}
+
+function renderSlotCard(slot) {
+  var periodClass = 'period-' + slot.period;
+  var label = periodLabel[slot.period] || slot.period;
+  var emoji = periodEmoji[slot.period] || '⏰';
+  var fallback = slotFallbackEmoji(slot.name);
+
+  var html = '<div class="slot-card">';
+
+  html += '<div class="slot-img-wrap">';
+  if (slot.photo) {
+    html += '<img class="slot-img" src="' + escapeHTML(slot.photo) + '" alt="' + escapeHTML(slot.name) + '" '
+      + 'onerror="this.style.display=\'none\';var fb=this.parentElement.querySelector(\'.slot-img-fallback\');if(fb)fb.style.display=\'flex\';">'
+      + '<div class="slot-img-fallback" style="display:none;"><span>' + fallback + '</span><span class="slot-img-fallback-text">' + escapeHTML(slot.name) + '</span></div>';
+  } else {
+    html += '<div class="slot-img-fallback"><span>' + fallback + '</span><span class="slot-img-fallback-text">' + escapeHTML(slot.name) + '</span></div>';
+  }
+  html += '<span class="slot-period-label ' + periodClass + '">' + emoji + ' ' + label + '</span>';
+  html += '</div>';
+
+  html += '<div class="slot-body">';
+  html += '<div class="slot-name-row">'
+    + '<div class="slot-name">' + escapeHTML(slot.name) + '</div>';
+  if (typeof slot.rating === 'number' && isFinite(slot.rating) && slot.rating > 0 && slot.rating <= 5) {
+    html += '<div class="slot-rating"><span class="slot-rating-star">★</span><span>' + slot.rating.toFixed(1) + '</span></div>';
+  }
+  html += '</div>';
+  html += '<div class="slot-time">🕐 ' + escapeHTML(slot.time) + '</div>';
+
+  if (slot.needsBooking) {
+    html += reminderBadgeHTML(slot.leadDays);
+  }
+
+  if (slot.review) {
+    html += '<div class="slot-review">' + escapeHTML(slot.review) + '</div>';
+  }
+
+  html += '<div class="slot-meta">';
+  if (slot.openingHours) {
+    html += '<div class="meta-row"><span class="meta-icon">🕐</span><span><span class="meta-label">营业</span>' + escapeHTML(slot.openingHours) + '</span></div>';
+  }
+  if (slot.ticketPrice) {
+    html += '<div class="meta-row"><span class="meta-icon">🎟️</span><span><span class="meta-label">门票</span>' + escapeHTML(slot.ticketPrice) + '</span></div>';
+  }
+  if (slot.transport) {
+    var tParts = [slot.transport.mode];
+    if (slot.transport.distance) tParts.push(slot.transport.distance);
+    if (slot.transport.highway) tParts.push(slot.transport.highway);
+    if (slot.transport.duration) tParts.push(slot.transport.duration);
+    if (slot.transport.fare) tParts.push(slot.transport.fare);
+    html += '<div class="meta-row"><span class="meta-icon">🚗</span><span><span class="meta-label">自驾</span>'
+      + escapeHTML(tParts.join(' · '))
+      + '</span></div>';
+  }
+  if (slot.seasonal) {
+    html += '<div class="seasonal-tag">🌸 ' + escapeHTML(slot.seasonal) + '</div>';
+  }
+  html += '</div>';   // 关闭 slot-meta
+
+  // 天气行
+  var dayDate = (slot._dayDate) || '';
+  var w = dayDate ? getWeatherForRender(slot, dayDate) : null;
+  if (w) {
+    html += '<div class="slot-weather">';
+    html += '<span class="slot-weather-icon">' + escapeHTML(w.icon) + '</span>';
+    html += '<span class="slot-weather-text">天气  ' + escapeHTML(w.conditions) + ' · '
+          + w.high + '°/' + w.low + '° · 💧' + escapeHTML(w.precipAdvice) + '</span>';
+    if (w.source === 'live') {
+      html += '<span class="slot-weather-live-dot" title="实时数据"></span>';
+    }
+    html += '</div>';
+    html += '<div class="slot-weather-note">📡 Open-Meteo · 11km 网格 · 参考'
+          + (w.unavailable === true ? ' · <span class="slot-weather-error">⚠ 实时不可用</span>' : '')
+          + '</div>';
+  }
+
+  html += '</div>';   // 关闭 slot-body
+  html += '</div>';
+  return html;
+}
+
+function renderDining(diningArr) {
+  if (!diningArr || diningArr.length === 0) return '';
+  var html = '<div class="dining-section">'
+    + '<div class="dining-header">🍽 当日餐饮推荐</div>';
+  diningArr.forEach(function (d) {
+    html += '<div class="dining-item">'
+      + '<div class="dining-meal-row">'
+      +   '<span class="dining-meal-badge">' + escapeHTML(d.meal) + '</span>'
+      +   '<span class="dining-place">' + escapeHTML(d.place) + '</span>'
+      + '</div>'
+      + '<div class="dining-hours">⏰ ' + escapeHTML(d.hours) + '</div>'
+      + '<div class="dish-list">';
+    d.dishes.forEach(function (dish) {
+      html += '<div class="dish-row">'
+        + '<span class="dish-name">• ' + escapeHTML(dish.name) + '</span>'
+        + '<span class="dish-price">' + escapeHTML(dish.price) + '</span>'
+        + '</div>';
+    });
+    html += '</div></div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function renderBackupSpots(spots) {
+  if (!spots || spots.length === 0) return '';
+  var html = '<div class="dining-section" style="margin-top:14px;">'
+    + '<div class="dining-header" style="color:var(--jade);">🧭 附近备选（车程 ≤ 1h，按价值排序）</div>';
+  spots.forEach(function (s) {
+    html += '<div class="meta-row" style="background:var(--bg);padding:10px 12px;border-radius:8px;margin-bottom:6px;">'
+      + '<div style="width:100%;">'
+      +   '<div style="font-family:\'Noto Serif SC\',serif;font-weight:700;font-size:13px;color:var(--ink);margin-bottom:3px;">' + escapeHTML(s.name) + '</div>'
+      +   '<div style="font-family:DM Mono,monospace;font-size:10px;color:var(--ink-soft);margin-bottom:4px;">📍 ' + escapeHTML(s.distance) + '</div>'
+      +   '<div style="font-size:12px;color:var(--ink-mid);line-height:1.55;">' + escapeHTML(s.description) + '</div>'
+      + '</div>'
+      + '</div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function renderTimeline() {
+  var container = document.getElementById('timeline-container');
+  var html = '';
+  trip.days.forEach(function (day, di) {
+    var dateLabel = 'Day ' + (di + 1);
+    html += '<div class="day-block day-' + (di + 1) + '" id="day-block-' + di + '">';
+    html += '<div class="day-header">'
+      + '<div class="day-num">' + dateLabel + '</div>'
+      + '<div class="day-title-row">'
+      +   '<div class="day-weekday">' + escapeHTML(day.date) + ' · ' + escapeHTML(day.weekday) + '</div>'
+      +   '<div class="day-theme">' + escapeHTML(day.theme) + '</div>'
+      + '</div>'
+      + '</div>';
+
+    if (day.tips && day.tips.length) {
+      day.tips.forEach(function (tip) {
+        html += '<div class="day-tips-banner">' + escapeHTML(tip) + '</div>';
+      });
+    }
+
+    if (day.slots && day.slots.length) {
+      html += '<div class="slots-grid">';
+      day.slots.forEach(function (slot) {
+        slot._dayDate = day.date;
+        html += renderSlotCard(slot);
+      });
+      html += '</div>';
+      html += renderDining(day.dining);
+      html += renderBackupSpots(day.backupSpots);
+    }
+
+    html += '</div>';
+  });
+  container.innerHTML = html;
+}
+
+function renderTips() {
+  var html = '';
+  trip.tips.forEach(function (tip, i) {
+    html += '<div class="tip-item">'
+      + '<div class="tip-num">' + (i + 1) + '</div>'
+      + '<div class="tip-text">' + escapeHTML(tip) + '</div>'
+      + '</div>';
+  });
+  document.getElementById('tips-container').innerHTML = html;
+}
+
+function renderSummary() {
+  var dayKm = ['约 95 km', '约 180 km', '约 180 km', '约 80 km'];
+  var dayStay = ['清新区', '连州市', '清城区', '— 返广州'];
+  var skipWords = ['酒店', '入住', '午餐', '晚餐', '早茶', '返程', '→', '区 → ', '瑶寨午餐'];
+  function isStop(name) {
+    if (!name) return false;
+    for (var i = 0; i < skipWords.length; i++) {
+      if (name.indexOf(skipWords[i]) >= 0) return false;
+    }
+    return true;
+  }
+  var html = '<div style="overflow-x:auto;">'
+    + '<table class="summary-table"><thead><tr>'
+    + '<th>Day</th><th>日期</th><th>主题</th><th>主要行程</th><th>里程</th><th>夜宿</th>'
+    + '</tr></thead><tbody>';
+  trip.days.forEach(function (day, di) {
+    var highlight = '';
+    (day.slots || []).forEach(function (s) {
+      if (highlight) return;
+      if (isStop(s.name)) highlight = s.name;
+    });
+    if (!highlight && day.slots && day.slots.length) {
+      highlight = (day.slots[1] || day.slots[0]).name || '—';
+    }
+    var dateLabel = day.date.slice(5).replace('-', '/');
+    html += '<tr class="day-' + (di + 1) + '">'
+      + '<td class="day-cell">Day ' + (di + 1) + '</td>'
+      + '<td class="date-cell">' + escapeHTML(dateLabel) + '<br><small>' + escapeHTML(day.weekday) + '</small></td>'
+      + '<td class="theme-cell">' + escapeHTML(day.theme) + '</td>'
+      + '<td>' + escapeHTML(highlight || '—') + '</td>'
+      + '<td class="km-cell">' + escapeHTML(dayKm[di]) + '</td>'
+      + '<td class="stay-cell">' + escapeHTML(dayStay[di]) + '</td>'
+      + '</tr>';
+  });
+  html += '</tbody></table></div>';
+  document.getElementById('summary-container').innerHTML = html;
+}
+
+// ═══════════════ INIT ═══════════════
+function init() {
+  renderChecklist();
+  renderPretrip();
+  renderDisclaimer();
+  renderTransport();
+  renderHotels();
+  renderSummary();
+  renderTimeline();
+  renderTips();
+  // 地图渲染 · 用 CartoDB Voyager 替代默认 OSM 瓦片（OSM 公共瓦片对未标识客户端会封禁）
+  if (typeof L !== 'undefined' && document.getElementById('map')) {
+    initTravelMap('map', mapPoints, {
+      tileUrl: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
+      attribution: '© OpenStreetMap contributors · © CARTO'
+    });
+  }
+  // 天气异步刷新
+  fetchAllWeather().then(updateWeatherRows);
+}
+
+function updateWeatherRows() {
+  trip.days.forEach(function (day) {
+    day.slots.forEach(function (slot) {
+      var cards = document.querySelectorAll('.slot-card');
+      cards.forEach(function (card) {
+        var nameEl = card.querySelector('.slot-name');
+        if (!nameEl || nameEl.textContent !== slot.name) return;
+        var w = getWeatherForRender(slot, day.date);
+        if (!w) return;
+        var weatherRow = card.querySelector('.slot-weather');
+        var noteRow = card.querySelector('.slot-weather-note');
+        if (!weatherRow) return;
+        weatherRow.innerHTML =
+          '<span class="slot-weather-icon">' + escapeHTML(w.icon) + '</span>' +
+          '<span class="slot-weather-text">天气  ' + escapeHTML(w.conditions) + ' · '
+            + w.high + '°/' + w.low + '° · 💧' + escapeHTML(w.precipAdvice) + '</span>' +
+          (w.source === 'live' ? '<span class="slot-weather-live-dot" title="实时数据"></span>' : '');
+        if (noteRow) {
+          noteRow.innerHTML = '📡 Open-Meteo · 11km 网格 · 参考'
+            + (w.unavailable === true ? ' · <span class="slot-weather-error">⚠ 实时不可用</span>' : '');
+        }
+      });
+    });
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+</script>
+
+</body>
+</html>
