@@ -1,0 +1,2028 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>广州-无锡-苏州 5 天 · 江南水墨行</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=ZCOOL+XiaoWei&family=DM+Mono:wght@300;400;500&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+
+<style>
+/* ─── Design Tokens · 江南水墨调 ─────────────── */
+:root {
+  --bg:         #f5f0e6;   /* 米白 */
+  --bg-card:    #ffffff;
+  --bg-section: #ebe5d8;
+  --ink:        #2a2520;   /* 墨黑 */
+  --ink-mid:    #4a3f33;
+  --ink-soft:   #7a6b5a;
+  --parchment:  #f7f2e8;
+  --da-blue:    #2c4a6e;   /* 黛蓝 */
+  --da-blue-lt: #4a6b8e;
+  --qing-green: #4a8a8a;   /* 青绿 */
+  --qing-green-lt: #6faca8;
+  --cinnabar:   #b8392e;   /* 朱砂 */
+  --cinnabar-lt:#d65a48;
+  --gold:       #a08040;
+  --gold-lt:    #c4a055;
+  --bronze:     #6b4a2b;
+
+  --day1: #b8392e; /* Oct 1 Thu 朱砂 抵锡 */
+  --day2: #4a8a8a; /* Oct 2 Fri 青绿 灵山太湖 */
+  --day3: #2c4a6e; /* Oct 3 Sat 黛蓝 移苏 */
+  --day4: #a08040; /* Oct 4 Sun 金棕 姑苏+演唱会 */
+  --day5: #7a5a4a; /* Oct 5 Mon 赭石 返程 */
+
+  --border:     rgba(74,138,138,0.20);
+  --border-soft:rgba(74,138,138,0.10);
+  --shadow:     0 2px 16px rgba(42,37,32,0.08);
+  --shadow-hover: 0 8px 32px rgba(42,37,32,0.16);
+  --radius:     14px;
+  --radius-sm:  8px;
+  --radius-lg:  22px;
+
+  --morning:    #e3f2fd;
+  --noon:       #fce4ec;
+  --evening:    #ede7f6;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Serif SC', serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.7;
+  background-image:
+    linear-gradient(rgba(74,138,138,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,138,138,0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+img { display: block; max-width: 100%; }
+
+/* ─── Layout ──────────────────────────────────── */
+.page-wrap {
+  max-width: 460px;
+  margin: 0 auto;
+  padding: 0 0 60px;
+}
+
+@media (min-width: 768px) {
+  .page-wrap {
+    max-width: 920px;
+    padding: 0 24px 80px;
+  }
+}
+@media (min-width: 1024px) {
+  .page-wrap {
+    max-width: 960px;
+  }
+}
+
+/* ─── Section ──────────────────────────────────────── */
+.section {
+  margin: 16px 12px;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+@media (min-width: 768px) {
+  .section { margin: 0 0 24px; }
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.section-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.section-icon.da-blue  { background: rgba(44,74,110,0.12);   color: var(--da-blue); }
+.section-icon.qing     { background: rgba(74,138,138,0.14);  color: var(--qing-green); }
+.section-icon.cinnabar { background: rgba(184,57,46,0.12);   color: var(--cinnabar); }
+.section-icon.gold     { background: rgba(160,128,64,0.14);  color: var(--gold); }
+.section-icon.bronze   { background: rgba(160,118,68,0.14);  color: var(--bronze); }
+.section-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+}
+.section-subtitle {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.section-body { padding: 16px 22px 20px; }
+
+/* ─── ① Hero 倒计时卡片 ────────────────────── */
+.countdown-card {
+  background: linear-gradient(160deg, #1a1410 0%, #2a1f15 60%, #3a2e22 100%);
+  color: var(--parchment);
+  padding: 36px 24px 32px;
+  margin: 0 12px 16px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 24px rgba(26,20,16,0.18);
+  position: relative;
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  .countdown-card { margin: 0 0 24px; padding: 56px 32px 48px; }
+}
+.countdown-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(74,138,138,0.18) 0%, transparent 50%),
+    radial-gradient(circle at 10% 90%, rgba(184,57,46,0.10) 0%, transparent 45%);
+  pointer-events: none;
+}
+.countdown-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(74,138,138,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,138,138,0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+.countdown-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--qing-green-lt);
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.countdown-event {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+  position: relative; z-index: 1;
+}
+.countdown-event-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+.countdown-event-text {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--parchment);
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+}
+.countdown-event-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(247,242,232,0.55);
+  letter-spacing: 0.12em;
+  margin-top: 4px;
+}
+.countdown-timer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  position: relative; z-index: 1;
+}
+@media (min-width: 768px) {
+  .countdown-timer { gap: 16px; max-width: 600px; }
+}
+.countdown-cell {
+  background: rgba(247,242,232,0.05);
+  border: 1px solid rgba(74,138,138,0.25);
+  border-radius: var(--radius);
+  padding: 14px 6px;
+  text-align: center;
+  backdrop-filter: blur(4px);
+}
+.countdown-num {
+  font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+  font-size: 36px;
+  line-height: 1;
+  color: var(--qing-green-lt);
+  font-weight: 400;
+  display: block;
+  font-variant-numeric: tabular-nums;
+}
+@media (min-width: 768px) {
+  .countdown-num { font-size: 56px; }
+}
+.countdown-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: rgba(247,242,232,0.55);
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+/* ─── ② 总览 SVG 地图 ────────────────────────── */
+.overview-card { padding: 16px 22px 20px; }
+.overview-svg-wrap {
+  background: var(--parchment);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+  min-height: 320px;
+}
+@media (min-width: 768px) {
+  .overview-svg-wrap { min-height: 420px; }
+}
+.overview-svg-wrap svg { width: 100%; height: auto; display: block; }
+.overview-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: var(--bg-section);
+  border-radius: 100px;
+}
+.legend-swatch {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+.legend-hotel {
+  width: 14px; height: 14px;
+  background: var(--gold);
+  border: 2px solid var(--bg);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* ─── ③ 已确认预订 ──────────────────────────── */
+.confirmed-block {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+.confirmed-sub {
+  background: var(--bg-section);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  border: 1px solid var(--border-soft);
+}
+.confirmed-sub-head {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--da-blue);
+}
+.confirmed-sub-head.alert {
+  color: var(--cinnabar);
+}
+.confirmed-item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border);
+}
+.confirmed-item:last-child { border-bottom: none; }
+.confirmed-item-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 13px;
+}
+.confirmed-item-row > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.confirmed-item-row .icon { opacity: 0.6; }
+.confirmed-time { color: var(--ink); font-weight: 600; }
+.confirmed-name { color: var(--ink); font-weight: 600; font-size: 14px; }
+.confirmed-note { color: var(--ink-soft); font-size: 12px; }
+.confirmed-tier {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--ink-mid);
+}
+.confirmed-tier.econ { color: var(--qing-green); }
+.confirmed-tier.mid  { color: var(--da-blue); }
+.confirmed-tier.lux  { color: var(--cinnabar); }
+.confirmed-address { color: var(--ink-soft); font-size: 12px; font-family: 'DM Mono', monospace; letter-spacing: 0.04em; }
+
+/* ─── ④ 逐日行程 ────────────────────────────── */
+.day-block {
+  border-bottom: 1px solid var(--border-soft);
+  padding: 0;
+}
+.day-block:last-child { border-bottom: none; }
+.day-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 22px 14px;
+  position: relative;
+  background: var(--bg-card);
+}
+.day-num {
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: 36px;
+  line-height: 1;
+  flex-shrink: 0;
+  -webkit-text-stroke: 1px currentColor;
+  color: transparent;
+}
+.day1 .day-num, .day-num.d1 { color: var(--day1); }
+.day2 .day-num, .day-num.d2 { color: var(--day2); }
+.day3 .day-num, .day-num.d3 { color: var(--day3); }
+.day4 .day-num, .day-num.d4 { color: var(--day4); }
+.day5 .day-num, .day-num.d5 { color: var(--day5); }
+.day-title-row { flex: 1; min-width: 0; }
+.day-weekday {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.day-theme {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--ink);
+  margin-top: 2px;
+  letter-spacing: 0.02em;
+}
+.day-stripe {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+}
+.day1 .day-stripe { background: var(--day1); }
+.day2 .day-stripe { background: var(--day2); }
+.day3 .day-stripe { background: var(--day3); }
+.day4 .day-stripe { background: var(--day4); }
+.day5 .day-stripe { background: var(--day5); }
+.day-expand-toggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 6px 12px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-mid);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  letter-spacing: 0.08em;
+}
+.day-expand-toggle:hover { background: var(--bg-section); }
+.day-minimap-wrap {
+  background: var(--parchment);
+  margin: 0 22px 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 12px;
+  display: none;
+}
+.day-minimap-wrap.is-open { display: block; }
+.day-minimap-wrap svg { width: 100%; height: auto; display: block; }
+.day-minimap-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-soft);
+  letter-spacing: 0.1em;
+}
+.btn-nav-multi {
+  background: var(--da-blue);
+  color: var(--parchment);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 100px;
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.btn-nav-multi:hover { background: var(--da-blue-lt); }
+.day-tips-banner {
+  background: rgba(74,138,138,0.06);
+  border-left: 3px solid var(--qing-green);
+  padding: 10px 14px;
+  margin: 0 22px 14px;
+  border-radius: 0 4px 4px 0;
+  font-size: 12px;
+  color: var(--ink-mid);
+}
+.day-tips-banner:empty { display: none; }
+
+/* Slot card */
+.slots-list {
+  padding: 0 22px 18px;
+  display: grid;
+  gap: 14px;
+}
+.slot-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 0;
+}
+@media (min-width: 768px) {
+  .slot-card {
+    grid-template-columns: 110px 1fr;
+    gap: 0;
+  }
+}
+.slot-img-wrap {
+  position: relative;
+  background: linear-gradient(135deg, var(--da-blue) 0%, var(--qing-green) 100%);
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+.slot-img-wrap img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.slot-img-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--parchment);
+  font-family: 'Ma Shan Zheng', cursive;
+  padding: 8px;
+  text-align: center;
+  gap: 6px;
+}
+.slot-img-fallback .fb-emoji { font-size: 28px; }
+.slot-img-fallback .fb-text { font-size: 11px; opacity: 0.85; line-height: 1.3; }
+.slot-period {
+  position: absolute;
+  top: 6px; left: 6px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  padding: 3px 8px;
+  border-radius: 100px;
+  background: rgba(0,0,0,0.45);
+  color: var(--parchment);
+  backdrop-filter: blur(2px);
+}
+.slot-body {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.slot-name {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+.slot-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+}
+.slot-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  margin-left: 8px;
+}
+.slot-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  font-size: 11px;
+  color: var(--ink-mid);
+  margin-top: 4px;
+}
+.slot-meta-row > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.slot-meta-row .ico { opacity: 0.6; }
+.slot-review {
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.55;
+  margin-top: 4px;
+}
+.slot-seasonal {
+  background: rgba(184,57,46,0.06);
+  color: var(--cinnabar);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  display: inline-block;
+  margin-top: 4px;
+}
+.slot-actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.btn-nav {
+  background: var(--qing-green);
+  color: var(--parchment);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 100px;
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.btn-nav:hover { background: var(--qing-green-lt); }
+.btn-nav.book { background: var(--cinnabar); }
+.btn-nav.book:hover { background: var(--cinnabar-lt); }
+.reminder-badge {
+  display: inline-block;
+  background: rgba(184,57,46,0.08);
+  color: var(--cinnabar);
+  border: 1px solid rgba(184,57,46,0.20);
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+
+/* Dining */
+.dining-section {
+  margin: 0 22px 18px;
+  background: var(--bg-section);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.dining-header {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--da-blue);
+  margin-bottom: 10px;
+}
+.dining-item {
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  border: 1px solid var(--border-soft);
+}
+.dining-item:last-child { margin-bottom: 0; }
+.dining-meal-row {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.dining-meal-badge {
+  background: var(--da-blue);
+  color: var(--parchment);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  padding: 2px 8px;
+  border-radius: 100px;
+}
+.dining-place {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ink);
+}
+.dining-hours {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+  margin-top: 3px;
+}
+.dish-list {
+  margin-top: 6px;
+  display: grid;
+  gap: 3px;
+}
+.dish-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--ink-mid);
+  padding: 2px 0;
+}
+.dish-name { flex: 1; min-width: 0; }
+.dish-price {
+  font-family: 'DM Mono', monospace;
+  color: var(--cinnabar);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+/* ─── ⑤ 待办清单（纯列表，无 checkbox） ────────── */
+.todo-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.todo-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--border);
+  align-items: baseline;
+  font-size: 13px;
+}
+.todo-item:last-child { border-bottom: none; }
+.todo-deadline {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--cinnabar);
+  background: rgba(184,57,46,0.06);
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 0.04em;
+}
+.todo-text {
+  color: var(--ink-mid);
+  flex: 1;
+  line-height: 1.5;
+}
+.todo-lead {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-soft);
+  margin-left: 6px;
+}
+.todo-urgent .todo-deadline {
+  background: var(--cinnabar);
+  color: var(--parchment);
+  font-weight: 600;
+}
+
+/* ─── ⑥ 实用贴士 ────────────────────────────── */
+.tips-list {
+  display: grid;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+}
+.tip-item {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--border-soft);
+}
+.tip-item:last-child { border-bottom: none; }
+.tip-num {
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: 22px;
+  color: var(--qing-green);
+  -webkit-text-stroke: 0.5px currentColor;
+  line-height: 1;
+}
+.tip-text {
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.65;
+}
+
+/* ─── 免责声明 ─────────────────────────────────── */
+.disclaimer-box {
+  margin: 16px 12px;
+  padding: 14px 18px;
+  background: rgba(184,57,46,0.05);
+  border-left: 3px solid var(--cinnabar);
+  border-radius: 4px;
+  font-size: 11px;
+  color: var(--ink-mid);
+  line-height: 1.65;
+}
+@media (min-width: 768px) {
+  .disclaimer-box { margin: 0 0 24px; }
+}
+.disclaimer-box strong { color: var(--cinnabar); }
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 28px 12px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--ink-soft);
+}
+.footer-cta {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 22px;
+  color: var(--da-blue);
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+
+/* ─── 暗色模式（prefers-color-scheme） ──────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:         #0d1418;
+    --bg-card:    #18222b;
+    --bg-section: #1e2a36;
+    --ink:        #e8e4dc;
+    --ink-mid:    #c8c0b4;
+    --ink-soft:   #8a8278;
+    --parchment:  #d0c8bc;
+    --da-blue:    #6b9bce;
+    --da-blue-lt: #8ab4d8;
+    --qing-green: #6faca8;
+    --qing-green-lt: #8fc8c4;
+    --cinnabar:   #e07870;
+    --cinnabar-lt:#e8908a;
+    --gold:       #c4a055;
+    --gold-lt:    #d4b870;
+    --bronze:     #a07644;
+    --day1: #e07870;
+    --day2: #6faca8;
+    --day3: #6b9bce;
+    --day4: #c4a055;
+    --day5: #b08866;
+    --border:     rgba(107,155,206,0.22);
+    --border-soft:rgba(107,155,206,0.10);
+    --shadow:     0 2px 16px rgba(0,0,0,0.35);
+    --shadow-hover: 0 8px 32px rgba(0,0,0,0.5);
+    --morning:    #1e2a3a;
+    --noon:       #3a1e26;
+    --evening:    #2a2238;
+  }
+  body {
+    background-image:
+      linear-gradient(rgba(107,155,206,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(107,155,206,0.05) 1px, transparent 1px);
+  }
+  .countdown-card {
+    background: linear-gradient(160deg, #0d1418 0%, #18222b 60%, #1e2a36 100%);
+  }
+  .overview-svg-wrap, .day-minimap-wrap {
+    background: #121a20;
+  }
+  .slot-img-wrap {
+    background: linear-gradient(135deg, #1e2a3a 0%, #2a3a4a 100%);
+  }
+  .dining-section {
+    background: #1e2a36;
+  }
+  .confirmed-sub {
+    background: #1e2a36;
+  }
+  .confirmed-sub-head { color: var(--qing-green-lt); }
+  .todo-deadline {
+    background: rgba(224,120,112,0.18);
+    color: var(--cinnabar-lt);
+  }
+  .todo-urgent .todo-deadline {
+    background: var(--cinnabar);
+    color: #1a1410;
+  }
+  .day-num {
+    color: transparent;
+    -webkit-text-stroke: 1px currentColor;
+  }
+  .day1 .day-num { color: var(--day1); -webkit-text-stroke: 1px var(--day1); }
+  .day2 .day-num { color: var(--day2); -webkit-text-stroke: 1px var(--day2); }
+  .day3 .day-num { color: var(--day3); -webkit-text-stroke: 1px var(--day3); }
+  .day4 .day-num { color: var(--day4); -webkit-text-stroke: 1px var(--day4); }
+  .day5 .day-num { color: var(--day5); -webkit-text-stroke: 1px var(--day5); }
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- ═══════ ① 顶部「此刻关注」倒计时 ═══════ -->
+  <div class="countdown-card">
+    <div class="countdown-eyebrow">此刻关注 · RIGHT NOW</div>
+    <div class="countdown-event">
+      <span class="countdown-event-icon" id="cd-icon">⏳</span>
+      <div>
+        <div class="countdown-event-text" id="cd-event">加载中…</div>
+        <div class="countdown-event-time" id="cd-event-time"></div>
+      </div>
+    </div>
+    <div class="countdown-timer">
+      <div class="countdown-cell">
+        <span class="countdown-num" id="cd-d">--</span>
+        <div class="countdown-label">天</div>
+      </div>
+      <div class="countdown-cell">
+        <span class="countdown-num" id="cd-h">--</span>
+        <div class="countdown-label">时</div>
+      </div>
+      <div class="countdown-cell">
+        <span class="countdown-num" id="cd-m">--</span>
+        <div class="countdown-label">分</div>
+      </div>
+      <div class="countdown-cell">
+        <span class="countdown-num" id="cd-s">--</span>
+        <div class="countdown-label">秒</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ ② 行程总览 SVG ═══════ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon qing">🗺</div>
+      <div>
+        <div class="section-title">行程总览</div>
+        <div class="section-subtitle">Overview · 5 days · 无锡 ↔ 苏州</div>
+      </div>
+    </div>
+    <div class="section-body overview-card">
+      <div class="overview-svg-wrap" id="overview-svg-wrap"></div>
+      <div class="overview-legend" id="overview-legend"></div>
+    </div>
+  </section>
+
+  <!-- ═══════ ③ 已确认预订 ═══════ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon bronze">✓</div>
+      <div>
+        <div class="section-title">已确认 & 推荐预订</div>
+        <div class="section-subtitle">Confirmed · 待办分清</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="confirmed-block" id="confirmed-block"></div>
+    </div>
+  </section>
+
+  <!-- ═══════ ④ 逐日行程 ═══════ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon da-blue">📅</div>
+      <div>
+        <div class="section-title">五天时间轴</div>
+        <div class="section-subtitle">Day-by-Day Timeline · 点击 ▾ 展开路线</div>
+      </div>
+    </div>
+    <div id="timeline-container"></div>
+  </section>
+
+  <!-- ═══════ ⑤ 待办清单（纯列表） ═══════ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon cinnabar">📋</div>
+      <div>
+        <div class="section-title">出发前待办</div>
+        <div class="section-subtitle">Pre-Trip TODO · 办完一项告诉我划掉</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <ul class="todo-list" id="todo-list"></ul>
+    </div>
+  </section>
+
+  <!-- ═══════ ⑥ 实用贴士 ═══════ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon gold">💡</div>
+      <div>
+        <div class="section-title">实用贴士</div>
+        <div class="section-subtitle">Practical Tips · 全程避坑</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <ul class="tips-list" id="tips-list"></ul>
+    </div>
+  </section>
+
+  <!-- ═══════ 免责声明 ═══════ -->
+  <div class="disclaimer-box">
+    <strong>免责声明 · </strong><span id="disclaimer-text">本页全部信息（天气、航班、酒店、餐厅、景点、门票、价格、营业时间、评分、活动等）均为 AI 基于公开资料整理的参考建议，可能不准确或已过时，不保证与实时情况一致；请务必在官方渠道 / 订票订房 / 地图 App 上核实后再做决定或前往。演唱会门票以大麦/猫眼实时库存为准，**门票可能已售罄**；航班号需自行核实；高铁班次以 12306 实时为准。</span>
+  </div>
+
+  <footer>
+    <div class="footer-cta">江南水墨行</div>
+    <div>广州 → 无锡 → 苏州 · 2026.10.01 – 10.05</div>
+    <div style="margin-top:6px;">Generated by Migo · travel-plan-viz</div>
+  </footer>
+
+</div>
+
+<!-- ═══════════════ ENGINE: MAP (inline subset) ═══════════════ -->
+<script>
+function escapeHTML(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+function _sanitizeLat(v) { var n = Number(v); if (!isFinite(n)) return 0; return Math.max(-90, Math.min(90, n)); }
+function _sanitizeLng(v) { var n = Number(v); if (!isFinite(n)) return 0; return Math.max(-180, Math.min(180, n)); }
+function buildNavLink(lat, lng, label, ua) {
+  var sLat = _sanitizeLat(lat), sLng = _sanitizeLng(lng);
+  var encLabel = encodeURIComponent(String(label || ''));
+  if (ua && /iPhone|iPad|iPod/.test(ua)) {
+    return 'https://maps.apple.com/?ll=' + sLat + ',' + sLng + '&q=' + encLabel;
+  }
+  return 'geo:' + sLat + ',' + sLng + '?q=' + sLat + ',' + sLng + '(' + encLabel + ')';
+}
+function buildMapAppLinks(lat, lng, label) {
+  var sLat = _sanitizeLat(lat), sLng = _sanitizeLng(lng);
+  var encLabel = encodeURIComponent(String(label || ''));
+  var amap = {
+    label: '高德地图',
+    url: 'https://uri.amap.com/marker?position=' + sLng + ',' + sLat
+      + '&name=' + encLabel + '&coordinate=wgs84&callnative=1&src=travel-plan-viz',
+  };
+  var google = {
+    label: 'Google 地图',
+    url: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(sLat + ',' + sLng),
+  };
+  return isInChinaBBox(sLat, sLng) ? [amap] : [google, amap];
+}
+var GCJ_A = 6378245.0;
+var GCJ_EE = 0.00669342162296594323;
+function isInChinaBBox(lat, lng) {
+  return lng >= 72.004 && lng <= 137.8347 && lat >= 0.8293 && lat <= 55.8271;
+}
+function gcjTransformLat(x, y) {
+  var ret = -100.0 + 2.0 * x + 3.0 * y + 0.2 * y * y + 0.1 * x * y + 0.2 * Math.sqrt(Math.abs(x));
+  ret += (20.0 * Math.sin(6.0 * x * Math.PI) + 20.0 * Math.sin(2.0 * x * Math.PI)) * 2.0 / 3.0;
+  ret += (20.0 * Math.sin(y * Math.PI) + 40.0 * Math.sin(y / 3.0 * Math.PI)) * 2.0 / 3.0;
+  ret += (160.0 * Math.sin(y / 12.0 * Math.PI) + 320.0 * Math.sin(y * Math.PI / 30.0)) * 2.0 / 3.0;
+  return ret;
+}
+function gcjTransformLng(x, y) {
+  var ret = 300.0 + x + 2.0 * y + 0.1 * x * x + 0.1 * x * y + 0.1 * Math.sqrt(Math.abs(x));
+  ret += (20.0 * Math.sin(6.0 * x * Math.PI) + 20.0 * Math.sin(2.0 * x * Math.PI)) * 2.0 / 3.0;
+  ret += (20.0 * Math.sin(y * Math.PI) + 40.0 * Math.sin(y / 3.0 * Math.PI)) * 2.0 / 3.0;
+  ret += (150.0 * Math.sin(x / 12.0 * Math.PI) + 300.0 * Math.sin(x / 30.0 * Math.PI)) * 2.0 / 3.0;
+  return ret;
+}
+function gcj02ToWgs84(lat, lng) {
+  if (!isInChinaBBox(lat, lng)) return { lat: lat, lng: lng };
+  var dLat = gcjTransformLat(lng - 105.0, lat - 35.0);
+  var dLng = gcjTransformLng(lng - 105.0, lat - 35.0);
+  var radLat = lat / 180.0 * Math.PI;
+  var magic = Math.sin(radLat);
+  magic = 1 - GCJ_EE * magic * magic;
+  var sqrtMagic = Math.sqrt(magic);
+  dLat = (dLat * 180.0) / ((GCJ_A * (1 - GCJ_EE)) / (magic * sqrtMagic) * Math.PI);
+  dLng = (dLng * 180.0) / (GCJ_A / sqrtMagic * Math.cos(radLat) * Math.PI);
+  return { lat: lat - dLat, lng: lng - dLng };
+}
+function routeCoordinates(points) {
+  return points.map(function (p) { return [p.lat, p.lng]; });
+}
+function buildMultiPointNavLink(points) {
+  if (!points || points.length < 2) return null;
+  var first = points[0];
+  var last = points[points.length - 1];
+  var via = points.slice(1, -1);
+  var url = 'https://uri.amap.com/navigation'
+    + '?from=' + _sanitizeLng(first.lng) + ',' + _sanitizeLat(first.lat) + ',' + encodeURIComponent(String(first.name || ''))
+    + '&to=' + _sanitizeLng(last.lng) + ',' + _sanitizeLat(last.lat) + ',' + encodeURIComponent(String(last.name || ''));
+  if (via.length > 0) {
+    var viaStr = via.map(function (p) { return _sanitizeLng(p.lng) + ',' + _sanitizeLat(p.lat); }).join(',');
+    url += '&via=' + viaStr;
+  }
+  url += '&mode=car&src=travel-plan-viz';
+  if (url.length > 2000) {
+    return buildNavLink(_sanitizeLat(first.lat), _sanitizeLng(first.lng), String(first.name || ''));
+  }
+  return url;
+}
+</script>
+
+<!-- ═══════════════ ENGINE: REMINDERS (inline subset) ═══════════════ -->
+<script>
+function escapeHTML2(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+function computeReminders(startDateISO, items) {
+  if (!startDateISO || !Array.isArray(items)) return [];
+  var start = new Date(startDateISO + 'T00:00:00Z');
+  if (isNaN(start.getTime())) return [];
+  var out = [];
+  for (var i = 0; i < items.length; i++) {
+    var it = items[i];
+    var lead = Math.max(0, Math.floor(Number(it.leadDays || 0)));
+    var deadline = new Date(start.getTime() - lead * 86400000);
+    var y = deadline.getUTCFullYear();
+    var m = String(deadline.getUTCMonth() + 1).padStart(2, '0');
+    var d = String(deadline.getUTCDate()).padStart(2, '0');
+    out.push({ item: String(it.item || ''), leadDays: lead, deadline: y + '-' + m + '-' + d });
+  }
+  out.sort(function (a, b) { return a.deadline < b.deadline ? -1 : (a.deadline > b.deadline ? 1 : 0); });
+  return out;
+}
+function reminderBadgeHTML(leadDays) {
+  var ld = Math.max(0, Math.floor(Number(leadDays || 0)));
+  return '<span class="reminder-badge">⚠ 建议提前 ' + ld + ' 天订</span>';
+}
+</script>
+
+<!-- ═══════════════ TRIP DATA ═══════════════ -->
+<script id="trip-data" type="application/json">
+{
+  "title": "广州-无锡-苏州 5天4晚",
+  "startDate": "2026-10-01",
+  "colorScheme": "江南水墨调",
+  "preTrip": {
+    "weather": {
+      "summary": "10月上旬无锡/苏州平均高 22-24°C、低 15-17°C，昼夜温差 8-10°C；白天可穿长袖/薄外套，傍晚加一件针织衫。",
+      "typhoon": "9 月底仍是江浙台风尾段，出发前 3 天起关注中国天气网与本地预警；如遇暴雨/大风，户外景点（鼋头渚、灵山、虎丘）可能临时关闭。"
+    },
+    "packing": "薄外套/针织衫 + 长裤 + 舒适步行鞋；江南景区石板路多，避免新鞋；带一把折叠伞 + 保温杯；酒店一般不提供洗漱用品需自备；10 月晚间已转凉，卫衣/风衣必备。",
+    "payment": "全程微信/支付宝畅通；老字号面馆偶尔只收现金，可备 200-500 元现金；机场与火车站都支持扫码购票。",
+    "apps": ["铁路 12306（高铁票）", "高德地图（境内导航）", "大麦/猫眼（演唱会抢票）", "微信小程序「苏州园林旅游」或「苏州博物馆」（拙政园/苏博预约）", "中国天气（实时预警）"],
+    "ticketTip": "最紧急：许嵩苏州演唱会门票（10/4 19:00，已于 9/16 19:00 开售，**很可能已售罄**——持续盯大麦候补/退票）；拙政园/苏博/留园/虎丘均建议出发前 1-3 天在官方公众号或小程序实名预约。"
+  },
+  "flights": {
+    "booked": [
+      {
+        "label": "去程 · 广州白云 T3 → 无锡苏南 T2",
+        "code": "航班号待核实（建议用南航/深航/东航直飞）",
+        "time": "10/1（周四）13:50 起飞 → 16:00 抵达",
+        "date": "2026-10-01",
+        "terminal": "广州 T3 → 无锡 T2",
+        "note": "飞行约 2h10min；建议提前 2 小时到机场。落地后可选机场大巴 1 号线（¥5/40 min 到无锡站）或地铁 3 号线（¥5-8/45-50 min 到市区）或打车（¥50-60）。"
+      },
+      {
+        "label": "返程 · 无锡苏南 T2 → 广州白云 T3",
+        "code": "航班号待核实（建议同航司返程）",
+        "time": "10/5（周一）17:35 起飞 → 20:05 抵达",
+        "date": "2026-10-05",
+        "terminal": "无锡 T2 → 广州 T3",
+        "note": "10/5 上午最后游览苏州后，约 14:00-14:30 从苏州出发（地铁或打车到苏南机场约 1.5 h），预留 2.5 h 值机时间。机场到苏州有跨城公交「苏锡公交 1 号线」备选。"
+      }
+    ]
+  },
+  "gtrains": {
+    "candidates": [
+      {
+        "label": "10/3（周六）无锡站 → 苏州站 · 推荐班次",
+        "code": "G7091 / G7069 / G7201",
+        "time": "建议 11:30 左右发车 · 全程约 25 min",
+        "priceRange": "二等座 ¥15-23 · 一等座 ¥24-37",
+        "note": "提前 15 天 12306 放票，每日 300+ 班次，不用太紧张；买 11:00-12:00 时段，到苏州正好午餐 + 下午开始拙政园。**无锡站离市区近、无锡东站更远但更快（→ 苏州北 10 min）**。"
+      },
+      {
+        "label": "10/4（周日）如有需要 · 苏州 → 无锡站",
+        "code": "G7xxx / G3xxx",
+        "time": "演唱会散场后末班地铁或高铁",
+        "priceRange": "二等座 ¥15-25",
+        "note": "10/4 晚 19:00 演唱会预计 22:00 散场，地铁 5 号线会延时运营（通常延到 23:30 后），可走苏州站末班高铁回无锡站或直接打车回酒店。"
+      }
+    ]
+  },
+  "hotelAreas": [
+    {
+      "area": "无锡 · 太湖/灵山区域",
+      "reason": "10/1 晚 + 10/2 晚入住；靠近灵山/拈花湾/鼋头渚，景区之间打车方便；离无锡站约 30-40 min。",
+      "options": [
+        { "tier": "中档", "name": "无锡太湖饭店 / 君来湖滨饭店", "priceRange": "约 ¥600-900/晚", "note": "太湖边景观房；旺季周末偏紧，建议提前 1 周订", "phone": "0510-88681234" },
+        { "tier": "中档", "name": "拈花湾客栈 / 灵山精舍", "priceRange": "约 ¥500-800/晚", "note": "景区内，体验唐风小镇夜景；10/2 看完拈花湾灯光秀直接住", "phone": "0510-85580888" },
+        { "tier": "经济", "name": "如家/全季（无锡新区/梅园店）", "priceRange": "约 ¥250-400/晚", "note": "性价比高；离鼋头渚打车 20 min", "phone": "0510-8825xxxx" }
+      ]
+    },
+    {
+      "area": "苏州 · 平江路/观前街（古城核心）",
+      "reason": "10/3 + 10/4 晚入住；步行可达拙政园/苏博/平江路，吃喝最方便；10/4 晚到奥体中心打车或地铁约 25-40 min。",
+      "options": [
+        { "tier": "中档", "name": "书香府邸·平江府 / 苏州南园宾馆", "priceRange": "约 ¥700-1100/晚", "note": "园林式酒店；步行 5 min 到平江路；旺季务必提前 2 周订", "phone": "0512-67708888" },
+        { "tier": "中档", "name": "亚朵 S / 全季（观前街店）", "priceRange": "约 ¥450-700/晚", "note": "性价比高；地铁 4 号线察院场站直达", "phone": "0512-6588xxxx" },
+        { "tier": "经济", "name": "如家/汉庭（观前街/平江路店）", "priceRange": "约 ¥250-380/晚", "note": "干净够用；10/4 晚演唱会后回酒店注意地铁延时", "phone": "0512-6511xxxx" },
+        { "tier": "高端", "name": "苏州 W 酒店 / 苏州柏悦酒店（金鸡湖）", "priceRange": "约 ¥1800-2800/晚", "note": "金鸡湖畔；离奥体中心近（10/4 晚节省通勤）", "phone": "0512-62669999" }
+      ]
+    }
+  ],
+  "concert": {
+    "name": "许嵩 2026「安泊猜想」巡回演唱会 · 苏州站",
+    "venue": "苏州奥林匹克体育中心体育场",
+    "address": "江苏省苏州市工业园区中新大道东 999 号",
+    "time": "2026-10-04（周日）19:00 开演 · 时长约 150-180 min",
+    "needsBooking": true,
+    "leadDays": 30,
+    "ticketAdvice": "⚠️ 大麦/猫眼 9/16 19:00 已开售，**目前很可能已售罄**。持续盯大麦 App 候补/退票（实名制不可闲鱼转让！）。票价区间：看台 ¥318/¥618/¥818，内场 ¥1118/¥1318/¥1618；一票一证必须本人身份证入场。",
+    "transport": "地铁 5 号线/6 号线 → 「苏州奥体中心」站 4 号口出步行 5 min；网约车至「港田路」或「东 5 门星体街东侧」；自驾约 2900 车位但散场拥堵。演唱会散场地铁通常延时到 23:30 后。"
+  },
+  "disclaimer": "本页全部信息（天气、航班、酒店、餐厅、景点、门票、价格、营业时间、评分、活动等）均为 AI 基于公开资料整理的参考建议，可能不准确或已过时，不保证与实时情况一致；请务必在官方渠道 / 订票订房 / 地图 App 上核实后再做决定或前往。演唱会门票以大麦/猫眼实时库存为准，**门票可能已售罄**；航班号需自行核实；高铁班次以 12306 实时为准。",
+  "tips": [
+    "10/1 落地苏南机场后，机场大巴 1 号线（¥5/40 min 到无锡站）+ 地铁 3 号线是最稳的进城方式；打车约 ¥50-60。",
+    "10/2 灵山大佛 + 拈花湾联票约 ¥210，景区内有观光车；拈花湾晚上灯光秀 19:00 后点亮，住景区内客栈可省往返。",
+    "10/3 上午鼋头渚避开周末高峰，10:00 前入园光线最好；下午 G-train 到苏州站，约 25 min，午餐在苏州站附近吃枫镇大面/苏式汤面。",
+    "10/4 拙政园 7:30 开门，**强烈建议 7:30 入园**（8:30 后旅行团涌入）；苏博免费但必须公众号提前 7 天预约，否则只能现场碰运气。",
+    "10/4 19:00 演唱会**提前 1.5-2 h 入场**（17:00 出门）；地铁 5 号线散场延时到 23:30 后，是最稳的返程方式。",
+    "10/5 上午只够虎丘（2 h）+ 退房，**14:00 必须离开苏州**；苏南机场国际出发需提前 2.5 h 值机，地铁/打车预留 1.5 h。",
+    "苏式菜偏甜，无锡菜更甜且浓油赤酱；点菜时主动跟店家说「少甜」；忌口提前告知。",
+    "10 月江南雨水渐多，景区石板路湿滑，建议带防滑鞋 + 折叠伞；雨天优先改去苏博/丝绸博物馆/诚品书店等室内。",
+    "园林景区禁止商拍/无人机/触摸假山/喂鱼；多数博物馆周一闭馆（拙政园/苏博/留园周一闭，出发前查官方）。",
+    "警惕景区周边「折扣票」「内部票」「免费导游」骗局，购票认准官方公众号/小程序/景区窗口。"
+  ],
+  "reminders": [
+    { "item": "🎤 许嵩演唱会门票（大麦/猫眼盯退票 · 一票一证）", "leadDays": 30 },
+    { "item": "✈️ 广州-无锡 & 无锡-广州 机票（建议同航司往返）", "leadDays": 30 },
+    { "item": "🏨 无锡酒店（10/1-2 共 2 晚）", "leadDays": 14 },
+    { "item": "🏨 苏州酒店（10/3-4 共 2 晚，建议古城核心区）", "leadDays": 14 },
+    { "item": "🚄 10/3 无锡→苏州 高铁票（G7xxx 早班车）", "leadDays": 15 },
+    { "item": "🎫 拙政园门票（10/3-4 微信小程序实名预约 · 国庆紧张）", "leadDays": 3 },
+    { "item": "🎫 苏州博物馆 免费预约（公众号 · 提前 7 天 · 周一闭馆）", "leadDays": 7 },
+    { "item": "🎫 留园门票（10/4 提前 1-3 天线上购）", "leadDays": 3 },
+    { "item": "🎫 灵山大佛+拈花湾联票（10/2 提前 1 天）", "leadDays": 1 },
+    { "item": "🎫 虎丘门票（10/5 现场购票即可）", "leadDays": 0 }
+  ],
+  "days": [
+    {
+      "date": "2026-10-01",
+      "weekday": "周四",
+      "theme": "飞抵无锡 · 太湖初见",
+      "tips": [
+        "白云 T3 提前 2 h 到机场；登机口一般提前 40 min 关闭",
+        "苏南机场落地后到出口需走 10-15 min；大巴 1 号线在到达厅北侧一层"
+      ],
+      "slots": [
+        {
+          "period": "afternoon",
+          "name": "广州白云国际机场 T3 出发",
+          "time": "13:50 起飞",
+          "lat": 23.3925, "lng": 113.2988,
+          "photo": "",
+          "rating": 4.5,
+          "review": "T3 规模大，国内出发建议预留 2 h 值机。地铁 3 号线北延段直达机场。",
+          "needsBooking": false,
+          "emoji": "✈️"
+        },
+        {
+          "period": "afternoon",
+          "name": "无锡苏南硕放机场 T2 抵达",
+          "time": "16:00 抵达（约 2h10min）",
+          "lat": 31.4947, "lng": 120.4356,
+          "photo": "",
+          "rating": 4.0,
+          "review": "苏南机场是无锡/苏州共用机场；出口到机场大巴/出租区步行 5 min。",
+          "transport": { "mode": "机场大巴 1 号线 / 地铁 3 号线 / 打车", "fare": "¥5-60", "duration": "40-60 min 到市区" },
+          "needsBooking": false,
+          "emoji": "🛬"
+        },
+        {
+          "period": "evening",
+          "name": "酒店 check-in（太湖/灵山区域）",
+          "time": "18:00",
+          "lat": 31.4822, "lng": 120.3917,
+          "photo": "",
+          "rating": 4.5,
+          "review": "建议酒店选在灵山/拈花湾附近，方便 10/2 一早进景区；如住太湖饭店区域，可先去湖边看夕阳。",
+          "transport": { "mode": "网约车", "fare": "¥80-120", "duration": "约 40 min" },
+          "needsBooking": true,
+          "leadDays": 14,
+          "emoji": "🏨"
+        },
+        {
+          "period": "evening",
+          "name": "酒店周边晚餐",
+          "time": "19:00-20:30",
+          "lat": 31.4822, "lng": 120.3917,
+          "photo": "",
+          "rating": 4.3,
+          "review": "推荐尝试无锡小笼（皮厚偏甜）、三凤桥酱排骨、太湖三白；点菜主动说「少甜」。",
+          "needsBooking": false,
+          "emoji": "🍜"
+        }
+      ],
+      "dining": [
+        {
+          "meal": "晚餐",
+          "place": "酒店周边（推荐三凤桥肉庄 / 王兴记）",
+          "hours": "17:30-21:30",
+          "dishes": [
+            { "name": "无锡小笼", "price": "¥28/笼" },
+            { "name": "三凤桥酱排骨", "price": "¥58-78" },
+            { "name": "太湖三白（白鱼/白虾/银鱼）", "price": "¥98-138" }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-02",
+      "weekday": "周五",
+      "theme": "灵山祈福 · 太湖揽胜",
+      "tips": [
+        "灵山 + 拈花湾联票约 ¥210，景区观光车单程 ¥10；建议上午 8:30 入园避人潮",
+        "拈花湾灯光秀 19:00 后点亮，住景区内客栈最省事"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "灵山大佛（88m 青铜立佛）",
+          "time": "08:30-12:00",
+          "lat": 31.43194, "lng": 120.09139,
+          "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Grand_Buddha_at_Ling_Shan,_China.jpg?width=800",
+          "rating": 4.7,
+          "review": "88 米释迦牟尼青铜立佛，世界级露天大佛；景区含九龙灌浴表演、灵山梵宫、五印坛城，逛 3 h+。",
+          "openingHours": "07:30-17:30（17:00 停止入园）",
+          "ticketPrice": "灵山胜境成人 ¥210（含九龙灌浴表演）",
+          "transport": { "mode": "网约车/景区直通车", "fare": "¥50-80", "duration": "约 30 min 从太湖饭店" },
+          "needsBooking": true,
+          "leadDays": 1,
+          "emoji": "🗿"
+        },
+        {
+          "period": "noon",
+          "name": "拈花湾小镇（禅意唐风）",
+          "time": "12:30-15:00",
+          "lat": 31.4186, "lng": 120.0870,
+          "photo": "",
+          "rating": 4.6,
+          "review": "灵山小镇拈花湾，唐风建筑+禅意园林；推荐午餐吃素斋，下午看小镇，下午继续逛到夜场灯光秀。",
+          "openingHours": "09:00-21:00",
+          "ticketPrice": "已含灵山联票 / 单买 ¥120",
+          "needsBooking": false,
+          "emoji": "⛩️"
+        },
+        {
+          "period": "afternoon",
+          "name": "鼋头渚（太湖第一名胜）",
+          "time": "15:30-18:00",
+          "lat": 31.51778, "lng": 120.22778,
+          "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Yuantouzhu_Lake_Tai.jpg?width=800",
+          "rating": 4.7,
+          "review": "太湖西北岸半岛，伸入湖中如鼋头翘首；含樱花谷、鹿顶迎晖、灯塔；10 月秋色 + 湖光。游船 ¥50。",
+          "openingHours": "08:00-17:00",
+          "ticketPrice": "门票 ¥85 + 游船 ¥50",
+          "transport": { "mode": "网约车", "fare": "¥60-90", "duration": "约 40 min 从拈花湾" },
+          "needsBooking": false,
+          "emoji": "🏝"
+        },
+        {
+          "period": "evening",
+          "name": "南禅寺 / 清名桥历史文化街区",
+          "time": "19:00-21:00",
+          "lat": 31.5650, "lng": 120.3110,
+          "photo": "",
+          "rating": 4.5,
+          "review": "京杭大运河畔，南禅寺是南朝 480 寺之一；清名桥街区是古运河精华段，夜景极美，小吃密集。",
+          "openingHours": "全天开放",
+          "ticketPrice": "免费",
+          "needsBooking": false,
+          "emoji": "🌉"
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "拈花湾内素斋馆",
+          "hours": "11:00-14:00",
+          "dishes": [
+            { "name": "素斋套餐", "price": "¥68-88" },
+            { "name": "禅意糕点", "price": "¥18-28" }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "南长街/清名桥街区",
+          "hours": "18:00-22:00",
+          "dishes": [
+            { "name": "太湖三白", "price": "¥98-138" },
+            { "name": "玉兰饼（穆桂英）", "price": "¥15-25" },
+            { "name": "银鱼炒蛋", "price": "¥48" }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-03",
+      "weekday": "周六",
+      "theme": "水乡过渡 · 姑苏初见",
+      "tips": [
+        "上午最后半天无锡，建议早 8:00 退房寄存行李，鼋头渚附近吃完早餐",
+        "G-train 11:30 左右发车，无锡站 → 苏州站约 25 min；二等座 ¥15-23",
+        "到苏州午餐在观前街/平江路附近，下午拙政园建议 14:00 前入园"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "鼋头渚晨游 / 退房",
+          "time": "08:00-10:30",
+          "lat": 31.51778, "lng": 120.22778,
+          "photo": "",
+          "rating": 4.6,
+          "review": "10 月清晨太湖有薄雾；景区深度游含太湖仙岛（需乘船 ¥50）；可缩短为 1.5 h 拍照打卡。",
+          "needsBooking": false,
+          "emoji": "🏝"
+        },
+        {
+          "period": "noon",
+          "name": "无锡站 → 苏州站 G-train",
+          "time": "约 11:30-12:00（25 min）",
+          "lat": 31.4942, "lng": 120.3058,
+          "photo": "",
+          "rating": 4.0,
+          "review": "无锡站位于梁溪区，到苏州站约 25 min；提前 15 天 12306 放票；每日 300+ 班次，随到随买也行。",
+          "transport": { "mode": "高铁 G 车", "fare": "二等座 ¥15-23", "duration": "约 25 min" },
+          "needsBooking": true,
+          "leadDays": 15,
+          "emoji": "🚄"
+        },
+        {
+          "period": "afternoon",
+          "name": "拙政园（四大名园之首）",
+          "time": "14:00-17:00",
+          "lat": 31.3238, "lng": 120.6172,
+          "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Humble_Administrator%27s_Garden_2013-09-11_10-53-37.jpg?width=800",
+          "rating": 4.8,
+          "review": "中国四大名园之首 / 世界文化遗产；明代文徵明参与设计；以水为主、亭台楼阁皆临水；3 h 才能走透。",
+          "openingHours": "07:30-17:30（10 月旺季，周一闭馆）",
+          "ticketPrice": "旺季 ¥80，淡季 ¥70；线上 ¥72",
+          "transport": { "mode": "地铁 4 号线 → 北寺塔站步行 10 min", "fare": "¥2", "duration": "约 25 min 从苏州站" },
+          "needsBooking": true,
+          "leadDays": 3,
+          "emoji": "🏯"
+        },
+        {
+          "period": "evening",
+          "name": "平江路历史街区",
+          "time": "18:00-21:00",
+          "lat": 31.3147, "lng": 120.6358,
+          "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Suzhou_Pingjiang_Road.jpg?width=800",
+          "rating": 4.6,
+          "review": "苏州古城最完整历史街区；800 年未变格局；小桥流水人家；评弹、苏式糕团、鸡爪、蟹壳黄。",
+          "openingHours": "全天开放",
+          "ticketPrice": "免费",
+          "needsBooking": false,
+          "emoji": "🏮"
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "苏州站附近（同得兴嘉馀坊店）",
+          "hours": "11:30-13:30",
+          "dishes": [
+            { "name": "枫镇大面（白汤面）", "price": "¥28" },
+            { "name": "苏式焖肉面", "price": "¥25" }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "平江路（松鹤楼/裕兴记/哑巴生煎）",
+          "hours": "17:30-21:30",
+          "dishes": [
+            { "name": "松鼠鳜鱼（松鹤楼）", "price": "¥128-168" },
+            { "name": "蟹粉小笼", "price": "¥58/笼" },
+            { "name": "桂花糖芋苗", "price": "¥18" }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-04",
+      "weekday": "周日",
+      "theme": "姑苏漫游 · 奥体聆听",
+      "tips": [
+        "苏州博物馆周一闭馆，10/4 周日正常开放（务必提前 7 天公众号预约！）",
+        "10/4 晚 17:00 出门去奥体中心；地铁 5 号线「苏州奥体中心」站 4 号口出步行 5 min；散场地铁延时至 23:30 后"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "苏州博物馆（贝聿铭设计）",
+          "time": "09:00-11:30",
+          "lat": 31.3237, "lng": 120.6281,
+          "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Suzhou_Museum_-_new_buildings.jpg?width=800",
+          "rating": 4.7,
+          "review": "贝聿铭封山之作，将苏州园林元素与现代建筑完美融合；免费但必须公众号预约；周一闭馆。",
+          "openingHours": "09:00-17:00（16:00 停止入场，周一闭馆）",
+          "ticketPrice": "免费（需公众号「苏州博物馆」提前 7 天预约）",
+          "needsBooking": true,
+          "leadDays": 7,
+          "emoji": "🏛"
+        },
+        {
+          "period": "noon",
+          "name": "狮子林",
+          "time": "11:30-13:30",
+          "lat": 31.32322, "lng": 120.62506,
+          "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/20090905_Suzhou_Lion_Grove_Garden_4502.jpg?width=800",
+          "rating": 4.6,
+          "review": "苏州四大名园之一；以「禅意」+「假山迷宫」著称；乾隆最爱；紧邻苏博，可联游。",
+          "openingHours": "07:30-17:30（10 月）",
+          "ticketPrice": "旺季 ¥40，淡季 ¥30",
+          "transport": { "mode": "步行", "fare": "¥0", "duration": "5 min 从苏博" },
+          "needsBooking": true,
+          "leadDays": 3,
+          "emoji": "🦁"
+        },
+        {
+          "period": "afternoon",
+          "name": "留园（四大名园 · 建筑艺术典范）",
+          "time": "14:00-16:30",
+          "lat": 31.31753, "lng": 120.58811,
+          "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Lingering_Garden.jpg?width=800",
+          "rating": 4.7,
+          "review": "中国四大名园之一；以「建筑艺术」著称；冠云峰（太湖石）世界知名；2 h 足够。",
+          "openingHours": "07:30-17:30（10 月）",
+          "ticketPrice": "旺季 ¥55，淡季 ¥45",
+          "transport": { "mode": "地铁 2 号线 → 石路站打车", "fare": "¥10-15", "duration": "约 25 min" },
+          "needsBooking": true,
+          "leadDays": 3,
+          "emoji": "🏯"
+        },
+        {
+          "period": "evening",
+          "name": "苏州奥体中心 · 许嵩演唱会",
+          "time": "19:00 开演（17:00 出门入场）",
+          "lat": 31.3117, "lng": 120.7128,
+          "photo": "",
+          "rating": 4.8,
+          "review": "苏州奥林匹克体育中心体育场；许嵩「安泊猜想」巡回；60m 延伸台 + 巨型月亮船；实名一票一证；建议提前 1.5-2 h 到达。",
+          "address": "江苏省苏州市工业园区中新大道东 999 号",
+          "transport": { "mode": "地铁 5/6 号线 → 苏州奥体中心站 4 号口", "fare": "¥3-5", "duration": "约 30 min 从平江路" },
+          "needsBooking": true,
+          "leadDays": 30,
+          "emoji": "🎤"
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "观前街（得月楼 / 松鹤楼）",
+          "hours": "11:30-14:00",
+          "dishes": [
+            { "name": "得月楼松鼠鳜鱼", "price": "¥168" },
+            { "name": "响油鳝糊", "price": "¥78" }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "奥体中心周边 / 提前吃",
+          "hours": "17:00-18:30",
+          "dishes": [
+            { "name": "苏式汤面", "price": "¥30" },
+            { "name": "卤味拼盘", "price": "¥48" }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-05",
+      "weekday": "周一",
+      "theme": "虎丘晨游 · 返穗",
+      "tips": [
+        "虎丘 7:30 开门，10/5 周一正常开放（虎丘不周一闭）",
+        "14:00 必须离开苏州；苏南机场国际/国内均需提前 2-2.5 h 值机",
+        "苏南机场到苏州有跨城「苏锡公交 1 号线」备选；打车约 ¥150-200"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "虎丘（吴中第一名胜）",
+          "time": "08:00-10:30",
+          "lat": 31.3367, "lng": 120.5964,
+          "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Tiger_Hill_Entrance.JPG?width=800",
+          "rating": 4.6,
+          "review": "「到苏州不游虎丘乃憾事也」（苏东坡）；世界第二斜塔「云岩寺塔」（虎丘塔）；含剑池、千人石。",
+          "openingHours": "07:30-17:30（10 月）",
+          "ticketPrice": "旺季 ¥80，淡季 ¥60",
+          "transport": { "mode": "地铁 2 号线 → 山塘街站打车", "fare": "¥10-15", "duration": "约 20 min" },
+          "needsBooking": false,
+          "emoji": "🗼"
+        },
+        {
+          "period": "morning",
+          "name": "山塘街（老苏州缩影）",
+          "time": "10:30-12:00",
+          "lat": 31.3210, "lng": 120.6097,
+          "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/Shantang_Street_Canal.jpg?width=800",
+          "rating": 4.5,
+          "review": "「七里山塘」；白居易任苏州刺史时修；沿河老街 + 古戏台 + 评弹茶馆；适合最后半天慢逛。",
+          "openingHours": "全天开放",
+          "ticketPrice": "免费（沿街景点另收）",
+          "needsBooking": false,
+          "emoji": "🏮"
+        },
+        {
+          "period": "noon",
+          "name": "退房 + 苏州 → 无锡苏南机场",
+          "time": "12:30-14:30",
+          "lat": 31.4947, "lng": 120.4356,
+          "photo": "",
+          "rating": 4.0,
+          "review": "苏州到苏南机场约 1.5 h；打车 ¥150-200 / 苏锡公交 1 号线 ¥5-8（耗时更长）/ 网约车合乘。",
+          "transport": { "mode": "网约车 / 苏锡公交 1 号线", "fare": "¥5-200", "duration": "约 1.5 h" },
+          "needsBooking": false,
+          "emoji": "🚖"
+        },
+        {
+          "period": "afternoon",
+          "name": "苏南机场 T2 → 广州白云 T3",
+          "time": "17:35 起飞 → 20:05 落地",
+          "lat": 23.3925, "lng": 113.2988,
+          "photo": "",
+          "rating": 4.5,
+          "review": "飞行约 2h30min；落地后地铁 3 号线回市区。",
+          "needsBooking": false,
+          "emoji": "✈️"
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "山塘街（老苏州茶酒楼 / 山塘评弹茶馆）",
+          "hours": "11:00-13:30",
+          "dishes": [
+            { "name": "苏式糕团（定胜糕/海棠糕）", "price": "¥8-15/个" },
+            { "name": "苏式汤面", "price": "¥28" }
+          ]
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<!-- ═══════════════ RENDER + UI LOGIC ═══════════════ -->
+<script>
+(function () {
+  var trip = JSON.parse(document.getElementById('trip-data').textContent);
+  var ua = (typeof navigator !== 'undefined' && navigator.userAgent) || '';
+
+  /* ────── ① 倒计时 ────── */
+  function findNextEvent(now) {
+    var candidates = [];
+    // 1) 出发日 13:50（机票）
+    var depDate = new Date(trip.startDate + 'T13:50:00+08:00').getTime();
+    candidates.push({ t: depDate, icon: '✈️', name: '广州出发 · 飞无锡', time: trip.startDate + ' 13:50 · 广州白云 T3', kind: 'flight' });
+    // 2) 演唱会 10/4 19:00
+    var concertDate = new Date('2026-10-04T19:00:00+08:00').getTime();
+    candidates.push({ t: concertDate, icon: '🎤', name: '许嵩「安泊猜想」演唱会 · 苏州', time: '2026-10-04 19:00 · 苏州奥体中心', kind: 'concert' });
+    // 3) 返程 10/5 17:35
+    var retDate = new Date('2026-10-05T17:35:00+08:00').getTime();
+    candidates.push({ t: retDate, icon: '✈️', name: '无锡返穗 · 飞广州', time: '2026-10-05 17:35 · 无锡苏南 T2', kind: 'return' });
+    // 4) 每天每个 slot.time（粗略；首段如 09:00）
+    trip.days.forEach(function (d) {
+      (d.slots || []).forEach(function (s) {
+        var timeStr = s.time || '';
+        var m = timeStr.match(/(\d{1,2}):(\d{2})/);
+        if (!m) return;
+        var hh = parseInt(m[1], 10), mm = parseInt(m[2], 10);
+        var eventDate = new Date(d.date + 'T' + (hh < 10 ? '0' + hh : hh) + ':' + (mm < 10 ? '0' + mm : mm) + ':00+08:00').getTime();
+        candidates.push({ t: eventDate, icon: s.emoji || '📍', name: s.name, time: d.date + ' ' + timeStr, kind: 'slot' });
+      });
+    });
+    candidates = candidates.filter(function (c) { return c.t > now; }).sort(function (a, b) { return a.t - b.t; });
+    if (candidates.length === 0) {
+      // 行程已结束
+      return {
+        icon: '🏁',
+        name: '行程已圆满结束 · 期待下次出发',
+        time: '',
+        diff: 0,
+        done: true,
+      };
+    }
+    return Object.assign({}, candidates[0], { diff: candidates[0].t - now });
+  }
+
+  var countdownTimerId = null;
+  function tickCountdown() {
+    var now = Date.now();
+    var ev = findNextEvent(now);
+    document.getElementById('cd-icon').textContent = ev.icon;
+    document.getElementById('cd-event').textContent = ev.name;
+    document.getElementById('cd-event-time').textContent = ev.time || '';
+    if (ev.done) {
+      document.getElementById('cd-d').textContent = '✓';
+      document.getElementById('cd-h').textContent = '';
+      document.getElementById('cd-m').textContent = '';
+      document.getElementById('cd-s').textContent = '';
+      if (countdownTimerId) clearInterval(countdownTimerId);
+      return;
+    }
+    var d = Math.floor(ev.diff / 86400000);
+    var h = Math.floor((ev.diff % 86400000) / 3600000);
+    var m = Math.floor((ev.diff % 3600000) / 60000);
+    var s = Math.floor((ev.diff % 60000) / 1000);
+    document.getElementById('cd-d').textContent = d;
+    document.getElementById('cd-h').textContent = String(h).padStart(2, '0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2, '0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2, '0');
+  }
+  tickCountdown();
+  countdownTimerId = setInterval(tickCountdown, 1000);
+
+  /* ────── ② 总览 SVG 地图 ────── */
+  function buildOverviewSVG() {
+    var all = [];
+    trip.days.forEach(function (d, di) {
+      (d.slots || []).forEach(function (s) {
+        if (isFinite(s.lat) && isFinite(s.lng)) {
+          all.push({ lat: s.lat, lng: s.lng, name: s.name, day: di + 1 });
+        }
+      });
+    });
+    if (all.length === 0) return;
+    var lats = all.map(function (p) { return p.lat; });
+    var lngs = all.map(function (p) { return p.lng; });
+    var minLat = Math.min.apply(null, lats), maxLat = Math.max.apply(null, lats);
+    var minLng = Math.min.apply(null, lngs), maxLng = Math.max.apply(null, lngs);
+    var padLat = (maxLat - minLat) * 0.15 || 0.05;
+    var padLng = (maxLng - minLng) * 0.15 || 0.05;
+    minLat -= padLat; maxLat += padLat;
+    minLng -= padLng; maxLng += padLng;
+    var w = 680, h = 380;
+    function toSVG(lat, lng) {
+      return {
+        x: ((lng - minLng) / (maxLng - minLng)) * w,
+        y: (1 - (lat - minLat) / (maxLat - minLat)) * h,
+      };
+    }
+    var dayColors = ['var(--day1)', 'var(--day2)', 'var(--day3)', 'var(--day4)', 'var(--day5)'];
+    var cityCenters = {};
+    var html = '<svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg">';
+    // 背景纸纹（淡淡的同心圆 / 河网感）
+    html += '<defs><pattern id="paper" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="12" cy="12" r="0.6" fill="rgba(74,138,138,0.08)"/></pattern></defs>';
+    html += '<rect x="0" y="0" width="' + w + '" height="' + h + '" fill="url(#paper)"/>';
+    // 城市 cluster 标签
+    var wuxiCenter = { lat: 31.52, lng: 120.20 };
+    var suzhouCenter = { lat: 31.32, lng: 120.62 };
+    var wuxiPt = toSVG(wuxiCenter.lat, wuxiCenter.lng);
+    var suzhouPt = toSVG(suzhouCenter.lat, suzhouCenter.lng);
+    html += '<text x="' + wuxiPt.x + '" y="' + (wuxiPt.y - 30) + '" text-anchor="middle" font-family="Ma Shan Zheng, cursive" font-size="22" fill="var(--qing-green)" opacity="0.7">无锡</text>';
+    html += '<text x="' + suzhouPt.x + '" y="' + (suzhouPt.y + 40) + '" text-anchor="middle" font-family="Ma Shan Zheng, cursive" font-size="22" fill="var(--da-blue)" opacity="0.7">苏州</text>';
+    // 每条当日路线
+    trip.days.forEach(function (d, di) {
+      var pts = (d.slots || []).filter(function (s) { return isFinite(s.lat) && isFinite(s.lng); });
+      if (pts.length < 2) return;
+      var svgPts = pts.map(function (p) {
+        var pt = toSVG(p.lat, p.lng);
+        return pt.x.toFixed(1) + ',' + pt.y.toFixed(1);
+      });
+      html += '<polyline points="' + svgPts.join(' ') + '" stroke="var(--day' + (di + 1) + ')" stroke-width="2.5" fill="none" stroke-dasharray="8 5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>';
+      // 当晚酒店标记（用每日最后一个 slot 作为住宿地代表）
+      var hotel = pts[pts.length - 1];
+      var hp = toSVG(hotel.lat, hotel.lng);
+      html += '<circle cx="' + hp.x.toFixed(1) + '" cy="' + hp.y.toFixed(1) + '" r="7" fill="var(--bg)" stroke="var(--gold)" stroke-width="2.5"/>';
+      html += '<circle cx="' + hp.x.toFixed(1) + '" cy="' + hp.y.toFixed(1) + '" r="3" fill="var(--gold)"/>';
+      html += '<text x="' + hp.x.toFixed(1) + '" y="' + (hp.y + 16) + '" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="var(--ink-soft)">夜 ' + (di + 1) + '</text>';
+    });
+    // 所有 slot 编号圆点
+    trip.days.forEach(function (d, di) {
+      (d.slots || []).forEach(function (s, si) {
+        if (!isFinite(s.lat) || !isFinite(s.lng)) return;
+        var pt = toSVG(s.lat, s.lng);
+        html += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="6" fill="var(--day' + (di + 1) + ')" stroke="var(--bg)" stroke-width="1.5"/>';
+        html += '<text x="' + pt.x.toFixed(1) + '" y="' + (pt.y + 3) + '" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="#fff" font-weight="bold">' + (si + 1) + '</text>';
+      });
+    });
+    html += '</svg>';
+    document.getElementById('overview-svg-wrap').innerHTML = html;
+    // 图例
+    var legend = '';
+    for (var i = 1; i <= trip.days.length; i++) {
+      legend += '<span class="legend-item"><span class="legend-swatch" style="background:var(--day' + i + ')"></span>Day ' + i + '</span>';
+    }
+    legend += '<span class="legend-item"><span class="legend-hotel"></span>夜宿</span>';
+    document.getElementById('overview-legend').innerHTML = legend;
+  }
+
+  /* ────── ③ 已确认预订 ────── */
+  function buildConfirmed() {
+    var html = '';
+    // 航班（已订）
+    html += '<div class="confirmed-sub"><div class="confirmed-sub-head">✈️ 已订机票</div>';
+    trip.flights.booked.forEach(function (f) {
+      html += '<div class="confirmed-item">'
+        + '<div class="confirmed-item-row"><span class="confirmed-time">🕐 ' + escapeHTML(f.time) + '</span><span class="confirmed-name">' + escapeHTML(f.label) + '</span></div>'
+        + '<div class="confirmed-item-row"><span><span class="icon">🏷</span> ' + escapeHTML(f.code) + '</span><span><span class="icon">🛂</span> ' + escapeHTML(f.terminal) + '</span></div>'
+        + '<div class="confirmed-note">📝 ' + escapeHTML(f.note) + '</div>'
+        + '</div>';
+    });
+    html += '</div>';
+    // 高铁（候选）
+    if (trip.gtrains && trip.gtrains.candidates) {
+      html += '<div class="confirmed-sub"><div class="confirmed-sub-head">🚄 高铁 G 车 · 待订</div>';
+      trip.gtrains.candidates.forEach(function (g) {
+        html += '<div class="confirmed-item">'
+          + '<div class="confirmed-item-row"><span class="confirmed-time">🕐 ' + escapeHTML(g.time) + '</span><span class="confirmed-name">' + escapeHTML(g.label) + '</span></div>'
+          + '<div class="confirmed-item-row"><span><span class="icon">🚄</span> ' + escapeHTML(g.code) + '</span><span><span class="icon">💴</span> ' + escapeHTML(g.priceRange) + '</span></div>'
+          + '<div class="confirmed-note">📝 ' + escapeHTML(g.note) + '</div>'
+          + '</div>';
+      });
+      html += '</div>';
+    }
+    // 酒店
+    trip.hotelAreas.forEach(function (area) {
+      html += '<div class="confirmed-sub"><div class="confirmed-sub-head">🏨 住宿推荐 · ' + escapeHTML(area.area) + '</div>';
+      html += '<div class="confirmed-note" style="margin-bottom:8px;">📍 ' + escapeHTML(area.reason) + '</div>';
+      area.options.forEach(function (opt) {
+        var tierCls = opt.tier === '经济' ? 'econ' : (opt.tier === '高端' ? 'lux' : 'mid');
+        html += '<div class="confirmed-item">'
+          + '<div class="confirmed-item-row"><span class="confirmed-tier ' + tierCls + '">' + escapeHTML(opt.tier) + '</span><span class="confirmed-name">' + escapeHTML(opt.name) + '</span><span style="margin-left:auto;color:var(--cinnabar);font-family:DM Mono,monospace;font-size:12px;">' + escapeHTML(opt.priceRange) + '</span></div>'
+          + '<div class="confirmed-item-row"><span><span class="icon">📞</span> ' + escapeHTML(opt.phone || '以官方为准') + '</span></div>'
+          + '<div class="confirmed-note">📝 ' + escapeHTML(opt.note) + '</div>'
+          + '</div>';
+      });
+      html += '</div>';
+    });
+    // 演唱会（高亮抢票）
+    var c = trip.concert;
+    html += '<div class="confirmed-sub" style="background:rgba(184,57,46,0.06);border:1px solid rgba(184,57,46,0.25);"><div class="confirmed-sub-head alert">🎤 演唱会门票 · 抢票建议</div>'
+      + '<div class="confirmed-item">'
+      + '<div class="confirmed-item-row"><span class="confirmed-time">🕐 ' + escapeHTML(c.time) + '</span><span class="confirmed-name">' + escapeHTML(c.name) + '</span></div>'
+      + '<div class="confirmed-item-row"><span><span class="icon">📍</span> ' + escapeHTML(c.venue) + '</span></div>'
+      + '<div class="confirmed-address">🏠 ' + escapeHTML(c.address) + '</div>'
+      + '<div class="confirmed-item-row" style="margin-top:6px;"><span><span class="icon">🚇</span> ' + escapeHTML(c.transport) + '</span></div>'
+      + '<div class="confirmed-note" style="margin-top:6px;color:var(--cinnabar);font-weight:600;">⚠ ' + escapeHTML(c.ticketAdvice) + '</div>'
+      + '</div></div>';
+    document.getElementById('confirmed-block').innerHTML = html;
+  }
+
+  /* ────── ④ 逐日行程 ────── */
+  var periodLabel = { morning: '上午', noon: '下午', afternoon: '下午', evening: '晚间' };
+  function periodOf(s) {
+    if (s.period === 'morning') return '上午';
+    if (s.period === 'noon' || s.period === 'afternoon') return '下午';
+    if (s.period === 'evening') return '晚间';
+    return '时段';
+  }
+  function renderSlotCard(s) {
+    var html = '<div class="slot-card">';
+    // 左：图片
+    var emoji = s.emoji || '📍';
+    html += '<div class="slot-img-wrap">';
+    if (s.photo) {
+      html += '<img src="' + escapeHTML(s.photo) + '" alt="' + escapeHTML(s.name) + '" '
+        + 'onerror="this.style.display=&#39;none&#39;;var fb=this.parentElement.querySelector(&#39;.slot-img-fallback&#39;);if(fb)fb.style.display=&#39;flex&#39;;">';
+      html += '<div class="slot-img-fallback" style="display:none;"><span class="fb-emoji">' + emoji + '</span><span class="fb-text">' + escapeHTML(s.name) + '</span></div>';
+    } else {
+      html += '<div class="slot-img-fallback"><span class="fb-emoji">' + emoji + '</span><span class="fb-text">' + escapeHTML(s.name) + '</span></div>';
+    }
+    html += '<span class="slot-period">' + periodOf(s) + '</span>';
+    html += '</div>';
+    // 右：内容
+    html += '<div class="slot-body">';
+    html += '<div><span class="slot-name">' + escapeHTML(s.name) + '</span>';
+    if (typeof s.rating === 'number' && s.rating > 0) {
+      html += '<span class="slot-rating">★ ' + s.rating.toFixed(1) + '</span>';
+    }
+    html += '</div>';
+    html += '<div class="slot-time">🕐 ' + escapeHTML(s.time || '') + '</div>';
+    if (s.needsBooking) {
+      html += reminderBadgeHTML(s.leadDays);
+    }
+    if (s.review) {
+      html += '<div class="slot-review">' + escapeHTML(s.review) + '</div>';
+    }
+    if (s.openingHours || s.ticketPrice || s.transport || s.address) {
+      html += '<div class="slot-meta-row">';
+      if (s.openingHours) html += '<span><span class="ico">🕐</span> ' + escapeHTML(s.openingHours) + '</span>';
+      if (s.ticketPrice) html += '<span><span class="ico">🎟</span> ' + escapeHTML(s.ticketPrice) + '</span>';
+      html += '</div>';
+    }
+    if (s.transport) {
+      var tParts = [];
+      if (s.transport.mode) tParts.push(s.transport.mode);
+      if (s.transport.duration) tParts.push(s.transport.duration);
+      if (s.transport.fare) tParts.push(s.transport.fare);
+      html += '<div class="slot-meta-row"><span><span class="ico">🚇</span> ' + escapeHTML(tParts.join(' · ')) + '</span></div>';
+    }
+    if (s.address) {
+      html += '<div class="slot-meta-row"><span><span class="ico">📍</span> ' + escapeHTML(s.address) + '</span></div>';
+    }
+    // 导航按钮
+    html += '<div class="slot-actions">';
+    var navUrl = buildNavLink(s.lat, s.lng, s.name, ua);
+    html += '<button class="btn-nav" onclick="window.open(\'' + escapeHTML(navUrl) + '\', \'_blank\')">🧭 导航</button>';
+    if (s.needsBooking) {
+      html += '<button class="btn-nav book" onclick="window.open(\'https://www.dahepiao.com/search?keyword=%E8%AE%B8%E5%B5%A9\', \'_blank\')">🎫 去抢票</button>';
+    }
+    html += '</div>';
+    html += '</div>'; // slot-body
+    html += '</div>'; // slot-card
+    return html;
+  }
+  function renderDining(arr) {
+    if (!arr || !arr.length) return '';
+    var html = '<div class="dining-section"><div class="dining-header">🍽 当日餐饮推荐</div>';
+    arr.forEach(function (d) {
+      html += '<div class="dining-item">'
+        + '<div class="dining-meal-row"><span class="dining-meal-badge">' + escapeHTML(d.meal) + '</span><span class="dining-place">' + escapeHTML(d.place) + '</span></div>'
+        + '<div class="dining-hours">⏰ ' + escapeHTML(d.hours) + '</div>'
+        + '<div class="dish-list">';
+      (d.dishes || []).forEach(function (dish) {
+        html += '<div class="dish-row"><span class="dish-name">' + escapeHTML(dish.name) + '</span><span class="dish-price">' + escapeHTML(dish.price) + '</span></div>';
+      });
+      html += '</div></div>';
+    });
+    html += '</div>';
+    return html;
+  }
+  function buildDayMiniSVG(slots) {
+    var valid = slots.filter(function (s) { return isFinite(s.lat) && isFinite(s.lng); });
+    if (valid.length === 0) return '<div style="padding:20px;color:var(--ink-soft);font-size:12px;">无坐标数据</div>';
+    var lats = valid.map(function (p) { return p.lat; });
+    var lngs = valid.map(function (p) { return p.lng; });
+    var minLat = Math.min.apply(null, lats), maxLat = Math.max.apply(null, lats);
+    var minLng = Math.min.apply(null, lngs), maxLng = Math.max.apply(null, lngs);
+    var pad = 0.005;
+    minLat -= pad; maxLat += pad;
+    minLng -= pad; maxLng += pad;
+    var w = 600, h = 220;
+    function toSVG(lat, lng) {
+      return {
+        x: ((lng - minLng) / (maxLng - minLng)) * w,
+        y: (1 - (lat - minLat) / (maxLat - minLat)) * h,
+      };
+    }
+    var html = '<svg viewBox="0 0 ' + w + ' ' + h + '">';
+    if (valid.length > 1) {
+      var pts = valid.map(function (p) {
+        var pt = toSVG(p.lat, p.lng);
+        return pt.x.toFixed(1) + ',' + pt.y.toFixed(1);
+      });
+      html += '<polyline points="' + pts.join(' ') + '" stroke="var(--da-blue)" stroke-width="2.5" fill="none" stroke-dasharray="6 4" stroke-linecap="round" opacity="0.7"/>';
+    }
+    valid.forEach(function (p, i) {
+      var pt = toSVG(p.lat, p.lng);
+      html += '<circle cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="10" fill="var(--da-blue)" opacity="0.85"/>';
+      html += '<text x="' + pt.x.toFixed(1) + '" y="' + (pt.y + 4) + '" text-anchor="middle" font-family="DM Mono, monospace" font-size="11" fill="#fff" font-weight="bold">' + (i + 1) + '</text>';
+    });
+    html += '</svg>';
+    return html;
+  }
+  function buildTimeline() {
+    var html = '';
+    trip.days.forEach(function (d, di) {
+      var dayCls = 'day' + (di + 1);
+      html += '<div class="day-block ' + dayCls + '" id="day-block-' + di + '">'
+        + '<div class="day-stripe"></div>'
+        + '<div class="day-header">'
+        + '<div class="day-num d' + (di + 1) + '">' + (di + 1) + '</div>'
+        + '<div class="day-title-row">'
+        + '<div class="day-weekday">' + escapeHTML(d.date) + ' · ' + escapeHTML(d.weekday) + '</div>'
+        + '<div class="day-theme">' + escapeHTML(d.theme) + '</div>'
+        + '</div>'
+        + '<button class="day-expand-toggle" data-day="' + di + '" aria-expanded="false">▾ 路线图</button>'
+        + '</div>';
+      // 当日 tips banner
+      (d.tips || []).forEach(function (tip) {
+        html += '<div class="day-tips-banner">💡 ' + escapeHTML(tip) + '</div>';
+      });
+      // 折叠的 mini map
+      var validSlots = (d.slots || []).filter(function (s) { return isFinite(s.lat) && isFinite(s.lng); });
+      var navUrl = buildMultiPointNavLink(validSlots);
+      html += '<div class="day-minimap-wrap" id="day-minimap-' + di + '">'
+        + buildDayMiniSVG(d.slots || [])
+        + '<div class="day-minimap-meta">'
+        + '<span>📍 ' + validSlots.length + ' 个途经点 · 路线示意</span>';
+      if (navUrl) {
+        html += '<button class="btn-nav-multi" onclick="window.open(\'' + escapeHTML(navUrl) + '\', \'_blank\')">🧭 一键全天导航</button>';
+      }
+      html += '</div></div>';
+      // slots
+      if (d.slots && d.slots.length) {
+        html += '<div class="slots-list">';
+        d.slots.forEach(function (s) {
+          html += renderSlotCard(s);
+        });
+        html += '</div>';
+        html += renderDining(d.dining);
+      }
+      html += '</div>'; // day-block
+    });
+    document.getElementById('timeline-container').innerHTML = html;
+
+    // 绑定折叠交互
+    document.querySelectorAll('.day-expand-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var dayIdx = btn.getAttribute('data-day');
+        var wrap = document.getElementById('day-minimap-' + dayIdx);
+        var isOpen = wrap.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        btn.textContent = isOpen ? '▴ 收起路线' : '▾ 路线图';
+      });
+    });
+  }
+
+  /* ────── ⑤ 待办清单（纯列表） ────── */
+  function buildTodoList() {
+    var reminders = computeReminders(trip.startDate, trip.reminders);
+    var html = '';
+    reminders.forEach(function (r) {
+      var urgent = r.leadDays >= 14;
+      html += '<li class="todo-item' + (urgent ? ' todo-urgent' : '') + '">'
+        + '<span class="todo-deadline">' + escapeHTML(r.deadline) + '前</span>'
+        + '<span class="todo-text">' + escapeHTML(r.item) + '<span class="todo-lead">（建议提前 ' + r.leadDays + ' 天）</span></span>'
+        + '</li>';
+    });
+    document.getElementById('todo-list').innerHTML = html;
+  }
+
+  /* ────── ⑥ 实用贴士 ────── */
+  function buildTips() {
+    var html = '';
+    (trip.tips || []).forEach(function (t, i) {
+      html += '<li class="tip-item"><span class="tip-num">' + String(i + 1).padStart(2, '0') + '</span><span class="tip-text">' + escapeHTML(t) + '</span></li>';
+    });
+    document.getElementById('tips-list').innerHTML = html;
+  }
+
+  /* ────── 免责声明 ────── */
+  function buildDisclaimer() {
+    document.getElementById('disclaimer-text').textContent = trip.disclaimer;
+  }
+
+  /* ────── 启动 ────── */
+  buildOverviewSVG();
+  buildConfirmed();
+  buildTimeline();
+  buildTodoList();
+  buildTips();
+  buildDisclaimer();
+})();
+</script>
+
+</body>
+</html>
