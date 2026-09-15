@@ -29,13 +29,13 @@
   --bronze-lt:  #4a6b8e;
   --celadon:    #6faca8;
 
-  --day1: #b8392e;
-  --day2: #4a8a8a;
-  --day3: #2c4a6e;
-  --day4: #a08040;
-  --day5: #7a5a4a;
-  --day6: #7a5a4a;
-  --day7: #7a5a4a;
+  --day1: #b8392e;  --day1-light: rgba(184,57,46,0.10);
+  --day2: #4a8a8a;  --day2-light: rgba(74,138,138,0.10);
+  --day3: #2c4a6e;  --day3-light: rgba(44,74,110,0.10);
+  --day4: #a08040;  --day4-light: rgba(160,128,64,0.12);
+  --day5: #7a5a4a;  --day5-light: rgba(122,90,74,0.10);
+  --day6: #7a5a4a;  --day6-light: rgba(122,90,74,0.10);
+  --day7: #7a5a4a;  --day7-light: rgba(122,90,74,0.10);
 
   --morning:    #e3f2fd;
   --noon:       #fce4ec;
@@ -571,6 +571,14 @@ img { display: block; max-width: 100%; }
   align-items: center; justify-content: center;
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
+/* 按天分色：描边色读 --dayN 变量（与 day-block/day-tab 同源） */
+.route-pin--day-0 { border-color: var(--day1) !important; }
+.route-pin--day-1 { border-color: var(--day2) !important; }
+.route-pin--day-2 { border-color: var(--day3) !important; }
+.route-pin--day-3 { border-color: var(--day4) !important; }
+.route-pin--day-4 { border-color: var(--day5) !important; }
+.route-pin--day-5 { border-color: var(--day6) !important; }
+.route-pin--day-6 { border-color: var(--day7) !important; }
 .route-pin__num {
   font-family: 'DM Mono', monospace;
   font-size: 10px; font-weight: 500;
@@ -610,23 +618,48 @@ img { display: block; max-width: 100%; }
   flex-shrink: 0;
   transition: all 0.18s ease;
   font-family: 'Noto Serif SC', serif;
+  position: relative;
 }
+/* 未激活：左侧加一道当日色竖条；数字徽章也用当日色 */
+.route-chip--day-1 { border-left: 3px solid var(--day1); }
+.route-chip--day-2 { border-left: 3px solid var(--day2); }
+.route-chip--day-3 { border-left: 3px solid var(--day3); }
+.route-chip--day-4 { border-left: 3px solid var(--day4); }
+.route-chip--day-5 { border-left: 3px solid var(--day5); }
+.route-chip--day-6 { border-left: 3px solid var(--day6); }
+.route-chip--day-7 { border-left: 3px solid var(--day7); }
+.route-chip--day-1 .route-chip__num { color: var(--day1); background: var(--day1-light); }
+.route-chip--day-2 .route-chip__num { color: var(--day2); background: var(--day2-light); }
+.route-chip--day-3 .route-chip__num { color: var(--day3); background: var(--day3-light); }
+.route-chip--day-4 .route-chip__num { color: var(--day4); background: var(--day4-light); }
+.route-chip--day-5 .route-chip__num { color: var(--day5); background: var(--day5-light); }
+.route-chip--day-6 .route-chip__num { color: var(--day6); background: var(--day6-light); }
+.route-chip--day-7 .route-chip__num { color: var(--day7); background: var(--day7-light); }
 .route-chip:hover {
   border-color: var(--gold);
   color: var(--ink);
   transform: translateY(-1px);
 }
+/* 激活：保持深底，但描边改用当日色；数字徽章反白为底色 */
 .route-chip.active {
   background: var(--ink);
-  color: var(--gold-lt);
-  border-color: var(--gold);
+  color: #f7f2e8;
   font-weight: 600;
 }
+.route-chip.active .route-chip__num {
+  background: #f7f2e8;
+  color: var(--ink);
+}
+.route-chip.active.route-chip--day-1 { border-color: var(--day1); border-left-color: var(--day1); }
+.route-chip.active.route-chip--day-2 { border-color: var(--day2); border-left-color: var(--day2); }
+.route-chip.active.route-chip--day-3 { border-color: var(--day3); border-left-color: var(--day3); }
+.route-chip.active.route-chip--day-4 { border-color: var(--day4); border-left-color: var(--day4); }
+.route-chip.active.route-chip--day-5 { border-color: var(--day5); border-left-color: var(--day5); }
+.route-chip.active.route-chip--day-6 { border-color: var(--day6); border-left-color: var(--day6); }
+.route-chip.active.route-chip--day-7 { border-color: var(--day7); border-left-color: var(--day7); }
 .route-chip__num {
   font-family: 'DM Mono', monospace;
   font-size: 10px;
-  color: var(--gold);
-  background: rgba(74,138,138,0.12);
   border-radius: 50%;
   width: 20px; height: 20px;
   display: inline-flex;
@@ -634,10 +667,6 @@ img { display: block; max-width: 100%; }
   justify-content: center;
   flex-shrink: 0;
   letter-spacing: 0;
-}
-.route-chip.active .route-chip__num {
-  background: var(--gold);
-  color: var(--ink);
 }
 .route-chip__emoji {
   font-size: 13px;
@@ -734,14 +763,36 @@ img { display: block; max-width: 100%; }
   min-width: 60px;
   transition: all 0.18s;
   font-family: 'Noto Serif SC', serif;
+  position: relative;
 }
+/* 未激活：用当日色描边 + 顶部细色条 + 数字染色（轻量暗示） */
+.day-tab--day-1 { border-color: rgba(184,57,46,0.35); }
+.day-tab--day-1 .day-tab__num { color: var(--day1); }
+.day-tab--day-2 { border-color: rgba(74,138,138,0.35); }
+.day-tab--day-2 .day-tab__num { color: var(--day2); }
+.day-tab--day-3 { border-color: rgba(44,74,110,0.35); }
+.day-tab--day-3 .day-tab__num { color: var(--day3); }
+.day-tab--day-4 { border-color: rgba(160,128,64,0.35); }
+.day-tab--day-4 .day-tab__num { color: var(--day4); }
+.day-tab--day-5 { border-color: rgba(122,90,74,0.35); }
+.day-tab--day-5 .day-tab__num { color: var(--day5); }
+.day-tab--day-6 { border-color: rgba(122,90,74,0.35); }
+.day-tab--day-6 .day-tab__num { color: var(--day6); }
+.day-tab--day-7 { border-color: rgba(122,90,74,0.35); }
+.day-tab--day-7 .day-tab__num { color: var(--day7); }
 .day-tab:hover { border-color: var(--gold); }
 .day-tab.active {
   background: var(--ink);
-  color: var(--gold-lt);
-  border-color: var(--gold);
+  color: #f7f2e8;
   font-weight: 700;
 }
+.day-tab.active.day-tab--day-1 { border-color: var(--day1); }
+.day-tab.active.day-tab--day-2 { border-color: var(--day2); }
+.day-tab.active.day-tab--day-3 { border-color: var(--day3); }
+.day-tab.active.day-tab--day-4 { border-color: var(--day4); }
+.day-tab.active.day-tab--day-5 { border-color: var(--day5); }
+.day-tab.active.day-tab--day-6 { border-color: var(--day6); }
+.day-tab.active.day-tab--day-7 { border-color: var(--day7); }
 .day-tab__num {
   font-family: 'Ma Shan Zheng', cursive;
   font-size: 18px;
@@ -755,7 +806,7 @@ img { display: block; max-width: 100%; }
   color: var(--ink-soft);
   margin-top: 2px;
 }
-.day-tab.active .day-tab__weekday { color: rgba(111,172,168,0.7); }
+.day-tab.active .day-tab__weekday { color: rgba(247,242,232,0.7); }
 
 /* ─── Timeline bookmarks (right-edge rail, timeline mode only) ─── */
 #timeline-bookmarks {
@@ -842,8 +893,16 @@ img { display: block; max-width: 100%; }
 }
 
 /* ─── Day sections ───────────────────────────────── */
-.day-block { padding: 22px 0; border-bottom: 1px solid var(--border); }
+.day-block { padding: 22px 0; border-bottom: 1px solid var(--border); position: relative; }
 .day-block:last-child { border-bottom: none; }
+/* 每个 day-block 左侧 3px 当日色条 */
+.day-block.day-1 { border-left: 3px solid var(--day1); padding-left: 0; }
+.day-block.day-2 { border-left: 3px solid var(--day2); padding-left: 0; }
+.day-block.day-3 { border-left: 3px solid var(--day3); padding-left: 0; }
+.day-block.day-4 { border-left: 3px solid var(--day4); padding-left: 0; }
+.day-block.day-5 { border-left: 3px solid var(--day5); padding-left: 0; }
+.day-block.day-6 { border-left: 3px solid var(--day6); padding-left: 0; }
+.day-block.day-7 { border-left: 3px solid var(--day7); padding-left: 0; }
 .day-header {
   padding: 0 22px 12px;
   display: flex;
@@ -881,7 +940,17 @@ img { display: block; max-width: 100%; }
   color: var(--ink);
   margin-top: 2px;
   line-height: 1.3;
+  padding-left: 10px;
+  border-left: 2px solid var(--border);
 }
+/* day-theme 的左侧色条跟随当日色 */
+.day-1 .day-theme { border-left-color: var(--day1); }
+.day-2 .day-theme { border-left-color: var(--day2); }
+.day-3 .day-theme { border-left-color: var(--day3); }
+.day-4 .day-theme { border-left-color: var(--day4); }
+.day-5 .day-theme { border-left-color: var(--day5); }
+.day-6 .day-theme { border-left-color: var(--day6); }
+.day-7 .day-theme { border-left-color: var(--day7); }
 .day-tips-banner {
   margin: 0 22px 14px;
   padding: 10px 14px;
@@ -1500,6 +1569,37 @@ footer .footer-cta {
   .expenses-table thead th,
   .expenses-table tbody td { padding: 6px 6px; }
 }
+
+/* ── 地图 popup / slot 卡片的导航按钮 ── */
+.popup-nav-row {
+  display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap;
+}
+.popup-nav-link {
+  display: inline-block; padding: 4px 10px;
+  border: 1px solid #d6c9b0; border-radius: 4px;
+  font-size: 11px; font-family: inherit; line-height: 1.4;
+  background: #fff; color: #2a2a2a;
+  cursor: pointer; text-decoration: none;
+  transition: background .15s ease, border-color .15s ease;
+}
+.popup-nav-link:hover { background: #f5efe2; border-color: #b8862e; }
+.popup-nav-link--amap { color: #1677ff; border-color: #d6e4ff; }
+.popup-nav-link--amap:hover { background: #e8f1ff; border-color: #1677ff; }
+.popup-nav-link--baidu { color: #31459b; border-color: #dde0ea; }
+.popup-nav-link--baidu:hover { background: #eaedf6; border-color: #31459b; }
+
+/* slot 卡片底部的"导航到此处"行 */
+.slot-nav-row {
+  display: flex; gap: 8px; align-items: center;
+  margin-top: 10px; padding-top: 8px;
+  border-top: 1px dashed var(--border);
+  font-size: 11px; color: var(--ink-soft);
+}
+.slot-nav-row__label {
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 </style>
 </head>
 <body>
@@ -1686,19 +1786,77 @@ function buildNavLink(lat, lng, label, ua) {
   }
   return 'geo:' + sLat + ',' + sLng + '?q=' + sLat + ',' + sLng + '(' + encLabel + ')';
 }
-function buildMapAppLinks(lat, lng, label) {
+function buildMapAppLinks(lat, lng, label, mode) {
   var sLat = _sanitizeLat(lat), sLng = _sanitizeLng(lng);
   var encLabel = encodeURIComponent(String(label));
-  var amap = {
-    label: '高德地图',
-    url: 'https://uri.amap.com/marker?position=' + sLng + ',' + sLat
-      + '&name=' + encLabel + '&coordinate=wgs84&callnative=1&src=travel-plan-viz',
+  mode = mode || 'marker';
+  var amap;
+  if (mode === 'navi') {
+    amap = {
+      label: '高德地图',
+      url: 'https://uri.amap.com/navigation?to=' + sLng + ',' + sLat + ',' + encLabel
+        + '&mode=car&policy=1&coordinate=wgs84&src=travel-plan-viz&callnative=1',
+    };
+  } else {
+    amap = {
+      label: '高德地图',
+      url: 'https://uri.amap.com/marker?position=' + sLng + ',' + sLat
+        + '&name=' + encLabel + '&coordinate=wgs84&callnative=1&src=travel-plan-viz',
+    };
+  }
+  var baidu = {
+    label: '百度地图',
+    url: 'https://api.map.baidu.com/marker?location=' + sLat + ',' + sLng
+      + '&title=' + encLabel + '&content=' + encLabel
+      + '&output=html&coord_type=wgs84&src=travel-plan-viz',
   };
   var google = {
     label: 'Google 地图',
     url: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(sLat + ',' + sLng),
   };
-  return isInChinaBBox(sLat, sLng) ? [amap] : [google, amap];
+  return isInChinaBBox(sLat, sLng) ? [amap, baidu] : [google, amap];
+}
+
+// 平台分流：PC 直接打开网页导航；iOS 先 confirm 询问高德/百度，再调起 App 走路径规划。
+function getNavLinks(lat, lng, label, ua) {
+  var sLat = _sanitizeLat(lat), sLng = _sanitizeLng(lng);
+  var encLabel = encodeURIComponent(String(label));
+  var platform = (ua && /iPhone|iPad|iPod/.test(ua)) ? 'ios'
+    : (ua && /Android/.test(ua)) ? 'android' : 'pc';
+  // 高德网页：coordinate=wgs84 声明由其自转 GCJ-02
+  var amapWeb = 'https://uri.amap.com/navigation?to=' + sLng + ',' + sLat + ',' + encLabel
+    + '&mode=car&policy=1&coordinate=wgs84&src=travel-plan-viz';
+  // 百度 direction 接口的 destination 解释为 GCJ-02；先转
+  var gcj = wgs84ToGcj02(sLat, sLng);
+  var baiduWeb = 'https://api.map.baidu.com/direction?destination=' + gcj.lat + ',' + gcj.lng
+    + '&destination_name=' + encLabel
+    + '&mode=driving&region=cn&output=html&src=travel-plan-viz';
+  var iosAmap = 'iosamap://navi?sourceApplication=travel-plan-viz&lat=' + sLat
+    + '&lon=' + sLng + '&dev=0&style=2&name=' + encLabel;
+  var iosBaidu = 'baidumap://map/navi?coord_type=gcj02&location=' + gcj.lat + ',' + gcj.lng
+    + '&type=BLK&src=travel-plan-viz';
+  return { platform: platform, amapWeb: amapWeb, baiduWeb: baiduWeb, iosAmap: iosAmap, iosBaidu: iosBaidu };
+}
+
+// 启动外部导航：按 UA 选策略
+// - pc / android：直接打开高德网页（默认更普及），用户也可在弹层里选百度
+// - ios：先 confirm 用高德还是百度，再 window.location 调起对应 scheme
+function launchNavigation(lat, lng, label, ua) {
+  var nav = getNavLinks(lat, lng, label, ua);
+  if (nav.platform === 'ios') {
+    var choice = window.confirm('选择地图 App：\n确定 = 高德地图\n取消 = 百度地图');
+    if (choice) {
+      // iOS scheme 调起；失败回退到网页（用户没装 App 时 Safari 会失败，需用户再次点击）
+      window.location.href = nav.iosAmap;
+      setTimeout(function () { window.open(nav.amapWeb, '_blank'); }, 1500);
+    } else {
+      window.location.href = nav.iosBaidu;
+      setTimeout(function () { window.open(nav.baiduWeb, '_blank'); }, 1500);
+    }
+  } else {
+    // pc/android：直接打开高德网页（callnative=1 在 Android 会优先唤起 App，失败再降级到网页）
+    window.open(nav.amapWeb, '_blank');
+  }
 }
 var GCJ_A = 6378245.0;
 var GCJ_EE = 0.00669342162296594323;
@@ -1731,16 +1889,92 @@ function gcj02ToWgs84(lat, lng) {
   dLng = (dLng * 180.0) / (GCJ_A / sqrtMagic * Math.cos(radLat) * Math.PI);
   return { lat: lat - dLat, lng: lng - dLng };
 }
+function wgs84ToGcj02(lat, lng) {
+  if (!isInChinaBBox(lat, lng)) return { lat: lat, lng: lng };
+  var dLat = gcjTransformLat(lng - 105.0, lat - 35.0);
+  var dLng = gcjTransformLng(lng - 105.0, lat - 35.0);
+  var radLat = lat / 180.0 * Math.PI;
+  var magic = Math.sin(radLat);
+  magic = 1 - GCJ_EE * magic * magic;
+  var sqrtMagic = Math.sqrt(magic);
+  dLat = (dLat * 180.0) / ((GCJ_A * (1 - GCJ_EE)) / (magic * sqrtMagic) * Math.PI);
+  dLng = (dLng * 180.0) / (GCJ_A / sqrtMagic * Math.cos(radLat) * Math.PI);
+  return { lat: lat + dLat, lng: lng + dLng };
+}
 function routeCoordinates(points) {
   return points.map(function (p) { return [p.lat, p.lng]; });
 }
 function initTravelMap(elementId, points, opts) {
   opts = opts || {};
-  var map = L.map(elementId);
-  L.tileLayer(opts.tileUrl || 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: opts.attribution || '© OpenStreetMap contributors',
-    maxZoom: 19,
+  var coords = routeCoordinates(points);
+  // 先计算点位的 LatLngBounds，用于约束最小缩放与拖动范围，
+  // 保证任意缩放/拖动后至少有一个行程点仍出现在视口中。
+  var pointBounds = coords.length
+    ? L.latLngBounds(coords)
+    : L.latLngBounds([[0, 0]]);
+  // 拖动边界在点位 bounds 基础上向外扩约 30%，给视觉留呼吸感，又不至于拖飞
+  var paddedBounds = pointBounds.pad(0.3);
+
+  var map = L.map(elementId, {
+    maxBounds: paddedBounds,
+    maxBoundsViscosity: 1.0,  // 1.0 = 硬墙，到边就被拽回
+  });
+  L.tileLayer(opts.tileUrl || 'https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', {
+    attribution: opts.attribution || '© CyclOSM | © OpenStreetMap contributors',
+    maxZoom: 20,
   }).addTo(map);
+  // fitBounds 决定初始缩放；先用无 padding 的 fitBounds 拿到"刚好框住所有点"的初始视图，
+  // 作为下面重叠检测的像素尺度参考（z 越高偏移量越大，符合视觉直觉）。
+  map.fitBounds(pointBounds, { padding: [0, 0] });
+  var initialZoom = Math.floor(map.getZoom());
+  map.setMinZoom(initialZoom);
+  map.options.minZoom = initialZoom;  // 同步给后续 setView / fitBounds 兜底
+
+  // ── 重叠 marker 视觉偏移 ──
+  // 用 union-find 把"屏幕上距离小于阈值"的点归到同一组，组内按螺旋角均匀分布偏移。
+  // 阈值取约 32 像素（pin 直径 28 + 一点呼吸感）。
+  var PIXEL_THRESHOLD = 32;
+  var parent = coords.map(function (_, i) { return i; });
+  function find(i) {
+    while (parent[i] !== i) { parent[i] = parent[parent[i]]; i = parent[i]; }
+    return i;
+  }
+  function union(a, b) { parent[find(a)] = find(b); }
+  for (var i = 0; i < coords.length; i++) {
+    var p0 = map.latLngToLayerPoint(coords[i]);
+    for (var j = i + 1; j < coords.length; j++) {
+      var p1 = map.latLngToLayerPoint(coords[j]);
+      var dx = p0.x - p1.x, dy = p0.y - p1.y;
+      if (dx * dx + dy * dy < PIXEL_THRESHOLD * PIXEL_THRESHOLD) {
+        union(i, j);
+      }
+    }
+  }
+  var groups = {};
+  for (var k = 0; k < coords.length; k++) {
+    var r = find(k);
+    (groups[r] = groups[r] || []).push(k);
+  }
+  // displayCoords[k] = 给 marker 显示用的 LatLng；polyline 仍用原 coords 以保证连线真实。
+  var displayCoords = coords.map(function (c) { return c.slice(); });
+  Object.keys(groups).forEach(function (root) {
+    var members = groups[root];
+    if (members.length < 2) return;
+    // 螺旋偏移：第 m 个成员（0-index）角度 = m*2π/N + 起始角，半径递增
+    var radiusStep = 18;  // 像素
+    for (var m = 0; m < members.length; m++) {
+      var angle = (m / members.length) * Math.PI * 2 + Math.PI / 6;
+      var radius = radiusStep * (1 + Math.floor(m / 6));  // 每圈放大一次，避免成员多时挤回中心
+      var dx = Math.cos(angle) * radius;
+      var dy = Math.sin(angle) * radius;
+      var idx = members[m];
+      var pt = map.latLngToLayerPoint(coords[idx]);
+      var newPt = L.point(pt.x + dx, pt.y + dy);
+      var newLL = map.layerPointToLatLng(newPt);
+      displayCoords[idx] = [newLL.lat, newLL.lng];
+    }
+  });
+
   var ua = (typeof navigator !== 'undefined' && navigator.userAgent) || '';
   window.routeMarkers = [];
   points.forEach(function (p, i) {
@@ -1754,29 +1988,48 @@ function initTravelMap(elementId, points, opts) {
       }
     }
     var icon = L.divIcon({
-      className: 'route-pin',
+      className: 'route-pin route-pin--day-' + (p.dayIdx || 0),
       html: '<span class="route-pin__num">' + (i + 1) + '</span>',
       iconSize: [28, 28],
       iconAnchor: [14, 14],
     });
-    var navLinks = [{ label: '导航', url: buildNavLink(sLat, sLng, p.name, ua) }]
-      .concat(buildMapAppLinks(sLat, sLng, p.name));
-    var marker = L.marker([sLat, sLng], { icon: icon }).addTo(map);
-    marker.bindPopup(
-      '<b>' + (i + 1) + '. ' + escapeHTML(String(p.name)) + '</b><br>'
+    // popup 导航行：高德/百度走 launchNavigation（按 UA 分流），保留"导航"兜底链接
+    var popupHtml = '<b>' + (i + 1) + '. ' + escapeHTML(String(p.name)) + '</b><br>'
       + (p.time ? escapeHTML(String(p.time)) + '<br>' : '')
-      + navLinks.map(function (l) {
-          return '<a href="' + l.url + '" target="_blank">' + escapeHTML(l.label) + '</a>';
-        }).join(' · '),
+      + '<div class="popup-nav-row">'
+      +   '<a href="' + escapeHTML(buildNavLink(sLat, sLng, p.name, ua)) + '" target="_blank" class="popup-nav-link popup-nav-link--default">导航</a>'
+      +   '<button type="button" class="popup-nav-link popup-nav-link--amap"'
+      +     ' data-nav-lat="' + sLat + '" data-nav-lng="' + sLng + '" data-nav-name="' + escapeHTML(String(p.name)) + '">高德地图</button>'
+      +   '<button type="button" class="popup-nav-link popup-nav-link--baidu"'
+      +     ' data-nav-lat="' + sLat + '" data-nav-lng="' + sLng + '" data-nav-name="' + escapeHTML(String(p.name)) + '">百度地图</button>'
+      + '</div>';
+    // marker 用视觉偏移后的位置（displayCoords），导航/详情用的是原坐标 sLat/sLng
+    var marker = L.marker(displayCoords[i], { icon: icon }).addTo(map);
+    marker.bindPopup(
+      popupHtml,
       popupOffset ? { offset: popupOffset } : {}
     );
     window.routeMarkers.push(marker);
   });
-  var coords = routeCoordinates(points);
   if (coords.length > 1) {
-    L.polyline(coords, { dashArray: '6 8', weight: 2, color: '#4a8a8a' }).addTo(map);
+    // 路线按"每日一段"独立 polyline 着色，便于一眼区分行程归属。
+    // mapPoints 顺序对应 trip.days 顺序；同一日的点连续，遇到 dayIdx 变化就画一条段。
+    var segStart = 0;
+    for (var si = 1; si <= coords.length; si++) {
+      var boundary = si === coords.length
+        || points[si].dayIdx !== points[si - 1].dayIdx;
+      if (!boundary) continue;
+      if (si - segStart > 1) {
+        var segColor = dayColor(points[segStart].dayIdx);
+        L.polyline(coords.slice(segStart, si + 1), {
+          dashArray: '6 8', weight: 3, color: segColor, opacity: 0.85
+        }).addTo(map);
+      }
+      segStart = si;
+    }
   }
-  map.fitBounds(coords.length ? coords : [[0, 0]], { padding: [30, 30] });
+  // 把已经"刚好框住"地图的视图用 30px padding 重新铺一遍，给 marker 偏移留出视觉空间
+  map.fitBounds(pointBounds, { padding: [30, 30] });
   return map;
 }
 </script>
@@ -2641,6 +2894,28 @@ function fetchOneCell(lat, lng, startDate, endDate) {
   ]);
 }
 
+// ── 给没有内嵌 weather 字段的 slot 自动派生 fallback ──
+// 苏州/无锡/广州 10 月气候由月+纬度启发式给出；坐标来自 slot.lat/lng。
+// 若数据已带 slot.weather.fallback（参照 shanxi-6d 的内嵌风格），则不覆盖。
+function ensureSlotWeather(slot) {
+  if (typeof slot.lat !== 'number' || typeof slot.lng !== 'number'
+      || !isFinite(slot.lat) || !isFinite(slot.lng)) return;
+  if (slot.weather && slot.weather.fallback) return;  // 已有内嵌 fallback，跳过
+  slot.weather = slot.weather || {};
+  slot.weather.coords = { lat: slot.lat, lng: slot.lng };
+  if (!slot.weather.fallback) {
+    // 简化启发：南北差异（< 28° 为华南，其余为江南）+ 月份模板
+    var isSouthChina = slot.lat < 28;
+    var month = 10;  // 当前行程固定 10 月
+    var fb = isSouthChina
+      ? { icon: '☀', conditions: '晴', high: 28, low: 22, precipAdvice: '无需备伞', updatedAt: '2026-09-09' }
+      : (month === 10
+          ? { icon: '⛅', conditions: '多云', high: 22, low: 16, precipAdvice: '无需备伞', updatedAt: '2026-09-09' }
+          : { icon: '⛅', conditions: '多云', high: 20, low: 14, precipAdvice: '无需备伞', updatedAt: '2026-09-09' });
+    slot.weather.fallback = fb;
+  }
+}
+
 function getWeatherForRender(slot, targetDate) {
   if (!slot.weather) return null;
   var key = roundCoord(slot.weather.coords.lat) + ':' + roundCoord(slot.weather.coords.lng);
@@ -2648,6 +2923,10 @@ function getWeatherForRender(slot, targetDate) {
 }
 
 function collectWeatherRequests() {
+  // 先派生：没内嵌 weather 字段的 slot 由 ensureSlotWeather 补全 coords + fallback
+  trip.days.forEach(function (day) {
+    (day.slots || []).forEach(ensureSlotWeather);
+  });
   var seen = {};
   var reqs = [];
   trip.days.forEach(function (day) {
@@ -2737,16 +3016,32 @@ var trip = JSON.parse(document.getElementById('trip-data').textContent);
 
 var mapPoints = (function () {
   var pts = [];
-  trip.days.forEach(function (d) {
+  trip.days.forEach(function (d, dayIdx) {
     (d.slots || []).forEach(function (s) {
       if (s.hideFromMap) return;
       if (typeof s.lat === 'number' && typeof s.lng === 'number' && isFinite(s.lat) && isFinite(s.lng)) {
-        pts.push({ lat: s.lat, lng: s.lng, name: s.name, time: d.date + ' ' + (s.time || ''), emoji: s.emoji });
+        pts.push({ lat: s.lat, lng: s.lng, name: s.name, time: d.date + ' ' + (s.time || ''), emoji: s.emoji, dayIdx: dayIdx });
       }
     });
   });
   return pts;
 })();
+
+// 按天区分颜色 —— 单一色源是 :root 里的 --day1..--day7；JS 在初始化时同步读一次，
+// 避免 CSS 与 JS 各写一份 hex 漂移。trip.days 长度 > 7 时回退到 --day7。
+var dayColors = [];
+(function _initDayColors() {
+  if (typeof getComputedStyle === 'undefined') return;  // 非浏览器环境兜底
+  var cs = getComputedStyle(document.documentElement);
+  for (var i = 1; i <= 7; i++) {
+    var v = cs.getPropertyValue('--day' + i).trim();
+    if (v) dayColors.push(v);
+  }
+})();
+function dayColor(dayIdx) {
+  if (!dayColors.length) return '#4a8a8a';  // 兜底色（变量未读到时）
+  return dayColors[Math.min(Math.max(dayIdx || 0, 0), dayColors.length - 1)];
+}
 
 var periodLabel = { morning: '上午', noon: '下午', afternoon: '下午', evening: '晚间' };
 var periodEmoji = { morning: '🌅', noon: '☀️', afternoon: '☀️', evening: '🌙' };
@@ -3014,6 +3309,18 @@ function renderSlotCard(slot) {
           + '</div>';
   }
 
+  // ── 导航按钮行：有 lat/lng 的 slot 才有（hideFromMap 也允许导航，因为去的就是这个真实地点）──
+  if (typeof slot.lat === 'number' && typeof slot.lng === 'number' && isFinite(slot.lat) && isFinite(slot.lng)) {
+    var nLat = _sanitizeLat(slot.lat), nLng = _sanitizeLng(slot.lng);
+    html += '<div class="slot-nav-row">'
+      + '<span class="slot-nav-row__label">导航到此处</span>'
+      + '<button type="button" class="popup-nav-link popup-nav-link--amap"'
+        + ' data-nav-lat="' + nLat + '" data-nav-lng="' + nLng + '" data-nav-name="' + escapeHTML(String(slot.name)) + '">高德地图</button>'
+      + '<button type="button" class="popup-nav-link popup-nav-link--baidu"'
+        + ' data-nav-lat="' + nLat + '" data-nav-lng="' + nLng + '" data-nav-name="' + escapeHTML(String(slot.name)) + '">百度地图</button>'
+      + '</div>';
+  }
+
   html += '</div>';   // 关闭 slot-body
   html += '</div>';
   return html;
@@ -3230,7 +3537,7 @@ function renderRouteChips() {
   var container = document.getElementById('route-chips');
   var html = '';
   mapPoints.forEach(function (p, i) {
-    html += '<button type="button" class="route-chip' + (i === 0 ? ' active' : '')
+    html += '<button type="button" class="route-chip route-chip--day-' + ((p.dayIdx || 0) + 1) + (i === 0 ? ' active' : '')
       + '" data-idx="' + i + '">'
       + '<span class="route-chip__num">' + (i + 1) + '</span>'
       + '<span class="route-chip__emoji">' + (p.emoji || chipEmoji(p.name)) + '</span>'
@@ -3340,7 +3647,7 @@ function renderDayTabs() {
   var html = '';
   trip.days.forEach(function (day, i) {
     var isPlaceholder = !day.slots || day.slots.length === 0;
-    var cls = 'day-tab' + (i === currentDayIdx ? ' active' : '');
+    var cls = 'day-tab day-tab--day-' + (i + 1) + (i === currentDayIdx ? ' active' : '');
     if (isPlaceholder) cls += ' day-tab--placeholder';
     html += '<button type="button" class="' + cls + '" data-day-idx="' + i + '">'
       + '<div class="day-tab__num">Day ' + (i + 1) + '</div>'
@@ -3440,9 +3747,9 @@ function highlightDayOnMap(idx) {
     window.__dayHighlightLine = null;
   }
   window.__dayHighlightLine = L.polyline(dayCoords, {
-    color: '#b8392e',
+    color: dayColor(idx),
     weight: 4,
-    opacity: 0.85
+    opacity: 0.9
   }).addTo(travelMap);
   // Fit bounds to day's coords
   travelMap.fitBounds(dayCoords, { padding: [60, 60], maxZoom: 13 });
@@ -3733,8 +4040,8 @@ function initSlotRotators() {
           dragging: false, scrollWheelZoom: false, doubleClickZoom: false,
           touchZoom: false, boxZoom: false, keyboard: false, tap: false
         });
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          { maxZoom: 17 }).addTo(m);
+        L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
+          { maxZoom: 20 }).addTo(m);
         var line = L.polyline(data.line,
           { color: '#14b8a6', weight: 3, opacity: 0.95 }).addTo(m);
         L.circleMarker(data.line[0], { radius: 4, weight: 2,
@@ -3806,6 +4113,8 @@ function initSlotRotators() {
   countdownTimerId = setInterval(tickCountdown, 1000);
   renderFlights();
   renderHotels();
+  // 首屏渲染前派生每 slot 的 weather fallback，否则 slot 卡片底部天气行会缺席
+  trip.days.forEach(function (day) { (day.slots || []).forEach(ensureSlotWeather); });
   renderTimeline();
   renderTips();
   renderConcert();
@@ -3813,6 +4122,33 @@ function initSlotRotators() {
   renderDayTabs();
   showDayTab(0);
   travelMap = initTravelMap('map', mapPoints);
+  // popup / 卡片里的高德/百度按钮点击委托：按 UA 调起网页/App 路径规划
+  // 委托到 document，覆盖 map popup + timeline slot 卡片两个位置。
+  // PC/Android 直接打开对应网页（高德/百度按钮分别走自己家）；
+  // iOS 任何按钮都先 confirm 询问，确认后再调起对应 scheme。
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('button.popup-nav-link');
+    if (!btn) return;
+    e.preventDefault();
+    var lat = parseFloat(btn.getAttribute('data-nav-lat'));
+    var lng = parseFloat(btn.getAttribute('data-nav-lng'));
+    var name = btn.getAttribute('data-nav-name') || '';
+    if (!isFinite(lat) || !isFinite(lng)) return;
+    var ua = navigator.userAgent || '';
+    var nav = getNavLinks(lat, lng, name, ua);
+    var isAmap = btn.classList.contains('popup-nav-link--amap');
+    if (nav.platform === 'ios') {
+      var ok = window.confirm('用 ' + (isAmap ? '高德地图' : '百度地图') + ' 开始路径规划？');
+      if (!ok) return;
+      var uri = isAmap ? nav.iosAmap : nav.iosBaidu;
+      var web = isAmap ? nav.amapWeb : nav.baiduWeb;
+      window.location.href = uri;
+      // 若 App 未装，1.5s 后 fallback 打开网页
+      setTimeout(function () { window.open(web, '_blank'); }, 1500);
+    } else {
+      window.open(isAmap ? nav.amapWeb : nav.baiduWeb, '_blank');
+    }
+  });
   renderRouteChips();
   initPlayButton();
   initSlotRotators();

@@ -1951,7 +1951,19 @@ function routeCoordinates(points) {
 }
 function initTravelMap(elementId, points, opts) {
   opts = opts || {};
-  var map = L.map(elementId);
+  var coords = routeCoordinates(points);
+  // 先计算点位的 LatLngBounds，用于约束最小缩放与拖动范围，
+  // 保证任意缩放/拖动后至少有一个行程点仍出现在视口中。
+  var pointBounds = coords.length
+    ? L.latLngBounds(coords)
+    : L.latLngBounds([[0, 0]]);
+  // 拖动边界在点位 bounds 基础上向外扩约 30%，给视觉留呼吸感，又不至于拖飞
+  var paddedBounds = pointBounds.pad(0.3);
+
+  var map = L.map(elementId, {
+    maxBounds: paddedBounds,
+    maxBoundsViscosity: 1.0,  // 1.0 = 硬墙，到边就被拽回
+  });
   L.tileLayer(opts.tileUrl || 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: opts.attribution || '© OpenStreetMap contributors',
     maxZoom: 19,
@@ -1987,11 +1999,14 @@ function initTravelMap(elementId, points, opts) {
     );
     window.routeMarkers.push(marker);
   });
-  var coords = routeCoordinates(points);
   if (coords.length > 1) {
     L.polyline(coords, { dashArray: '6 8', weight: 2, color: '#b8862e' }).addTo(map);
   }
-  map.fitBounds(coords.length ? coords : [[0, 0]], { padding: [30, 30] });
+  // fitBounds 决定初始缩放；取该 zoom 作为最小缩放，阻止无限缩小拖出点位区域
+  map.fitBounds(pointBounds, { padding: [30, 30] });
+  var initialZoom = Math.floor(map.getZoom());
+  map.setMinZoom(initialZoom);
+  map.options.minZoom = initialZoom;  // 同步给后续 setView / fitBounds 兜底
   return map;
 }
 </script>
