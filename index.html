@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Migo · 旅行领航 — 选择行程</title>
-<meta name="description" content="四段参考行程：山西古建八日朝圣（新版·推荐）、山西古建六日朝圣、江南水墨五日行、清远山江瑶寨四日。">
+<meta name="description" content="山西古建六日朝圣（新版·推荐），辅以八日反向版与六日原版（暂存）；另有江南水墨五日行、清远山江瑶寨四日。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+XiaoWei&family=DM+Mono:wght@400;500&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
@@ -292,9 +292,9 @@ a { color: inherit; text-decoration: none; }
 .plan-card.shanxi-re .bullet { color: var(--shanxi-re); background: var(--shanxi-re-lt); border-color: rgba(31,58,110,0.25); }
 .plan-card.shanxi-re .card-cta { color: var(--shanxi-re); }
 /* "新版" 推荐徽章 */
-.plan-card.shanxi-re .card-eyebrow::after {
+.plan-card.shanxi.recommend .card-eyebrow::after {
   content: ' · 推荐';
-  background: var(--shanxi-re);
+  background: var(--shanxi);
   color: #fff;
   padding: 2px 7px;
   border-radius: 100px;
@@ -314,6 +314,46 @@ a { color: inherit; text-decoration: none; }
 .plan-card.qingyuan .card-eyebrow { color: var(--qingyuan); }
 .plan-card.qingyuan .bullet { color: var(--qingyuan); background: var(--qingyuan-lt); border-color: rgba(42,111,95,0.25); }
 .plan-card.qingyuan .card-cta { color: var(--qingyuan); }
+
+/* ─── Fold (其他山西方案 · 暂存) ───────────── */
+.plans-fold { margin: 0 12px 16px; }
+.plans-fold-summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 12px 18px;
+  background: var(--bg-card);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 13px;
+  color: var(--ink-mid);
+  user-select: none;
+}
+.plans-fold-summary::-webkit-details-marker { display: none; }
+.plans-fold-summary::before {
+  content: '▶';
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 9px;
+  color: var(--ink-soft);
+  transition: transform 0.2s;
+}
+.plans-fold[open] .plans-fold-summary::before { transform: rotate(90deg); }
+.plans-fold-title { font-weight: 600; }
+.plans-fold-meta {
+  font-size: 11px;
+  color: var(--ink-soft);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.06em;
+}
+.plans-fold-body {
+  margin-top: 12px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.plans-fold-body .plan-card { margin: 0; }
 
 /* ─── Footer ─────────────────────────────────────── */
 footer {
@@ -354,6 +394,12 @@ footer .footer-line { margin-bottom: 6px; }
   .plans-grid .plan-card { margin: 0; }
   .section-title-row { margin-left: 24px; margin-right: 24px; }
   .intro { margin-left: 24px; margin-right: 24px; }
+  .plans-fold { margin: 0 24px 16px; }
+  .plans-fold-body {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
 }
 </style>
 </head>
@@ -385,36 +431,19 @@ footer .footer-line { margin-bottom: 6px; }
 
   <div class="plans-grid">
 
-    <a class="plan-card shanxi-re" href="shanxi-re.html">
-      <div class="watermark">晋</div>
-      <div class="card-eyebrow">山西 · 8 天 7 晚</div>
-      <div class="card-title">山西古建八日朝圣（反向版）</div>
-      <div class="card-sub">经无锡中转 29h · 反向走古建线 · 五台山机场回</div>
-      <ul class="card-bullets">
-        <li class="bullet">鼋头渚中转</li>
-        <li class="bullet">悬空寺+恒山</li>
-        <li class="bullet">应县木塔+雁门关</li>
-        <li class="bullet">佛光寺+南禅寺</li>
-      </ul>
-      <div class="card-footer">
-        <span class="card-dates">📅 9/26 → 10/3 · 🚌 景区直通车</span>
-        <span class="card-cta">查看行程 <span class="card-cta-arrow">→</span></span>
-      </div>
-    </a>
-
-    <a class="plan-card shanxi" href="shanxi-6d.html">
+    <a class="plan-card shanxi recommend" href="shanxi.html">
       <div class="watermark">晋</div>
       <div class="card-eyebrow">山西 · 6 天 5 晚</div>
-      <div class="card-title">山西古建六日朝圣（原版）</div>
-      <div class="card-sub">黑神话悟空 · 太原进 · 大同出 · 南→北不折返</div>
+      <div class="card-title">山西古建六日朝圣</div>
+      <div class="card-sub">黑神话悟空 · 太原进·大同出 · 9/27 国庆前夕出发</div>
       <ul class="card-bullets">
         <li class="bullet">佛光寺东大殿</li>
-        <li class="bullet">雁门关</li>
-        <li class="bullet">悬空寺</li>
-        <li class="bullet">云冈石窟</li>
+        <li class="bullet">雁门关+应县木塔</li>
+        <li class="bullet">悬空寺+恒山</li>
+        <li class="bullet">云冈石窟+华严寺</li>
       </ul>
       <div class="card-footer">
-        <span class="card-dates">📅 9/25 → 9/30 · 🚗 约 730 km</span>
+        <span class="card-dates">📅 9/27 → 10/2 · 🚗 约 674 km</span>
         <span class="card-cta">查看行程 <span class="card-cta-arrow">→</span></span>
       </div>
     </a>
@@ -454,6 +483,51 @@ footer .footer-line { margin-bottom: 6px; }
     </a>
 
   </div>
+
+  <!-- ═══════════════ FOLD · 其他山西方案 ═══════════════ -->
+  <details class="plans-fold">
+    <summary class="plans-fold-summary">
+      <span class="plans-fold-title">📜 其他山西方案（暂存）</span>
+      <span class="plans-fold-meta">点击展开</span>
+    </summary>
+    <div class="plans-fold-body">
+
+      <a class="plan-card shanxi-re" href="shanxi-re.html">
+        <div class="watermark">晋</div>
+        <div class="card-eyebrow">山西 · 8 天 7 晚</div>
+        <div class="card-title">山西古建八日朝圣（反向版）</div>
+        <div class="card-sub">经无锡中转 29h · 反向走古建线 · 五台山机场回</div>
+        <ul class="card-bullets">
+          <li class="bullet">鼋头渚中转</li>
+          <li class="bullet">悬空寺+恒山</li>
+          <li class="bullet">应县木塔+雁门关</li>
+          <li class="bullet">佛光寺+南禅寺</li>
+        </ul>
+        <div class="card-footer">
+          <span class="card-dates">📅 9/26 → 10/3 · 🚌 景区直通车</span>
+          <span class="card-cta">查看行程 <span class="card-cta-arrow">→</span></span>
+        </div>
+      </a>
+
+      <a class="plan-card shanxi" href="shanxi-6d.html">
+        <div class="watermark">晋</div>
+        <div class="card-eyebrow">山西 · 6 天 5 晚</div>
+        <div class="card-title">山西古建六日朝圣（原版）</div>
+        <div class="card-sub">黑神话悟空 · 太原进·大同出 · 南→北不折返</div>
+        <ul class="card-bullets">
+          <li class="bullet">佛光寺东大殿</li>
+          <li class="bullet">雁门关</li>
+          <li class="bullet">悬空寺</li>
+          <li class="bullet">云冈石窟</li>
+        </ul>
+        <div class="card-footer">
+          <span class="card-dates">📅 9/25 → 9/30 · 🚗 约 730 km</span>
+          <span class="card-cta">查看行程 <span class="card-cta-arrow">→</span></span>
+        </div>
+      </a>
+
+    </div>
+  </details>
 
   <footer>
     <div class="footer-cta">Migo · 旅行领航</div>
