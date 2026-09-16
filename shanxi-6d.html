@@ -978,6 +978,62 @@ img { display: block; max-width: 100%; }
 .day-6 .day-num { color: var(--day6); }
 .day-7 .day-num { color: var(--day7); }
 .day-title-row { flex: 1; min-width: 0; }
+
+/* ─── Summary table（行程概要）────────────────────────── */
+.summary-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.summary-table thead th {
+  font-weight: 700;
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.summary-table tbody td {
+  padding: 10px;
+  border-bottom: 1px dashed var(--border);
+  vertical-align: top;
+  color: var(--ink-soft);
+}
+.summary-table tbody tr:last-child td { border-bottom: none; }
+.summary-table tbody tr:hover { background: rgba(42, 122, 94, 0.03); }
+.summary-table .day-cell {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 18px;
+  white-space: nowrap;
+  font-weight: 700;
+}
+.summary-table tbody tr.day-1 .day-cell { color: var(--day1); }
+.summary-table tbody tr.day-2 .day-cell { color: var(--day2); }
+.summary-table tbody tr.day-3 .day-cell { color: var(--day3); }
+.summary-table tbody tr.day-4 .day-cell { color: var(--day4); }
+.summary-table tbody tr.day-5 .day-cell { color: var(--day5); }
+.summary-table tbody tr.day-6 .day-cell { color: var(--day6); }
+.summary-table .date-cell { white-space: nowrap; }
+.summary-table .date-cell small { color: var(--ink-soft); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.06em; }
+.summary-table .theme-cell {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.summary-table .km-cell,
+.summary-table .stay-cell {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--rice);
+  white-space: nowrap;
+}
+.summary-table .stay-cell { color: var(--jade); }
+@media (max-width: 600px) {
+  .summary-table { font-size: 11px; }
+  .summary-table thead th,
+  .summary-table tbody td { padding: 6px 5px; }
+  .summary-table .theme-cell { font-size: 12px; }
+  .summary-table .day-cell { font-size: 16px; }
+}
 .day-weekday {
   font-family: 'DM Mono', monospace;
   font-size: 10px;
@@ -1699,6 +1755,18 @@ footer .footer-cta {
       </div>
     </div>
     <div class="section-body" id="hotels-container"><!-- JS 生成 --></div>
+  </section>
+
+  <!-- ═══════════════ SUMMARY ═══════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon jade">📋</div>
+      <div>
+        <div class="section-title">行程概要</div>
+        <div class="section-subtitle">At a Glance · 6 天 5 晚 · 自驾总里程约 730 km</div>
+      </div>
+    </div>
+    <div class="section-body" id="summary-container"><!-- JS 生成 --></div>
   </section>
 
   <!-- ═══════════════ MAP ═══════════════ -->
@@ -3337,6 +3405,52 @@ function renderBackupSpots(spots) {
   return html;
 }
 
+function renderSummary() {
+  var dayKm = ['约 15 km', '约 25 km', '约 320 km', '约 230 km', '约 90 km', '约 50 km'];
+  var dayStay = ['太原市区', '太原市区', '代县古城', '浑源县城', '大同古城', '— 返广州'];
+  var skipWords = ['酒店', '入住', '午餐', '晚餐', '早餐', '早点', '返程', '机场'];
+  // shanxi slot 均为「X → 目的地」过渡格式；先取出右侧目的地再做 skip 过滤
+  function destOf(name) {
+    if (!name) return '';
+    var parts = name.split('→');
+    return (parts.length > 1 ? parts[parts.length - 1] : name).trim();
+  }
+  function isStop(name) {
+    if (!name) return false;
+    for (var i = 0; i < skipWords.length; i++) {
+      if (name.indexOf(skipWords[i]) >= 0) return false;
+    }
+    return true;
+  }
+  var html = '<div style="overflow-x:auto;">'
+    + '<table class="summary-table"><thead><tr>'
+    + '<th>Day</th><th>日期</th><th>主题</th><th>主要行程</th><th>里程</th><th>夜宿</th>'
+    + '</tr></thead><tbody>';
+  trip.days.forEach(function (day, di) {
+    var highlight = '';
+    (day.slots || []).forEach(function (s) {
+      if (highlight) return;
+      var d = destOf(s.name);
+      if (isStop(d)) highlight = d;
+    });
+    if (!highlight && day.slots && day.slots.length) {
+      var fallback = (day.slots[1] || day.slots[0]).name || '—';
+      highlight = destOf(fallback);
+    }
+    var dateLabel = day.date.slice(5).replace('-', '/');
+    html += '<tr class="day-' + (di + 1) + '">'
+      + '<td class="day-cell">Day ' + (di + 1) + '</td>'
+      + '<td class="date-cell">' + escapeHTML(dateLabel) + '<br><small>' + escapeHTML(day.weekday) + '</small></td>'
+      + '<td class="theme-cell">' + escapeHTML(day.theme) + '</td>'
+      + '<td>' + escapeHTML(highlight || '—') + '</td>'
+      + '<td class="km-cell">' + escapeHTML(dayKm[di]) + '</td>'
+      + '<td class="stay-cell">' + escapeHTML(dayStay[di]) + '</td>'
+      + '</tr>';
+  });
+  html += '</tbody></table></div>';
+  document.getElementById('summary-container').innerHTML = html;
+}
+
 function renderTimeline() {
   var container = document.getElementById('timeline-container');
   var html = '';
@@ -4137,6 +4251,7 @@ function initSlotRotators() {
   renderDisclaimer();
   renderFlights();
   renderHotels();
+  renderSummary();
   renderTimeline();
   renderTips();
   renderTourismCard();

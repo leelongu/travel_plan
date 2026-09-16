@@ -1,12 +1,431 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=suzhou.html">
-  <title>苏州无锡</title>
-  <link rel="canonical" href="suzhou.html">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Migo · 旅行领航 — 选择行程</title>
+<meta name="description" content="三段参考行程：山西古建六日朝圣、江南水墨五日行、清远山江瑶寨四日。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+XiaoWei&family=DM+Mono:wght@400;500&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:         #f5f1e8;
+  --bg-card:    #ffffff;
+  --ink:        #1a1410;
+  --ink-mid:    #3a2e22;
+  --ink-soft:   #6b5a47;
+  --parchment:  #f7f2e8;
+  --gold:       #b8862e;
+  --gold-lt:    #d4a04c;
+  --cinnabar:   #b8392e;
+  --jade:       #2a6f5f;
+  --indigo:     #1f3a6e;
+  --teal:       #4a8a8a;
+
+  --shanxi:    #b8392e;
+  --shanxi-lt: rgba(184,57,46,0.10);
+  --suzhou:    #4a8a8a;
+  --suzhou-lt: rgba(74,138,138,0.10);
+  --qingyuan:  #2a6f5f;
+  --qingyuan-lt: rgba(42,111,95,0.10);
+
+  --border:    rgba(184,134,46,0.18);
+  --shadow:    0 2px 16px rgba(26,20,16,0.08);
+  --shadow-hover: 0 8px 32px rgba(26,20,16,0.16);
+  --radius:    14px;
+  --radius-lg: 22px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Serif SC', serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.7;
+  background-image:
+    linear-gradient(rgba(184,134,46,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(184,134,46,0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ─── Layout ──────────────────────────────────── */
+.page-wrap {
+  max-width: 460px;
+  margin: 0 auto;
+  padding: 0 0 60px;
+}
+@media (min-width: 768px) {
+  .page-wrap { max-width: 920px; padding: 0 24px 80px; }
+}
+
+/* ─── Hero ──────────────────────────────────────── */
+.hero {
+  background: linear-gradient(160deg, #1a1410 0%, #2a1f15 60%, #3a2e22 100%);
+  color: var(--parchment);
+  padding: 56px 24px 44px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '游';
+  position: absolute;
+  top: -30px; right: -20px;
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 280px;
+  color: rgba(184,134,46,0.08);
+  line-height: 1;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(184,134,46,0.18) 0%, transparent 50%),
+    radial-gradient(circle at 10% 90%, rgba(184,57,46,0.10) 0%, transparent 45%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold-lt);
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: '·'; margin: 0 8px;
+}
+.hero-title {
+  font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+  font-size: 44px;
+  line-height: 1.1;
+  color: var(--parchment);
+  margin-bottom: 14px;
+  position: relative; z-index: 1;
+  letter-spacing: 0.04em;
+}
+.hero-title .accent {
+  color: var(--gold-lt);
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 0.6em;
+  vertical-align: middle;
+  margin-left: 6px;
+  letter-spacing: 0;
+}
+.hero-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgba(247,242,232,0.55);
+  text-transform: uppercase;
+  position: relative; z-index: 1;
+}
+
+/* ─── Intro ─────────────────────────────────────── */
+.intro {
+  margin: 16px 12px 4px;
+  padding: 14px 18px;
+  background: rgba(184,57,46,0.05);
+  border: 1px solid rgba(184,57,46,0.18);
+  border-left: 3px solid var(--cinnabar);
+  border-radius: var(--radius);
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.7;
+}
+.intro strong { color: var(--cinnabar); font-weight: 700; }
+
+/* ─── Section heading ───────────────────────────── */
+.section-title-row {
+  margin: 24px 12px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-title-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  background: rgba(184,134,46,0.14);
+  color: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.section-title-text {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+}
+.section-title-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+/* ─── Plan card ─────────────────────────────────── */
+.plan-card {
+  display: block;
+  position: relative;
+  margin: 0 12px 16px;
+  padding: 20px 22px 22px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+.plan-card:hover, .plan-card:focus-visible {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+  outline: none;
+}
+.plan-card::before {
+  /* 左侧 3px 当日色条 */
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+}
+.plan-card .watermark {
+  position: absolute;
+  top: -16px; right: -8px;
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 110px;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.plan-card .card-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+  position: relative; z-index: 1;
+}
+.plan-card .card-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
+  position: relative; z-index: 1;
+}
+.plan-card .card-sub {
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.55;
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.plan-card .card-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 14px;
+  display: flex; flex-wrap: wrap; gap: 6px;
+  position: relative; z-index: 1;
+}
+.plan-card .bullet {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  border: 1px solid;
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 500;
+}
+.plan-card .card-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+  position: relative; z-index: 1;
+}
+.plan-card .card-dates {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+}
+.plan-card .card-cta {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.plan-card .card-cta-arrow { font-size: 16px; }
+
+/* ── per-destination theme ── */
+.plan-card.shanxi::before { background: var(--shanxi); }
+.plan-card.shanxi .watermark { color: var(--shanxi-lt); }
+.plan-card.shanxi .card-eyebrow { color: var(--shanxi); }
+.plan-card.shanxi .bullet { color: var(--shanxi); background: var(--shanxi-lt); border-color: rgba(184,57,46,0.25); }
+.plan-card.shanxi .card-cta { color: var(--shanxi); }
+
+.plan-card.suzhou::before { background: var(--suzhou); }
+.plan-card.suzhou .watermark { color: var(--suzhou-lt); }
+.plan-card.suzhou .card-eyebrow { color: var(--suzhou); }
+.plan-card.suzhou .bullet { color: var(--suzhou); background: var(--suzhou-lt); border-color: rgba(74,138,138,0.25); }
+.plan-card.suzhou .card-cta { color: var(--suzhou); }
+
+.plan-card.qingyuan::before { background: var(--qingyuan); }
+.plan-card.qingyuan .watermark { color: var(--qingyuan-lt); }
+.plan-card.qingyuan .card-eyebrow { color: var(--qingyuan); }
+.plan-card.qingyuan .bullet { color: var(--qingyuan); background: var(--qingyuan-lt); border-color: rgba(42,111,95,0.25); }
+.plan-card.qingyuan .card-cta { color: var(--qingyuan); }
+
+/* ─── Footer ─────────────────────────────────────── */
+footer {
+  background: #1a1410;
+  color: rgba(247,242,232,0.55);
+  padding: 32px 24px 28px;
+  margin-top: 24px;
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+footer .footer-cta {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 18px;
+  color: var(--gold-lt);
+  letter-spacing: 0.12em;
+  margin-bottom: 14px;
+  text-transform: none;
+}
+footer .footer-line { margin-bottom: 6px; }
+
+/* ─── Responsive ────────────────────────────────── */
+@media (max-width: 480px) {
+  .hero { padding: 40px 20px 32px; }
+  .hero-title { font-size: 36px; }
+  .plan-card { padding: 18px 18px 20px; }
+}
+@media (min-width: 768px) {
+  /* 桌面端：3 张卡片横排 */
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 0 24px;
+  }
+  .plans-grid .plan-card { margin: 0; }
+  .section-title-row { margin-left: 24px; margin-right: 24px; }
+  .intro { margin-left: 24px; margin-right: 24px; }
+}
+</style>
 </head>
 <body>
-  <p>正在跳转至 <a href="suzhou.html">苏州好/a>…</p>
+
+<div class="page-wrap">
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <header class="hero">
+    <div class="hero-eyebrow">Migo · 旅行领航</div>
+    <h1 class="hero-title">选择<span class="accent">一段行程</span></h1>
+    <p class="hero-sub">Three Trips · 离线可读 · 移动优先</p>
+  </header>
+
+  <!-- ═══════════════ INTRO ═══════════════ -->
+  <p class="intro">
+    <strong>免责声明 · </strong>三段行程均为 AI 基于公开资料整理的参考规划，可能不准确或已过时；
+    票价、营业时间、预约规则请在出行前到官方渠道核实。点击下方任一卡片查看完整行程。
+  </p>
+
+  <!-- ═══════════════ PLAN CARDS ═══════════════ -->
+  <div class="section-title-row">
+    <div class="section-title-icon">📋</div>
+    <div>
+      <div class="section-title-text">参考行程</div>
+      <div class="section-title-sub">Choose Your Trip</div>
+    </div>
+  </div>
+
+  <div class="plans-grid">
+
+    <a class="plan-card shanxi" href="shanxi-6d.html">
+      <div class="watermark">晋</div>
+      <div class="card-eyebrow">山西 · 6 天 5 晚</div>
+      <div class="card-title">山西古建六日朝圣</div>
+      <div class="card-sub">黑神话悟空 · 太原进 · 大同出 · 南→北不折返</div>
+      <ul class="card-bullets">
+        <li class="bullet">佛光寺东大殿</li>
+        <li class="bullet">雁门关</li>
+        <li class="bullet">悬空寺</li>
+        <li class="bullet">云冈石窟</li>
+      </ul>
+      <div class="card-footer">
+        <span class="card-dates">📅 9/25 → 9/30 · 🚗 约 730 km</span>
+        <span class="card-cta">查看行程 <span class="card-cta-arrow">→</span></span>
+      </div>
+    </a>
+
+    <a class="plan-card suzhou" href="suzhou.html">
+      <div class="watermark">苏</div>
+      <div class="card-eyebrow">江南 · 5 天 4 晚</div>
+      <div class="card-title">江南水墨五日行</div>
+      <div class="card-sub">无锡灵山太湖 · 苏州园林 · 许嵩演唱会</div>
+      <ul class="card-bullets">
+        <li class="bullet">灵山大佛</li>
+        <li class="bullet">拙政园</li>
+        <li class="bullet">山塘街</li>
+        <li class="bullet">许嵩「安泊」</li>
+      </ul>
+      <div class="card-footer">
+        <span class="card-dates">📅 10/1 → 10/5 · 🚄 高铁+飞机</span>
+        <span class="card-cta">查看行程 <span class="card-cta-arrow">→</span></span>
+      </div>
+    </a>
+
+    <a class="plan-card qingyuan" href="qingyuan-4d.html">
+      <div class="watermark">粤</div>
+      <div class="card-eyebrow">清远 · 4 天 3 晚</div>
+      <div class="card-title">清远山江瑶寨</div>
+      <div class="card-sub">古龙峡谷 · 连州地下河 · 千年瑶寨 · 山江四日记</div>
+      <ul class="card-bullets">
+        <li class="bullet">古龙峡漂流</li>
+        <li class="bullet">连州地下河 5A</li>
+        <li class="bullet">千年瑶寨</li>
+        <li class="bullet">山江自驾</li>
+      </ul>
+      <div class="card-footer">
+        <span class="card-dates">📅 9/25 → 9/28 · 🚗 约 600 km</span>
+        <span class="card-cta">查看行程 <span class="card-cta-arrow">→</span></span>
+      </div>
+    </a>
+
+  </div>
+
+  <footer>
+    <div class="footer-cta">Migo · 旅行领航</div>
+    <div class="footer-line">Generated by travel-plan-viz</div>
+    <div class="footer-line">所有信息仅供参考 · 出行前请核实</div>
+  </footer>
+
+</div>
+
 </body>
 </html>
