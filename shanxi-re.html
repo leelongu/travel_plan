@@ -1,0 +1,5611 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>山西 8 天 · 反向版 · 经无锡中转 · 黑神话悟空古建朝圣（景区直通车版）</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=ZCOOL+XiaoWei&family=DM+Mono:wght@300;400;500&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+
+<style>
+/* ─── Design Tokens ─────────────────────────────── */
+:root {
+  --bg:         #f5f1e8;
+  --bg-card:    #ffffff;
+  --bg-section: #ebe4d3;
+  --ink:        #1a1410;
+  --ink-mid:    #3a2e22;
+  --ink-soft:   #6b5a47;
+  --parchment:  #f7f2e8;
+  --gold:       #b8862e;
+  --gold-lt:    #d4a04c;
+  --cinnabar:   #b8392e;
+  --cinnabar-lt:#d65a48;
+  --jade:       #2a6f5f;
+  --indigo:     #1f3a6e;
+  --bronze:     #6b4a2b;
+  --bronze-lt:  #a07644;
+  --celadon:    #5a8a7f;
+
+  --day1: #b8392e;
+  --day2: #b8862e;
+  --day3: #1f3a6e;
+  --day4: #2a6f5f;
+  --day5: #b8392e;
+  --day6: #8a7a68;
+  --day7: #8a7a68;
+
+  --morning:    #e3f2fd;
+  --noon:       #fce4ec;
+  --evening:    #ede7f6;
+
+  --border:     rgba(184,134,46,0.18);
+  --shadow:     0 2px 16px rgba(26,20,16,0.08);
+  --shadow-hover: 0 8px 32px rgba(26,20,16,0.16);
+  --radius:     14px;
+  --radius-sm:  8px;
+  --radius-lg:  22px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Serif SC', serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.7;
+  background-image:
+    linear-gradient(rgba(184,134,46,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(184,134,46,0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; }
+
+/* ─── Layout ──────────────────────────────────── */
+.page-wrap {
+  max-width: 460px;
+  margin: 0 auto;
+  padding: 0 0 60px;
+}
+
+@media (min-width: 768px) {
+  .page-wrap {
+    max-width: 920px;
+    padding: 0 24px 80px;
+  }
+  .section { margin: 0 0 24px; }
+}
+
+/* ─── Hero ──────────────────────────────────────── */
+.hero {
+  background: linear-gradient(160deg, #1a1410 0%, #2a1f15 60%, #3a2e22 100%);
+  color: #f7f2e8;
+  padding: 56px 24px 44px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '晋';
+  position: absolute;
+  top: -30px; right: -20px;
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 280px;
+  color: rgba(184,134,46,0.06);
+  line-height: 1;
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(184,134,46,0.18) 0%, transparent 50%),
+    radial-gradient(circle at 10% 90%, rgba(184,57,46,0.10) 0%, transparent 45%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold-lt);
+  margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: '·'; margin: 0 8px;
+}
+.hero-title {
+  font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+  font-size: 44px;
+  line-height: 1.1;
+  color: var(--parchment);
+  margin-bottom: 14px;
+  position: relative; z-index: 1;
+  letter-spacing: 0.04em;
+}
+.hero-title .accent {
+  color: var(--gold-lt);
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 0.6em;
+  vertical-align: middle;
+  margin-left: 6px;
+  letter-spacing: 0;
+}
+.hero-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgba(247,242,232,0.55);
+  text-transform: uppercase;
+  position: relative; z-index: 1;
+}
+.hero-dates {
+  margin-top: 22px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(184,134,46,0.12);
+  border: 1px solid rgba(184,134,46,0.30);
+  border-radius: 100px;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: var(--gold-lt);
+  letter-spacing: 0.04em;
+}
+
+/* ─── Section ──────────────────────────────────────── */
+.section {
+  margin: 16px 12px;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.section--sticky-tabs {
+  /* 子元素 .tab-strip 用 position: sticky 须相对视口；祖先 overflow:hidden 会把它圈在 section 内 */
+  overflow: visible;
+}
+#timeline-section {
+  /* scrollIntoView 时给吸顶的 .tab-strip（~65px）留出空间，避免 Day 标题被遮挡 */
+  scroll-margin-top: 72px;
+}
+@media (min-width: 768px) {
+  .section { margin: 0 0 24px; }
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.section-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.section-icon.gold     { background: rgba(184,134,46,0.14); color: var(--gold); }
+.section-icon.cinnabar { background: rgba(184,57,46,0.12);  color: var(--cinnabar); }
+.section-icon.jade     { background: rgba(42,111,95,0.12);  color: var(--jade); }
+.section-icon.bronze   { background: rgba(160,118,68,0.14); color: var(--bronze-lt); }
+.section-icon.indigo   { background: rgba(31,58,110,0.12);  color: var(--indigo); }
+.section-icon.celadon  { background: rgba(90,138,127,0.14); color: var(--celadon); }
+.section-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+}
+.section-subtitle {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.section-body { padding: 16px 22px 20px; }
+
+/* ─── Checklist ───────────────────────────────────── */
+.checklist-wrap {
+  background: linear-gradient(135deg, #1a1410 0%, #2a1f15 100%);
+  border-radius: var(--radius-lg);
+  padding: 22px 22px 24px;
+  margin: 16px 12px;
+  box-shadow: 0 4px 24px rgba(26,20,16,0.18);
+  color: var(--parchment);
+  position: relative;
+  overflow: hidden;
+}
+@media (min-width: 768px) { .checklist-wrap { margin: 0 0 24px; padding: 28px 32px 30px; } }
+.checklist-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-lt) 50%, var(--cinnabar) 100%);
+}
+.checklist-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: 14px;
+  color: var(--parchment);
+  display: flex; align-items: center; gap: 8px;
+}
+.checklist-title::before {
+  content: '✓';
+  font-size: 16px;
+  color: var(--gold-lt);
+}
+
+/* ─── Pretrip info ───────────────────────────────── */
+.pretrip-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+@media (min-width: 600px) { .pretrip-grid { grid-template-columns: 1fr 1fr; } }
+.pretrip-item {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+@media (min-width: 600px) {
+  .pretrip-item:nth-child(odd)  { padding-right: 14px; border-right: 1px solid var(--border); }
+  .pretrip-item:nth-child(even) { padding-left: 14px; }
+  .pretrip-item:nth-last-child(-n+2) { border-bottom: none; }
+}
+.pretrip-item:last-child { border-bottom: none; }
+.pretrip-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.pretrip-text {
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.65;
+}
+.pretrip-typhoon {
+  background: rgba(184,57,46,0.06);
+  border-left: 3px solid var(--cinnabar);
+  padding: 12px 14px;
+  margin-top: 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.65;
+}
+.pretrip-typhoon strong { color: var(--cinnabar); }
+.apps-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.app-pill {
+  font-size: 10px;
+  padding: 3px 10px;
+  background: rgba(184,134,46,0.10);
+  border: 1px solid rgba(184,134,46,0.22);
+  border-radius: 100px;
+  color: var(--bronze-lt);
+}
+
+/* ─── Disclaimer ─────────────────────────────────── */
+.disclaimer-box {
+  margin: 0 12px 20px;
+  padding: 14px 18px;
+  background: rgba(184,57,46,0.05);
+  border: 1px solid rgba(184,57,46,0.18);
+  border-left: 3px solid var(--cinnabar);
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  color: var(--ink-mid);
+  line-height: 1.7;
+}
+@media (min-width: 768px) { .disclaimer-box { margin: 0 0 24px; } }
+.disclaimer-box strong { color: var(--cinnabar); font-weight: 700; }
+
+/* ─── Tourism card block ──────────────────────── */
+.tourism-card {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
+  color: var(--ink);
+  border-radius: var(--radius-lg);
+  padding: 22px 22px 24px;
+  margin: 16px 12px;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+@media (min-width: 768px) { .tourism-card { margin: 0 0 24px; } }
+.tourism-card::before {
+  content: '年';
+  position: absolute;
+  top: -20px; right: -10px;
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 140px;
+  color: rgba(26,20,16,0.08);
+  line-height: 1;
+  pointer-events: none;
+}
+.tourism-card__head {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px;
+}
+.tourism-card__icon {
+  font-size: 24px;
+}
+.tourism-card__title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--ink);
+}
+.tourism-card__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+}
+.tourism-card__row {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  line-height: 1.6;
+  align-items: flex-start;
+}
+.tourism-card__label {
+  flex-shrink: 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  background: rgba(26,20,16,0.18);
+  padding: 3px 8px;
+  border-radius: 3px;
+  min-width: 56px;
+  text-align: center;
+}
+.tourism-card__value { flex: 1; color: var(--ink); }
+.tourism-card__savings {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: rgba(26,20,16,0.08);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--ink);
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+.tourism-card__savings strong { color: var(--cinnabar); }
+
+/* ─── Closure audit block ─────────────────────── */
+.closure-audit {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  margin: 16px 12px;
+}
+@media (min-width: 768px) { .closure-audit { margin: 0 0 24px; } }
+.closure-audit__head {
+  display: flex; align-items: center; gap: 12px;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.closure-audit__icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: rgba(31,58,110,0.12);
+  color: var(--indigo);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.closure-audit__title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+}
+.closure-audit__subtitle {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.closure-audit__summary {
+  padding: 12px 22px;
+  background: rgba(184,134,46,0.06);
+  font-size: 12px;
+  color: var(--ink-mid);
+  border-bottom: 1px solid var(--border);
+  line-height: 1.6;
+}
+.closure-audit__list {
+  padding: 8px 0;
+}
+.closure-item {
+  padding: 12px 22px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.closure-item:last-child { border-bottom: none; }
+.closure-item__status {
+  flex-shrink: 0;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 4px 9px;
+  border-radius: 3px;
+  white-space: nowrap;
+  margin-top: 1px;
+}
+.closure-item__status.ok {
+  color: var(--jade);
+  background: rgba(42,111,95,0.10);
+  border: 1px solid rgba(42,111,95,0.25);
+}
+.closure-item__status.warn {
+  color: var(--cinnabar);
+  background: rgba(184,57,46,0.08);
+  border: 1px solid rgba(184,57,46,0.22);
+}
+.closure-item__body { flex: 1; min-width: 0; }
+.closure-item__name {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+.closure-item__date {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+.closure-item__detail {
+  font-size: 11px;
+  color: var(--ink-mid);
+  line-height: 1.6;
+}
+
+/* ─── Flight candidates ──────────────────────────── */
+.flight-block-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.flight-block-label + .flight-block-label { margin-top: 18px; }
+.candidates-grid {
+  display: flex; flex-direction: column;
+  gap: 10px; margin-bottom: 8px;
+}
+.flight-candidate {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.flight-candidate:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-1px);
+}
+.flight-candidate.booked {
+  border-color: var(--cinnabar);
+  background: rgba(184,57,46,0.04);
+}
+.flight-top {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px;
+}
+.flight-label {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+}
+.flight-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: rgba(107,90,71,0.10);
+  border: 1px solid rgba(107,90,71,0.20);
+  padding: 3px 9px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+.flight-tag.booked-tag {
+  color: #fff;
+  background: var(--cinnabar);
+  border-color: var(--cinnabar);
+}
+.flight-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-mid);
+  letter-spacing: 0.04em;
+}
+.flight-note {
+  font-size: 11px;
+  color: var(--ink-soft);
+  background: rgba(26,20,16,0.04);
+  border-radius: 4px;
+  padding: 4px 9px;
+  letter-spacing: 0.04em;
+  line-height: 1.55;
+}
+
+/* ─── Hotel areas ────────────────────────────────── */
+.hotel-area {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+.hotel-area:last-child { border-bottom: none; }
+.hotel-area-name {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.hotel-area-reason {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+.hotel-options { display: flex; flex-direction: column; gap: 10px; }
+.hotel-option {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.hotel-tier {
+  display: inline-block;
+  align-self: flex-start;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 2px 9px;
+  border-radius: 3px;
+  margin-bottom: 4px;
+}
+.hotel-tier.tier-economy { color: var(--jade);     background: rgba(42,111,95,0.10);  border: 1px solid rgba(42,111,95,0.25); }
+.hotel-tier.tier-mid     { color: var(--gold);     background: rgba(184,134,46,0.10); border: 1px solid rgba(184,134,46,0.25); }
+.hotel-tier.tier-luxury  { color: var(--indigo);   background: rgba(31,58,110,0.10);  border: 1px solid rgba(31,58,110,0.25); }
+.hotel-name {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+}
+.hotel-price {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+}
+.hotel-note {
+  font-size: 11px;
+  color: var(--ink-mid);
+  line-height: 1.6;
+}
+
+/* ─── Map ────────────────────────────────────────── */
+.map-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  margin: 0 12px 16px;
+}
+@media (min-width: 768px) { .map-card { margin: 0 0 24px; } }
+.map-head {
+  padding: 18px 22px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.map-head__title { flex: 1; min-width: 0; }
+.map-head__actions { flex-shrink: 0; }
+.map-head h2 {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.map-head p {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-soft);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+#map {
+  height: 380px;
+  width: 100%;
+  border-top: 1px solid var(--border);
+}
+.route-pin {
+  background: var(--ink) !important;
+  border: 2px solid var(--gold) !important;
+  border-radius: 50%;
+  display: flex !important;
+  align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.route-pin__num {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  color: var(--gold-lt);
+  line-height: 1;
+}
+
+/* ─── Route chips (clickable stops under map) ─── */
+.route-chips {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px 14px 14px;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(184,134,46,0.3) transparent;
+}
+.route-chips::-webkit-scrollbar { height: 4px; }
+.route-chips::-webkit-scrollbar-thumb {
+  background: rgba(184,134,46,0.3);
+  border-radius: 2px;
+}
+.route-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 12px;
+  color: var(--ink-mid);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.18s ease;
+  font-family: 'Noto Serif SC', serif;
+}
+.route-chip:hover {
+  border-color: var(--gold);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+.route-chip.active {
+  background: var(--ink);
+  color: var(--gold-lt);
+  border-color: var(--gold);
+  font-weight: 600;
+}
+.route-chip__num {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  background: rgba(184,134,46,0.12);
+  border-radius: 50%;
+  width: 20px; height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0;
+}
+.route-chip.active .route-chip__num {
+  background: var(--gold);
+  color: var(--ink);
+}
+.route-chip__emoji {
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+/* ─── Play button + walking markers ─────────────── */
+.map-controls {
+  display: flex;
+  gap: 6px;
+}
+.map-btn {
+  background: rgba(255,255,255,0.94);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 7px 14px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 0.04em;
+}
+.map-btn:hover { background: var(--gold-lt); color: var(--ink); }
+.map-btn.playing { background: var(--cinnabar); color: #fff; border-color: var(--cinnabar); }
+.map-btn.playing:hover { background: var(--cinnabar-lt); }
+.map-btn .icon { font-size: 14px; }
+
+.walker-marker {
+  background: none !important;
+  border: none !important;
+  font-size: 28px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
+  z-index: 900;
+  pointer-events: none;
+}
+.walker-marker.second {
+  font-size: 26px;
+  opacity: 0.92;
+  z-index: 899;
+}
+.walker-trail {
+  position: absolute;
+  pointer-events: none;
+  z-index: 850;
+}
+.map-point-dim .route-pin {
+  opacity: 0.25;
+  transition: opacity 0.3s;
+}
+.map-point-highlight .route-pin {
+  opacity: 1;
+  transform: scale(1.4);
+  transition: all 0.3s;
+  z-index: 950;
+}
+
+/* ─── Tabbed timeline ──────────────────────────── */
+.tab-strip {
+  display: flex;
+  gap: 6px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(184,134,46,0.3) transparent;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.tab-strip.is-stuck {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+.tab-strip::-webkit-scrollbar { height: 4px; }
+.tab-strip::-webkit-scrollbar-thumb {
+  background: rgba(184,134,46,0.3);
+  border-radius: 2px;
+}
+.day-tab {
+  flex-shrink: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+  text-align: center;
+  min-width: 60px;
+  transition: all 0.18s;
+  font-family: 'Noto Serif SC', serif;
+}
+.day-tab:hover { border-color: var(--gold); }
+.day-tab.active {
+  background: var(--ink);
+  color: var(--gold-lt);
+  border-color: var(--gold);
+  font-weight: 700;
+}
+.day-tab__num {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 18px;
+  line-height: 1;
+  color: inherit;
+}
+.day-tab__weekday {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.10em;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.day-tab.active .day-tab__weekday { color: rgba(212,160,76,0.7); }
+
+/* ─── Timeline bookmarks (right-edge rail, timeline mode only) ─── */
+#timeline-bookmarks {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1099;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.bookmark {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--ink);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+  transition: all 0.18s;
+  padding: 0;
+}
+.bookmark:hover { border-color: var(--gold); transform: scale(1.08); }
+.bookmark.is-current-day {
+  background: var(--ink);
+  color: var(--gold-lt);
+  border-color: var(--gold);
+  font-weight: 700;
+}
+@media (max-width: 767px) {
+  #timeline-bookmarks { display: none; }
+}
+
+/* ─── Toggle switch (tab vs timeline) ──────────── */
+.view-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1100;
+  display: flex;
+  gap: 0;
+  background: var(--ink);
+  border-radius: 100px;
+  padding: 4px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+}
+.view-toggle__btn {
+  border: none;
+  background: transparent;
+  color: rgba(247,242,232,0.55);
+  padding: 7px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 100px;
+  transition: all 0.18s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.view-toggle__btn.active {
+  background: var(--gold);
+  color: var(--ink);
+  font-weight: 700;
+}
+.view-toggle__btn:hover:not(.active) {
+  color: var(--parchment);
+}
+@media (max-width: 480px) {
+  .view-toggle {
+    top: auto;
+    bottom: 16px;
+    right: 16px;
+    left: 16px;
+    justify-content: center;
+  }
+  .view-toggle__btn { flex: 1; justify-content: center; padding: 10px 12px; }
+}
+
+/* ─── Day sections ───────────────────────────────── */
+.day-block { padding: 22px 0; border-bottom: 1px solid var(--border); }
+.day-block:last-child { border-bottom: none; }
+.day-header {
+  padding: 0 22px 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  border-bottom: 1px dashed var(--border);
+  margin-bottom: 18px;
+}
+.day-num {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 42px;
+  color: var(--gold);
+  line-height: 1;
+  flex-shrink: 0;
+}
+.day-1 .day-num { color: var(--day1); }
+.day-2 .day-num { color: var(--day2); }
+.day-3 .day-num { color: var(--day3); }
+.day-4 .day-num { color: var(--day4); }
+.day-5 .day-num { color: var(--day5); }
+.day-6 .day-num { color: var(--day6); }
+.day-7 .day-num { color: var(--day7); }
+.day-title-row { flex: 1; min-width: 0; }
+
+/* ─── Summary table（行程概要）────────────────────────── */
+.summary-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.summary-table thead th {
+  font-weight: 700;
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.summary-table tbody td {
+  padding: 10px;
+  border-bottom: 1px dashed var(--border);
+  vertical-align: top;
+  color: var(--ink-soft);
+}
+.summary-table tbody tr:last-child td { border-bottom: none; }
+.summary-table tbody tr:hover { background: rgba(42, 122, 94, 0.03); }
+.summary-table .day-cell {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 18px;
+  white-space: nowrap;
+  font-weight: 700;
+}
+.summary-table tbody tr.day-1 .day-cell { color: var(--day1); }
+.summary-table tbody tr.day-2 .day-cell { color: var(--day2); }
+.summary-table tbody tr.day-3 .day-cell { color: var(--day3); }
+.summary-table tbody tr.day-4 .day-cell { color: var(--day4); }
+.summary-table tbody tr.day-5 .day-cell { color: var(--day5); }
+.summary-table tbody tr.day-6 .day-cell { color: var(--day6); }
+.summary-table .date-cell { white-space: nowrap; }
+.summary-table .date-cell small { color: var(--ink-soft); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.06em; }
+.summary-table .theme-cell {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.summary-table .km-cell,
+.summary-table .stay-cell {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--rice);
+  white-space: nowrap;
+}
+.summary-table .stay-cell { color: var(--jade); }
+@media (max-width: 600px) {
+  .summary-table { font-size: 11px; }
+  .summary-table thead th,
+  .summary-table tbody td { padding: 6px 5px; }
+  .summary-table .theme-cell { font-size: 12px; }
+  .summary-table .day-cell { font-size: 16px; }
+}
+.day-weekday {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.day-theme {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--ink);
+  margin-top: 2px;
+  line-height: 1.3;
+}
+.day-tips-banner {
+  margin: 0 22px 14px;
+  padding: 10px 14px;
+  background: rgba(184,134,46,0.07);
+  border: 1px solid rgba(184,134,46,0.18);
+  border-left: 3px solid var(--gold);
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.6;
+}
+.day-tips-banner::before { content: '💡 '; color: var(--gold); }
+
+/* Placeholder day (Day 6 / 7) */
+.day-placeholder {
+  margin: 0 22px 16px;
+  padding: 24px 16px;
+  text-align: center;
+  background: var(--bg);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--ink-soft);
+}
+.day-placeholder__icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+  opacity: 0.6;
+}
+.day-placeholder__text {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-mid);
+  margin-bottom: 4px;
+}
+.day-placeholder__sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+}
+
+/* ─── Slot cards ─────────────────────────────────── */
+.slots-grid { padding: 0 14px; display: flex; flex-direction: column; gap: 14px; }
+.slot-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.25s, transform 0.25s;
+  position: relative;
+}
+.slot-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+
+.slot-img-wrap {
+  position: relative;
+  width: 100%; height: 300px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #2a1f15 0%, #3a2e22 100%);
+}
+.slot-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.slot-img-fallback {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-size: 56px; color: rgba(247,242,232,0.32);
+}
+.slot-img-fallback-text {
+  margin-top: 8px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px; font-weight: 600;
+  color: rgba(247,242,232,0.55);
+  letter-spacing: 0.08em;
+}
+.slot-img-credit {
+  position: absolute; right: 8px; bottom: 8px;
+  max-width: 74%;
+  padding: 3px 7px;
+  border-radius: 4px;
+  background: rgba(20,14,9,0.48);
+  font-size: 10px; line-height: 1.45;
+  color: rgba(247,242,232,0.74);
+  text-align: right;
+  letter-spacing: 0.02em;
+  pointer-events: auto;
+}
+.slot-img-credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+@media (max-width: 480px) { .slot-img-credit { font-size: 9px; max-width: 82%; } }
+
+/* ── 实景图 / 路线图 双面轮换 ── */
+.slot-face {
+  position: absolute; inset: 0;
+  opacity: 0; visibility: hidden;
+  transition: opacity .55s ease;
+}
+.slot-face.is-active { opacity: 1; visibility: visible; }
+@media (prefers-reduced-motion: reduce) { .slot-face { transition: none; } }
+
+.slot-minimap { position: absolute; inset: 0; background: #1d1710; }
+.slot-minimap .leaflet-container { background: #1d1710; font-family: inherit; }
+
+.slot-map-caption {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  z-index: 800; /* 必须高于 Leaflet 内部 pane（tile 200 / overlay 400 / marker 600 / popup 700） */
+  padding: 10px 12px 12px 36px;
+  display: flex; flex-direction: column; gap: 2px;
+  background: linear-gradient(to top, rgba(20,14,9,0.9), rgba(20,14,9,0));
+  pointer-events: none;
+}
+.slot-map-leg { font-size: 12px; font-weight: 600; color: rgba(247,242,232,0.92); }
+.slot-map-num { font-size: 11px; color: #d8a63f; letter-spacing: 0.02em; }
+.slot-map-attr {
+  position: absolute; top: 8px; right: 8px;
+  z-index: 800;
+  padding: 2px 6px; border-radius: 3px;
+  background: rgba(20,14,9,0.45);
+  font-size: 9px; color: rgba(247,242,232,0.6);
+  pointer-events: none;
+}
+.slot-face-dots {
+  position: absolute; left: 12px; bottom: 11px;
+  display: flex; gap: 6px; z-index: 900;
+}
+.slot-dot {
+  width: 7px; height: 7px; padding: 0; border: 0; border-radius: 50%;
+  background: rgba(247,242,232,0.38);
+  cursor: pointer;
+  transition: background .25s ease, transform .25s ease;
+}
+.slot-dot.is-on { background: rgba(247,242,232,0.95); transform: scale(1.25); }
+.slot-period-label {
+  position: absolute; top: 12px; left: 12px;
+  z-index: 850;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 100px;
+  backdrop-filter: blur(8px);
+}
+.slot-period-label.period-morning {
+  background: rgba(227,242,253,0.85); color: #0d47a1;
+}
+.slot-period-label.period-noon {
+  background: rgba(252,228,236,0.85); color: #c2185b;
+}
+.slot-period-label.period-evening {
+  background: rgba(237,231,246,0.85); color: #1f3a6e;
+}
+
+.slot-body {
+  position: relative;
+  margin-top: -90px;
+  padding: 100px 16px 16px;
+  background: linear-gradient(180deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.55) 30%,
+    rgba(255,255,255,0.92) 65%,
+    rgba(255,255,255,1) 100%);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.slot-name-row {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 10px; margin-bottom: 4px;
+}
+.slot-name {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  line-height: 1.35;
+  flex: 1;
+}
+.slot-rating {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.slot-rating-star { font-size: 12px; }
+.slot-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+.slot-review {
+  font-size: 12px;
+  color: var(--ink-mid);
+  line-height: 1.65;
+  margin-bottom: 8px;
+}
+.slot-meta { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+.meta-row {
+  display: flex; align-items: flex-start; gap: 6px;
+  font-size: 11px; color: var(--ink-mid);
+  line-height: 1.55;
+}
+.meta-icon { flex-shrink: 0; margin-top: 1px; }
+.meta-label {
+  color: var(--gold);
+  font-weight: 600;
+  margin-right: 4px;
+}
+.seasonal-tag {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--cinnabar);
+  background: rgba(184,57,46,0.07);
+  padding: 4px 10px;
+  border-radius: 100px;
+  display: inline-block;
+  border: 1px solid rgba(184,57,46,0.18);
+}
+
+/* ─── Reminder badge ─────────────────────────────── */
+.reminder-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 10px; font-weight: 600;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.06em;
+  color: #fff;
+  background: var(--cinnabar);
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+/* ─── Dining ─────────────────────────────────────── */
+.dining-section {
+  margin: 18px 22px 0;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+}
+.dining-header {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.dining-item {
+  background: linear-gradient(135deg, #1a1410 0%, #2a1f15 100%);
+  color: var(--parchment);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+}
+.dining-meal-row {
+  display: flex; align-items: baseline; gap: 10px;
+  margin-bottom: 6px;
+}
+.dining-meal-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--gold-lt);
+  background: rgba(184,134,46,0.18);
+  padding: 3px 9px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.dining-place {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--parchment);
+}
+.dining-hours {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: rgba(247,242,232,0.5);
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+}
+.dish-list {
+  display: flex; flex-direction: column;
+  gap: 4px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(247,242,232,0.08);
+}
+.dish-row {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 11px;
+  color: rgba(247,242,232,0.78);
+}
+.dish-name { flex: 1; }
+.dish-price {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gold-lt);
+  background: rgba(184,134,46,0.14);
+  padding: 2px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+  margin-left: 8px;
+}
+
+/* ─── Backup spots ───────────────────────────────── */
+.backup-section {
+  margin: 18px 22px 0;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, #fff8e7 0%, #fdf3d6 100%);
+  border: 1px solid #d4b876;
+  border-radius: var(--radius);
+}
+.backup-header {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: #6b4a1a;
+  margin-bottom: 12px;
+  letter-spacing: 0.04em;
+}
+.backup-item {
+  padding: 10px 0;
+  border-top: 1px dashed rgba(184,134,46,0.18);
+}
+.backup-item:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+.backup-name {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: #3a2410;
+  margin-bottom: 3px;
+}
+.backup-distance {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: #8b6a3a;
+  margin-bottom: 4px;
+  letter-spacing: 0.04em;
+}
+.backup-desc {
+  font-size: 12px;
+  color: #4a3520;
+  line-height: 1.55;
+}
+
+/* ─── Tips section ──────────────────────────────── */
+.tips-wrap {
+  background: linear-gradient(135deg, #1a1410 0%, #2a1f15 100%);
+  border-radius: var(--radius-lg);
+  padding: 22px 22px 24px;
+  margin: 16px 12px;
+  box-shadow: var(--shadow);
+  color: var(--parchment);
+  position: relative;
+  overflow: hidden;
+}
+@media (min-width: 768px) { .tips-wrap { margin: 0 0 24px; padding: 28px 32px 30px; } }
+.tips-wrap::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--jade) 0%, var(--gold-lt) 50%, var(--cinnabar) 100%);
+}
+.tips-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 17px;
+  margin-bottom: 14px;
+  color: var(--parchment);
+  display: flex; align-items: center; gap: 8px;
+}
+.tips-title::before { content: '◇'; color: var(--gold-lt); }
+.tip-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 12px;
+  color: rgba(247,242,232,0.78);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.tip-item:last-child { margin-bottom: 0; }
+.tip-num {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: rgba(184,134,46,0.18);
+  border: 1px solid rgba(184,134,46,0.32);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--gold-lt);
+  margin-top: 1px;
+}
+
+/* ─── Nav jump (between versions) ───────────────── */
+.nav-jump {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  padding: 18px 20px;
+  margin: 16px 12px 0;
+  background: var(--ink);
+  border-radius: var(--radius-lg);
+  border-top: 3px solid var(--gold);
+  color: var(--parchment);
+}
+.nav-jump__label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: rgba(247,242,232,0.4);
+  text-transform: uppercase;
+  margin-right: 8px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 4px;
+}
+.nav-jump__btn {
+  display: inline-block;
+  padding: 7px 16px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--gold-lt);
+  border-radius: 100px;
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-jump__btn:hover {
+  background: var(--gold);
+  color: var(--parchment);
+}
+.nav-jump__btn.active {
+  background: rgba(184,134,46,0.18);
+  color: var(--gold-lt);
+  cursor: default;
+  pointer-events: none;
+  border: 1px solid var(--gold);
+}
+@media (min-width: 600px) {
+  .nav-jump__label { width: auto; margin-bottom: 0; text-align: left; }
+}
+
+/* ─── Footer ─────────────────────────────────────── */
+footer {
+  background: #1a1410;
+  color: rgba(247,242,232,0.55);
+  padding: 36px 24px 28px;
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+footer .footer-line {
+  margin-bottom: 8px;
+}
+footer .footer-cta {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 18px;
+  color: var(--gold-lt);
+  letter-spacing: 0.12em;
+  margin-bottom: 16px;
+}
+
+/* ─── Responsive ────────────────────────────────── */
+@media (max-width: 480px) {
+  .hero { padding: 40px 20px 32px; }
+  .hero-title { font-size: 36px; }
+  .section { margin: 12px; }
+  .checklist-wrap, .tips-wrap { margin: 12px; padding: 18px 18px 20px; }
+  .map-card { margin: 0 12px 12px; }
+  .day-header { padding: 0 16px 12px; }
+  .day-tips-banner { margin: 0 16px 12px; }
+  .day-placeholder { margin: 0 16px 12px; }
+  .slots-grid { padding: 0 12px; }
+  .dining-section { margin: 14px 16px 0; }
+}
+
+/* ─────── 天气行（每个 slot 卡片） ─────── */
+.slot-weather {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(0,0,0,.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.slot-weather-icon { font-size: 16px; }
+.slot-weather-text { flex: 1; color: #2a2a2a; }
+.slot-weather-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4caf50;
+  flex-shrink: 0;
+}
+.slot-weather-note {
+  font-size: 11px;
+  color: #999;
+  margin-top: 4px;
+  padding-left: 4px;
+}
+.slot-weather-error {
+  color: #c62828;
+  font-size: 12px;
+  margin-left: 8px;
+}
+.slot-weather-loading { color: #999; }
+
+/* ─── Adjustments folding module ───────────── */
+.adjustments-wrap { margin: 12px; }
+@media (min-width: 768px) {
+  .adjustments-wrap { margin: 0 0 24px; }
+}
+.adjustments {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 14px 18px;
+}
+.adjustments__summary {
+  cursor: pointer;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  list-style: none;
+  user-select: none;
+}
+.adjustments__summary::-webkit-details-marker { display: none; }
+.adjustments__summary::before {
+  content: '▸ ';
+  display: inline-block;
+  transition: transform 0.2s;
+  color: var(--gold);
+}
+.adjustments[open] .adjustments__summary::before { content: '▾ '; }
+.adjustments__body {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+.adjustments__body ul { padding-left: 20px; margin: 6px 0 10px; }
+.adjustments__body li { margin-bottom: 4px; }
+.adjustments__note {
+  font-size: 12px;
+  color: var(--cinnabar);
+  background: rgba(184, 57, 46, 0.06);
+  border-left: 3px solid var(--cinnabar);
+  padding: 6px 10px;
+  margin-top: 10px;
+}
+
+/* ─── Expenses table (cost estimate folding module) ─── */
+.expenses-note {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+.expenses-h4 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 16px 0 8px;
+}
+.expenses-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+.expenses-table thead th {
+  background: rgba(184, 134, 46, 0.10);
+  color: var(--ink);
+  font-weight: 700;
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.04em;
+}
+.expenses-table tbody td {
+  padding: 8px 10px;
+  border-bottom: 1px dashed var(--border);
+  vertical-align: top;
+  color: var(--ink-soft);
+}
+.expenses-table tbody tr:last-child td { border-bottom: none; }
+@media (max-width: 600px) {
+  .expenses-table { font-size: 11px; }
+  .expenses-table thead th,
+  .expenses-table tbody td { padding: 6px 6px; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <header class="hero">
+    <div class="hero-eyebrow">Guangzhou → Wuxi (29h) → Taiyuan → Datong → WUT Airport</div>
+    <h1 class="hero-title">山西古建<span class="accent">八日朝圣</span></h1>
+    <p class="hero-sub">黑神话悟空 · 反向走古建线 · 景区直通车+拼车 · 五台山机场回</p>
+    <div class="hero-dates">
+      <span class="hero-badge">📅 出发 9/26 周六</span>
+      <span class="hero-badge">🛬 返程 10/3 周六</span>
+      <span class="hero-badge">⏱ 8 天 7 晚</span>
+    </div>
+  </header>
+
+  <!-- ═══════════════ CHECKLIST ═══════════════ -->
+  <div class="checklist-wrap">
+    <h2 class="checklist-title">出发前待办清单</h2>
+    <div id="checklist-container"><!-- JS 生成 --></div>
+  </div>
+
+  <!-- ═══════════════ PRE-TRIP ═══════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon bronze">⚠️</div>
+      <div>
+        <div class="section-title">行前须知</div>
+        <div class="section-subtitle">Pre-Trip · 9 月末定制</div>
+      </div>
+    </div>
+    <div class="section-body" id="pretrip-info"><!-- JS 生成 --></div>
+  </section>
+
+  <!-- ═══════════════ TOURISM CARD ═══════════════ -->
+  <div class="tourism-card" id="tourism-card">
+    <div class="tourism-card__head">
+      <span class="tourism-card__icon">🎫</span>
+      <span class="tourism-card__title">山西文旅年卡 · 晋游卡</span>
+    </div>
+    <div class="tourism-card__rows" id="tourism-card-rows"><!-- JS 生成 --></div>
+    <div class="tourism-card__savings" id="tourism-card-savings"><!-- JS 生成 --></div>
+  </div>
+
+  <!-- ═══════════════ CLOSURE AUDIT ═══════════════ -->
+  <div class="closure-audit">
+    <div class="closure-audit__head">
+      <div class="closure-audit__icon">🔍</div>
+      <div>
+        <div class="closure-audit__title">参观日修缮/封闭核查</div>
+        <div class="closure-audit__subtitle" id="closure-audit-date">// Site Closure Audit</div>
+      </div>
+    </div>
+    <div class="closure-audit__summary" id="closure-audit-summary"><!-- JS 生成 --></div>
+    <div class="closure-audit__list" id="closure-audit-list"><!-- JS 生成 --></div>
+  </div>
+
+  <!-- ═══════════════ DISCLAIMER ═══════════════ -->
+  <div class="disclaimer-box">
+    <strong>免责声明 · </strong><span id="disclaimer-text">本页全部信息（天气、航班、酒店、餐厅、景点、门票、价格、营业时间、评分、活动等）均为 AI 基于公开资料整理的参考建议，可能不准确或已过时，不保证与实时情况一致；请务必在官方渠道 / 订票订房 / 地图等 App 上核实后再做决定或前往。山西古建文物以官方最新通知为准；佛光寺东大殿仅殿外参观。页面实景照片均来自 Wikimedia Commons，作者与许可证标注于每张图片右下角，点击可跳转原始文件页。</span>
+  </div>
+
+  <!-- ═══════════════ FLIGHTS ═══════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon cinnabar">✈️</div>
+      <div>
+        <div class="section-title">推荐航班</div>
+        <div class="section-subtitle">Flights · 去程待选 · 返程待选</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="flight-block-label">✈ 去程 · 广州 (CAN) → 无锡 (WUX) → 太原 (TYN) · 联程 · 9/26-9/27</div>
+      <div class="candidates-grid" id="outbound-flights"></div>
+      <div class="flight-block-label">✈ 返程 · 五台山机场 (WUT) → 广州 (CAN) · 2026-10-03（周六）</div>
+      <div class="candidates-grid" id="return-flights"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ HOTELS ═══════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon gold">🏨</div>
+      <div>
+        <div class="section-title">住宿推荐 · 按片区价位</div>
+        <div class="section-subtitle">Hotel Areas · 太原/代县/浑源/大同</div>
+      </div>
+    </div>
+    <div class="section-body" id="hotels-container"><!-- JS 生成 --></div>
+  </section>
+
+  <!-- ═══════════════ SUMMARY ═══════════════ -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-icon jade">📋</div>
+      <div>
+        <div class="section-title">行程概要</div>
+        <div class="section-subtitle">At a Glance · 6 天 5 晚 · 自驾总里程约 730 km</div>
+      </div>
+    </div>
+    <div class="section-body" id="summary-container"><!-- JS 生成 --></div>
+  </section>
+
+  <!-- ═══════════════ MAP ═══════════════ -->
+  <div class="map-card">
+    <div class="map-head">
+      <div class="map-head__title">
+        <h2>行程地图</h2>
+        <p>// 点击下方途经点 · 沿真实道路从上一站滑向目标</p>
+      </div>
+      <div class="map-head__actions">
+        <button type="button" class="map-btn" id="play-btn">
+          <span class="icon">▶</span><span class="label">播放行程</span>
+        </button>
+      </div>
+    </div>
+    <div id="map"></div>
+    <div class="route-chips" id="route-chips"><!-- JS 生成 --></div>
+  </div>
+
+  <!-- ═══════════════ VIEW TOGGLE ═══════════════ -->
+  <div class="view-toggle" id="view-toggle">
+    <button type="button" class="view-toggle__btn active" data-mode="tabs">▤ 标签页</button>
+    <button type="button" class="view-toggle__btn" data-mode="timeline">≡ 时间轴</button>
+  </div>
+
+  <!-- ═══════════════ TIMELINE ═══════════════ -->
+  <section class="section section--sticky-tabs" id="timeline-section">
+    <div class="section-header">
+      <div class="section-icon jade">🗓</div>
+      <div>
+        <div class="section-title">八日时间轴</div>
+        <div class="section-subtitle">Day-by-Day Timeline</div>
+      </div>
+    </div>
+    <div class="tab-strip" id="day-tabs"><!-- JS 生成 · 标签页模式 --></div>
+    <div id="timeline-container"><!-- JS 生成 --></div>
+  </section>
+
+  <!-- ═══════════════ TIPS ═══════════════ -->
+  <div class="tips-wrap">
+    <h2 class="tips-title">全程实用贴士</h2>
+    <div id="tips-container"><!-- JS 生成 --></div>
+  </div>
+
+  <!-- ═══════════════ ADJUSTMENTS (optional extensions) ═══════════════ -->
+  <section class="adjustments-wrap">
+    <details class="adjustments">
+      <summary class="adjustments__summary">▸ 五台山机场班次少 / 想改大同返程 / 想加五台山景区，应该怎么调整？</summary>
+      <div class="adjustments__body">
+        <p>雁门关已排入 Day 4 正式行程（08:00 开门即进）。下面两处仍在主推行程之外，按下面方式可加入：</p>
+        <ul>
+          <li>觉山寺（灵丘县红石塄乡）：距浑源约 80 km、距大同约 140–150 km，最后 15 km 为唐河峡谷乡道。加进 Day 5 需多跑约 150 km，须与北岳恒山二选一——若更看重辽塔可舍恒山换它。</li>
+          <li>壶口瀑布：位于临汾市西北吉县，距太原约 400 km、车程约 5 小时。需整日往返。</li>
+          <li>建议方案：将行程延长 1 天（共 7 天），并在 Day 6 改线为「云冈石窟 → 大同南站 → 临汾西（动车约 3h）」住宿。</li>
+          <li>新增 Day 7：临汾 → 壶口瀑布（包车往返约 4–5h）→ 临汾乔李机场 → 飞广州（CA/RY 等航线，须自行核实）。</li>
+        </ul>
+        <p class="adjustments__note">⚠ 上述为行程调整参考；车票 / 机票 / 壶口景区预约请自行核实。</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ═══════════════ EXPENSES (optional cost estimate) ═══════════════ -->
+  <section class="adjustments-wrap">
+    <details class="adjustments">
+      <summary class="adjustments__summary">▸ 6 天花费预估（参考 · 需自核）</summary>
+      <div class="adjustments__body">
+        <p class="expenses-note">所有金额为参考区间，按"交通 / 饮食 / 住宿 / 门票 / 导游 / 杂费"分类，按日期顺序排列；租车自驾在"交通"类下并列两个互斥选项。⚠ 最终以个人实际预订/消费为准。</p>
+
+        <table class="expenses-table">
+          <thead>
+            <tr>
+              <th>日期</th>
+              <th>分类</th>
+              <th>项目</th>
+              <th>金额（参考）</th>
+              <th>备注</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td rowspan="3">2026-10-01<br>周四</td><td>交通</td><td>广州 ⇄ 太原往返机票</td><td>¥2,000+ / 人</td><td>「不查实时」红线，标 "+" 表示最低起步；实际以购票为准</td></tr>
+            <tr><td>交通</td><td>太原机场 → 酒店 网约车</td><td>约 ¥60–80</td><td>车程 30–40 分钟</td></tr>
+            <tr><td>住宿</td><td>太原酒店（亲贤街 / 五一广场片区 4 钻）</td><td>约 ¥500–800 / 晚</td><td>D1 + D6 共 2 晚</td></tr>
+
+            <tr><td rowspan="2">2026-10-01<br>周四</td><td>饮食</td><td>头脑/过油肉/莜面等本地餐</td><td>约 ¥80–150 / 天</td><td>3 餐，按中端餐厅估算</td></tr>
+            <tr><td>门票</td><td>山西博物院</td><td>免费（需预约）</td><td>微信公众号预约</td></tr>
+
+            <tr><td rowspan="3">2026-10-01<br>周四</td><td>交通</td><td>太原 → 佛光寺 → 代县 油费+过路+停车（选项 2）</td><td>约 ¥250–350</td><td>D4-D5 起租，详见下方</td></tr>
+            <tr><td>饮食</td><td>代县/五台山 当日餐</td><td>约 ¥80–150 / 天</td><td>—</td></tr>
+            <tr><td>住宿</td><td>代县古城酒店</td><td>约 ¥300–500 / 晚</td><td>D3 1 晚</td></tr>
+
+            <tr><td rowspan="3">2026-10-01<br>周四</td><td>饮食</td><td>代县/朔州/浑源 当日餐</td><td>约 ¥80–150 / 天</td><td>—</td></tr>
+            <tr><td>门票</td><td>雁门关 + 崇福寺 + 应县木塔</td><td>约 ¥170 / 人</td><td>公开常见参考价；⚠ 崇福寺周一闭馆，如未开则减 ¥30</td></tr>
+            <tr><td>住宿</td><td>浑源县城酒店</td><td>约 ¥150–500 / 晚</td><td>D4 1 晚</td></tr>
+
+            <tr><td rowspan="4">2026-10-01<br>周四</td><td>饮食</td><td>浑源/大同 当日餐</td><td>约 ¥80–150 / 天</td><td>—</td></tr>
+            <tr><td>门票</td><td>悬空寺 + 北岳恒山（含索道）+ 华严寺 + 九龙壁</td><td>约 ¥280–340 / 人</td><td>公开常见参考价；恒山门票与索道价未核实</td></tr>
+            <tr><td>住宿</td><td>大同酒店（古城周边）</td><td>约 ¥500–800 / 晚</td><td>D5 1 晚</td></tr>
+            <tr><td>导游</td><td>云冈石窟 5A 解说</td><td>¥200 / 人（参考）</td><td>5A 找不到公开价格；按占位约定</td></tr>
+
+            <tr><td rowspan="3">2026-10-01<br>周四</td><td>交通</td><td>大同高铁站 → 广州 高铁/机票</td><td>已含往返机票 ¥2000+</td><td>—</td></tr>
+            <tr><td>门票</td><td>云冈石窟</td><td>约 ¥120 / 人</td><td>含景交车</td></tr>
+            <tr><td>杂费</td><td>机场停车（如自驾）/ 包车空驶费</td><td>约 ¥50–150</td><td>—</td></tr>
+          </tbody>
+        </table>
+
+        <h4 class="expenses-h4">租车自驾两个互斥选项（交通类）</h4>
+        <p class="expenses-note">两个选项终点都在大同（机场或高铁站二选一），区别是起点 + 路线覆盖范围。选其一不要叠加。</p>
+        <table class="expenses-table">
+          <thead>
+            <tr><th>选项</th><th>起点</th><th>覆盖</th><th>还车点</th><th>估算（油+过路+停车）</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>选项 1 · 全程自驾</td>
+              <td>太原武宿机场</td>
+              <td>Day 1 落地起，Day 2–5 全程自驾，Day 6 看完云冈石窟</td>
+              <td>大同机场（或高铁站）</td>
+              <td>约 ¥1,500–2,000（参考）<br>含异地还车费 ¥400–600</td>
+            </tr>
+            <tr>
+              <td>选项 2 · 半程自驾</td>
+              <td>D4-D5 大同起租</td>
+              <td>Day 3 太原 → 佛光寺 → 代县 → 雁门关 → 朔州 → 应县 → 浑源 → 大同方向自驾，Day 6 云冈后还车</td>
+              <td>大同机场（或高铁站）</td>
+              <td>油+高速+停车 ≈ ¥819（参考，详见下方明细）<br>另计租车租金 ~¥400–600 + 异地还车费 ¥400–600</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4 class="expenses-h4">半程自驾（选项 2）逐段明细（参考）</h4>
+        <p class="expenses-note">Day 3 太原酒店起租，Day 6 云冈后还车；油费 / 高速费取自行程数据，停车费为景区常见参考价。还车点机场 / 高铁站二选一（暂不确定）。</p>
+        <table class="expenses-table">
+          <thead>
+            <tr><th>日期</th><th>行程段</th><th>公里</th><th>耗时</th><th>油费</th><th>高速费</th><th>停车费</th></tr>
+          </thead>
+          <tbody>
+            <tr><td rowspan="3">Day 3<br>09-27 周日</td><td>太原酒店 → 佛光寺</td><td>260 km</td><td>3.5–4.5 h</td><td>¥150</td><td>¥100</td><td>¥10</td></tr>
+            <tr><td>佛光寺 → 南禅寺</td><td>25 km</td><td>30 min</td><td>¥5</td><td>¥0</td><td>¥5</td></tr>
+            <tr><td>南禅寺 → 代县古城</td><td>80 km</td><td>1.5 h</td><td>¥45</td><td>¥30</td><td>¥10</td></tr>
+
+            <tr><td rowspan="4">Day 4<br>09-28 周一</td><td>代县 → 雁门关</td><td>20 km</td><td>25 min</td><td>¥12</td><td>¥0</td><td>¥10</td></tr>
+            <tr><td>雁门关 → 崇福寺（朔州）</td><td>90 km</td><td>1.2 h</td><td>¥55</td><td>¥35</td><td>¥5</td></tr>
+            <tr><td>崇福寺 → 应县木塔</td><td>90–96 km</td><td>1.5 h</td><td>¥58</td><td>¥40</td><td>¥10</td></tr>
+            <tr><td>应县 → 浑源（夜宿）</td><td>54 km</td><td>1.25 h</td><td>¥33</td><td>¥25</td><td>¥0（酒店）</td></tr>
+
+            <tr><td rowspan="3">Day 5<br>09-29 周二</td><td>浑源 → 悬空寺</td><td>4 km</td><td>10–15 min</td><td>¥3</td><td>¥0</td><td>¥15</td></tr>
+            <tr><td>悬空寺 → 北岳恒山</td><td>4–6 km</td><td>15–20 min</td><td>¥4</td><td>¥0</td><td>¥15</td></tr>
+            <tr><td>恒山 → 大同古城</td><td>85–90 km</td><td>1.3–1.5 h</td><td>¥52</td><td>¥32</td><td>¥0（酒店）</td></tr>
+
+            <tr><td rowspan="3">Day 6<br>09-30 周三</td><td>大同古城 → 云冈石窟</td><td>30 km</td><td>35 min</td><td>¥15</td><td>¥0</td><td>¥15</td></tr>
+            <tr><td>云冈 → 大同机场（还车 · 乘 AQ1052）</td><td>~40 km</td><td>~40 min</td><td>¥20</td><td>¥10</td><td>¥0</td></tr>
+            <tr><td>云冈 → 大同高铁站（还车 · 备选）</td><td>~25 km</td><td>~35 min</td><td>¥15</td><td>¥0</td><td>¥0</td></tr>
+
+            <tr><td colspan="2">合计（按机场还车计；高铁站备选略减 ~¥10）</td><td>~788 km</td><td>—</td><td>¥452</td><td>¥272</td><td>¥95</td></tr>
+          </tbody>
+        </table>
+        <p class="expenses-note">油费 + 高速费 + 停车费合计 ≈ ¥995（参考）。另计：租车日租金 Day 3–6 约 4 天 × ¥100–150 ≈ ¥400–600；异地还车费 ¥400–600。三项合计约 ¥1,800–2,200（参考）。</p>
+
+        <p class="adjustments__note">⚠ 全部数字为参考区间，实际以个人预订/消费为准；自驾里程 / 过路费以高德 / Google 实测为准。</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ═══════════════ NAV JUMP ═══════════════ -->
+  <div class="nav-jump">
+    <span class="nav-jump__label">// 切换行程版本</span>
+    <a href="shanxi-6d.html" class="nav-jump__btn">原版（直飞·6天）</a>
+    <a href="shanxi-re.html" class="nav-jump__btn active" aria-disabled="true">反向版（无锡中转·8天·当前）</a>
+    <a href="shanxi-7d-followtour.html" class="nav-jump__btn">7 天跟团版</a>
+    <a href="index.html" class="nav-jump__btn">GitHub 首页</a>
+  </div>
+
+  <footer>
+    <div class="footer-cta">山西古建 · 六日朝圣</div>
+    <div class="footer-line">Generated by Migo · travel-plan-viz</div>
+    <div class="footer-line">所有信息仅供参考 · 出行前请核实</div>
+  </footer>
+
+</div>
+
+<!-- ═══════════════ LEAFLET ═══════════════ -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- ═══════════════ ENGINE: MAP ═══════════════ -->
+<script>
+function escapeHTML(s) {
+  return String(s)
+    .replace(/&/g, '&')
+    .replace(/</g, '<')
+    .replace(/>/g, '>')
+    .replace(/"/g, '"')
+    .replace(/'/g, '&#39;');
+}
+function _sanitizeLat(v) { var n = Number(v); if (!isFinite(n)) return 0; return Math.max(-90, Math.min(90, n)); }
+function _sanitizeLng(v) { var n = Number(v); if (!isFinite(n)) return 0; return Math.max(-180, Math.min(180, n)); }
+function buildNavLink(lat, lng, label, ua) {
+  var sLat = _sanitizeLat(lat), sLng = _sanitizeLng(lng);
+  var encLabel = encodeURIComponent(String(label));
+  if (ua && /iPhone|iPad|iPod/.test(ua)) {
+    return 'https://maps.apple.com/?ll=' + sLat + ',' + sLng + '&q=' + encLabel;
+  }
+  return 'geo:' + sLat + ',' + sLng + '?q=' + sLat + ',' + sLng + '(' + encLabel + ')';
+}
+function buildMapAppLinks(lat, lng, label) {
+  var sLat = _sanitizeLat(lat), sLng = _sanitizeLng(lng);
+  var encLabel = encodeURIComponent(String(label));
+  var amap = {
+    label: '高德地图',
+    url: 'https://uri.amap.com/marker?position=' + sLng + ',' + sLat
+      + '&name=' + encLabel + '&coordinate=wgs84&callnative=1&src=travel-plan-viz',
+  };
+  var google = {
+    label: 'Google 地图',
+    url: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(sLat + ',' + sLng),
+  };
+  return isInChinaBBox(sLat, sLng) ? [amap] : [google, amap];
+}
+var GCJ_A = 6378245.0;
+var GCJ_EE = 0.00669342162296594323;
+function isInChinaBBox(lat, lng) {
+  return lng >= 72.004 && lng <= 137.8347 && lat >= 0.8293 && lat <= 55.8271;
+}
+function gcjTransformLat(x, y) {
+  var ret = -100.0 + 2.0 * x + 3.0 * y + 0.2 * y * y + 0.1 * x * y + 0.2 * Math.sqrt(Math.abs(x));
+  ret += (20.0 * Math.sin(6.0 * x * Math.PI) + 20.0 * Math.sin(2.0 * x * Math.PI)) * 2.0 / 3.0;
+  ret += (20.0 * Math.sin(y * Math.PI) + 40.0 * Math.sin(y / 3.0 * Math.PI)) * 2.0 / 3.0;
+  ret += (160.0 * Math.sin(y / 12.0 * Math.PI) + 320.0 * Math.sin(y * Math.PI / 30.0)) * 2.0 / 3.0;
+  return ret;
+}
+function gcjTransformLng(x, y) {
+  var ret = 300.0 + x + 2.0 * y + 0.1 * x * x + 0.1 * x * y + 0.1 * Math.sqrt(Math.abs(x));
+  ret += (20.0 * Math.sin(6.0 * x * Math.PI) + 20.0 * Math.sin(2.0 * x * Math.PI)) * 2.0 / 3.0;
+  ret += (20.0 * Math.sin(y * Math.PI) + 40.0 * Math.sin(y / 3.0 * Math.PI)) * 2.0 / 3.0;
+  ret += (150.0 * Math.sin(x / 12.0 * Math.PI) + 300.0 * Math.sin(x / 30.0 * Math.PI)) * 2.0 / 3.0;
+  return ret;
+}
+function gcj02ToWgs84(lat, lng) {
+  if (!isInChinaBBox(lat, lng)) return { lat: lat, lng: lng };
+  var dLat = gcjTransformLat(lng - 105.0, lat - 35.0);
+  var dLng = gcjTransformLng(lng - 105.0, lat - 35.0);
+  var radLat = lat / 180.0 * Math.PI;
+  var magic = Math.sin(radLat);
+  magic = 1 - GCJ_EE * magic * magic;
+  var sqrtMagic = Math.sqrt(magic);
+  dLat = (dLat * 180.0) / ((GCJ_A * (1 - GCJ_EE)) / (magic * sqrtMagic) * Math.PI);
+  dLng = (dLng * 180.0) / (GCJ_A / sqrtMagic * Math.cos(radLat) * Math.PI);
+  return { lat: lat - dLat, lng: lng - dLng };
+}
+function routeCoordinates(points) {
+  return points.map(function (p) { return [p.lat, p.lng]; });
+}
+function initTravelMap(elementId, points, opts) {
+  opts = opts || {};
+  var coords = routeCoordinates(points);
+  // 先计算点位的 LatLngBounds，用于约束最小缩放与拖动范围，
+  // 保证任意缩放/拖动后至少有一个行程点仍出现在视口中。
+  var pointBounds = coords.length
+    ? L.latLngBounds(coords)
+    : L.latLngBounds([[0, 0]]);
+  // 拖动边界在点位 bounds 基础上向外扩约 30%，给视觉留呼吸感，又不至于拖飞
+  var paddedBounds = pointBounds.pad(0.3);
+
+  var map = L.map(elementId, {
+    maxBounds: paddedBounds,
+    maxBoundsViscosity: 1.0,  // 1.0 = 硬墙，到边就被拽回
+  });
+  L.tileLayer(opts.tileUrl || 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: opts.attribution || '© OpenStreetMap contributors',
+    maxZoom: 19,
+  }).addTo(map);
+  var ua = (typeof navigator !== 'undefined' && navigator.userAgent) || '';
+  window.routeMarkers = [];
+  points.forEach(function (p, i) {
+    var sLat = _sanitizeLat(p.lat), sLng = _sanitizeLng(p.lng);
+    // 与前一途经点距离过近（约 1km 内）时，popup 垂直错开避免重叠
+    var popupOffset = null;
+    if (i > 0) {
+      var prev = points[i - 1];
+      if (Math.abs(p.lat - prev.lat) < 0.01 && Math.abs(p.lng - prev.lng) < 0.01) {
+        popupOffset = L.point(0, -72);
+      }
+    }
+    var icon = L.divIcon({
+      className: 'route-pin',
+      html: '<span class="route-pin__num">' + (i + 1) + '</span>',
+      iconSize: [28, 28],
+      iconAnchor: [14, 14],
+    });
+    var navLinks = [{ label: '导航', url: buildNavLink(sLat, sLng, p.name, ua) }]
+      .concat(buildMapAppLinks(sLat, sLng, p.name));
+    var marker = L.marker([sLat, sLng], { icon: icon }).addTo(map);
+    marker.bindPopup(
+      '<b>' + (i + 1) + '. ' + escapeHTML(String(p.name)) + '</b><br>'
+      + (p.time ? escapeHTML(String(p.time)) + '<br>' : '')
+      + navLinks.map(function (l) {
+          return '<a href="' + l.url + '" target="_blank">' + escapeHTML(l.label) + '</a>';
+        }).join(' · '),
+      popupOffset ? { offset: popupOffset } : {}
+    );
+    window.routeMarkers.push(marker);
+  });
+  if (coords.length > 1) {
+    L.polyline(coords, { dashArray: '6 8', weight: 2, color: '#b8862e' }).addTo(map);
+  }
+  // fitBounds 决定初始缩放；取该 zoom 作为最小缩放，阻止无限缩小拖出点位区域
+  map.fitBounds(pointBounds, { padding: [30, 30] });
+  var initialZoom = Math.floor(map.getZoom());
+  map.setMinZoom(initialZoom);
+  map.options.minZoom = initialZoom;  // 同步给后续 setView / fitBounds 兜底
+  return map;
+}
+</script>
+
+<!-- ═══════════════ ENGINE: REMINDERS ═══════════════ -->
+<script>
+function computeReminders(startDateISO, items) {
+  return items.map(function (it) {
+    var d = new Date(startDateISO + 'T00:00:00Z');
+    d.setUTCDate(d.getUTCDate() - it.leadDays);
+    return { item: it.item, leadDays: it.leadDays, deadline: d.toISOString().slice(0, 10) };
+  }).sort(function (a, b) { return a.deadline < b.deadline ? -1 : a.deadline > b.deadline ? 1 : 0; });
+}
+function renderChecklistHTML(reminders) {
+  var lis = reminders.map(function (r) {
+    var ld = Math.max(0, Math.floor(Number(r.leadDays) || 0));
+    var dd = (typeof r.deadline === 'string' || typeof r.deadline === 'number')
+      ? escapeHTML(String(r.deadline)) : '';
+    return '<li class="todo-item" style="display:flex;align-items:flex-start;gap:8px;padding:10px 12px;margin-bottom:6px;background:rgba(247,242,232,0.04);border:1px solid rgba(247,242,232,0.08);border-radius:6px;font-size:12px;color:rgba(247,242,232,0.82);line-height:1.55;">'
+      + '<input type="checkbox" style="flex-shrink:0;width:15px;height:15px;margin-top:2px;accent-color:#b8862e;cursor:pointer;"> '
+      + '<span style="flex-shrink:0;font-family:DM Mono,monospace;font-size:10px;color:#d4a04c;background:rgba(184,134,46,0.18);padding:2px 8px;border-radius:3px;letter-spacing:0.06em;">' + dd + '前</span> '
+      + '<span style="flex:1;">' + escapeHTML(String(r.item)) + '<span style="color:rgba(247,242,232,0.5);">（建议提前' + ld + '天）</span></span>'
+      + '</li>';
+  }).join('');
+  return '<ul style="list-style:none;display:flex;flex-direction:column;">' + lis + '</ul>';
+}
+function reminderBadgeHTML(leadDays) {
+  var ld = Math.max(0, Math.floor(Number(leadDays) || 0));
+  return '<span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;font-family:DM Mono,monospace;letter-spacing:0.06em;color:#fff;background:#b8392e;padding:3px 10px;border-radius:4px;margin-top:6px;">⚠️ 建议提前' + ld + '天订</span>';
+}
+</script>
+
+<!-- ═══════════════ TRIP DATA ═══════════════ -->
+<script id="trip-data" type="application/json">
+
+{
+  "title": "山西 8 天 · 反向版 · 经无锡中转 · 黑神话悟空古建朝圣（景区直通车版）",
+  "startDate": "2026-09-26",
+  "colorScheme": "shanhai-bronze-cinnabar-8d-via-wuxi-reverse-shuttle",
+  "preTrip": {
+    "weather": {
+      "summary": "9 月末 10 月初山西秋高气爽：太原约 22°C / 12℃，大同 18°C / 6℃，昼夜温差大；五台山、恒山等高海拔区 5–10℃ 偏低。白天晴朗适合户外古建，傍晚/清晨骤冷需加外套。",
+      "typhoon": "山西内陆无台风影响；主要看 9 月底是否有寒潮预警，五台山/恒山/太行山高海拔区可能下雪。"
+    },
+    "packing": "6 天跨山西南北：抓绒+薄羽绒+防风外套各一；防滑徒步鞋必备（佛光寺东大殿台阶陡、悬空寺登临风大）；保温杯、润唇膏、暖宝宝；常用药；雨伞/雨衣备用；寺庙内禁止短裤/拖鞋/帽。",
+    "payment": "全国通用：微信/支付宝覆盖绝大多数场景；山西老字号面馆偶有只收现金/微信，可备 300–500 元现金。",
+    "apps": [
+      "高德地图（境内导航）",
+      "12306（高铁备选）",
+      "飞猪/携程（机票/酒店）",
+      "九元航空 APP",
+      "山西博物院公众号（免费预约）"
+    ],
+    "ticketTip": "去程拆两段：9/26 ZH9823 08:40 广州 T3 → 11:00 无锡；29h 中转；9/27 ZH8533 16:00 无锡 T2 → 18:05 太原 T2。9/28 傍晚 太原南→大同南 高铁（约 2h）。返程 10/3 五台山机场→广州（华夏/南航/春秋，班次少须提前核）。大同/应县/雁门关/恒山段全用**景区直通车**（微信搜\"晋游宝\"购票）；佛光寺/南禅寺/五台山机场在五台县山区，直通车不到，需拼车或包车。"
+  },
+  "tourismCard": {
+    "name": "山西文旅年卡（晋游卡）",
+    "price": "标准版 258 元/年（工会普惠卡 100 元、亲子卡 599 元）",
+    "validity": "激活起 365 天（购买 3 个月内未激活将自动激活）",
+    "covers": "120+ 山西景区，含 6 家 5A 级（云冈石窟/晋祠/平遥古城/雁门关/乔家大院/八泉峡）+ 40+ 4A 级（佛光寺周边多数含）",
+    "coversYourTrip": "晋祠（5A · 单门票 ¥80）+ 云冈石窟（5A · 单门票 ¥120）+ 平遥古城（如加，半价通票 ¥65）= 至少省 ¥265（标准年卡已回本）",
+    "limitations": "部分热门景区限 3 次/年（平遥、乔家、雁门关、八泉峡等）；悬空寺属恒山十八景，需核实是否含在年卡中",
+    "how": "微信公众号「山西文旅年卡」或「票通天下发布」实名购买，人脸识别入园，无需实体卡",
+    "savingsHint": "若本次行程游玩晋祠+云冈共 2 个收费景区，单独购票 ¥200，年卡 ¥258 = 多花 ¥58；如再加悬空寺（¥100 登临）或扩展到临汾/平遥，年卡性价比立刻显著"
+  },
+  "closureAudit": {
+    "auditDate": "2026-09",
+    "summary": "本表基于 2026 年 9 月公开公告整理，出发前仍需电话核实",
+    "sites": [
+      {
+        "name": "应县木塔",
+        "visitDate": "10/1（周四）",
+        "status": "✅ 正常开放（落架大修系谣言）",
+        "detail": "2026 年 3 月网传\"应县木塔即将落架大修\"已被国家文物局、山西省文物局、应县文旅局集体辟谣。现仅开放一层，二层以上因塔身倾斜长期禁止攀登；2026 年 4 月起有数字沉浸式体验空间可作替代。"
+      },
+      {
+        "name": "崇福寺（朔州）",
+        "visitDate": "10/1（周四）· 可选",
+        "status": "✅ 正常开放（10/1 周四非闭馆日）",
+        "detail": "⚠️ 周一闭馆。本版 10/1 周四可去，但应县→朔州/朔州→雁门关没有直通车（仅朔州→忻州古城/雁门关部分时段有），需打车/拼车。开放时间 9:00–17:00。"
+      },
+      {
+        "name": "雁门关",
+        "visitDate": "10/1（周四）",
+        "status": "✅ 正常开放",
+        "detail": "5A 级景区。明月楼—关城—雁塔一线徒步约 2.5 小时。⚠ 雁门关→代县无直通车，需打车（20 km，¥30）。"
+      },
+      {
+        "name": "佛光寺",
+        "visitDate": "10/2（周五）",
+        "status": "✅ 正常开放",
+        "detail": "无长期修缮公告。东大殿禁止入殿（仅殿外参观）。雨季遇山洪预警会临时闭馆。⚠ 佛光寺/南禅寺/五台山机场在五台县西南山区，景区直通车不到；需从代县→五台县城班车（约 50 km，¥25，1.5h）→当地拼车/打车。"
+      },
+      {
+        "name": "南禅寺",
+        "visitDate": "10/2（周五）",
+        "status": "✅ 正常开放",
+        "detail": "9-1 起恢复每周一闭馆（周二至周日 8:30–17:30）。10/2 周五避开闭馆日。"
+      },
+      {
+        "name": "云冈石窟",
+        "visitDate": "9/29（周二）",
+        "status": "✅ 正常开放",
+        "detail": "9/29 周二非闭馆日。从大同古城乘景区直通车：6:40/7:00/7:20/7:40/8:00/8:20/8:40/9:10/9:40/10:10/10:50/11:40/12:20/13:10/14:00/14:50/15:40（40 min ¥10）。"
+      }
+    ]
+  },
+  "flights": {
+    "booked": [
+      {
+        "label": "广州 (CAN) → 无锡 (WUX) · 9/26",
+        "code": "深航 ZH9823",
+        "time": "9/26 08:40 广州 T3 → 11:00 无锡",
+        "note": "✅ 已预订"
+      },
+      {
+        "label": "无锡 (WUX) → 太原 (TYN) · 9/27",
+        "code": "深航 ZH8533",
+        "time": "9/27 16:00 无锡 T2 → 18:05 太原 T2",
+        "note": "✅ 已预订"
+      },
+      {
+        "label": "太原南→大同南 · 9/28 傍晚 高铁",
+        "code": "高铁 G/D 字头",
+        "time": "9/28 17:30–19:30 段（约 2h）",
+        "note": "✅ 9 月底每天 10+ 班次"
+      },
+      {
+        "label": "五台山机场→广州 · 10/3 返程",
+        "code": "华夏/南航/春秋",
+        "time": "10/3 班次以购票系统为准（约 3h）",
+        "note": "⚠ 五台山机场班次少（每天 1–2 班），提前 1–2 周核班期"
+      }
+    ],
+    "candidates": {
+      "outbound": [
+        {
+          "label": "广州 → 无锡",
+          "code": "深航 ZH9823",
+          "time": "9/26 08:40",
+          "note": "✅"
+        },
+        {
+          "label": "无锡 → 太原",
+          "code": "深航 ZH8533",
+          "time": "9/27 16:00",
+          "note": "✅"
+        },
+        {
+          "label": "太原南 → 大同南",
+          "code": "高铁 G/D",
+          "time": "9/28 傍晚",
+          "note": "✅"
+        }
+      ],
+      "return": [
+        {
+          "label": "五台山机场 (WUT) → 广州 (CAN)",
+          "code": "华夏/南航/春秋",
+          "time": "10/3 班次以系统为准",
+          "note": "⚠ 班次少"
+        },
+        {
+          "label": "太原 (TYN) → 广州 · 高铁备选",
+          "code": "高铁 G 字头",
+          "time": "10/3 全天多班次",
+          "note": "需 Day 8 早上从五台山机场打车去太原南站"
+        }
+      ]
+    }
+  },
+  "hotelAreas": [
+    {
+      "area": "无锡 · 太湖广场 / 南禅寺 / 崇安寺",
+      "reason": "Day 1 入住：29h 中转大本营。",
+      "options": [
+        {
+          "tier": "经济",
+          "name": "如家 / 锦江之星南禅寺店",
+          "priceRange": "约 ¥280–450/晚",
+          "note": "市中心"
+        },
+        {
+          "tier": "中档",
+          "name": "全季无锡南禅寺店",
+          "priceRange": "约 ¥450–750/晚",
+          "note": "推荐 1 晚休整"
+        },
+        {
+          "tier": "高端",
+          "name": "无锡君来洲际酒店",
+          "priceRange": "约 ¥900–1500/晚",
+          "note": "太湖景观"
+        }
+      ]
+    },
+    {
+      "area": "太原 · 钟楼街 / 柳巷",
+      "reason": "Day 2 入住一晚（中转用）。",
+      "options": [
+        {
+          "tier": "经济",
+          "name": "如家钟楼街店",
+          "priceRange": "约 ¥280–480/晚",
+          "note": "市中心"
+        },
+        {
+          "tier": "中档",
+          "name": "全季太原柳巷店",
+          "priceRange": "约 ¥480–750/晚",
+          "note": "硬件新"
+        },
+        {
+          "tier": "高端",
+          "name": "太原凯宾斯基",
+          "priceRange": "约 ¥900–1500/晚",
+          "note": "汾河景观"
+        }
+      ]
+    },
+    {
+      "area": "大同古城 · 四牌楼/南门",
+      "reason": "Day 3-Day 5 入住 3 晚（云冈+悬空寺+恒山均从大同出发）。景区直通车\"大同古城站\"在古城内。",
+      "options": [
+        {
+          "tier": "经济",
+          "name": "汉庭 / 锦江之星大同古城店",
+          "priceRange": "约 ¥260–450/晚",
+          "note": "步行可达直通车"
+        },
+        {
+          "tier": "中档",
+          "name": "大同酒店 / 全季大同古城店",
+          "priceRange": "约 ¥450–750/晚",
+          "note": "性价比最高"
+        },
+        {
+          "tier": "高端",
+          "name": "大同贵宾楼假日酒店",
+          "priceRange": "约 ¥850–1500/晚",
+          "note": "国际品牌"
+        }
+      ]
+    },
+    {
+      "area": "应县县城",
+      "reason": "Day 5 入住一晚（悬空寺+恒山回来当晚直接来应县）。距应县木塔景区直通车\"应县木塔站\"步行 5 分钟。",
+      "options": [
+        {
+          "tier": "经济",
+          "name": "应县招待所 / 县城快捷宾馆",
+          "priceRange": "约 ¥150–280/晚",
+          "note": "便宜"
+        },
+        {
+          "tier": "中档",
+          "name": "应县木塔附近酒店",
+          "priceRange": "约 ¥280–450/晚",
+          "note": "提前 1 周订"
+        },
+        {
+          "tier": "高端",
+          "name": "—",
+          "priceRange": "—",
+          "note": "高端供给少"
+        }
+      ]
+    },
+    {
+      "area": "代县古城内",
+      "reason": "Day 6 入住一晚（雁门关回来）。⚠ 雁门关→代县没有直通车，需打车（20 km，¥30，25 min）。",
+      "options": [
+        {
+          "tier": "经济",
+          "name": "代县招待所 / 古城内民宿",
+          "priceRange": "约 ¥150–300/晚",
+          "note": "便宜"
+        },
+        {
+          "tier": "中档",
+          "name": "边客楼 / 赵杲观酒店",
+          "priceRange": "约 ¥350–600/晚",
+          "note": "古城内精品客栈"
+        },
+        {
+          "tier": "高端",
+          "name": "—",
+          "priceRange": "—",
+          "note": "高端选择少"
+        }
+      ]
+    },
+    {
+      "area": "五台山机场附近 · 五台县城",
+      "reason": "Day 7 入住一晚（佛光寺+南禅寺后直飞前）。机场距五台县城约 10 km；佛光寺/南禅寺在五台县西南山区，需从五台县城拼车前往。",
+      "options": [
+        {
+          "tier": "经济",
+          "name": "五台县城快捷宾馆",
+          "priceRange": "约 ¥150–280/晚",
+          "note": "便宜"
+        },
+        {
+          "tier": "中档",
+          "name": "五台山机场宾馆",
+          "priceRange": "约 ¥300–500/晚",
+          "note": "步行/短驳可达"
+        },
+        {
+          "tier": "高端",
+          "name": "—",
+          "priceRange": "—",
+          "note": "高端少"
+        }
+      ]
+    }
+  ],
+  "disclaimer": "本页全部信息（天气、航班、高铁、景区直通车、酒店、餐厅、景点、门票等）均为 AI 基于公开资料整理的参考建议，可能不准确或已过时，不保证与实时情况一致；请务必在官方渠道 / 12306 / 航司官网 / 微信\"晋游宝\" / 地图等 App 上核实后再做决定或前往。山西古建文物以官方最新通知为准；佛光寺东大殿仅殿外参观。深航 ZH9823 / ZH8533 班期以购票系统为准；五台山机场→广州班次稀少，必须在航司官网核班期；高铁车次以 12306 实时为准；**景区直通车（DT1/DT2/DT3 时刻表）节假日会动态调整，以\"晋游宝\"当天购票页显示为准**。页面实景照片均来自 Wikimedia Commons。",
+  "tips": [
+    "本版路线：广州→无锡 29h 中转→太原→大同（高铁）→云冈→悬空寺+恒山→应县木塔→雁门关→代县→佛光寺→南禅寺→五台山机场→广州。**全程严格按大同景区直通车（DT1/DT2/DT3 时刻表）排班**，详情见各日 tips。",
+    "景区直通车购票：微信小程序搜\"晋游宝\"，按行程预订各段；节假日会动态调整班次以当天购票页为准。理论时长受天气/临时管制影响会有偏差。",
+    "中转段已锁定深航联程 ZH9823 + ZH8533（含行李直挂概率高，以航司确认为准）。无锡中转无需提取行李（T3 → T2 转机走国内中转通道）。",
+    "无锡 29h 中转：Day 1 下午去鼋头渚（\"太湖第一名胜\"，秋季桂花+芦苇荡）；Day 1 晚南禅寺美食街尝无锡小笼/酱排骨/太湖三白。",
+    "太原 1 晚：Day 3 早上看晋祠（宋代木构+周柏唐槐+难老泉；圣母殿彩塑区 2026-08-24 起围挡修复 14 个月）；下午高铁去大同。⚠ 山西博物院周一闭馆本版无参观日。",
+    "【D4 9/29 周二 大同+云冈】按 DT3：大同古城站 8:00 直通车→云冈石窟站（40 min ¥10）；云冈游览 4 小时（昙曜五窟 16-20窟）；13:30 云冈→大同古城（50 min ¥10，¥10 含大同博物馆经停）；下午大同古城：华严寺（17:30 前入殿）+ 九龙壁 + 善化寺 + 古城墙夜景。",
+    "【D5 9/30 周三 悬空寺+恒山→应县】按 DT3 + DT2：早 7:30 大同古城站→恒山游客中心（90 min ¥19.50，9:00 抵）；打车去悬空寺（4 km，¥10，09:30 抵）；抢在旅行团前上栈道；10:30 悬空寺→恒山（5 km，¥10，11:00 抵）；11:00-14:00 恒山游览（索道上山，庙群步行 1.5-2 h）；14:30 恒山游客中心→应县木塔站（55 min ¥29，DT3，15:25 抵）；步行到酒店入住。⚠ 悬空寺登临票每日 9:00 公众号放票（限 2475 张），提前 7 天 9:00 准时蹲。",
+    "【D6 10/1 周四 应县木塔+崇福寺（可选）+雁门关→代县】按 DT2 + DT3：早 8:00 应县木塔（步行 5 min）；10:30 出；11:50 应县木塔站→雁门关北门站（60 min ¥39，DT2，12:50 抵）；雁门关 12:50-15:30；⚠ 雁门关→代县无直通车，打车（20 km，¥30，25 min，16:00 抵代县），夜宿代县。崇福寺在朔州，应县→朔州/朔州→雁门关均无直通车，需打车/拼车（若坚持去，Day 6 整天安排紧张）。",
+    "【D7 10/2 周五 佛光寺+南禅寺→五台山机场】景区直通车不到五台县山区。代县→五台县城班车（50 km，¥25，1.5h，每天 2-4 班）；五台县城→佛光寺拼车（50 km，¥80-150，需提前预约）；佛光寺→南禅寺拼车（25 km，¥30-50）；南禅寺→五台山机场拼车/打车（80 km，¥150-250，1.5h）；15:30 抵机场入住酒店。⚠ 佛光寺东大殿禁止入殿，仅殿外参观。",
+    "【D8 10/3 周六 返程】五台山机场→广州（华夏/南航/春秋，每天 1-2 班，航程约 3h）。⚠ 五台山机场班次稀少，必须提前 1-2 周在航司官网核班期。起飞前 1.5h 到机场。",
+    "9 月底 10 月初山西昼夜温差 10–15°C：白天短袖+外套；傍晚/清晨加抓绒；五台山/恒山务必带羽绒。无锡太湖周边湿度高体感偏凉。",
+    "认准云冈石窟、华严寺、悬空寺、应县木塔、佛光寺、雁门关官方公众号预约，警惕景区周边\"折扣票\"\"内部票\"骗局。"
+  ],
+  "reminders": [
+    {
+      "item": "深航 ZH9823 广州→无锡 9/26 08:40",
+      "leadDays": 7
+    },
+    {
+      "item": "深航 ZH8533 无锡→太原 9/27 16:00",
+      "leadDays": 7
+    },
+    {
+      "item": "太原南→大同南 高铁 9/28 傍晚",
+      "leadDays": 14
+    },
+    {
+      "item": "五台山机场→广州 10/3",
+      "leadDays": 21
+    },
+    {
+      "item": "⚠ 微信\"晋游宝\"购买景区直通车票（提前 1 天）",
+      "leadDays": 3
+    },
+    {
+      "item": "无锡酒店（Day 1）",
+      "leadDays": 14
+    },
+    {
+      "item": "太原酒店（Day 2 一晚）",
+      "leadDays": 14
+    },
+    {
+      "item": "大同酒店（Day 3-5 共 3 晚）",
+      "leadDays": 14
+    },
+    {
+      "item": "应县酒店（Day 5 一晚）",
+      "leadDays": 14
+    },
+    {
+      "item": "代县酒店（Day 6 一晚）",
+      "leadDays": 14
+    },
+    {
+      "item": "五台山机场酒店（Day 7 一晚）",
+      "leadDays": 14
+    },
+    {
+      "item": "⚠ 佛光寺/南禅寺/五台山机场需从代县→五台县城班车+拼车",
+      "leadDays": 3
+    },
+    {
+      "item": "⚠ 五台山机场航班稀少，提前 1–2 周核班期",
+      "leadDays": 14
+    }
+  ],
+  "days": [
+    {
+      "date": "2026-09-26",
+      "weekday": "周六",
+      "theme": "无锡中转：鼋头渚太湖 + 当地晚餐",
+      "tips": [
+        "29h 中转：上午 11:00 落地无锡，傍晚前足够玩一个轻量景点。",
+        "下午去鼋头渚（\"太湖第一名胜\"）：从酒店打车约 25 分钟；景区约 2–3 小时可走完核心；秋季有桂花+芦苇荡。",
+        "晚上回市区去南禅寺美食街或崇安寺：尝无锡小笼、三凤桥酱排骨、太湖三白。",
+        "行李存酒店前台（无锡 Day 2 中午前退房）。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "广州白云机场 T3 → 无锡",
+          "time": "08:40 起飞 / 11:00 落地",
+          "lat": 31.4944,
+          "lng": 120.4294,
+          "photo": "",
+          "rating": 0,
+          "review": "深航 ZH9823，航程 2h20m。建议提前 90 分钟到 T3 办理值机；无锡硕放机场有地铁 3 号线直达市区（¥5，约 40 分钟）或打车/网约车（约 ¥60–100，30 分钟）。",
+          "openingHours": "全天",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "地铁/打车",
+            "distance": "约 30 km",
+            "highway": "机场高速",
+            "duration": "约 30–40 分钟",
+            "fare": "地铁 ¥5 / 打车 ¥60–100"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 31.4944,
+              "lng": 120.4294
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 26,
+              "low": 18,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "noon",
+          "name": "酒店入住 + 当地午餐",
+          "time": "12:00–13:30",
+          "lat": 31.5667,
+          "lng": 120.3022,
+          "photo": "",
+          "rating": 0,
+          "review": "建议选南禅寺/崇安寺/太湖广场片区酒店。前台寄存行李或直接办入住。午餐就近：南禅寺美食街或崇安寺附近小馆；推荐小笼 + 馄饨 + 一碗太湖三白面（¥50–80/人）。",
+          "openingHours": "—",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "步行",
+            "distance": "<1 km",
+            "highway": "—",
+            "duration": "—",
+            "fare": "—"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 31.5667,
+              "lng": 120.3022
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 26,
+              "low": 18,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "afternoon",
+          "name": "鼋头渚 · 太湖",
+          "time": "14:30–17:30",
+          "lat": 31.5197,
+          "lng": 120.1875,
+          "photo": "",
+          "rating": 0,
+          "review": "\"太湖第一名胜\"，5A 级景区；含太湖仙岛、樱花谷、鹿顶山、长春桥等。9 月末去人少景美，桂花 + 芦苇荡。打车从酒店约 25 分钟（¥40–60）。",
+          "openingHours": "约 8:00–17:30",
+          "ticketPrice": "门票参考 ¥85",
+          "transport": {
+            "mode": "打车",
+            "distance": "约 12 km",
+            "highway": "环湖路",
+            "duration": "约 25 分钟",
+            "fare": "¥40–60"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 31.5197,
+              "lng": 120.1875
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 26,
+              "low": 18,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "南禅寺美食街 · 当地晚餐",
+          "time": "18:30–20:30",
+          "lat": 31.5667,
+          "lng": 120.3022,
+          "photo": "",
+          "rating": 0,
+          "review": "南禅寺 + 美食街区：无锡老字号聚集地。推荐三凤桥酱排骨、王兴记小笼、忆秦园、老牛窝里。人均 ¥80–150。",
+          "openingHours": "约 10:00–22:00",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "打车",
+            "distance": "约 12 km",
+            "highway": "环湖路",
+            "duration": "约 25 分钟",
+            "fare": "¥40–60"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 31.5667,
+              "lng": 120.3022
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 24,
+              "low": 17,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "南禅寺美食街 · 忆秦园 / 老牛窝里",
+          "hours": "11:30–13:30",
+          "dishes": [
+            {
+              "name": "无锡小笼（鲜肉/蟹粉）",
+              "price": "约 ¥18–35/笼"
+            },
+            {
+              "name": "太湖三白面",
+              "price": "约 ¥48"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "南禅寺美食街 / 崇安寺",
+          "hours": "18:00–21:00",
+          "dishes": [
+            {
+              "name": "三凤桥酱排骨",
+              "price": "约 ¥78/份"
+            },
+            {
+              "name": "太湖船菜",
+              "price": "约 ¥98–168"
+            }
+          ]
+        }
+      ],
+      "backupSpots": [
+        {
+          "name": "灵山大佛（拈花湾）",
+          "distance": "无锡西南约 35 km",
+          "description": "88 米高露天青铜大佛。门票参考 ¥210。"
+        },
+        {
+          "name": "惠山古镇",
+          "distance": "无锡西北约 5 km",
+          "description": "免费古镇 + 锡惠园林。"
+        }
+      ]
+    },
+    {
+      "date": "2026-09-27",
+      "weekday": "周日",
+      "theme": "飞太原 · 直接入住酒店",
+      "tips": [
+        "Day 2 是\"中转日\"：上午酒店休整或附近步行；中午退房去机场；下午 16:00 起飞；18:05 落地太原后直奔酒店吃晚餐。",
+        "航班：ZH8533 9/27 16:00 无锡 T2 → 18:05 太原 T2（航程 2h5m）。提前 2h 到 T2 值机。",
+        "落地太原后网约车去酒店（约 15 km，¥60–80，30–40 分钟）。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "酒店周边步行 / 休整",
+          "time": "08:30–11:30",
+          "lat": 31.5667,
+          "lng": 120.3022,
+          "photo": "",
+          "rating": 0,
+          "review": "早上睡到自然醒；可在南禅寺周边步行 + 忆秦园早茶。12 点前退房。",
+          "openingHours": "—",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "步行",
+            "distance": "<2 km",
+            "highway": "—",
+            "duration": "—",
+            "fare": "—"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 31.5667,
+              "lng": 120.3022
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 26,
+              "low": 18,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "noon",
+          "name": "无锡机场 → ZH8533 起飞",
+          "time": "12:30 出发 / 14:00 抵 T2 / 16:00 起飞",
+          "lat": 31.4944,
+          "lng": 120.4294,
+          "photo": "",
+          "rating": 0,
+          "review": "中午退房打车/地铁 3 号线去无锡硕放机场（30 km）。提前 2h 到 T2 值机。",
+          "openingHours": "全天",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "地铁/打车",
+            "distance": "约 30 km",
+            "highway": "机场高速",
+            "duration": "约 30–40 分钟",
+            "fare": "¥5–100"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 31.4944,
+              "lng": 120.4294
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 26,
+              "low": 18,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "太原武宿机场 → 太原市区酒店",
+          "time": "18:05 落地 / 19:00 抵酒店",
+          "lat": 37.7398,
+          "lng": 112.6286,
+          "photo": "",
+          "rating": 0,
+          "review": "ZH8533 18:05 落地太原 T2。网约车去酒店（¥60–80，30–40 分钟）。",
+          "openingHours": "全天",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "网约车",
+            "distance": "约 15 km",
+            "highway": "城市快速路",
+            "duration": "约 25–35 分钟",
+            "fare": "¥60–80"
+          },
+          "needsBooking": true,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 37.7398,
+              "lng": 112.6286
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 22,
+              "low": 12,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "太原 · 食品街/柳巷 · 晚餐",
+          "time": "19:30–21:00",
+          "lat": 37.875,
+          "lng": 112.564,
+          "photo": "",
+          "rating": 0,
+          "review": "太原老城美食：山西面食（刀削面、莜面、过油肉）+ 老陈醋。推荐\"认一力\"、\"林香斋\"、\"郝刚刚羊杂割\"。人均 ¥60–120。",
+          "openingHours": "约 11:00–22:00",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "打车",
+            "distance": "约 4 km",
+            "highway": "—",
+            "duration": "约 15 分钟",
+            "fare": "¥15–25"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 37.875,
+              "lng": 112.564
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 21,
+              "low": 11,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "早餐",
+          "place": "酒店 / 南禅寺周边",
+          "hours": "8:30–10:00",
+          "dishes": [
+            {
+              "name": "无锡小笼",
+              "price": "约 ¥18–35"
+            }
+          ]
+        },
+        {
+          "meal": "午餐",
+          "place": "无锡机场餐厅",
+          "hours": "13:00–14:00",
+          "dishes": [
+            {
+              "name": "机场简餐",
+              "price": "约 ¥40–60"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "太原 · 食品街/柳巷",
+          "hours": "19:30–21:00",
+          "dishes": [
+            {
+              "name": "山西刀削面",
+              "price": "约 ¥18"
+            },
+            {
+              "name": "过油肉",
+              "price": "约 ¥48"
+            }
+          ]
+        }
+      ],
+      "backupSpots": [
+        {
+          "name": "永祚寺（双塔寺）",
+          "distance": "太原市区东南约 5 km",
+          "description": "明代万历年间双塔。"
+        }
+      ]
+    },
+    {
+      "date": "2026-09-28",
+      "weekday": "周一",
+      "theme": "太原一日：晋祠宋代木构 · 傍晚高铁去大同",
+      "tips": [
+        "⚠ 山西博物院周一闭馆（本版行程无参观日）。",
+        "上午 9:30 退房寄存行李，去晋祠（市区西南 25 km，打车 ¥60–80，40 分钟）。",
+        "晋祠重点看：圣母殿（围挡外远观宋代彩塑）、鱼沼飞梁、周柏唐槐、难老泉、金人台。1.5–2 小时可走完。",
+        "下午回酒店附近吃饭，16:00 前退房带行李到太原南站。",
+        "傍晚高铁（G/D 字头）太原南 → 大同南，约 1.5–2 h，¥90–120 二等座。建议选 17:30–19:00 班次。",
+        "到大同南站后打车去大同古城酒店（约 8 km，¥25–35，20 分钟），放下行李出门吃晚饭。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "晋祠",
+          "time": "09:30–12:00",
+          "lat": 37.706,
+          "lng": 112.4459,
+          "photo": "",
+          "rating": 0,
+          "review": "晋祠：为中国现存最早的皇家祭祀园林。圣母殿为宋代木构（986 年）；鱼沼飞梁为全国唯一十字形古桥。⚠ 圣母殿内 5 尊宋代彩塑区域 2026-08-24 至 2027-10-26 围挡修复，殿外远观。",
+          "openingHours": "约 8:30–17:30",
+          "ticketPrice": "成人 ¥80（年卡含）",
+          "transport": {
+            "mode": "打车",
+            "distance": "约 25 km",
+            "highway": "城市快速路",
+            "duration": "约 40 分钟",
+            "fare": "¥60–80"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 37.706,
+              "lng": 112.4459
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 22,
+              "low": 12,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "noon",
+          "name": "太原 · 午餐",
+          "time": "12:30–14:00",
+          "lat": 37.875,
+          "lng": 112.564,
+          "photo": "",
+          "rating": 0,
+          "review": "晋祠出来后回市区吃午饭。推荐\"郝刚刚羊杂割\"或\"认一力\"。",
+          "openingHours": "约 11:00–22:00",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "打车",
+            "distance": "约 25 km",
+            "highway": "城市快速路",
+            "duration": "约 40 分钟",
+            "fare": "¥60–80"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 37.875,
+              "lng": 112.564
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 21,
+              "low": 11,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "太原南站 → 大同南站 · 高铁",
+          "time": "17:30–19:30（推荐班次）",
+          "lat": 37.704,
+          "lng": 112.6254,
+          "photo": "",
+          "rating": 0,
+          "review": "G/D 字头高铁太原南→大同南，约 1.5–2 h，¥90–120 二等座。提前 30 分钟到站取票/检票；12306 提前 15 天放票。",
+          "openingHours": "全天",
+          "ticketPrice": "¥90–120 二等座",
+          "transport": {
+            "mode": "高铁",
+            "distance": "约 280 km",
+            "highway": "大西高铁",
+            "duration": "约 1.5–2 h",
+            "fare": "¥90–120"
+          },
+          "needsBooking": true,
+          "leadDays": 14,
+          "weather": {
+            "coords": {
+              "lat": 37.704,
+              "lng": 112.6254
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 20,
+              "low": 10,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "大同古城 · 入住 + 晚餐",
+          "time": "20:00–22:00",
+          "lat": 40.0936,
+          "lng": 113.2954,
+          "photo": "",
+          "rating": 0,
+          "review": "到大同南站打车去大同古城酒店（约 8 km，¥25–35，20 分钟）。放下行李出门吃晚饭：大同铜火锅、烧麦、莜面窝窝。人均 ¥80–150。",
+          "openingHours": "约 11:00–22:00",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "打车",
+            "distance": "约 8 km",
+            "highway": "城市道路",
+            "duration": "约 20 分钟",
+            "fare": "¥25–35"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 40.0936,
+              "lng": 113.2954
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 18,
+              "low": 8,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "太原 · 食品街/柳巷",
+          "hours": "12:30–14:00",
+          "dishes": [
+            {
+              "name": "山西刀削面",
+              "price": "约 ¥18"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "大同古城 · 鼓楼东街老火锅",
+          "hours": "20:00–22:00",
+          "dishes": [
+            {
+              "name": "大同铜锅涮羊肉",
+              "price": "约 ¥98/锅底"
+            }
+          ]
+        }
+      ],
+      "backupSpots": [
+        {
+          "name": "蒙山大佛",
+          "distance": "太原市西南约 25 km",
+          "description": "北齐天保年间开凿的摩崖大佛（高 63 米）。"
+        }
+      ]
+    },
+    {
+      "date": "2026-09-29",
+      "weekday": "周二",
+      "theme": "大同 · 云冈石窟（5A · 景区直通车 DT3）",
+      "tips": [
+        "【按 DT3 时刻表】大同古城站→云冈：6:40/7:00/7:20/7:40/8:00/8:20/8:40/9:10/9:40/10:10/10:50/11:40/12:20/13:10/14:00/14:50/15:40（40 min ¥10）。",
+        "推荐 8:00 大同古城站上车（步行/打车到大同古城景区直通车\"大同古城站\"，具体位置\"晋游宝\"有），8:40 到云冈石窟站。",
+        "云冈石窟游览 4 小时：第 1–45 窟，重点昙曜五窟（第 16–20 窟，露天大佛最具识别度）；第 5、6 窟雕饰繁复。",
+        "13:30 云冈→大同古城（50 min ¥10，云冈石窟→大同古城（含大同博物馆经停）→大同南站，发车 13:30），14:20 到大同古城。",
+        "下午+晚上：大同古城深度（华严寺 17:30 前入殿 + 九龙壁 + 善化寺 + 古城墙夜景）。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "大同古城站 → 云冈石窟（景区直通车 DT3）",
+          "time": "8:00 大同古城 / 8:40 云冈",
+          "lat": 40.1096,
+          "lng": 113.1469,
+          "photo": "",
+          "rating": 0,
+          "review": "景区直通车：大同古城站 8:00 发车→云冈石窟站（40 min ¥10）。⚠ 节假日班次会动态调整，请在\"晋游宝\"提前 1 天购票。",
+          "openingHours": "全天",
+          "ticketPrice": "¥10",
+          "transport": {
+            "mode": "景区直通车",
+            "distance": "约 16 km",
+            "highway": "S339",
+            "duration": "约 40 分钟",
+            "fare": "¥10"
+          },
+          "needsBooking": true,
+          "leadDays": 1,
+          "weather": {
+            "coords": {
+              "lat": 40.1096,
+              "lng": 113.1469
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 18,
+              "low": 6,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "morning",
+          "name": "云冈石窟 · 昙曜五窟",
+          "time": "09:00–13:00",
+          "lat": 40.1096,
+          "lng": 113.1469,
+          "photo": "",
+          "rating": 0,
+          "review": "云冈石窟：从第 1 窟看到第 45 窟，重点：昙曜五窟（第 16–20 窟，露天大佛最具识别度）；第 5、6 窟雕饰繁复。配合数字馆 3D 打印洞窟体验。预留 4 小时。",
+          "openingHours": "4/1–10/31 约 8:30–17:30",
+          "ticketPrice": "成人 ¥120",
+          "transport": {
+            "mode": "步行",
+            "distance": "<1 km",
+            "highway": "—",
+            "duration": "—",
+            "fare": "已含景交"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 40.1096,
+              "lng": 113.1469
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 18,
+              "low": 6,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "afternoon",
+          "name": "云冈石窟 → 大同古城（景区直通车 DT2）",
+          "time": "13:30 出发 / 14:20 抵达",
+          "lat": 40.0936,
+          "lng": 113.2954,
+          "photo": "",
+          "rating": 0,
+          "review": "景区直通车：云冈石窟→大同古城（经大同博物馆）→大同南站，13:30 发车（50 min ¥10）。⚠ 节假日班次会动态调整。",
+          "openingHours": "全天",
+          "ticketPrice": "¥10",
+          "transport": {
+            "mode": "景区直通车",
+            "distance": "约 16 km",
+            "highway": "S339",
+            "duration": "约 50 分钟",
+            "fare": "¥10"
+          },
+          "needsBooking": true,
+          "leadDays": 1,
+          "weather": {
+            "coords": {
+              "lat": 40.0936,
+              "lng": 113.2954
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 20,
+              "low": 8,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "afternoon",
+          "name": "华严寺 · 善化寺 · 九龙壁",
+          "time": "14:30–18:30",
+          "lat": 40.0936,
+          "lng": 113.2954,
+          "photo": "",
+          "rating": 0,
+          "review": "华严寺（含辽代薄伽教藏殿\"合掌露齿菩萨\"、大雄宝殿中国现存最大辽金佛殿）门票 ¥50，17:30 前入殿。九龙壁 ¥10。善化寺免费。两点步行可达。",
+          "openingHours": "华严寺 8:30–17:30；九龙壁全天",
+          "ticketPrice": "华严寺 ¥50 / 九龙壁 ¥10 / 善化寺 免费",
+          "transport": {
+            "mode": "步行",
+            "distance": "<3 km",
+            "highway": "—",
+            "duration": "—",
+            "fare": "—"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 40.0936,
+              "lng": 113.2954
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 20,
+              "low": 8,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "大同古城墙 · 夜景 + 晚餐",
+          "time": "18:30–21:30",
+          "lat": 40.0936,
+          "lng": 113.2954,
+          "photo": "",
+          "rating": 0,
+          "review": "傍晚登古城墙看日落 + 亮灯（约 30 分钟，¥30）；晚上鼓楼东街老火锅 / 紫泥 369 粗粮馆。人均 ¥80–150。",
+          "openingHours": "古城墙约 8:00–22:00",
+          "ticketPrice": "古城墙 ¥30",
+          "transport": {
+            "mode": "步行",
+            "distance": "<1 km",
+            "highway": "—",
+            "duration": "—",
+            "fare": "—"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 40.0936,
+              "lng": 113.2954
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 17,
+              "low": 6,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "云冈石窟餐厅",
+          "hours": "12:00–13:00",
+          "dishes": [
+            {
+              "name": "景区简餐",
+              "price": "约 ¥40–60"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "大同古城 · 鼓楼东街老火锅",
+          "hours": "18:30–21:00",
+          "dishes": [
+            {
+              "name": "大同铜锅涮羊肉",
+              "price": "约 ¥98/锅底"
+            },
+            {
+              "name": "大同烧麦",
+              "price": "约 ¥35/笼"
+            }
+          ]
+        }
+      ],
+      "backupSpots": [
+        {
+          "name": "大同博物馆",
+          "distance": "大同古城东北约 2 km",
+          "description": "免费；周一闭馆（10/1 周一也闭馆）；9/29 周二正常开放。展示北魏平城时代文物。"
+        }
+      ]
+    },
+    {
+      "date": "2026-09-30",
+      "weekday": "周三",
+      "theme": "悬空寺 · 北岳恒山 · 傍晚去应县（DT3 + DT2 时刻表）",
+      "tips": [
+        "【按 DT3 时刻表】大同古城站→恒山游客中心：6:00/6:45/7:30/8:00/8:30/9:00/9:30/10:00/10:30/13:30/16:00（90 min ¥19.50）。",
+        "推荐 7:30 大同古城站上车，9:00 抵恒山游客中心。",
+        "恒山游客中心打车去悬空寺（4 km，¥10），09:30 抵悬空寺，抢在旅行团前上栈道。",
+        "10:30 悬空寺→恒山（5 km，¥10，11:00 抵），11:00-14:00 恒山游览（索道上山，庙群步行 1.5–2 h）。",
+        "14:00 恒山→恒山游客中心（5 km，¥10）。",
+        "【按 DT3 时刻表】恒山游客中心→应县木塔：11:00/12:30/13:55/14:30/15:00（55 min ¥29）。推荐 14:30 发车，15:25 抵应县木塔站。",
+        "⚠ 悬空寺登临票每日 9:00 公众号放票（限 2475 张），提前 7 天 9:00 准时蹲；错过只能远观（入园 ¥15）。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "大同古城站 → 恒山游客中心（DT3）",
+          "time": "7:30 大同古城 / 9:00 恒山游客中心",
+          "lat": 39.67,
+          "lng": 113.73,
+          "photo": "",
+          "rating": 0,
+          "review": "景区直通车：大同古城站 7:30 发车→恒山游客中心（90 min ¥19.50）。⚠ 节假日班次会动态调整，请\"晋游宝\"提前 1 天购票。",
+          "openingHours": "全天",
+          "ticketPrice": "¥19.50",
+          "transport": {
+            "mode": "景区直通车",
+            "distance": "约 90 km",
+            "highway": "G18 荣乌高速",
+            "duration": "约 90 分钟",
+            "fare": "¥19.50"
+          },
+          "needsBooking": true,
+          "leadDays": 1,
+          "weather": {
+            "coords": {
+              "lat": 39.67,
+              "lng": 113.73
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 15,
+              "low": 5,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "morning",
+          "name": "打车 → 悬空寺",
+          "time": "09:00–09:30",
+          "lat": 39.6792,
+          "lng": 113.7369,
+          "photo": "",
+          "rating": 0,
+          "review": "恒山游客中心打车去悬空寺（4 km，¥10，10 分钟）。9:30 抵悬空寺，抢在旅行团前。",
+          "openingHours": "约 8:00–17:00",
+          "ticketPrice": "入园 ¥15；登临票参考 ¥100（限量）",
+          "transport": {
+            "mode": "打车",
+            "distance": "约 4 km",
+            "highway": "县道",
+            "duration": "约 10 分钟",
+            "fare": "¥10"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 39.6792,
+              "lng": 113.7369
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 15,
+              "low": 5,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "morning",
+          "name": "悬空寺",
+          "time": "09:30–10:30",
+          "lat": 39.6792,
+          "lng": 113.7369,
+          "photo": "",
+          "rating": 0,
+          "review": "北岳恒山脚下、悬于绝壁 50 米高空：儒释道三教合一的小型寺庙群，黑神话悟空取景地之一。栈道狭窄单向通行，旺季排队可达 1 小时。",
+          "openingHours": "约 8:00–17:00",
+          "ticketPrice": "入园 ¥15；登临票参考 ¥100（限量）",
+          "transport": {
+            "mode": "步行",
+            "distance": "<1 km",
+            "highway": "—",
+            "duration": "—",
+            "fare": "—"
+          },
+          "needsBooking": true,
+          "leadDays": 7,
+          "weather": {
+            "coords": {
+              "lat": 39.6792,
+              "lng": 113.7369
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 15,
+              "low": 5,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "morning",
+          "name": "打车 → 北岳恒山",
+          "time": "10:30–11:00",
+          "lat": 39.67,
+          "lng": 113.73,
+          "photo": "",
+          "rating": 0,
+          "review": "悬空寺→北岳恒山（5 km，¥10，15 分钟）。索道上山，庙群步行 1.5–2 小时。",
+          "openingHours": "约 8:00–17:30",
+          "ticketPrice": "门票与索道价格以景区官方公告为准",
+          "transport": {
+            "mode": "打车",
+            "distance": "约 5 km",
+            "highway": "景区道路",
+            "duration": "约 15 分钟",
+            "fare": "¥10"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 39.67,
+              "lng": 113.73
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 13,
+              "low": 3,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "noon",
+          "name": "北岳恒山",
+          "time": "11:00–14:00",
+          "lat": 39.67,
+          "lng": 113.73,
+          "photo": "",
+          "rating": 0,
+          "review": "五岳之北岳，主峰天峰岭海拔 2016.8 米。索道上行至朝殿一带庙群，恒宗殿、九天宫、纯阳宫等道教庙群沿山脊分布。步行 1.5–2 小时可走完主要庙群。",
+          "openingHours": "约 8:00–17:30",
+          "ticketPrice": "门票与索道价格以景区官方公告为准",
+          "transport": {
+            "mode": "步行",
+            "distance": "—",
+            "highway": "—",
+            "duration": "—",
+            "fare": "索道往返约 20 分钟"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 39.67,
+              "lng": 113.73
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 13,
+              "low": 3,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "afternoon",
+          "name": "打车 → 恒山游客中心 → 应县木塔（DT3 直通车）",
+          "time": "14:30 恒山游客中心 / 15:25 应县木塔站",
+          "lat": 39.5572,
+          "lng": 113.1847,
+          "photo": "",
+          "rating": 0,
+          "review": "【按 DT3】恒山游客中心→应县木塔站：11:00/12:30/13:55/14:30/15:00（55 min ¥29）。推荐 14:30 发车。",
+          "openingHours": "全天",
+          "ticketPrice": "¥29",
+          "transport": {
+            "mode": "景区直通车",
+            "distance": "约 55 km",
+            "highway": "G18 荣乌高速",
+            "duration": "约 55 分钟",
+            "fare": "¥29"
+          },
+          "needsBooking": true,
+          "leadDays": 1,
+          "weather": {
+            "coords": {
+              "lat": 39.5572,
+              "lng": 113.1847
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 18,
+              "low": 6,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "应县县城 · 入住 + 晚餐",
+          "time": "16:00–20:00",
+          "lat": 39.5572,
+          "lng": 113.1847,
+          "photo": "",
+          "rating": 0,
+          "review": "应县木塔站步行 5–10 分钟到酒店。晚饭：应县小馆（莜面、刀削面、羊肉）。明天早上去应县木塔。",
+          "openingHours": "约 11:00–22:00",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "步行",
+            "distance": "<1 km",
+            "highway": "—",
+            "duration": "—",
+            "fare": "—"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 39.5572,
+              "lng": 113.1847
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 17,
+              "low": 5,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "早餐",
+          "place": "大同古城酒店",
+          "hours": "7:00 前",
+          "dishes": [
+            {
+              "name": "酒店早餐",
+              "price": "含"
+            }
+          ]
+        },
+        {
+          "meal": "午餐",
+          "place": "悬空寺停车场 / 恒山停车场小馆",
+          "hours": "13:00–14:00",
+          "dishes": [
+            {
+              "name": "莜面窝窝",
+              "price": "约 ¥28"
+            },
+            {
+              "name": "山西刀削面",
+              "price": "约 ¥18"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "应县县城小馆",
+          "hours": "18:00–20:00",
+          "dishes": [
+            {
+              "name": "应县小馆 / 应县莜面",
+              "price": "约 ¥30–60"
+            }
+          ]
+        }
+      ],
+      "backupSpots": [
+        {
+          "name": "永安寺",
+          "distance": "浑源县城内",
+          "description": "元代佛教建筑；本版夜宿应县故不顺路。"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-01",
+      "weekday": "周四",
+      "theme": "应县木塔 · 雁门关 → 夜宿代县（DT2 时刻表）",
+      "tips": [
+        "【按 DT2 时刻表】应县木塔站→雁门关北门站：11:50（60 min ¥39），当天仅 1 班，错过只能打车。",
+        "早 8:00 应县木塔（步行 5 min），10:30 出。",
+        "11:50 应县木塔站→雁门关北门站（60 min ¥39），12:50 抵雁门关。",
+        "雁门关 12:50-15:30（明月楼—关城—雁塔一线徒步约 2.5 h）。",
+        "⚠ 雁门关→代县没有直通车（DT2 仅发 16:30 雁门关→大同古城/忻州古城），需打车（20 km，¥30，25 min），16:00 抵代县。",
+        "夜宿代县古城。",
+        "⚠ 崇福寺在朔州：应县→朔州/朔州→雁门关均无直通车，需打车/拼车；若坚持去，Day 6 整天安排紧张（建议放弃）。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "应县木塔",
+          "time": "08:00–10:30",
+          "lat": 39.5572,
+          "lng": 113.1847,
+          "photo": "",
+          "rating": 0,
+          "review": "应县木塔：67.31 米高，中国现存最高最古的木塔。一层可入；2026 年 4 月起有数字沉浸式体验空间可作替代。塔院在木塔外围、不收门票。",
+          "openingHours": "约 8:00–18:00",
+          "ticketPrice": "成人 ¥50",
+          "transport": {
+            "mode": "步行",
+            "distance": "<1 km",
+            "highway": "—",
+            "duration": "—",
+            "fare": "—"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 39.5572,
+              "lng": 113.1847
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 18,
+              "low": 6,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "noon",
+          "name": "应县木塔站 → 雁门关北门站（DT2 直通车）",
+          "time": "11:50 出发 / 12:50 抵雁门关",
+          "lat": 39.187,
+          "lng": 112.863,
+          "photo": "",
+          "rating": 0,
+          "review": "【按 DT2】应县木塔站→雁门关北门站：11:50（60 min ¥39），当天仅 1 班。⚠ 节假日班次会动态调整，请\"晋游宝\"提前 1 天购票。",
+          "openingHours": "全天",
+          "ticketPrice": "¥39",
+          "transport": {
+            "mode": "景区直通车",
+            "distance": "约 55 km",
+            "highway": "G55 二广高速",
+            "duration": "约 60 分钟",
+            "fare": "¥39"
+          },
+          "needsBooking": true,
+          "leadDays": 1,
+          "weather": {
+            "coords": {
+              "lat": 39.187,
+              "lng": 112.863
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 17,
+              "low": 5,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "afternoon",
+          "name": "雁门关",
+          "time": "13:00–15:30",
+          "lat": 39.187,
+          "lng": 112.863,
+          "photo": "",
+          "rating": 0,
+          "review": "雁门关（5A）：明月楼—关城—雁塔一线徒步约 2.5 h。景区纵深大、上下坡多，上山为盘山公路，连续急弯陡坡，避免夜间下山。",
+          "openingHours": "约 8:00–17:00",
+          "ticketPrice": "成人 ¥90",
+          "transport": {
+            "mode": "步行",
+            "distance": "—",
+            "highway": "—",
+            "duration": "—",
+            "fare": "景交已含"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 39.187,
+              "lng": 112.863
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 17,
+              "low": 5,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "雁门关 → 代县古城（打车）",
+          "time": "15:30 出发 / 16:00 抵代县",
+          "lat": 39.0897,
+          "lng": 112.963,
+          "photo": "",
+          "rating": 0,
+          "review": "⚠ 雁门关→代县没有直通车（DT2 仅发 16:30 雁门关→大同古城/忻州古城）。需打车（20 km，¥30，25 min）。",
+          "openingHours": "全天",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "打车",
+            "distance": "约 20 km",
+            "highway": "景区公路",
+            "duration": "约 25 分钟",
+            "fare": "¥30"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 39.0897,
+              "lng": 112.963
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 17,
+              "low": 5,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "代县古城 · 入住 + 晚餐",
+          "time": "18:00–20:00",
+          "lat": 39.0897,
+          "lng": 112.963,
+          "photo": "",
+          "rating": 0,
+          "review": "代县古城内边客楼/赵杲观酒店。晚饭：边塞菜 + 莜面 + 黄米凉糕。",
+          "openingHours": "约 11:00–22:00",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "步行",
+            "distance": "<1 km",
+            "highway": "—",
+            "duration": "—",
+            "fare": "—"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 39.0897,
+              "lng": 112.963
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 16,
+              "low": 4,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "应县木塔附近",
+          "hours": "10:30–11:30",
+          "dishes": [
+            {
+              "name": "应县小馆",
+              "price": "约 ¥30–60"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "代县古城 · 边塞菜",
+          "hours": "18:00–20:00",
+          "dishes": [
+            {
+              "name": "边塞菜 + 莜面 + 黄米凉糕",
+              "price": "约 ¥60–100"
+            }
+          ]
+        }
+      ],
+      "backupSpots": [
+        {
+          "name": "边靖楼",
+          "distance": "代县古城内",
+          "description": "明代边塞楼，全国现存最大的木质鼓楼之一；与应县木塔、雁门关并称\"代州三宝\"。"
+        },
+        {
+          "name": "代州文庙",
+          "distance": "代县古城内",
+          "description": "始建于唐，明清多次修缮；大成殿内有孔子及四配十二哲塑像。"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-02",
+      "weekday": "周五",
+      "theme": "佛光寺 · 南禅寺 → 五台山机场（拼车+打车）",
+      "tips": [
+        "⚠ 佛光寺/南禅寺/五台山机场在五台县西南山区，景区直通车不到，必须从代县→五台县城班车 → 当地拼车/打车。",
+        "代县→五台县城班车（50 km，¥25，1.5h，每天 2-4 班），推荐 7:00 发车，8:30 到五台县城。",
+        "五台县城→佛光寺拼车（50 km，¥80-150，1h，需提前预约），10:00 到佛光寺。",
+        "佛光寺游览 10:00-12:30（⚠ 东大殿禁止入殿，仅殿外参观）。",
+        "12:30 拼车去南禅寺（25 km，¥30-50，30 min），13:00 到南禅寺，游览 1 h。",
+        "14:00 拼车/打车去五台山机场（80 km，¥150-250，1.5h），15:30 抵机场。",
+        "夜宿机场附近酒店。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "代县 → 五台县城（班车）",
+          "time": "7:00 出发 / 8:30 抵达",
+          "lat": 38.9058,
+          "lng": 113.0058,
+          "photo": "",
+          "rating": 0,
+          "review": "代县汽车站→五台县城班车（50 km，¥25，1.5h，每天 2-4 班）。",
+          "openingHours": "全天",
+          "ticketPrice": "¥25",
+          "transport": {
+            "mode": "班车",
+            "distance": "约 50 km",
+            "highway": "G1812 沧榆高速",
+            "duration": "约 1.5 h",
+            "fare": "¥25"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 38.9058,
+              "lng": 113.0058
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 14,
+              "low": 2,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "morning",
+          "name": "五台县城 → 佛光寺（拼车）",
+          "time": "9:00 出发 / 10:00 抵达",
+          "lat": 38.725,
+          "lng": 113.3706,
+          "photo": "",
+          "rating": 0,
+          "review": "五台县城→佛光寺拼车（50 km，¥80-150，1h，需提前预约当地司机/客栈老板）。",
+          "openingHours": "全天",
+          "ticketPrice": "¥80-150",
+          "transport": {
+            "mode": "拼车",
+            "distance": "约 50 km",
+            "highway": "山区县道",
+            "duration": "约 1 h",
+            "fare": "¥80-150/人"
+          },
+          "needsBooking": true,
+          "leadDays": 3,
+          "weather": {
+            "coords": {
+              "lat": 38.725,
+              "lng": 113.3706
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 14,
+              "low": 2,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "morning",
+          "name": "佛光寺",
+          "time": "10:00–12:30",
+          "lat": 38.725,
+          "lng": 113.3706,
+          "photo": "",
+          "rating": 0,
+          "review": "佛光寺：唐代建筑、彩塑、壁画、题记四绝。东大殿禁止入殿（仅殿外参观）。建议请文管员讲解。",
+          "openingHours": "约 8:30–17:00",
+          "ticketPrice": "成人 ¥50",
+          "transport": {
+            "mode": "步行",
+            "distance": "<1 km",
+            "highway": "—",
+            "duration": "—",
+            "fare": "—"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 38.725,
+              "lng": 113.3706
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 14,
+              "low": 2,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "noon",
+          "name": "拼车 → 南禅寺",
+          "time": "12:30 出发 / 13:00 抵达",
+          "lat": 38.7013,
+          "lng": 113.1138,
+          "photo": "",
+          "rating": 0,
+          "review": "佛光寺→南禅寺（25 km，¥30-50，30 min）。",
+          "openingHours": "全天",
+          "ticketPrice": "¥30-50",
+          "transport": {
+            "mode": "拼车",
+            "distance": "约 25 km",
+            "highway": "山区县道",
+            "duration": "约 30 分钟",
+            "fare": "¥30-50"
+          },
+          "needsBooking": true,
+          "leadDays": 3,
+          "weather": {
+            "coords": {
+              "lat": 38.7013,
+              "lng": 113.1138
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 14,
+              "low": 2,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "noon",
+          "name": "南禅寺",
+          "time": "13:00–14:00",
+          "lat": 38.7013,
+          "lng": 113.1138,
+          "photo": "",
+          "rating": 0,
+          "review": "南禅寺：中国现存最古老的唐代木构建筑（782 年建）。大殿内有唐代彩塑 17 尊，全国孤例。",
+          "openingHours": "约 8:30–17:30",
+          "ticketPrice": "成人 ¥40",
+          "transport": {
+            "mode": "步行",
+            "distance": "<1 km",
+            "highway": "—",
+            "duration": "—",
+            "fare": "—"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 38.7013,
+              "lng": 113.1138
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 14,
+              "low": 2,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "afternoon",
+          "name": "南禅寺 → 五台山机场（拼车/打车）",
+          "time": "14:00 出发 / 15:30 抵达",
+          "lat": 38.9171,
+          "lng": 112.9695,
+          "photo": "",
+          "rating": 0,
+          "review": "南禅寺→五台山机场（80 km，¥150-250，1.5h）。机场设施简单（小型支线机场），每天 1-2 班出港。",
+          "openingHours": "全天",
+          "ticketPrice": "¥150-250",
+          "transport": {
+            "mode": "拼车/打车",
+            "distance": "约 80 km",
+            "highway": "G1812 沧榆高速",
+            "duration": "约 1.5 h",
+            "fare": "¥150-250"
+          },
+          "needsBooking": true,
+          "leadDays": 3,
+          "weather": {
+            "coords": {
+              "lat": 38.9171,
+              "lng": 112.9695
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 16,
+              "low": 4,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "五台县城 · 入住 + 晚餐",
+          "time": "17:00–21:00",
+          "lat": 38.9058,
+          "lng": 113.0058,
+          "photo": "",
+          "rating": 0,
+          "review": "五台县城距机场约 10 km。晚饭：五台山素斋（台蘑 / 莜面 / 素饺子）或本地小馆。人均 ¥50–100。",
+          "openingHours": "约 11:00–22:00",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "打车",
+            "distance": "约 10 km",
+            "highway": "县道",
+            "duration": "约 15 分钟",
+            "fare": "¥20–30"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 38.9058,
+              "lng": 113.0058
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 14,
+              "low": 2,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "早餐",
+          "place": "代县古城酒店",
+          "hours": "6:30 前",
+          "dishes": [
+            {
+              "name": "酒店早餐",
+              "price": "含"
+            }
+          ]
+        },
+        {
+          "meal": "午餐",
+          "place": "佛光寺附近农家菜",
+          "hours": "12:00–13:00",
+          "dishes": [
+            {
+              "name": "山西面食",
+              "price": "约 ¥30–50"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "五台县城",
+          "hours": "18:00–20:00",
+          "dishes": [
+            {
+              "name": "五台山素斋",
+              "price": "约 ¥50–100"
+            }
+          ]
+        }
+      ],
+      "backupSpots": [
+        {
+          "name": "佛光寺周边古建群",
+          "distance": "佛光寺步行可达",
+          "description": "佛光寺周边还有唐代石经幢、北魏祖师塔等小景。"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-03",
+      "weekday": "周六",
+      "theme": "返程 · 五台山机场 → 广州",
+      "tips": [
+        "⚠ 五台山机场班次较少，每天 1–2 班出港；本版返程航班须提前 1–2 周在航司官网/携程核班期（华夏/南航/春秋）。",
+        "酒店早餐后退房，打车去机场（约 10 km，¥20–30，15 分钟）。",
+        "起飞前 1.5 h 到机场办理值机 + 安检；机场小，餐饮选择有限可提前吃饱。",
+        "飞行约 3 h 直飞广州。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "五台县城 · 酒店休整",
+          "time": "08:30–10:30",
+          "lat": 38.9058,
+          "lng": 113.0058,
+          "photo": "",
+          "rating": 0,
+          "review": "睡到自然醒；可在县城走一段；10:00 前退房。",
+          "openingHours": "—",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "步行",
+            "distance": "<2 km",
+            "highway": "—",
+            "duration": "—",
+            "fare": "—"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 38.9058,
+              "lng": 113.0058
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 14,
+              "low": 2,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        },
+        {
+          "period": "noon",
+          "name": "五台山机场 · 起飞",
+          "time": "11:00 退房 / 12:00 抵机场 / 13:30 后起飞",
+          "lat": 38.9171,
+          "lng": 112.9695,
+          "photo": "",
+          "rating": 0,
+          "review": "五台山机场 → 广州：航程约 3 h 直飞。具体航班时间以购票系统为准（10/3 须自核）。⚠ 五台山机场设施简单，值机排队可能较慢。",
+          "openingHours": "全天",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "打车",
+            "distance": "约 10 km",
+            "highway": "县道",
+            "duration": "约 15 分钟",
+            "fare": "¥20–30"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 38.9171,
+              "lng": 112.9695
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 16,
+              "low": 4,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-09"
+            }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "早餐",
+          "place": "酒店",
+          "hours": "8:00–9:30",
+          "dishes": [
+            {
+              "name": "酒店早餐",
+              "price": "含"
+            }
+          ]
+        },
+        {
+          "meal": "午餐",
+          "place": "五台山机场餐厅",
+          "hours": "12:00–13:30",
+          "dishes": [
+            {
+              "name": "机场简餐",
+              "price": "约 ¥40–60"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "广州白云机场 / 回家",
+          "hours": "落地后",
+          "dishes": [
+            {
+              "name": "机场简餐 / 回家吃",
+              "price": "约 ¥40–80"
+            }
+          ]
+        }
+      ],
+      "backupSpots": []
+    }
+  ]
+}
+</script>
+
+<!-- ═══════════════ RENDER SCRIPT ═══════════════ -->
+<script>
+// ═══════════════ WEATHER ENGINE（内联自 travel-plan-viz/assets/weather.js）═══════════════
+// 天气查询引擎：Open-Meteo forecast API + 静态 fallback。
+// 浏览器与 Node 双用。浏览器侧内联到 index.html 使用。
+//
+// 设计要点：
+// - 公开函数尽量纯（wmoIconCN / wmoToText / precipAdvice / roundCoord）便于单测
+// - fetch / cache / DOM 部分不强求纯函数，做不到的依赖 try/catch 兜底
+// - 不发起实时票价/机票价查询（CLAUDE.md 红线）—— 天气不是票价
+
+// ───────── HTML 转义（与 map.js/reminders.js 重复属故意，CLAUDE.md 要求） ─────────
+function escapeHTML(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// ───────── WMO 天气码 → [emoji, 中文] ─────────
+var wmoIconCN = {
+  0:  ['☀', '晴'],
+  1:  ['🌤', '晴间多云'],
+  2:  ['⛅', '多云'],
+  3:  ['☁', '阴'],
+  45: ['🌫', '雾'],
+  48: ['🌫', '雾凇'],
+  51: ['🌦', '毛毛雨'],
+  53: ['🌦', '毛毛雨'],
+  55: ['🌦', '毛毛雨'],
+  61: ['🌧', '小雨'],
+  63: ['🌧', '中雨'],
+  65: ['🌧', '大雨'],
+  71: ['🌨', '小雪'],
+  73: ['🌨', '中雪'],
+  75: ['🌨', '大雪'],
+  80: ['🌦', '阵雨'],
+  81: ['🌦', '阵雨'],
+  82: ['⛈', '强阵雨'],
+  95: ['⛈', '雷暴']
+};
+
+// ───────── WMO + 降水概率 → { icon, conditions } ─────────
+// prob: 0–100 整数百分比
+function wmoToText(code, prob) {
+  var entry = wmoIconCN[code] || ['🌤', '多云'];
+  var cond = entry[1];
+  if (prob >= 50) cond += '（有雨）';
+  else if (prob >= 20) cond += '（可能有阵雨）';
+  return { icon: entry[0], conditions: cond };
+}
+
+// ───────── 降水概率 → 建议文案 ─────────
+// 阈值 < 20 / 20–50 / > 50
+function precipAdvice(prob) {
+  if (prob > 50) return '必带雨具';
+  if (prob >= 20) return '建议备伞';
+  return '无需备伞';
+}
+
+// ──────────── 天气引擎 ────────────
+var WEATHER_CACHE_KEY = 't6d_weather_v1';
+var WEATHER_CACHE_TTL = 6 * 60 * 60 * 1000;
+var WEATHER_FETCH_TIMEOUT = 4000;
+var liveWeatherResults = {};  // { key: { daily: {...} } }
+var weatherCellStatus = {};  // { key: 'ok' | 'error' } —— 'error' 才显示 ⚠ 实时不可用
+
+function buildDailyUrl(lat, lng, startDate, endDate) {
+  return 'https://api.open-meteo.com/v1/forecast'
+    + '?latitude=' + lat + '&longitude=' + lng
+    + '&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max'
+    + '&timezone=Asia/Shanghai'
+    + '&start_date=' + startDate + '&end_date=' + endDate;
+}
+
+function loadWeatherCache() {
+  try {
+    var raw = sessionStorage.getItem(WEATHER_CACHE_KEY);
+    if (!raw) return {};
+    return JSON.parse(raw);
+  } catch (e) { return {}; }
+}
+
+function saveWeatherCache(cache) {
+  try { sessionStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify(cache)); }
+  catch (e) { /* 隐私模式/容量满静默 */ }
+}
+
+function fetchOneCell(lat, lng, startDate, endDate) {
+  var url = buildDailyUrl(lat, lng, startDate, endDate);
+  return Promise.race([
+    fetch(url).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }),
+    new Promise(function (resolve) { setTimeout(function () { resolve(null); }, WEATHER_FETCH_TIMEOUT); })
+  ]);
+}
+
+function getWeatherForRender(slot, targetDate) {
+  if (!slot.weather) return null;
+  var key = roundCoord(slot.weather.coords.lat) + ':' + roundCoord(slot.weather.coords.lng);
+  return resolveWeather(liveWeatherResults, slot, targetDate, weatherCellStatus[key] === 'error');
+}
+
+function collectWeatherRequests() {
+  var seen = {};
+  var reqs = [];
+  trip.days.forEach(function (day) {
+    day.slots.forEach(function (slot) {
+      if (!slot.weather || !slot.weather.coords) return;
+      var lat = slot.weather.coords.lat;
+      var lng = slot.weather.coords.lng;
+      var key = roundCoord(lat) + ':' + roundCoord(lng);
+      var composite = key + ':' + day.date;
+      if (seen[composite]) return;
+      seen[composite] = true;
+      reqs.push({ key: key, lat: lat, lng: lng, date: day.date });
+    });
+  });
+  return reqs;
+}
+
+function fetchAllWeather() {
+  var reqs = collectWeatherRequests();
+  if (!reqs.length) return Promise.resolve();
+  var cache = loadWeatherCache();
+  var now = Date.now();
+  var dateMin = reqs.reduce(function (a, r) { return r.date < a ? r.date : a; }, reqs[0].date);
+  var dateMax = reqs.reduce(function (a, r) { return r.date > a ? r.date : a; }, reqs[0].date);
+
+  var fetches = {};
+  reqs.forEach(function (r) {
+    var cached = cache[r.key];
+    if (cached && (now - cached.fetchedAt) < WEATHER_CACHE_TTL) {
+      liveWeatherResults[r.key] = { daily: cached.daily };
+      weatherCellStatus[r.key] = 'ok';
+      return;
+    }
+    if (fetches[r.key]) return;  // 同 cell 不重复 fetch
+    fetches[r.key] = fetchOneCell(r.lat, r.lng, dateMin, dateMax).then(function (data) {
+      if (!data || !data.daily) {
+        weatherCellStatus[r.key] = 'error';
+        return;
+      }
+      liveWeatherResults[r.key] = { daily: data.daily };
+      weatherCellStatus[r.key] = 'ok';
+      cache[r.key] = { fetchedAt: now, daily: data.daily };
+    });
+  });
+
+  return Promise.all(Object.values(fetches)).then(function () {
+    saveWeatherCache(cache);
+  });
+}
+
+// ───────── 坐标 5km 网格去重（0.05° ≈ 5km）─────────
+function roundCoord(v) {
+  return Math.round(v * 20) / 20;
+}
+
+// ───────── 从 live 数据 + fallback 解析出渲染用的天气结果 ─────────
+// liveResults: { key: { daily: {...} } }；unavailable: 该 cell 是否抓取失败（true 才显示 ⚠）
+// 返回 { source: 'live'|'fallback', icon, conditions, high, low, precipAdvice, [unavailable] }
+function resolveWeather(liveResults, slot, targetDate, unavailable) {
+  if (!slot.weather) return null;
+  var key = roundCoord(slot.weather.coords.lat) + ':' + roundCoord(slot.weather.coords.lng);
+  var live = liveResults[key];
+  if (live && live.daily) {
+    var i = live.daily.time.indexOf(targetDate);
+    if (i >= 0) {
+      var cond = wmoToText(live.daily.weather_code[i], live.daily.precipitation_probability_max[i]);
+      return {
+        source: 'live',
+        icon: cond.icon,
+        conditions: cond.conditions,
+        high: Math.round(live.daily.temperature_2m_max[i]),
+        low: Math.round(live.daily.temperature_2m_min[i]),
+        precipAdvice: precipAdvice(live.daily.precipitation_probability_max[i])
+      };
+    }
+  }
+  var fb = Object.assign({ source: 'fallback' }, slot.weather.fallback);
+  if (unavailable) fb.unavailable = true;
+  return fb;
+}
+
+// ───────── Node 导出守卫 ─────────
+// （内联后省略 module.exports 守卫，browser 环境不需要）
+
+// ─── Extract trip data from embedded JSON ───
+var trip = JSON.parse(document.getElementById('trip-data').textContent);
+
+var mapPoints = [
+  { lat: 31.4944, lng: 120.4294, name: "无锡硕放机场（WUX）", time: "2026-09-26 11:00 落地" },
+  { lat: 31.5667, lng: 120.3022, name: "无锡南禅寺酒店", time: "2026-09-26 12:00 入住" },
+  { lat: 31.5197, lng: 120.1875, name: "鼋头渚 · 太湖", time: "2026-09-26 14:30–17:30" },
+  { lat: 31.5667, lng: 120.3022, name: "南禅寺美食街 · 晚餐", time: "2026-09-26 18:30" },
+  { lat: 31.4944, lng: 120.4294, name: "无锡硕放机场（飞太原）", time: "2026-09-27 16:00 起飞" },
+  { lat: 37.7398, lng: 112.6286, name: "太原武宿国际机场", time: "2026-09-27 18:05 落地" },
+  { lat: 37.7060, lng: 112.4459, name: "晋祠", time: "2026-09-28 09:30–12:00" },
+  { lat: 37.7040, lng: 112.6254, name: "太原南站（高铁去大同）", time: "2026-09-28 17:30" },
+  { lat: 40.0936, lng: 113.2954, name: "大同古城酒店（直通车站）", time: "2026-09-28 20:00 入住" },
+  { lat: 40.1096, lng: 113.1469, name: "云冈石窟（直通车 DT3 8:00）", time: "2026-09-29 8:00 大同古城出发" },
+  { lat: 39.6792, lng: 113.7369, name: "悬空寺", time: "2026-09-30 09:30 抵" },
+  { lat: 39.6700, lng: 113.7300, name: "北岳恒山", time: "2026-09-30 11:00 抵" },
+  { lat: 39.5572, lng: 113.1847, name: "应县木塔（直通车 DT3 14:30）", time: "2026-09-30 15:25 抵" },
+  { lat: 39.1870, lng: 112.8630, name: "雁门关（直通车 DT2 11:50）", time: "2026-10-01 12:50 抵" },
+  { lat: 39.0897, lng: 112.9630, name: "代县古城", time: "2026-10-01 16:00 入住" },
+  { lat: 38.7250, lng: 113.3706, name: "佛光寺", time: "2026-10-02 10:00 抵" },
+  { lat: 38.7013, lng: 113.1138, name: "南禅寺", time: "2026-10-02 13:00 抵" },
+  { lat: 38.9171, lng: 112.9695, name: "五台山机场（WUT）", time: "2026-10-03 起飞" },
+  { lat: 37.7398, lng: 112.6286, name: "太原武宿国际机场", time: "2026-09-27 上午" },
+  { lat: 37.8755, lng: 112.5512, name: "山西博物院", time: "2026-09-27 11:00–13:00" },
+  { lat: 37.7060, lng: 112.4459, name: "晋祠", time: "2026-09-27 14:00–17:00" },
+  { lat: 37.8750, lng: 112.5640, name: "太原食品街（晚餐）", time: "2026-09-27 18:30" },
+  { lat: 38.7250, lng: 113.3706, name: "佛光寺", time: "2026-09-28 10:00–12:30" },
+  { lat: 38.7013, lng: 113.1138, name: "南禅寺", time: "2026-09-28 13:00–15:00" },
+  { lat: 39.0897, lng: 112.9630, name: "代县古城（夜宿）", time: "2026-09-28 16:30+" },
+  { lat: 39.1870, lng: 112.8630, name: "雁门关", time: "2026-09-29 08:00–10:30" },
+  { lat: 39.3131, lng: 112.4257, name: "崇福寺（朔州）", time: "2026-09-29 11:45–13:15" },
+  { lat: 39.5572, lng: 113.1847, name: "应县木塔", time: "2026-09-29 14:45–16:15" },
+  { lat: 39.7000, lng: 113.7000, name: "浑源县城（夜宿）", time: "2026-09-29 17:30+" },
+  { lat: 39.6792, lng: 113.7369, name: "悬空寺", time: "2026-09-30 08:00–10:00" },
+  { lat: 39.6700, lng: 113.7300, name: "北岳恒山", time: "2026-09-30 10:15–14:30" },
+  { lat: 40.0936, lng: 113.2954, name: "大同古城", time: "2026-09-30 16:00+" },
+  { lat: 40.0937, lng: 113.2960, name: "华严寺 · 九龙壁 · 善化寺", time: "2026-09-30 16:00–18:30" },
+  { lat: 40.1096, lng: 113.1469, name: "云冈石窟", time: "2026-10-01 09:00–13:00" },
+  { lat: 40.0611, lng: 113.4822, name: "大同机场（返程）", time: "2026-10-01 16:45" }
+];
+
+var periodLabel = { morning: '上午', noon: '下午', evening: '晚间' };
+var periodEmoji = { morning: '🌅', noon: '☀️', evening: '🌙' };
+
+function slotFallbackEmoji(name) {
+  if (!name) return '📍';
+  if (name.includes('机场') || name.includes('广州') || name.includes('返程')) return '✈️';
+  if (name.includes('晋祠') || name.includes('山西博物院')) return '🏯';
+  if (name.includes('佛光寺')) return '🏯';
+  if (name.includes('南禅寺')) return '⛩️';
+  if (name.includes('代县') || name.includes('边靖楼')) return '🏮';
+  if (name.includes('雁门关')) return '🏰';
+  if (name.includes('恒山')) return '⛰️';
+  if (name.includes('应县') || name.includes('木塔')) return '🗼';
+  if (name.includes('崇福寺') || name.includes('弥陀')) return '🕍';
+  if (name.includes('大同') || name.includes('华严')) return '🏯';
+  if (name.includes('悬空寺')) return '🪨';
+  if (name.includes('浑源')) return '🏘️';
+  if (name.includes('觉山')) return '🗼';
+  if (name.includes('云冈')) return '⛩️';
+  if (name.includes('午餐') || name.includes('晚餐')) return '🍜';
+  if (name.includes('太原')) return '🏙';
+  if (name.includes('食品街')) return '🍜';
+  return '📍';
+}
+
+function renderChecklist() {
+  var reminders = computeReminders(trip.startDate, trip.reminders);
+  document.getElementById('checklist-container').innerHTML = renderChecklistHTML(reminders);
+}
+
+function renderPretrip() {
+  var p = trip.preTrip;
+  var html = '<div class="pretrip-grid">';
+  html += '<div class="pretrip-item"><div class="pretrip-label">气候</div><div class="pretrip-text">' + escapeHTML(p.weather.summary) + '</div></div>';
+  html += '<div class="pretrip-item"><div class="pretrip-label">穿搭</div><div class="pretrip-text">' + escapeHTML(p.packing) + '</div></div>';
+  html += '<div class="pretrip-item"><div class="pretrip-label">支付</div><div class="pretrip-text">' + escapeHTML(p.payment) + '</div></div>';
+  html += '<div class="pretrip-item"><div class="pretrip-label">必备 App</div><div class="pretrip-text"><div class="apps-list">';
+  p.apps.forEach(function (a) { html += '<span class="app-pill">' + escapeHTML(a) + '</span>'; });
+  html += '</div></div></div>';
+  html += '<div class="pretrip-item" style="grid-column:1/-1;"><div class="pretrip-label">购票时机</div><div class="pretrip-text">' + escapeHTML(p.ticketTip) + '</div></div>';
+  html += '</div>';
+  html += '<div class="pretrip-typhoon"><strong>⚠ ' + escapeHTML(p.weather.typhoon.split('；')[0]) + '：</strong>' + escapeHTML(p.weather.typhoon.split('；').slice(1).join('；') || p.weather.typhoon) + '</div>';
+  document.getElementById('pretrip-info').innerHTML = html;
+}
+
+function renderDisclaimer() {
+  document.getElementById('disclaimer-text').textContent = trip.disclaimer;
+}
+
+function renderFlights() {
+  function renderList(arr, isBookedSection) {
+    var html = '';
+    arr.forEach(function (f) {
+      var cardClass = isBookedSection ? 'flight-candidate booked' : 'flight-candidate';
+      var tagClass = isBookedSection ? 'flight-tag booked-tag' : 'flight-tag';
+      var tagText = isBookedSection ? '已确定' : '待选 · 自行核实';
+      html += '<div class="' + cardClass + '">'
+        + '<div class="flight-top">'
+        +   '<span class="flight-label">' + escapeHTML(f.label) + '</span>'
+        +   '<span class="' + tagClass + '">' + tagText + '</span>'
+        + '</div>'
+        + '<div class="flight-time">' + escapeHTML(f.code) + ' · ' + escapeHTML(f.time) + '</div>'
+        + '<div class="flight-note">' + escapeHTML(f.note) + '</div>'
+        + '</div>';
+    });
+    return html;
+  }
+  document.getElementById('outbound-flights').innerHTML = renderList(trip.flights.candidates.outbound, false);
+  // 已定航班 + 备选放一起
+  var returnHtml = renderList(trip.flights.booked, true);
+  returnHtml += renderList(trip.flights.candidates.return, false);
+  document.getElementById('return-flights').innerHTML = returnHtml;
+}
+
+function renderHotels() {
+  var tierMap = { '经济': 'tier-economy', '中档': 'tier-mid', '高端': 'tier-luxury' };
+  var html = '';
+  trip.hotelAreas.forEach(function (area, ai) {
+    if (ai > 0) html += '<div style="height:1px;background:var(--border);margin:0;"></div>';
+    html += '<div class="hotel-area">'
+      + '<div class="hotel-area-name">📍 ' + escapeHTML(area.area) + '</div>'
+      + '<div class="hotel-area-reason">' + escapeHTML(area.reason) + '</div>'
+      + '<div class="hotel-options">';
+    area.options.forEach(function (opt) {
+      var cls = tierMap[opt.tier] || 'tier-economy';
+      html += '<div class="hotel-option">'
+        + '<span class="hotel-tier ' + cls + '">' + escapeHTML(opt.tier) + '</span>'
+        + '<div class="hotel-name">' + escapeHTML(opt.name) + '</div>'
+        + '<div class="hotel-price">' + escapeHTML(opt.priceRange) + '</div>'
+        + '<div class="hotel-note">' + escapeHTML(opt.note) + '</div>'
+        + '</div>';
+    });
+    html += '</div></div>';
+  });
+  document.getElementById('hotels-container').innerHTML = html;
+}
+
+function renderSlotCard(slot) {
+  var periodClass = 'period-' + slot.period;
+  var label = periodLabel[slot.period] || slot.period;
+  var emoji = periodEmoji[slot.period] || '⏰';
+  var fallback = slotFallbackEmoji(slot.name);
+
+  var html = '<div class="slot-card">';
+
+  var hasRoute = !!(slot.routeLine && slot.routeLine.length > 1);
+  var hasPhoto = !!slot.photo;
+  var routeIdx = -1;
+  if (hasRoute) {
+    window.__slotRoutes = window.__slotRoutes || [];
+    routeIdx = window.__slotRoutes.length;
+    window.__slotRoutes.push({ line: slot.routeLine, meta: slot.routeMeta || {}, name: slot.name });
+  }
+
+  html += '<div class="slot-img-wrap'
+    + (hasRoute && hasPhoto ? ' has-rotate' : (hasRoute ? ' has-map' : '')) + '">';
+
+  if (hasPhoto || !hasRoute) {
+    html += '<div class="slot-face slot-face--photo is-active">';
+    if (slot.photo) {
+      html += '<img class="slot-img" src="' + escapeHTML(slot.photo) + '" alt="' + escapeHTML(slot.name) + '" '
+        + 'onerror="this.style.display=\'none\';var fb=this.parentElement.querySelector(\'.slot-img-fallback\');if(fb)fb.style.display=\'flex\';">'
+        + '<div class="slot-img-fallback" style="display:none;"><span>' + fallback + '</span><span class="slot-img-fallback-text">' + escapeHTML(slot.name) + '</span></div>';
+    } else {
+      html += '<div class="slot-img-fallback"><span>' + fallback + '</span><span class="slot-img-fallback-text">' + escapeHTML(slot.name) + '</span></div>';
+    }
+    if (slot.photo && slot.photoCredit) {
+      var pc = slot.photoCredit;
+      html += '<div class="slot-img-credit">© ' + escapeHTML(pc.author || '未署名')
+        + ' · <a href="' + escapeHTML(pc.url) + '" target="_blank" rel="noopener noreferrer">'
+        + escapeHTML(pc.license) + '</a></div>';
+    }
+    html += '</div>';
+  }
+
+  if (hasRoute) {
+    var rm = slot.routeMeta || {};
+    var altTxt = rm.alts > 0 ? ' · 另有 ' + rm.alts + ' 条备选' : '';
+    var legText = slot.name.indexOf('→') >= 0
+      ? slot.name
+      : (rm.from ? rm.from + ' → ' : '') + slot.name;
+    html += '<div class="slot-face slot-face--map' + (hasPhoto ? '' : ' is-active') + '" data-route-idx="' + routeIdx + '">'
+      + '<div class="slot-minimap"></div>'
+      + '<div class="slot-map-caption">'
+      + '<span class="slot-map-leg">' + escapeHTML(legText) + '</span>'
+      + '<span class="slot-map-num">约 ' + escapeHTML(String(rm.km)) + ' km · ' + escapeHTML(String(rm.min)) + ' 分钟' + altTxt + '</span>'
+      + '</div>'
+      + '<div class="slot-map-attr">路线 © OSRM／底图 © OpenStreetMap 贡献者 · 仅供示意</div>'
+      + '</div>';
+  }
+
+  html += '<span class="slot-period-label ' + periodClass + '">' + emoji + ' ' + label + '</span>';
+  if (hasRoute && hasPhoto) {
+    html += '<div class="slot-face-dots" role="tablist" aria-label="切换实景图与路线图">'
+      + '<button type="button" class="slot-dot is-on" data-face="0" aria-label="实景照片"></button>'
+      + '<button type="button" class="slot-dot" data-face="1" aria-label="自驾路线图"></button>'
+      + '</div>';
+  }
+  html += '</div>';
+
+  html += '<div class="slot-body">';
+  html += '<div class="slot-name-row">'
+    + '<div class="slot-name">' + escapeHTML(slot.name) + '</div>';
+  if (typeof slot.rating === 'number' && isFinite(slot.rating) && slot.rating > 0 && slot.rating <= 5) {
+    html += '<div class="slot-rating"><span class="slot-rating-star">★</span><span>' + slot.rating.toFixed(1) + '</span></div>';
+  }
+  html += '</div>';
+  html += '<div class="slot-time">🕐 ' + escapeHTML(slot.time) + '</div>';
+
+  if (slot.needsBooking) {
+    html += reminderBadgeHTML(slot.leadDays);
+  }
+
+  if (slot.review) {
+    html += '<div class="slot-review">' + escapeHTML(slot.review) + '</div>';
+  }
+
+  html += '<div class="slot-meta">';
+  if (slot.openingHours) {
+    html += '<div class="meta-row"><span class="meta-icon">🕐</span><span><span class="meta-label">营业</span>' + escapeHTML(slot.openingHours) + '</span></div>';
+  }
+  if (slot.closedDays) {
+    html += '<div class="meta-row"><span class="meta-icon">📅</span><span><span class="meta-label">休息</span>' + escapeHTML(slot.closedDays) + '</span></div>';
+  }
+  if (slot.ticketPrice) {
+    html += '<div class="meta-row"><span class="meta-icon">🎟️</span><span><span class="meta-label">门票</span>' + escapeHTML(slot.ticketPrice) + '</span></div>';
+  }
+  if (slot.transport) {
+    var tParts = [slot.transport.mode];
+    if (slot.transport.distance) tParts.push(slot.transport.distance);
+    if (slot.transport.highway) tParts.push(slot.transport.highway);
+    if (slot.transport.duration) tParts.push(slot.transport.duration);
+    if (slot.transport.fare) tParts.push(slot.transport.fare);
+    html += '<div class="meta-row"><span class="meta-icon">🚗</span><span><span class="meta-label">自驾</span>'
+      + escapeHTML(tParts.join(' · '))
+      + '</span></div>';
+  }
+  if (slot.seasonal) {
+    html += '<div class="seasonal-tag">🌸 ' + escapeHTML(slot.seasonal) + '</div>';
+  }
+  html += '</div>';   // 关闭 slot-meta
+
+  // ── 天气行 ──
+  var dayDate = (slot._dayDate) || '';  // 临时标记（见 Task 7）
+  var w = dayDate ? getWeatherForRender(slot, dayDate) : null;
+  if (w) {
+    html += '<div class="slot-weather">';
+    html += '<span class="slot-weather-icon">' + escapeHTML(w.icon) + '</span>';
+    html += '<span class="slot-weather-text">天气  ' + escapeHTML(w.conditions) + ' · '
+          + w.high + '°/' + w.low + '° · 💧' + escapeHTML(w.precipAdvice) + '</span>';
+    if (w.source === 'live') {
+      html += '<span class="slot-weather-live-dot" title="实时数据"></span>';
+    }
+    html += '</div>';
+    html += '<div class="slot-weather-note">📡 Open-Meteo · 11km 网格 · 参考'
+          + (w.unavailable === true ? ' · <span class="slot-weather-error">⚠ 实时不可用</span>' : '')
+          + '</div>';
+  }
+
+  html += '</div>';   // 关闭 slot-body
+  html += '</div>';
+  return html;
+}
+
+function renderDining(diningArr) {
+  if (!diningArr || diningArr.length === 0) return '';
+  var html = '<div class="dining-section">'
+    + '<div class="dining-header">🍽 当日餐饮推荐</div>';
+  diningArr.forEach(function (d) {
+    html += '<div class="dining-item">'
+      + '<div class="dining-meal-row">'
+      +   '<span class="dining-meal-badge">' + escapeHTML(d.meal) + '</span>'
+      +   '<span class="dining-place">' + escapeHTML(d.place) + '</span>'
+      + '</div>'
+      + '<div class="dining-hours">⏰ ' + escapeHTML(d.hours) + '</div>'
+      + '<div class="dish-list">';
+    d.dishes.forEach(function (dish) {
+      html += '<div class="dish-row">'
+        + '<span class="dish-name">• ' + escapeHTML(dish.name) + '</span>'
+        + '<span class="dish-price">' + escapeHTML(dish.price) + '</span>'
+        + '</div>';
+    });
+    html += '</div></div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function renderBackupSpots(spots) {
+  if (!spots || spots.length === 0) return '';
+  var html = '<div class="backup-section">'
+    + '<div class="backup-header">🧭 附近备选（车程 ≤ 1.5h，按价值排序）</div>';
+  spots.forEach(function (s) {
+    html += '<div class="backup-item">'
+      + '<div class="backup-name">' + escapeHTML(s.name) + '</div>'
+      + '<div class="backup-distance">📍 ' + escapeHTML(s.distance) + '</div>'
+      + '<div class="backup-desc">' + escapeHTML(s.description) + '</div>'
+      + '</div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function renderSummary() {
+  var dayKm = ['约 15 km', '约 25 km', '约 320 km', '约 230 km', '约 90 km', '约 50 km'];
+  var dayStay = ['太原市区', '太原市区', '代县古城', '浑源县城', '大同古城', '— 返广州'];
+  var skipWords = ['酒店', '入住', '午餐', '晚餐', '早餐', '早点', '返程', '机场'];
+  // shanxi slot 均为「X → 目的地」过渡格式；先取出右侧目的地再做 skip 过滤
+  function destOf(name) {
+    if (!name) return '';
+    var parts = name.split('→');
+    return (parts.length > 1 ? parts[parts.length - 1] : name).trim();
+  }
+  function isStop(name) {
+    if (!name) return false;
+    for (var i = 0; i < skipWords.length; i++) {
+      if (name.indexOf(skipWords[i]) >= 0) return false;
+    }
+    return true;
+  }
+  var html = '<div style="overflow-x:auto;">'
+    + '<table class="summary-table"><thead><tr>'
+    + '<th>Day</th><th>日期</th><th>主题</th><th>主要行程</th><th>里程</th><th>夜宿</th>'
+    + '</tr></thead><tbody>';
+  trip.days.forEach(function (day, di) {
+    var highlight = '';
+    (day.slots || []).forEach(function (s) {
+      if (highlight) return;
+      var d = destOf(s.name);
+      if (isStop(d)) highlight = d;
+    });
+    if (!highlight && day.slots && day.slots.length) {
+      var fallback = (day.slots[1] || day.slots[0]).name || '—';
+      highlight = destOf(fallback);
+    }
+    var dateLabel = day.date.slice(5).replace('-', '/');
+    html += '<tr class="day-' + (di + 1) + '">'
+      + '<td class="day-cell">Day ' + (di + 1) + '</td>'
+      + '<td class="date-cell">' + escapeHTML(dateLabel) + '<br><small>' + escapeHTML(day.weekday) + '</small></td>'
+      + '<td class="theme-cell">' + escapeHTML(day.theme) + '</td>'
+      + '<td>' + escapeHTML(highlight || '—') + '</td>'
+      + '<td class="km-cell">' + escapeHTML(dayKm[di]) + '</td>'
+      + '<td class="stay-cell">' + escapeHTML(dayStay[di]) + '</td>'
+      + '</tr>';
+  });
+  html += '</tbody></table></div>';
+  document.getElementById('summary-container').innerHTML = html;
+}
+
+function renderTimeline() {
+  var container = document.getElementById('timeline-container');
+  var html = '';
+  trip.days.forEach(function (day, di) {
+    var dateLabel = 'Day ' + (di + 1);
+    html += '<div class="day-block day-' + (di + 1) + '" id="day-block-' + di + '">';
+    html += '<div class="day-header">'
+      + '<div class="day-num">' + dateLabel + '</div>'
+      + '<div class="day-title-row">'
+      +   '<div class="day-weekday">' + escapeHTML(day.date) + ' · ' + escapeHTML(day.weekday) + '</div>'
+      +   '<div class="day-theme">' + escapeHTML(day.theme) + '</div>'
+      + '</div>'
+      + '</div>';
+
+    if (day.tips && day.tips.length) {
+      day.tips.forEach(function (tip) {
+        html += '<div class="day-tips-banner">' + escapeHTML(tip) + '</div>';
+      });
+    }
+
+    if (day.slots && day.slots.length) {
+      html += '<div class="slots-grid">';
+      day.slots.forEach(function (slot) {
+        slot._dayDate = day.date;
+        html += renderSlotCard(slot);
+      });
+      html += '</div>';
+      html += renderDining(day.dining);
+      html += renderBackupSpots(day.backupSpots);
+    } else {
+      // 占位日 (Day 6 / 7)
+      html += '<div class="day-placeholder">'
+        + '<div class="day-placeholder__icon">⏳</div>'
+        + '<div class="day-placeholder__text">机动 · 待补充</div>'
+        + '<div class="day-placeholder__sub">FLEXIBLE · TO BE FILLED</div>'
+        + '</div>';
+    }
+
+    html += '</div>';
+  });
+  container.innerHTML = html;
+}
+
+function renderTips() {
+  var html = '';
+  trip.tips.forEach(function (tip, i) {
+    html += '<div class="tip-item">'
+      + '<div class="tip-num">' + (i + 1) + '</div>'
+      + '<div class="tip-text">' + escapeHTML(tip) + '</div>'
+      + '</div>';
+  });
+  document.getElementById('tips-container').innerHTML = html;
+}
+
+// ═══════════════ ROUTE NAVIGATION ═══════════════
+var travelMap = null;
+var activeChipIdx = 0;
+var animCancel = null;
+var routeCache = {};
+
+function chipEmoji(name) {
+  if (!name) return '📍';
+  if (name.includes('机场')) return '✈️';
+  if (name.includes('晋祠')) return '🏯';
+  if (name.includes('山西博物院')) return '🏛';
+  if (name.includes('佛光寺')) return '🏯';
+  if (name.includes('南禅寺')) return '⛩️';
+  if (name.includes('代县')) return '🏮';
+  if (name.includes('雁门关')) return '🏰';
+  if (name.includes('恒山')) return '⛰️';
+  if (name.includes('应县')) return '🗼';
+  if (name.includes('崇福寺')) return '🕍';
+  if (name.includes('华严')) return '🏯';
+  if (name.includes('悬空寺')) return '🪨';
+  if (name.includes('浑源')) return '🏘️';
+  if (name.includes('觉山')) return '🗼';
+  if (name.includes('云冈')) return '⛩️';
+  if (name.includes('广州')) return '✈️';
+  if (name.includes('大同')) return '🏙';
+  if (name.includes('食品街')) return '🍜';
+  return '📍';
+}
+
+function haversineKm(lat1, lng1, lat2, lng2) {
+  var R = 6371;
+  var toRad = function (d) { return d * Math.PI / 180; };
+  var dLat = toRad(lat2 - lat1), dLng = toRad(lng2 - lng1);
+  var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+          Math.sin(dLng/2) * Math.sin(dLng/2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+function durationForDistance(km) {
+  if (km < 5) return 0.8;
+  if (km > 200) return 3.0;
+  if (km <= 50) return 0.8 + (km - 5) * (1.0 / 45);
+  return 1.8 + (km - 50) * (1.2 / 150);
+}
+
+function fetchRoute(fromIdx, toIdx) {
+  var a = mapPoints[fromIdx], b = mapPoints[toIdx];
+  var key = a.lng + ',' + a.lat + ';' + b.lng + ',' + b.lat;
+  if (routeCache[key]) return Promise.resolve(routeCache[key]);
+  var url = 'https://router.project-osrm.org/route/v1/driving/'
+    + a.lng + ',' + a.lat + ';' + b.lng + ',' + b.lat
+    + '?overview=full&geometries=geojson';
+  return fetch(url, { mode: 'cors' })
+    .then(function (r) {
+      if (!r.ok) throw new Error('OSRM HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function (data) {
+      if (data.code !== 'Ok' || !data.routes || !data.routes.length) throw new Error('OSRM no route');
+      var coords = data.routes[0].geometry.coordinates;
+      routeCache[key] = coords;
+      return coords;
+    })
+    .catch(function (err) {
+      console.warn('OSRM 失败，使用直线回退:', err.message);
+      var mid = [(a.lng + b.lng) / 2, (a.lat + b.lat) / 2];
+      var fallback = [[a.lng, a.lat], mid, [b.lng, b.lat]];
+      routeCache[key] = fallback;
+      return fallback;
+    });
+}
+
+function flyAlongRoute(fromIdx, toIdx) {
+  if (!travelMap) return;
+  if (fromIdx === toIdx) {
+    var p = mapPoints[toIdx];
+    travelMap.flyTo([p.lat, p.lng], Math.max(travelMap.getZoom(), 11), { duration: 0.6 });
+    setActiveChip(toIdx);
+    return;
+  }
+  if (animCancel) animCancel.cancelled = true;
+  var token = { cancelled: false };
+  animCancel = token;
+  setActiveChip(toIdx);
+  fetchRoute(fromIdx, toIdx).then(function (coords) {
+    if (token.cancelled) return;
+    var km = haversineKm(
+      mapPoints[fromIdx].lat, mapPoints[fromIdx].lng,
+      mapPoints[toIdx].lat,   mapPoints[toIdx].lng
+    );
+    var dur = durationForDistance(km) * 1000;
+    var startTs = null;
+    var targetZoom = Math.max(travelMap.getZoom(), km < 30 ? 12 : 9);
+    function step(ts) {
+      if (token.cancelled) return;
+      if (startTs === null) startTs = ts;
+      var t = (ts - startTs) / dur;
+      if (t >= 1) {
+        var last = coords[coords.length - 1];
+        travelMap.setView([last[1], last[0]], targetZoom, { animate: false });
+        return;
+      }
+      var idx = t * (coords.length - 1);
+      var i0 = Math.floor(idx);
+      var i1 = Math.min(coords.length - 1, i0 + 1);
+      var frac = idx - i0;
+      var c0 = coords[i0], c1 = coords[i1];
+      var lng = c0[0] + (c1[0] - c0[0]) * frac;
+      var lat = c0[1] + (c1[1] - c0[1]) * frac;
+      travelMap.setView([lat, lng], targetZoom, { animate: false });
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+function setActiveChip(idx) {
+  activeChipIdx = idx;
+  document.querySelectorAll('.route-chip').forEach(function (el) {
+    var i = parseInt(el.getAttribute('data-idx'), 10);
+    if (i === idx) el.classList.add('active');
+    else el.classList.remove('active');
+  });
+}
+
+function renderRouteChips() {
+  var container = document.getElementById('route-chips');
+  var html = '';
+  mapPoints.forEach(function (p, i) {
+    html += '<button type="button" class="route-chip' + (i === 0 ? ' active' : '')
+      + '" data-idx="' + i + '">'
+      + '<span class="route-chip__num">' + (i + 1) + '</span>'
+      + '<span class="route-chip__emoji">' + chipEmoji(p.name) + '</span>'
+      + '<span>' + escapeHTML(p.name) + '</span>'
+      + '</button>';
+  });
+  container.innerHTML = html;
+  container.addEventListener('click', function (e) {
+    var btn = e.target.closest('.route-chip');
+    if (!btn) return;
+    var idx = parseInt(btn.getAttribute('data-idx'), 10);
+    if (isNaN(idx)) return;
+    flyAlongRoute(activeChipIdx, idx);
+    btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  });
+}
+
+function renderTourismCard() {
+  if (!trip.tourismCard) return;
+  var t = trip.tourismCard;
+  var rows = [
+    { label: '价格', value: t.price },
+    { label: '有效期', value: t.validity },
+    { label: '覆盖', value: t.covers },
+    { label: '行程', value: t.coversYourTrip },
+    { label: '限制', value: t.limitations },
+    { label: '办理', value: t.how }
+  ];
+  var html = rows.map(function (r) {
+    return '<div class="tourism-card__row">'
+      + '<span class="tourism-card__label">' + escapeHTML(r.label) + '</span>'
+      + '<span class="tourism-card__value">' + escapeHTML(r.value) + '</span>'
+      + '</div>';
+  }).join('');
+  document.getElementById('tourism-card-rows').innerHTML = html;
+  document.getElementById('tourism-card-savings').innerHTML =
+    '💡 <strong>性价比</strong>：' + escapeHTML(t.savingsHint);
+}
+
+function renderClosureAudit() {
+  if (!trip.closureAudit) return;
+  var ca = trip.closureAudit;
+  document.getElementById('closure-audit-date').textContent =
+    '// ' + ca.auditDate + ' · Site Closure Audit';
+  document.getElementById('closure-audit-summary').textContent = ca.summary;
+
+  var html = ca.sites.map(function (s) {
+    var statusClass = s.status.indexOf('⚠') >= 0 ? 'warn' : 'ok';
+    return '<div class="closure-item">'
+      + '<span class="closure-item__status ' + statusClass + '">' + escapeHTML(s.status) + '</span>'
+      + '<div class="closure-item__body">'
+      +   '<div class="closure-item__name">' + escapeHTML(s.name) + '</div>'
+      +   '<div class="closure-item__date">参观日：' + escapeHTML(s.visitDate) + '</div>'
+      +   '<div class="closure-item__detail">' + escapeHTML(s.detail) + '</div>'
+      + '</div>'
+      + '</div>';
+  }).join('');
+  document.getElementById('closure-audit-list').innerHTML = html;
+}
+
+// ═══════════════ VIEW TOGGLE + TABBED TIMELINE ═══════════════
+var currentViewMode = 'tabs';  // 'tabs' | 'timeline'
+var currentDayIdx = 0;
+
+function initViewToggle() {
+  document.getElementById('view-toggle').addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-mode]');
+    if (!btn) return;
+    var mode = btn.getAttribute('data-mode');
+    if (mode === currentViewMode) return;
+    setViewMode(mode);
+  });
+}
+
+function setViewMode(mode) {
+  currentViewMode = mode;
+  document.querySelectorAll('.view-toggle__btn').forEach(function (b) {
+    if (b.getAttribute('data-mode') === mode) b.classList.add('active');
+    else b.classList.remove('active');
+  });
+  renderDayTabs();
+  var container = document.getElementById('timeline-container');
+  if (mode === 'timeline') {
+    renderTimeline();
+    clearDayHighlights();
+    buildTimelineBookmarks();
+  } else {
+    // tabs mode
+    showDayTab(currentDayIdx);
+    teardownTimelineBookmarks();
+  }
+}
+
+function buildTimelineBookmarks() {
+  if (document.getElementById('timeline-bookmarks')) return;
+  var rail = document.createElement('aside');
+  rail.id = 'timeline-bookmarks';
+  rail.setAttribute('aria-label', '快速跳转到某一天');
+  trip.days.forEach(function (day, di) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'bookmark';
+    btn.setAttribute('data-day-idx', String(di));
+    btn.textContent = String(di + 1);
+    rail.appendChild(btn);
+  });
+  document.body.appendChild(rail);
+  // Current-day highlight via IntersectionObserver
+  if ('IntersectionObserver' in window) {
+    var dayObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var idx = parseInt(e.target.id.replace('day-block-', ''), 10);
+        if (isNaN(idx)) return;
+        document.querySelectorAll('#timeline-bookmarks .bookmark').forEach(function (b) {
+          b.classList.toggle('is-current-day',
+            parseInt(b.getAttribute('data-day-idx'), 10) === idx);
+        });
+      });
+    }, { rootMargin: '-10% 0px -70% 0px', threshold: 0 });
+    document.querySelectorAll('.day-block').forEach(function (b) { dayObs.observe(b); });
+  }
+}
+
+function teardownTimelineBookmarks() {
+  var rail = document.getElementById('timeline-bookmarks');
+  if (rail) rail.parentNode.removeChild(rail);
+}
+
+// Delegated click handler — set up once on init.
+function initBookmarkClickHandler() {
+  document.body.addEventListener('click', function (e) {
+    var btn = e.target.closest('.bookmark');
+    if (!btn) return;
+    var idx = parseInt(btn.getAttribute('data-day-idx'), 10);
+    if (isNaN(idx)) return;
+    var target = document.getElementById('day-block-' + idx);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelectorAll('#timeline-bookmarks .bookmark').forEach(function (b) {
+        b.classList.toggle('is-current-day',
+          parseInt(b.getAttribute('data-day-idx'), 10) === idx);
+      });
+    }
+  });
+}
+
+function renderDayTabs() {
+  var strip = document.getElementById('day-tabs');
+  var html = '';
+  trip.days.forEach(function (day, i) {
+    var isPlaceholder = !day.slots || day.slots.length === 0;
+    var cls = 'day-tab' + (i === currentDayIdx ? ' active' : '');
+    if (isPlaceholder) cls += ' day-tab--placeholder';
+    html += '<button type="button" class="' + cls + '" data-day-idx="' + i + '">'
+      + '<div class="day-tab__num">Day ' + (i + 1) + '</div>'
+      + '<div class="day-tab__weekday">' + escapeHTML(day.weekday || '') + '</div>'
+      + '</button>';
+  });
+  strip.innerHTML = html;
+  strip.addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-day-idx]');
+    if (!btn) return;
+    var idx = parseInt(btn.getAttribute('data-day-idx'), 10);
+    if (isNaN(idx)) return;
+    if (currentViewMode === 'tabs') {
+      // tabs 模式：过滤日程到单日 + 地图高亮 + 滚到 section 顶
+      showDayTab(idx);
+      var sectionEl = document.getElementById('timeline-section');
+      if (sectionEl) sectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      // timeline 模式：只地图高亮 + 标签页 active 切换，日程保持所有天
+      currentDayIdx = idx;
+      document.querySelectorAll('.day-tab').forEach(function (el) {
+        var i = parseInt(el.getAttribute('data-day-idx'), 10);
+        if (i === idx) el.classList.add('active');
+        else el.classList.remove('active');
+      });
+      highlightDayOnMap(idx);
+    }
+  });
+}
+
+function showDayTab(idx) {
+  currentDayIdx = idx;
+  var container = document.getElementById('timeline-container');
+  var day = trip.days[idx];
+  // Render only this day
+  var html = '';
+  html += '<div class="day-block day-' + (idx + 1) + '">';
+  html += '<div class="day-header">'
+    + '<div class="day-num">Day ' + (idx + 1) + '</div>'
+    + '<div class="day-title-row">'
+    +   '<div class="day-weekday">' + escapeHTML(day.date) + ' · ' + escapeHTML(day.weekday) + '</div>'
+    +   '<div class="day-theme">' + escapeHTML(day.theme) + '</div>'
+    + '</div>'
+    + '</div>';
+  if (day.tips && day.tips.length) {
+    day.tips.forEach(function (tip) {
+      html += '<div class="day-tips-banner">' + escapeHTML(tip) + '</div>';
+    });
+  }
+  if (day.slots && day.slots.length) {
+    html += '<div class="slots-grid">';
+    day.slots.forEach(function (slot) {
+      slot._dayDate = day.date;
+      html += renderSlotCard(slot);
+    });
+    html += '</div>';
+    html += renderDining(day.dining);
+    html += renderBackupSpots(day.backupSpots);
+  } else {
+    html += '<div class="day-placeholder">'
+      + '<div class="day-placeholder__icon">⏳</div>'
+      + '<div class="day-placeholder__text">机动 · 待补充</div>'
+      + '<div class="day-placeholder__sub">FLEXIBLE · TO BE FILLED</div>'
+      + '</div>';
+  }
+  html += '</div>';
+  container.innerHTML = html;
+  // Tab visual state
+  document.querySelectorAll('.day-tab').forEach(function (el) {
+    var i = parseInt(el.getAttribute('data-day-idx'), 10);
+    if (i === idx) el.classList.add('active');
+    else el.classList.remove('active');
+  });
+  // Map highlight
+  highlightDayOnMap(idx);
+}
+
+function highlightDayOnMap(idx) {
+  if (!travelMap) return;
+  var day = trip.days[idx];
+  var dayCoords = (day.slots || []).map(function (s) {
+    return L.latLng(s.lat, s.lng);
+  });
+  if (dayCoords.length === 0) {
+    clearDayHighlights();
+    return;
+  }
+  // Dim all route-pins, highlight day's pins
+  var mapEl = document.getElementById('map');
+  mapEl.classList.add('map-point-dim');
+  // For mapPoints overlay (in addition to slot pins), we draw a highlight polyline
+  // Remove previous day highlight line
+  if (window.__dayHighlightLine) {
+    travelMap.removeLayer(window.__dayHighlightLine);
+    window.__dayHighlightLine = null;
+  }
+  window.__dayHighlightLine = L.polyline(dayCoords, {
+    color: '#b8392e',
+    weight: 4,
+    opacity: 0.85
+  }).addTo(travelMap);
+  // Fit bounds to day's coords
+  travelMap.fitBounds(dayCoords, { padding: [60, 60], maxZoom: 13 });
+}
+
+function clearDayHighlights() {
+  var mapEl = document.getElementById('map');
+  if (mapEl) mapEl.classList.remove('map-point-dim');
+  if (travelMap && window.__dayHighlightLine) {
+    travelMap.removeLayer(window.__dayHighlightLine);
+    window.__dayHighlightLine = null;
+  }
+}
+
+// ═══════════════ PLAY BUTTON + WALKING ANIMATION ═══════════════
+var isPlaying = false;
+var walkerMarkers = [];
+var walkerAnimToken = null;
+var walkerPopupTimer = null;
+
+function initPlayButton() {
+  var btn = document.getElementById('play-btn');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    if (isPlaying) {
+      pauseWalkingAnimation();
+    } else {
+      startWalkingAnimation();
+    }
+  });
+}
+
+function startWalkingAnimation() {
+  if (isPlaying) return;
+  isPlaying = true;
+  var btn = document.getElementById('play-btn');
+  btn.classList.add('playing');
+  btn.querySelector('.icon').textContent = '⏸';
+  btn.querySelector('.label').textContent = '暂停';
+
+  // Cancel any in-flight chip animation
+  if (typeof animCancel !== 'undefined' && animCancel) animCancel.cancelled = true;
+  if (typeof walkerAnimToken !== 'undefined' && walkerAnimToken) walkerAnimToken.cancelled = true;
+
+  // Clear day highlight
+  clearDayHighlights();
+  // Fit map to all points
+  var allCoords = mapPoints.map(function (p) { return [p.lat, p.lng]; });
+  travelMap.fitBounds(allCoords, { padding: [40, 40] });
+
+  // Build segments: fetch OSRM routes between consecutive stops
+  var segments = [];
+  var fetchPromises = [];
+  for (var i = 0; i < mapPoints.length - 1; i++) {
+    fetchPromises.push(fetchRoute(i, i + 1).then(function (idx) {
+      return function (coords) {
+        segments[idx] = coords;
+      };
+    }(i)));
+  }
+  Promise.all(fetchPromises).then(function () {
+    // Create walker markers at start
+    removeWalkerMarkers();
+    var startLatLng = mapPoints[0];
+    walkerMarkers.push(L.marker([startLatLng.lat, startLatLng.lng], {
+      icon: L.divIcon({ className: 'walker-marker', html: '👨', iconSize: [28, 28], iconAnchor: [14, 14] }),
+      interactive: false
+    }).addTo(travelMap));
+    walkerMarkers.push(L.marker([startLatLng.lat, startLatLng.lng], {
+      icon: L.divIcon({ className: 'walker-marker second', html: '👩', iconSize: [26, 26], iconAnchor: [13, 13] }),
+      interactive: false
+    }).addTo(travelMap));
+    runWalkingAnimation(segments);
+  });
+}
+
+function pauseWalkingAnimation() {
+  isPlaying = false;
+  if (walkerAnimToken) walkerAnimToken.cancelled = true;
+  if (walkerPopupTimer) { clearTimeout(walkerPopupTimer); walkerPopupTimer = null; }
+  if (travelMap) travelMap.closePopup();
+  var btn = document.getElementById('play-btn');
+  btn.classList.remove('playing');
+  btn.querySelector('.icon').textContent = '▶';
+  btn.querySelector('.label').textContent = '继续行程';
+}
+
+function stopWalkingAnimation() {
+  pauseWalkingAnimation();
+  removeWalkerMarkers();
+  var btn = document.getElementById('play-btn');
+  btn.classList.remove('playing');
+  btn.querySelector('.icon').textContent = '▶';
+  btn.querySelector('.label').textContent = '播放行程';
+}
+
+function removeWalkerMarkers() {
+  walkerMarkers.forEach(function (m) {
+    if (travelMap) travelMap.removeLayer(m);
+  });
+  walkerMarkers = [];
+}
+
+function runWalkingAnimation(segments) {
+  walkerAnimToken = { cancelled: false };
+  var token = walkerAnimToken;
+  var leaderDelay = 0;        // ms before second walker starts
+  var startTs = null;
+  var firstSegmentMs = 0;      // accumulated time before each segment
+  var lastSegIdx = -1;         // 检测 walker 到达途经点
+
+  // Compute total duration based on haversine distance per segment
+  var segmentMeta = segments.map(function (coords, i) {
+    var a = mapPoints[i], b = mapPoints[i + 1];
+    var km = haversineKm(a.lat, a.lng, b.lat, b.lng);
+    var dur = durationForDistance(km) * 1000;  // ms
+    return { coords: coords, dur: dur };
+  });
+  var totalMs = segmentMeta.reduce(function (s, m) { return s + m.dur; }, 0);
+
+  function step(ts) {
+    if (token.cancelled) return;
+    if (startTs === null) startTs = ts;
+    var elapsed = ts - startTs;
+    if (elapsed >= totalMs) {
+      // End: place both at last point
+      var last = mapPoints[mapPoints.length - 1];
+      setWalkerPosition(0, last.lat, last.lng);
+      setWalkerPosition(1, last.lat, last.lng);
+      stopWalkingAnimation();
+      return;
+    }
+    // Find which segment we're in
+    var acc = 0;
+    var segIdx = 0;
+    var segT = 0;
+    for (var i = 0; i < segmentMeta.length; i++) {
+      if (elapsed < acc + segmentMeta[i].dur) {
+        segIdx = i;
+        segT = (elapsed - acc) / segmentMeta[i].dur;
+        break;
+      }
+      acc += segmentMeta[i].dur;
+    }
+    if (segIdx !== lastSegIdx) {
+      lastSegIdx = segIdx;
+      flashPoint(segIdx);
+    }
+    var coords = segmentMeta[segIdx].coords;
+    var idx = segT * (coords.length - 1);
+    var i0 = Math.floor(idx);
+    var i1 = Math.min(coords.length - 1, i0 + 1);
+    var frac = idx - i0;
+    var lng = coords[i0][0] + (coords[i1][0] - coords[i0][0]) * frac;
+    var lat = coords[i0][1] + (coords[i1][1] - coords[i0][1]) * frac;
+    setWalkerPosition(0, lat, lng);
+
+    // Second walker with leaderDelay offset
+    var delayedElapsed = elapsed - leaderDelay;
+    if (delayedElapsed > 0) {
+      if (delayedElapsed >= totalMs) {
+        var last2 = mapPoints[mapPoints.length - 1];
+        setWalkerPosition(1, last2.lat, last2.lng);
+      } else {
+        var acc2 = 0;
+        var segIdx2 = 0;
+        var segT2 = 0;
+        for (var j = 0; j < segmentMeta.length; j++) {
+          if (delayedElapsed < acc2 + segmentMeta[j].dur) {
+            segIdx2 = j;
+            segT2 = (delayedElapsed - acc2) / segmentMeta[j].dur;
+            break;
+          }
+          acc2 += segmentMeta[j].dur;
+        }
+        var coords2 = segmentMeta[segIdx2].coords;
+        var idx2 = segT2 * (coords2.length - 1);
+        var i02 = Math.floor(idx2);
+        var i12 = Math.min(coords2.length - 1, i02 + 1);
+        var frac2 = idx2 - i02;
+        var lng2 = coords2[i02][0] + (coords2[i12][0] - coords2[i02][0]) * frac2;
+        var lat2 = coords2[i02][1] + (coords2[i12][1] - coords2[i02][1]) * frac2;
+        setWalkerPosition(1, lat2, lng2);
+      }
+    } else {
+      // Leader hasn't started; second stays at start
+      var start = mapPoints[0];
+      setWalkerPosition(1, start.lat, start.lng);
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+}
+
+function setWalkerPosition(idx, lat, lng) {
+  if (walkerMarkers[idx]) {
+    walkerMarkers[idx].setLatLng([lat, lng]);
+  }
+}
+
+function flashPoint(i) {
+  var m = window.routeMarkers && window.routeMarkers[i];
+  if (!m || !travelMap) return;
+  m.openPopup();
+  if (walkerPopupTimer) clearTimeout(walkerPopupTimer);
+  walkerPopupTimer = setTimeout(function () {
+    walkerPopupTimer = null;
+    if (m && travelMap) m.closePopup();
+  }, 3000);
+}
+
+// ─────── 天气二次 patch ───────
+// fetchAllWeather() 完成后调用；只重渲染天气行，不重建整个卡片。
+function updateWeatherRows() {
+  trip.days.forEach(function (day) {
+    day.slots.forEach(function (slot) {
+      // 找到已渲染的天气行节点（querySelector 在 slot 卡片内）
+      var cards = document.querySelectorAll('.slot-card');
+      // 用 slot name + 时间戳定位（实际只能用 name，因为没有 ID）
+      cards.forEach(function (card) {
+        var nameEl = card.querySelector('.slot-name');
+        if (!nameEl || nameEl.textContent !== slot.name) return;
+        var w = getWeatherForRender(slot, day.date);
+        if (!w) return;
+        var weatherRow = card.querySelector('.slot-weather');
+        var noteRow = card.querySelector('.slot-weather-note');
+        if (!weatherRow) return;  // 没渲染就跳过
+        // 重写天气行
+        weatherRow.innerHTML =
+          '<span class="slot-weather-icon">' + escapeHTML(w.icon) + '</span>' +
+          '<span class="slot-weather-text">天气  ' + escapeHTML(w.conditions) + ' · '
+            + w.high + '°/' + w.low + '° · 💧' + escapeHTML(w.precipAdvice) + '</span>' +
+          (w.source === 'live' ? '<span class="slot-weather-live-dot" title="实时数据"></span>' : '');
+        if (noteRow) {
+          noteRow.innerHTML = '📡 Open-Meteo · 11km 网格 · 参考'
+            + (w.unavailable === true ? ' · <span class="slot-weather-error">⚠ 实时不可用</span>' : '');
+        }
+      });
+    });
+  });
+}
+
+/* ── 实景图 / 自驾路线图 双面轮换（每 9 秒） ──
+   路线折线在创作时一次性烘焙进 trip-data，页面运行时不发任何算路请求。
+   小地图懒加载：进入视口才建 Leaflet 实例，移出视口即停表，容器移除即销毁。 */
+var SLOT_ROTATE_MS = 9000;
+var slotRotators = [];
+
+function disposeDetachedRotators() {
+  slotRotators = slotRotators.filter(function (r) {
+    if (document.body.contains(r.wrap)) return true;
+    if (r.timer) clearInterval(r.timer);
+    if (r.io) r.io.disconnect();
+    if (r.map) { try { r.map.remove(); } catch (e) { /* noop */ } }
+    return false;
+  });
+}
+
+function initSlotRotators() {
+  disposeDetachedRotators();
+  var reduce = window.matchMedia
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  Array.prototype.forEach.call(
+    document.querySelectorAll('.slot-img-wrap.has-rotate, .slot-img-wrap.has-map'),
+    function (wrap) {
+      if (wrap.__rotator) return;
+      var faces = wrap.querySelectorAll('.slot-face');
+      var dots = wrap.querySelectorAll('.slot-dot');
+      var mapFace = wrap.querySelector('.slot-face--map');
+      if (!mapFace) return;
+      var staticOnly = wrap.classList.contains('has-map');
+
+      var rec = { wrap: wrap, idx: staticOnly ? 1 : 0, timer: null, io: null, map: null, paused: false, picked: false };
+      wrap.__rotator = rec;
+
+      function ensureMap() {
+        if (rec.map || typeof L === 'undefined') return;
+        var data = (window.__slotRoutes || [])[
+          parseInt(mapFace.getAttribute('data-route-idx'), 10)];
+        if (!data || !data.line || data.line.length < 2) return;
+        var el = mapFace.querySelector('.slot-minimap');
+        if (!el) return;
+        var m = L.map(el, {
+          attributionControl: false, zoomControl: false,
+          dragging: false, scrollWheelZoom: false, doubleClickZoom: false,
+          touchZoom: false, boxZoom: false, keyboard: false, tap: false
+        });
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          { maxZoom: 17 }).addTo(m);
+        var line = L.polyline(data.line,
+          { color: '#14b8a6', weight: 3, opacity: 0.95 }).addTo(m);
+        L.circleMarker(data.line[0], { radius: 4, weight: 2,
+          color: '#f7f2e8', fillColor: '#7a6a52', fillOpacity: 1 }).addTo(m);
+        L.circleMarker(data.line[data.line.length - 1], { radius: 5, weight: 2,
+          color: '#f7f2e8', fillColor: '#c0392b', fillOpacity: 1 }).addTo(m);
+        var fit = function () {
+          m.invalidateSize();
+          m.fitBounds(line.getBounds(), { padding: [22, 22] });
+        };
+        fit();
+        setTimeout(fit, 80);
+        rec.map = m;
+      }
+
+      function show(i) {
+        if (staticOnly) return;
+        rec.idx = i;
+        for (var k = 0; k < faces.length; k++) {
+          faces[k].classList.toggle('is-active', k === i);
+        }
+        for (var j = 0; j < dots.length; j++) {
+          dots[j].classList.toggle('is-on', j === i);
+        }
+        if (i === 1) ensureMap();
+      }
+
+      function start() {
+        if (rec.timer || reduce || staticOnly || rec.picked) return;
+        rec.timer = setInterval(function () {
+          if (rec.paused) return;
+          show(rec.idx === 0 ? 1 : 0);
+        }, SLOT_ROTATE_MS);
+      }
+      function stop() {
+        if (rec.timer) { clearInterval(rec.timer); rec.timer = null; }
+      }
+
+      Array.prototype.forEach.call(dots, function (dot, n) {
+        dot.addEventListener('click', function (e) {
+          e.stopPropagation();
+          rec.picked = true;
+          stop(); show(n);
+        });
+      });
+      wrap.addEventListener('mouseenter', function () { rec.paused = true; });
+      wrap.addEventListener('mouseleave', function () { rec.paused = false; });
+
+      if ('IntersectionObserver' in window) {
+        rec.io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) { ensureMap(); start(); } else { stop(); }
+          });
+        }, { rootMargin: '120px' });
+        rec.io.observe(wrap);
+      } else {
+        ensureMap(); start();
+      }
+
+      slotRotators.push(rec);
+    });
+}
+
+(function init() {
+  renderChecklist();
+  renderPretrip();
+  renderDisclaimer();
+  renderFlights();
+  renderHotels();
+  renderSummary();
+  renderTimeline();
+  renderTips();
+  renderTourismCard();
+  renderClosureAudit();
+  initViewToggle();
+  renderDayTabs();
+  showDayTab(0);
+  travelMap = initTravelMap('map', mapPoints);
+  renderRouteChips();
+  initPlayButton();
+  initSlotRotators();
+  // 时间轴会因切天/切视图重渲染，用观察者统一接管轮换器的建立与回收
+  var tlc = document.getElementById('timeline-container');
+  if (tlc && 'MutationObserver' in window) {
+    new MutationObserver(function () { initSlotRotators(); })
+      .observe(tlc, { childList: true });
+  }
+  // ── 启动天气抓取（不阻塞首屏）──
+  fetchAllWeather().then(updateWeatherRows);
+
+  // ── Sticky tab-strip shadow toggle (sentinel pattern, avoids scroll thrash) ──
+  if ('IntersectionObserver' in window) {
+    var tabStrip = document.querySelector('.tab-strip');
+    if (tabStrip) {
+      var sentinel = document.createElement('div');
+      sentinel.className = 'sticky-sentinel';
+      sentinel.style.cssText = 'height:1px;margin-bottom:-1px;';
+      tabStrip.parentNode.insertBefore(sentinel, tabStrip);
+      var stickyObs = new IntersectionObserver(function (entries) {
+        tabStrip.classList.toggle('is-stuck', entries[0].intersectionRatio < 1);
+      }, { threshold: [1] });
+      stickyObs.observe(sentinel);
+    }
+  }
+
+  initBookmarkClickHandler();
+})();
+</script>
+
+</body>
+</html>

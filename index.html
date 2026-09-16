@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Migo · 旅行领航 — 选择行程</title>
-<meta name="description" content="三段参考行程：山西古建六日朝圣、江南水墨五日行、清远山江瑶寨四日。">
+<meta name="description" content="四段参考行程：山西古建八日朝圣（新版·推荐）、山西古建六日朝圣、江南水墨五日行、清远山江瑶寨四日。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=ZCOOL+XiaoWei&family=DM+Mono:wght@400;500&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
@@ -26,6 +26,8 @@
 
   --shanxi:    #b8392e;
   --shanxi-lt: rgba(184,57,46,0.10);
+  --shanxi-re: #1f3a6e;
+  --shanxi-re-lt: rgba(31,58,110,0.10);
   --suzhou:    #4a8a8a;
   --suzhou-lt: rgba(74,138,138,0.10);
   --qingyuan:  #2a6f5f;
@@ -284,6 +286,23 @@ a { color: inherit; text-decoration: none; }
 .plan-card.shanxi .bullet { color: var(--shanxi); background: var(--shanxi-lt); border-color: rgba(184,57,46,0.25); }
 .plan-card.shanxi .card-cta { color: var(--shanxi); }
 
+.plan-card.shanxi-re::before { background: var(--shanxi-re); }
+.plan-card.shanxi-re .watermark { color: var(--shanxi-re-lt); }
+.plan-card.shanxi-re .card-eyebrow { color: var(--shanxi-re); }
+.plan-card.shanxi-re .bullet { color: var(--shanxi-re); background: var(--shanxi-re-lt); border-color: rgba(31,58,110,0.25); }
+.plan-card.shanxi-re .card-cta { color: var(--shanxi-re); }
+/* "新版" 推荐徽章 */
+.plan-card.shanxi-re .card-eyebrow::after {
+  content: ' · 推荐';
+  background: var(--shanxi-re);
+  color: #fff;
+  padding: 2px 7px;
+  border-radius: 100px;
+  margin-left: 4px;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+}
+
 .plan-card.suzhou::before { background: var(--suzhou); }
 .plan-card.suzhou .watermark { color: var(--suzhou-lt); }
 .plan-card.suzhou .card-eyebrow { color: var(--suzhou); }
@@ -325,10 +344,10 @@ footer .footer-line { margin-bottom: 6px; }
   .plan-card { padding: 18px 18px 20px; }
 }
 @media (min-width: 768px) {
-  /* 桌面端：3 张卡片横排 */
+  /* 桌面端：4 张卡片 2×2 */
   .plans-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
     margin: 0 24px;
   }
@@ -346,12 +365,12 @@ footer .footer-line { margin-bottom: 6px; }
   <header class="hero">
     <div class="hero-eyebrow">Migo · 旅行领航</div>
     <h1 class="hero-title">选择<span class="accent">一段行程</span></h1>
-    <p class="hero-sub">Three Trips · 离线可读 · 移动优先</p>
+    <p class="hero-sub">Four Trips · 离线可读 · 移动优先</p>
   </header>
 
   <!-- ═══════════════ INTRO ═══════════════ -->
   <p class="intro">
-    <strong>免责声明 · </strong>三段行程均为 AI 基于公开资料整理的参考规划，可能不准确或已过时；
+    <strong>免责声明 · </strong>四段行程均为 AI 基于公开资料整理的参考规划，可能不准确或已过时；
     票价、营业时间、预约规则请在出行前到官方渠道核实。点击下方任一卡片查看完整行程。
   </p>
 
@@ -366,10 +385,27 @@ footer .footer-line { margin-bottom: 6px; }
 
   <div class="plans-grid">
 
+    <a class="plan-card shanxi-re" href="shanxi-re.html">
+      <div class="watermark">晋</div>
+      <div class="card-eyebrow">山西 · 8 天 7 晚</div>
+      <div class="card-title">山西古建八日朝圣（反向版）</div>
+      <div class="card-sub">经无锡中转 29h · 反向走古建线 · 五台山机场回</div>
+      <ul class="card-bullets">
+        <li class="bullet">鼋头渚中转</li>
+        <li class="bullet">悬空寺+恒山</li>
+        <li class="bullet">应县木塔+雁门关</li>
+        <li class="bullet">佛光寺+南禅寺</li>
+      </ul>
+      <div class="card-footer">
+        <span class="card-dates">📅 9/26 → 10/3 · 🚌 景区直通车</span>
+        <span class="card-cta">查看行程 <span class="card-cta-arrow">→</span></span>
+      </div>
+    </a>
+
     <a class="plan-card shanxi" href="shanxi-6d.html">
       <div class="watermark">晋</div>
       <div class="card-eyebrow">山西 · 6 天 5 晚</div>
-      <div class="card-title">山西古建六日朝圣</div>
+      <div class="card-title">山西古建六日朝圣（原版）</div>
       <div class="card-sub">黑神话悟空 · 太原进 · 大同出 · 南→北不折返</div>
       <ul class="card-bullets">
         <li class="bullet">佛光寺东大殿</li>
