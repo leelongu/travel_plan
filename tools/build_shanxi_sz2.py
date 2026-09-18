@@ -770,10 +770,29 @@ INIT_SCRIPT = r"""
   var pointsWithDayIdx = (typeof attachDayIdx === 'function') ? attachDayIdx(trip, mapPoints) : mapPoints;
   if (typeof initTravelMap === 'function') {
     try {
-      initTravelMap('map', pointsWithDayIdx, {
+      var travelMap = initTravelMap('map', pointsWithDayIdx, {
         tileUrl: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
         attribution: '© OpenStreetMap contributors · © OpenTopoMap'
       });
+
+      // 缩放与位移限制（参考 shanxi-re.html / shanxi-6d.html 的实现）
+      // - maxBounds：点位外扩 30% 后作为硬墙
+      // - maxBoundsViscosity: 1.0：到边即被拽回
+      // - maxZoom: 19：阻止无限放大
+      // - minZoom = fitBounds 后的初始 zoom：阻止无限缩小拖出点位区域
+      if (travelMap && typeof L !== 'undefined' && pointsWithDayIdx.length >= 2) {
+        var lats = pointsWithDayIdx.map(function (p) { return p.lat; });
+        var lngs = pointsWithDayIdx.map(function (p) { return p.lng; });
+        var latLngs = lats.map(function (lat, i) { return [lat, lngs[i]]; });
+        var pointBounds = L.latLngBounds(latLngs);
+        var paddedBounds = pointBounds.pad(0.3);
+        travelMap.setMaxBounds(paddedBounds);
+        travelMap.options.maxBoundsViscosity = 1.0;
+        travelMap.options.maxZoom = 19;
+        travelMap.options.minZoom = travelMap.getZoom();
+      } else if (travelMap) {
+        travelMap.options.maxZoom = 19;
+      }
     } catch (e) {
       document.getElementById('map').innerHTML = '<div style="padding:60px 20px;text-align:center;color:var(--parchment-dim);">地图加载失败（可能离线）</div>';
     }
