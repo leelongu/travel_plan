@@ -213,7 +213,12 @@ a:hover { color: var(--gold); text-decoration: underline; }
   transition: all 0.2s;
   color: var(--parchment-dim);
 }
-.day-tab.active { color: var(--parchment); }
+.day-tab.active {
+  background: var(--gold);
+  color: var(--bg-deep);
+  font-weight: 700;
+}
+.day-tabs .day-tab.active .day-tab__num { color: var(--bg-deep); }
 .day-tab:hover { border-color: var(--gold); }
 
 /* DAY BLOCK */
@@ -569,6 +574,34 @@ details.section > .section-body { padding: 0 22px 20px; }
   details.section > .section-body { padding: 0 32px 28px; }
 }
 
+/* SLOT WEATHER（行程点天气预报） */
+.slot-weather {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border-soft);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--parchment);
+}
+.slot-weather-icon { font-size: 16px; }
+.slot-weather-text { flex: 1; line-height: 1.5; }
+.slot-weather-live-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #4caf50;
+  flex-shrink: 0;
+}
+.slot-weather-note {
+  font-size: 10px;
+  color: var(--parchment-dim);
+  margin-top: 4px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.04em;
+}
+.slot-weather-error { color: var(--cinnabar); }
+
 /* utility */
 img { max-width: 100%; }
 </style>
@@ -692,7 +725,7 @@ img { max-width: 100%; }
       <span class="hero-badge">📅 出发 9/26（周六早班）</span>
       <span class="hero-badge">🛬 返程 10/2（周五·太原武宿T2）</span>
       <span class="hero-badge">⏱ 7 天 6 晚</span>
-      <span class="hero-badge">🚗 自驾总里程约 1,220 km</span>
+      <span class="hero-badge">🚗 自驾约 500 km（大同还车）+ 高铁赴临汾</span>
     </div>
   </section>
 
@@ -1000,8 +1033,8 @@ img { max-width: 100%; }
       ]
     },
     {
-      "area": "太原 · 钟楼街 / 柳巷 / 食品街",
-      "reason": "Day 4 入住一晚（19:30 大同抵达后入住）+ Day 6 高铁返太原再入住一晚：太原老城核心、吃饭最方便；步行可达食品街老字号；Day 5 出发去晋祠（市区西南 25 km）、Day 7 早去武宿机场也方便。",
+      "area": "太原 · 山西博物院附近",
+      "reason": "Day 5 晚高铁抵太原入住 + Day 6 晋祠返程继续住：紧邻山西博物院（Day 6 早第一波进）；去晋祠约 30 km、去柳巷/食品街约 6 km；Day 7 早去北齐壁画博物馆（迎泽区东侧）约 15 km、去武宿机场约 15–20 km。",
       "options": [
         {
           "tier": "经济",
@@ -1024,8 +1057,8 @@ img { max-width: 100%; }
       ]
     },
     {
-      "area": "临汾市区 · 鼓楼/解放路",
-      "reason": "Day 5 入住一晚（晋祠南下后入住）：临汾市区是 10/1 一日游团集散中心，次日还车+出发都方便；临汾西站近距，10/1 晚高铁返太原省时。",
+      "area": "临汾西站附近 · 高铁站片区",
+      "reason": "Day 4 晚高铁 20:05 抵达后入住：就在临汾西站旁，出站即达；次日（Day 5）跟团一日游从临汾旅游集散中心出发，集合方便；国庆前一日不紧张，快捷/中档酒店充足。",
       "options": [
         {
           "tier": "经济",
@@ -1050,20 +1083,20 @@ img { max-width: 100%; }
   ],
   "disclaimer": "本页全部信息（天气、航班、酒店、餐厅、景点、门票、价格、营业时间、评分、活动等）均为 AI 基于公开资料整理的参考建议，可能不准确或已过时，不保证与实时情况一致；请务必在官方渠道 / 订票订房 / 地图等 App 上核实后再做决定或前往。山西古建文物以官方最新通知为准；佛光寺东大殿仅殿外参观。页面实景照片均来自 Wikimedia Commons，作者与许可证标注于每张图片右下角，点击可跳转原始文件页。",
   "tips": [
-    "本行程 7 天 6 晚采用'朔州进太原出'一路向南不折返：Day 1 朔州/代县、Day 2 浑源、Day 3 大同、Day 4 太原、Day 5–6 临汾/太原、Day 7 返程。Day 1 落地强度大（落地+取车+ 2 景点），Day 2 强度最大（3 个古建+长途自驾），Day 5 强度也大（博物院+长途南下），Day 6 14h 高强度（广胜寺+小西天+壶口一日游）。",
+    "本行程 7 天 6 晚'朔州进太原出'：Day 1 朔州/代县、Day 2 浑源、Day 3 大同、Day 4 大同还车→高铁临汾、Day 5 临汾跟团一日游→夜高铁返太原、Day 6 山西博物院+晋祠、Day 7 北齐壁画博物馆→返广州。Day 1 落地强度大，Day 2 强度最大（3 古建+长途自驾），Day 5 也大（14h 跟团一日游）。",
     "佛光寺东大殿禁止入殿，仅殿外参观。建议请文管员讲解，了解'四绝'：唐代建筑、彩塑、壁画、题记。",
     "Day 3 时间计算：悬空寺 8:00–10:30 出来 → 11:00 出发应县木塔（约 50 km / 1h）→ 12:00 抵达应县游览+午餐 → 13:30 出发大同（约 80 km / 1.5h）→ 15:00 抵达大同古城看 1 个点 → 17:00 入住大同。不爬恒山。",
     "应县木塔现仅开放一层，二层以上因塔身倾斜长期禁止攀登；2026 年 4 月起有数字沉浸式体验空间可作替代。塔院在木塔外围、不收门票。",
-    "山西博物院免费但需预约（提前 1–3 天微信公众号'山西博物院'）；周一闭馆，9/30 周三正常开放。",
+    "山西博物院免费但需预约（提前 1–3 天微信公众号'山西博物院'）；10/1 国庆首日人极多，务必约第一波（8:30/9:00 场）。",
     "Day 1 雁门关走 G208 国道南下代县，**不要走二淅线**（山阴→代县段山路盘绕，国庆前夕已堵车）。",
     "Day 2 佛光寺/南禅寺都在五台县西南（豆村、阳白乡），末段山区县道弯多路窄，需会车避让；务必自驾或包车。山区县道夜行危险——若 18:00 后无法抵达浑源，直接改住五台山台怀镇。",
     "Day 2 段实测参考：佛光寺→南禅寺约 25 km/30 min，南禅寺→应县木塔约 140 km/2h（走 G18 荣乌高速），应县→浑源约 80 km/1.25 h（G18→G55）。⚠️ 9/27 周日崇福寺全天绕行代价大（约 270 km），可看时间和天气决定是否顺路。",
     "Day 3 时间计算：悬空寺 8:00–10:30 出来 → 11:00 出发应县木塔（约 50 km / 1h）→ 12:00 抵达应县游览+午餐 → 13:30 出发大同（约 80 km / 1.5h）→ 15:00 抵达大同古城看 1 个点 → 17:00 入住大同。不爬恒山。",
     "9 月底 10 月初山西昼夜温差 10–15°C：白天短袖+外套足够；傍晚/清晨加抓绒；五台山/恒山务必带羽绒。10/1 国庆首日大同可能降温 5–8℃。",
-    "Day 4 大同→太原 必须 15:30 前出发！9 月底日落 18:00–18:15，山区段已亏人；晚 19:30 抵达太原柳巷/食品街。",
-    "Day 6 一日游三景点一日内全覆盖属超常规强度（14h）：广胜寺（洪洞）+ 小西天（隰县）+ 壶口瀑布（吉县）；若体力不够，提前与旅行社协商砍小西天。临汾西→太原南 高铁末班约 21:30，务必提前 1 周订票。",
+    "Day 4 大同南站还车 + 16:17 高铁赴临汾：13:30 前从云冈/大同市区出发去还车，预留 40–60 min 进站安检；20:05 到临汾西，住临汾西附近。",
+    "Day 5 一日游三景点一日内全覆盖属超常规强度（14h）：广胜寺（洪洞）+ 小西天（隰县）+ 壶口瀑布（吉县）；体力不够可提前与旅行社协商砍小西天。临汾西→太原 高铁末班 22:18，务必提前订票、21:00 前返回临汾。",
     "Day 7 国庆返程高峰——建议起飞前 2h 到武宿机场（太原武宿在市区东南约 15 km，打车 ¥40–60）。",
-    "🚗 70L 油箱 + 1.5T SUV 加油规划（按 ~10 L/100km 综合油耗推算）：**至少 3 次补满**——①朔州（提车当日，机场/高速入口加满 70L）；②应县（Day 2 抵达后加满，山区段附近加油站少）；③大同（Day 3 抵达后加满，保证 Day 4 下太原 320 km 余裕）。临汾还车前一天在大同/临汾高速前补满（多数租车合同要求满油还，否则按 ¥15-30/L 差量扣费）。参考坐标：朔州市区中石油、应县木塔附近中石化、大同古城南门中石化、临汾西站中石油。"
+    "🚗 70L 油箱 + 1.5T SUV 加油规划（按 ~10 L/100km 综合油耗推算）：自驾只到 Day 4 大同南站还车（不再南下临汾）。**至少 2 次补满**——①朔州（提车当日加满）；②大同（Day 3 抵达后加满，保证 Day 4 还车）。多数租车合同要求满油还，还车前在大同市区/大同南站附近加满。参考坐标：朔州市区中石油、大同古城南门中石化。"
   ],
   "reminders": [
     {
@@ -1761,12 +1794,13 @@ img { max-width: 100%; }
     {
       "date": "2026-09-29",
       "weekday": "周二",
-      "theme": "云冈石窟 + 大同市 → 太原 · 夜宿太原",
+      "theme": "云冈石窟 → 大同南站还车 · 高铁赴临汾 · 夜宿临汾西",
       "tips": [
         "云冈预留 3.5h；9/29 周二人少，可早 8:30 入园。",
-        "大同市 14:00–15:30 补一个点：善化寺（¥50，国宝级辽金寺院）或大同博物馆/九龙壁（免费）。",
-        "⚠️ 必须 15:30 前出发去太原！9 月底日落 18:00–18:15，山区段已亏人。",
-        "晚上抵达太原后可看汾河夜景或柳巷/食品街老字号晚餐（'郝刚刚羊汤'等）。"
+        "⚠️ 13:30 前从云冈/大同市区出发去大同南站还车，16:17 高铁需提前 40–60 min 到站安检。",
+        "还车点选大同南站附近（或高铁站还车点），提前与租车行确认异地还车。",
+        "大西高铁 16:17 大同南 → 20:05 临汾西（约 3h48m）；二等座约 ¥200，提前 1–2 周订票。",
+        "晚上 20:05 到临汾西，住临汾西附近，方便次日跟团一日游集合。"
       ],
       "slots": [
         {
@@ -1811,30 +1845,29 @@ img { max-width: 100%; }
           }
         },
         {
-          "period": "noon",
-          "name": "云冈石窟 → 大同古城",
-          "time": "12:00 出发 / 12:40 抵达 / 12:40–14:00 午餐+整理",
-          "lat": 40.094,
-          "lng": 113.296,
+          "period": "afternoon",
+          "name": "大同南站 · 还车",
+          "time": "13:30 出发 / 14:10 抵达 / 14:10–15:30 还车+进站",
+          "lat": 40.05,
+          "lng": 113.32,
           "photo": "",
-          "photoCredit": "",
           "rating": 0,
-          "review": "云冈回大同古城午餐。⚠️ 14:00 起可逛一个市内点：推荐善化寺（昨未看完）/ 大同市博物馆/九龙壁。大同市博物馆免费、周二正常开放（仅周一闭馆）。",
-          "openingHours": "全天",
-          "ticketPrice": "—",
+          "review": "云冈返回后把租的车还在大同南站附近还车点；预留 40–60 min 进站安检（高铁 16:17 发车）。",
+          "openingHours": "8:00–20:00（提前与租车行预约）",
+          "ticketPrice": "异地还车费 ¥0–300/次",
           "transport": {
             "mode": "自驾",
             "distance": "约 30 km",
             "highway": "G55",
             "duration": "约 40 分钟",
-            "fare": "—"
+            "fare": "油费约 ¥20"
           },
-          "needsBooking": false,
-          "leadDays": 0,
+          "needsBooking": true,
+          "leadDays": 7,
           "weather": {
             "coords": {
-              "lat": 40.094,
-              "lng": 113.296
+              "lat": 40.05,
+              "lng": 113.32
             },
             "fallback": {
               "icon": "☀",
@@ -1847,67 +1880,147 @@ img { max-width: 100%; }
           }
         },
         {
+          "period": "evening",
+          "name": "大同南站 → 临汾西（高铁）",
+          "time": "16:17 发车 / 20:05 抵达",
+          "lat": 36.07,
+          "lng": 111.5,
+          "photo": "",
+          "rating": 0,
+          "review": "大西高铁 16:17 大同南发车，20:05 到临汾西（约 3h48m）；二等座约 ¥200，提前 1–2 周订票。",
+          "openingHours": "—",
+          "ticketPrice": "高铁二等座约 ¥200",
+          "transport": {
+            "mode": "高铁",
+            "distance": "约 460 km",
+            "highway": "大西高铁",
+            "duration": "约 3 小时 48 分",
+            "fare": "二等座约 ¥200"
+          },
+          "needsBooking": true,
+          "leadDays": 14,
+          "weather": {
+            "coords": {
+              "lat": 36.07,
+              "lng": 111.5
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 23,
+              "low": 13,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "大同市区 · 东方削面/老柴削面",
+          "hours": "午市至 14:00 · 13:30 前点餐",
+          "dishes": [
+            {
+              "name": "大同刀削面",
+              "price": "¥25"
+            },
+            {
+              "name": "羊杂汤",
+              "price": "¥35"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "临汾西站附近 · 牛肉丸子面",
+          "hours": "—",
+          "dishes": [
+            {
+              "name": "临汾牛肉丸子面",
+              "price": "¥25"
+            },
+            {
+              "name": "临汾刀削面",
+              "price": "¥22"
+            }
+          ]
+        }
+      ],
+      "alternatives": []
+    },
+    {
+      "date": "2026-09-30",
+      "weekday": "周三",
+      "theme": "广胜寺+小西天+壶口瀑布 跟团一日游 · 夜高铁返太原",
+      "tips": [
+        "⚠️ 国庆前一日人也不少：临汾旅游集散中心 8:00 前到达、提前 1 周预订一日游。",
+        "⚠️ 高强度日（约 14h）：广胜寺+小西天+壶口一日内全覆盖已超常规；体力不够可与旅行社协商砍小西天（团费不变）。",
+        "⚠️ 临汾西 → 太原 末班 22:18；务必提前订票，一日游需 21:00 前返回临汾赶车。",
+        "晚上到太原住山西博物院附近，方便次日早第一波进博物院。"
+      ],
+      "slots": [
+        {
           "period": "afternoon",
-          "name": "大同古城闲逛（善化寺/九龙壁）",
-          "time": "14:00–15:30",
-          "lat": 40.094,
-          "lng": 113.296,
-          "photo": "assets/img/shanhua-temple.jpg",
+          "name": "一日游 · 广胜寺 + 小西天 + 壶口瀑布",
+          "time": "07:30 出发 / 21:00 返回临汾（14h 高强度）",
+          "lat": 36.241,
+          "lng": 111.696,
+          "photo": "assets/img/guangsheng-temple.jpg",
           "photoCredit": {
-            "author": "Zhangzhugang, Wikimedia Commons",
-            "license": "CC BY-SA 3.0",
-            "file": "File:Shanhua Temple.jpg",
-            "url": "https://commons.wikimedia.org/wiki/File:Shanhua_Temple.jpg"
+            "author": "未知 (Wikimedia Commons)",
+            "license": "CC",
+            "file": "File:Guangsheng temple.jpg",
+            "url": "https://commons.wikimedia.org/wiki/File:Guangsheng_temple.jpg"
           },
           "rating": 4.7,
-          "review": "善化寺：唐贞观年间（始建），'中国现存最完整的辽金寺院'，大雄宝殿内 24 尊金代塑像为国宝级。⚠️ 9/29 周二正常开放；昨 9/28 周一闭馆错过了。游览 1h。若时间还多，加九龙壁（明初·朱元璋第十三子代王朱桂府前照壁，免费）。",
-          "openingHours": "8:30–17:00",
-          "ticketPrice": "¥50",
+          "review": "临汾出发·拼团一日游：广胜寺（洪洞县，¥50，约 1.5h）+ 小西天（隰县，¥50，约 1h）+ 壶口瀑布（吉县，¥100，约 2.5h）。总车程约 280 km，往返 6h、景点 5h、午餐 0.5h。⚠️ 国庆首日人多，壶口瀑布 12:00–14:00 排队较长。⚠️ 三点一日内全覆盖属高强度行程；若体力不够建议提前与旅行社协商砍小西天。",
+          "openingHours": "8:00–18:00",
+          "ticketPrice": "广胜寺 ¥50 + 小西天 ¥50 + 壶口 ¥100 + 车费约 ¥250",
           "transport": {
-            "mode": "步行",
-            "distance": "古城内 1–2 km",
-            "highway": "—",
-            "duration": "约 1 小时",
-            "fare": "—"
+            "mode": "一日游包车",
+            "distance": "约 280 km",
+            "highway": "G22 青兰 → G108",
+            "duration": "约 14 小时（含午餐）",
+            "fare": "一日游团费约 ¥500–600/人（含车+门票）"
           },
-          "needsBooking": false,
-          "leadDays": 0,
+          "needsBooking": true,
+          "leadDays": 7,
           "weather": {
             "coords": {
-              "lat": 40.094,
-              "lng": 113.296
+              "lat": 36.241,
+              "lng": 111.696
             },
             "fallback": {
               "icon": "☀",
               "conditions": "晴",
-              "high": 18,
-              "low": 6,
+              "high": 23,
+              "low": 12,
               "precipAdvice": "无需备伞",
               "updatedAt": "2026-09-18"
             }
           }
         },
         {
-          "period": "afternoon",
-          "name": "大同 → 太原",
-          "time": "15:30 出发 / 19:30 抵达",
+          "period": "evening",
+          "name": "临汾西 → 太原（高铁·末班 22:18）",
+          "time": "22:18 发车 / 次日 00:20 抵达",
           "lat": 37.871,
           "lng": 112.564,
           "photo": "",
-          "photoCredit": "",
           "rating": 0,
-          "review": "大同走 G55 二广高速转 G5 京昆高速南下太原（约 320 km / 4h）。⚠️ 必须 15:30 前出发（不能拖到 16:00，否则 9 月底日落 18:00–18:15，山区段路已亏人）。9 月底日落 18:00–18:15；高速段可控，但中间有隧道+山区段。19:30 抵达太原钟楼街/柳巷，晚餐+入住。",
-          "openingHours": "全天",
-          "ticketPrice": "—",
+          "review": "临汾西末班 22:18 高铁返太原（约 2h）；⚠️ 务必提前订票，一日游需 21:00 前返回临汾。抵太原后打车/网约车到山西博物院附近入住。",
+          "openingHours": "—",
+          "ticketPrice": "高铁二等座约 ¥150",
           "transport": {
-            "mode": "自驾",
-            "distance": "约 320 km",
-            "highway": "G55 → G5 京昆",
-            "duration": "约 4 小时",
-            "fare": "油费约 ¥200 + 高速约 ¥160"
+            "mode": "高铁",
+            "distance": "约 270 km",
+            "highway": "大西高铁",
+            "duration": "约 2 小时",
+            "fare": "二等座约 ¥150"
           },
-          "needsBooking": false,
-          "leadDays": 0,
+          "needsBooking": true,
+          "leadDays": 14,
           "weather": {
             "coords": {
               "lat": 37.871,
@@ -1927,45 +2040,42 @@ img { max-width: 100%; }
       "dining": [
         {
           "meal": "午餐",
-          "place": "大同古城 · 东方削面/老柴削面",
-          "hours": "午市至 14:00 · 13:30 前点餐",
+          "place": "壶口瀑布景区附近 · 农家乐",
+          "hours": "午市至 14:00（跟团午餐）",
           "dishes": [
             {
-              "name": "大同刀削面",
-              "price": "¥25"
+              "name": "黄河鲤鱼",
+              "price": "¥88"
             },
             {
-              "name": "羊杂汤",
-              "price": "¥35"
+              "name": "黄河大枣",
+              "price": "¥15"
             }
           ]
         },
         {
           "meal": "晚餐",
-          "place": "太原柳巷 · 郝刚刚羊汤/食品街",
+          "place": "临汾市区/高铁站",
           "hours": "—",
           "dishes": [
             {
-              "name": "郝刚刚羊汤",
-              "price": "¥58"
-            },
-            {
-              "name": "莜面栲栳栳",
-              "price": "¥28"
+              "name": "临汾牛肉丸子面",
+              "price": "¥25"
             }
           ]
         }
-      ]
+      ],
+      "alternatives": []
     },
     {
-      "date": "2026-09-30",
-      "weekday": "周三",
-      "theme": "山西博物院 + 晋祠 → 临汾 · 夜宿临汾",
+      "date": "2026-10-01",
+      "weekday": "周四",
+      "theme": "山西博物院 + 晋祠 · 夜宿太原",
       "tips": [
-        "山西博物院 8:30 最早场预约；提前 1–3 天公众号。",
-        "晋祠预留 3h；16:00 必须出园南下，否则天黑前到不了临汾。",
-        "太原→临汾 280 km / 4h。晚餐推荐临汾牛肉丸子面。",
-        "明早 7:30 临汾还车 → 报一日游团去广胜寺/小西天/壶口瀑布（详见 Day 6）。"
+        "⚠️ 国庆首日：山西博物院 9:00 开门，公众号提前 1–3 天预约，尽量约第一波（8:30/9:00 场）。",
+        "山西博物院重点看'晋魂'展厅（青铜器/佛教造像/戏曲文物）。",
+        "晋祠预留 3h；国庆人多，建议 13:00 前入园，16:00 出园回市区。",
+        "北齐壁画博物馆（次日）微信'太原北齐壁画博物馆'提前 1–15 天预约。"
       ],
       "slots": [
         {
@@ -2093,35 +2203,34 @@ img { max-width: 100%; }
         },
         {
           "period": "evening",
-          "name": "晋祠 → 临汾（夜宿）",
-          "time": "16:00 出发 / 20:00 抵达",
-          "lat": 36.08,
-          "lng": 111.51,
+          "name": "晋祠 → 太原市区（夜宿）",
+          "time": "16:00 出发 / 16:40 抵达",
+          "lat": 37.871,
+          "lng": 112.564,
           "photo": "",
-          "photoCredit": "",
           "rating": 0,
-          "review": "晋祠走 G5 京昆转 G22 青兰高速南下临汾（约 280 km / 4h）。晚 20:00 抵达临汾市区，晚餐推荐临汾牛肉丸子面/临汾刀削面。⚠️ 明早 7:30 临汾还车+1 日临汾/洪洞/吉县/隰县一日游。",
+          "review": "晋祠返回太原市区（约 30 km / 40 min），夜宿市区（可继续住山西博物院附近，方便次日去北齐壁画博物馆）。",
           "openingHours": "全天",
           "ticketPrice": "—",
           "transport": {
-            "mode": "自驾",
-            "distance": "约 280 km",
-            "highway": "G5 → G22 青兰",
-            "duration": "约 4 小时",
-            "fare": "油费约 ¥170 + 高速约 ¥130"
+            "mode": "网约车/打车",
+            "distance": "约 30 km",
+            "highway": "滨河西路",
+            "duration": "约 40 分钟",
+            "fare": "打车约 ¥60–80"
           },
           "needsBooking": false,
           "leadDays": 0,
           "weather": {
             "coords": {
-              "lat": 36.08,
-              "lng": 111.51
+              "lat": 37.871,
+              "lng": 112.564
             },
             "fallback": {
-              "icon": "☀",
-              "conditions": "晴",
-              "high": 23,
-              "low": 13,
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 22,
+              "low": 12,
               "precipAdvice": "无需备伞",
               "updatedAt": "2026-09-18"
             }
@@ -2146,210 +2255,57 @@ img { max-width: 100%; }
         },
         {
           "meal": "晚餐",
-          "place": "临汾市区 · 牛肉丸子面",
+          "place": "太原柳巷/食品街 · 老字号",
           "hours": "—",
           "dishes": [
             {
-              "name": "临汾牛肉丸子面",
-              "price": "¥25"
+              "name": "郝刚刚羊汤",
+              "price": "¥58"
             },
             {
-              "name": "临汾刀削面",
-              "price": "¥22"
+              "name": "过油肉",
+              "price": "¥48"
             }
           ]
-        }
-      ]
-    },
-    {
-      "date": "2026-10-01",
-      "weekday": "周四",
-      "theme": "临汾还车 + 广胜寺+小西天+壶口瀑布 一日游 · 高铁返太原",
-      "tips": [
-        "⚠️ 国庆首日人多：临汾旅游集散中心 8:00 前到达、提前 1 周预订一日游。",
-        "⚠️ 高强度日（约 14h）：广胜寺+小西天+壶口瀑布一日内全覆盖已超常规；如体力不够可与旅行社协商砍小西天（团费不变）。",
-        "⚠️ 临汾西→太原南 高铁末班约 21:30；务必提前 1 周订票，避免一日游拖到 19:30 后没票。",
-        "🟡 备选：若担心一日游拖到 19:30 后没高铁，改 10/2 早上早班高铁（提前订）。"
-      ],
-      "slots": [
-        {
-          "period": "morning",
-          "name": "临汾 · 还车",
-          "time": "07:30 还车",
-          "lat": 36.08,
-          "lng": 111.51,
-          "photo": "",
-          "photoCredit": "",
-          "rating": 0,
-          "review": "临汾市区租车点还车（建议选择临汾西站/市区还车点，异地还车费 ¥0–300/次）。⚠️ 加满油还车（参考位置：临汾西站附近中石化），否则按 ¥15–30/L 差量扣费。还车后步行或打车去临汾旅游集散中心（约 10 min），开始一日游。",
-          "openingHours": "8:00–18:00（提前与租车行预约）",
-          "ticketPrice": "—",
-          "transport": {
-            "mode": "步行/打车",
-            "distance": "—",
-            "highway": "—",
-            "duration": "—",
-            "fare": "—"
-          },
-          "needsBooking": true,
-          "leadDays": 7,
-          "weather": {
-            "coords": {
-              "lat": 36.08,
-              "lng": 111.51
-            },
-            "fallback": {
-              "icon": "☀",
-              "conditions": "晴",
-              "high": 23,
-              "low": 13,
-              "precipAdvice": "无需备伞",
-              "updatedAt": "2026-09-18"
-            }
-          }
-        },
-        {
-          "period": "afternoon",
-          "name": "一日游 · 广胜寺 + 小西天 + 壶口瀑布",
-          "time": "07:30 出发 / 21:00 返回临汾（14h 高强度）",
-          "lat": 36.241,
-          "lng": 111.696,
-          "photo": "assets/img/guangsheng-temple.jpg",
-          "photoCredit": {
-            "author": "未知 (Wikimedia Commons)",
-            "license": "CC",
-            "file": "File:Guangsheng temple.jpg",
-            "url": "https://commons.wikimedia.org/wiki/File:Guangsheng_temple.jpg"
-          },
-          "rating": 4.7,
-          "review": "临汾出发·拼团一日游：广胜寺（洪洞县，¥50，约 1.5h）+ 小西天（隰县，¥50，约 1h）+ 壶口瀑布（吉县，¥100，约 2.5h）。总车程约 280 km，往返 6h、景点 5h、午餐 0.5h。⚠️ 国庆首日人多，壶口瀑布 12:00–14:00 排队较长。⚠️ 三点一日内全覆盖属高强度行程；若体力不够建议提前与旅行社协商砍小西天。",
-          "openingHours": "8:00–18:00",
-          "ticketPrice": "广胜寺 ¥50 + 小西天 ¥50 + 壶口 ¥100 + 车费约 ¥250",
-          "transport": {
-            "mode": "一日游包车",
-            "distance": "约 280 km",
-            "highway": "G22 青兰 → G108",
-            "duration": "约 14 小时（含午餐）",
-            "fare": "一日游团费约 ¥500–600/人（含车+门票）"
-          },
-          "needsBooking": true,
-          "leadDays": 7,
-          "weather": {
-            "coords": {
-              "lat": 36.241,
-              "lng": 111.696
-            },
-            "fallback": {
-              "icon": "☀",
-              "conditions": "晴",
-              "high": 23,
-              "low": 12,
-              "precipAdvice": "无需备伞",
-              "updatedAt": "2026-09-18"
-            }
-          }
-        },
-        {
-          "period": "evening",
-          "name": "临汾西 → 太原南（高铁返程）",
-          "time": "21:30 出发 / 23:50 抵达太原",
-          "lat": 37.871,
-          "lng": 112.564,
-          "photo": "",
-          "photoCredit": "",
-          "rating": 0,
-          "review": "临汾西站乘高铁返太原南站（动车约 2.5h；末班车通常 21:30 左右，**务必提前 1 周订票**）。抵达太原后入住机场附近/南站附近酒店，明早方便去机场。🟡 备选：若一日游拖到 19:30 后才返回临汾，可改 10/2 早上 高铁回太原（约 7:00 早班高铁，太原午班车早上才能赶上，需早订）。",
-          "openingHours": "—",
-          "ticketPrice": "高铁二等座约 ¥150",
-          "transport": {
-            "mode": "高铁",
-            "distance": "约 270 km",
-            "highway": "大西高铁",
-            "duration": "约 2.5 小时",
-            "fare": "二等座约 ¥150"
-          },
-          "needsBooking": true,
-          "leadDays": 14,
-          "weather": {
-            "coords": {
-              "lat": 37.871,
-              "lng": 112.564
-            },
-            "fallback": {
-              "icon": "⛅",
-              "conditions": "多云",
-              "high": 22,
-              "low": 12,
-              "precipAdvice": "无需备伞",
-              "updatedAt": "2026-09-18"
-            }
-          }
         }
       ],
-      "dining": [
-        {
-          "meal": "午餐",
-          "place": "壶口瀑布景区附近 · 农家乐",
-          "hours": "午市至 14:00（跟团午餐）",
-          "dishes": [
-            {
-              "name": "黄河鲤鱼",
-              "price": "¥88"
-            },
-            {
-              "name": "黄河大枣",
-              "price": "¥15"
-            }
-          ]
-        },
-        {
-          "meal": "晚餐",
-          "place": "临汾市区/太原南站",
-          "hours": "—",
-          "dishes": [
-            {
-              "name": "临汾牛肉丸子面",
-              "price": "¥25"
-            }
-          ]
-        }
-      ]
+      "alternatives": []
     },
     {
       "date": "2026-10-02",
       "weekday": "周五",
-      "theme": "太原休整 → 武宿机场返广州 · 下午班",
+      "theme": "北齐壁画博物馆 → 武宿机场返广州 · 下午班",
       "tips": [
+        "北齐壁画博物馆 9:00 开门，微信'太原北齐壁画博物馆'提前 1–15 天实名预约（35 元/人；周一闭馆）。",
+        "博物馆约 1.5–2h；9:00 第一波进、11:00 出，赶下午航班。",
         "⚠️ 国庆返程高峰：建议起飞前 2h 到机场（节假日安检排队较长）。",
-        "若一日游 Day 6 拖到 19:30 后无高铁，改 10/2 早上 7:00 早班高铁返太原（需提前订），下午班时间够。",
-        "太原武宿机场在市区东南约 15 km，打车 ¥40–60 / 30 min；机场大巴约 ¥15。"
+        "太原武宿机场在市区东南约 15 km，打车 ¥40–60 / 30 min。"
       ],
       "slots": [
         {
           "period": "morning",
-          "name": "太原休整 / 汾河/柳巷闲逛",
-          "time": "08:00–12:00",
-          "lat": 37.871,
-          "lng": 112.564,
+          "name": "北齐壁画博物馆",
+          "time": "08:30 出发 / 09:00 抵达 / 09:00–11:00 游览",
+          "lat": 37.82,
+          "lng": 112.6,
           "photo": "",
-          "photoCredit": "",
-          "rating": 0,
-          "review": "昨晚高铁返太原已晚，建议今日轻松休整：可逛汾河公园（'汾河晚渡'夜景）/ 柳巷·食品街。⚠️ 午班飞机前 2h 到机场（太原武宿机场在市区东南约 15 km，打车 ¥40–60）。13:00 前退房出发去机场。",
-          "openingHours": "全天",
-          "ticketPrice": "—",
+          "rating": 4.6,
+          "review": "太原北齐壁画博物馆（迎泽区王家峰村）：全国首座北齐壁画专题馆，核心是北齐徐显秀墓壁画，约 1.5–2h 逛完。",
+          "openingHours": "9:00–17:00（16:30 停止检票；周一闭馆）",
+          "ticketPrice": "¥35（公众号实名预约）",
           "transport": {
-            "mode": "步行/打车",
-            "distance": "—",
-            "highway": "—",
-            "duration": "—",
-            "fare": "—"
+            "mode": "网约车/打车",
+            "distance": "约 15 km",
+            "highway": "城市道路",
+            "duration": "约 30 分钟",
+            "fare": "打车约 ¥40"
           },
-          "needsBooking": false,
-          "leadDays": 0,
+          "needsBooking": true,
+          "leadDays": 3,
           "weather": {
             "coords": {
-              "lat": 37.871,
-              "lng": 112.564
+              "lat": 37.82,
+              "lng": 112.6
             },
             "fallback": {
               "icon": "⛅",
@@ -2364,7 +2320,7 @@ img { max-width: 100%; }
         {
           "period": "noon",
           "name": "太原 → 武宿机场 → 广州",
-          "time": "13:00 出发 / 13:30 抵机场 / 15:00–18:00 起飞",
+          "time": "12:00 出发 / 12:30 抵机场 / 15:00–18:00 起飞",
           "lat": 37.747,
           "lng": 112.629,
           "photo": "",
@@ -2401,20 +2357,21 @@ img { max-width: 100%; }
       "dining": [
         {
           "meal": "午餐",
-          "place": "太原柳巷/食品街 · 老字号",
+          "place": "太原市区 · 刀削面/羊汤",
           "hours": "午市至 14:00",
           "dishes": [
             {
-              "name": "郝刚刚羊汤",
-              "price": "¥58"
+              "name": "太原刀削面",
+              "price": "¥25"
             },
             {
-              "name": "过油肉",
-              "price": "¥48"
+              "name": "郝刚刚羊汤",
+              "price": "¥58"
             }
           ]
         }
-      ]
+      ],
+      "alternatives": []
     }
   ],
   "tourismCard": {
@@ -3379,9 +3336,18 @@ if (typeof module !== 'undefined' && module.exports) {
   var tabsEl = document.getElementById('day-tabs');
   var blocksEl = document.getElementById('day-blocks');
 
+  // 天气文案：无需备伞时不提示，也不显示水滴 emoji
+  function weatherText(w) {
+    var s = '天气 ' + escapeHTML(w.conditions) + ' · ' + w.high + '°/' + w.low + '°';
+    if (w.precipAdvice && w.precipAdvice !== '无需备伞') {
+      s += ' · ' + escapeHTML(w.precipAdvice);
+    }
+    return s;
+  }
+
   function renderSlotsHTML(day, dayIdx) {
     var html = '';
-    (day.slots || []).forEach(function (slot) {
+    (day.slots || []).forEach(function (slot, slotIdx) {
       var photoHTML = '';
       if (slot.photo) {
         var credit = slot.photoCredit && slot.photoCredit.author
@@ -3406,10 +3372,28 @@ if (typeof module !== 'undefined' && module.exports) {
         try { navRowHTML = renderSlotNavRow(slot, slot._prevNav); } catch (e) { navRowHTML = ''; }
       }
 
+      // 天气行（行程点天气预报；先渲染 fallback，live 到后由 updateWeatherRows 二次 patch）
+      var weatherHTML = '';
+      if (typeof getWeatherForRender === 'function' && slot.weather) {
+        try {
+          var w = getWeatherForRender(slot, day.date);
+          if (w) {
+            weatherHTML = '<div class="slot-weather">'
+              + '<span class="slot-weather-icon">' + escapeHTML(w.icon) + '</span>'
+              + '<span class="slot-weather-text">' + weatherText(w) + '</span>'
+              + (w.source === 'live' ? '<span class="slot-weather-live-dot" title="实时数据"></span>' : '')
+              + '</div>'
+              + '<div class="slot-weather-note">📡 Open-Meteo · 11km 网格 · 参考'
+              + (w.unavailable === true ? ' · <span class="slot-weather-error">⚠ 实时不可用</span>' : '')
+              + '</div>';
+          }
+        } catch (e) { weatherHTML = ''; }
+      }
+
       var periodMap = { morning: '上午', noon: '中午', afternoon: '下午', evening: '晚上' };
       var periodZH = periodMap[slot.period] || slot.period;
 
-      html += '<div class="slot-card day-' + (dayIdx + 1) + '-border">'
+      html += '<div class="slot-card day-' + (dayIdx + 1) + '-border" data-slot-id="' + dayIdx + '-' + slotIdx + '">'
         + '<div class="slot-period">' + periodZH + '</div>'
         + '<div class="slot-name">' + escapeHTML(slot.name) + '</div>'
         + timeHTML
@@ -3419,6 +3403,7 @@ if (typeof module !== 'undefined' && module.exports) {
         + metaHTML
         + transportHTML
         + navRowHTML
+        + weatherHTML
         + '</div>';
     });
     return html;
@@ -3566,9 +3551,10 @@ if (typeof module !== 'undefined' && module.exports) {
           currentDayIdx = idx;
           updateActiveTab(idx);
           highlightDayOnMap(idx);
-          var block = document.getElementById('day-block-' + idx);
-          if (block) block.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+        // 两种模式都滚到所点日期的行程开头（day-block 有 scroll-margin-top 避让吸顶 tabs）
+        var block = document.getElementById('day-block-' + idx);
+        if (block) block.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     }
     document.body.addEventListener('click', function (e) {
@@ -3829,8 +3815,30 @@ if (typeof module !== 'undefined' && module.exports) {
   }
 
   // ----- 10. weather -----
+  function updateWeatherRows() {
+    if (typeof getWeatherForRender !== 'function') return;
+    DAYS.forEach(function (day, dayIdx) {
+      (day.slots || []).forEach(function (slot, slotIdx) {
+        var card = document.querySelector('.slot-card[data-slot-id="' + dayIdx + '-' + slotIdx + '"]');
+        if (!card) return;
+        var w;
+        try { w = getWeatherForRender(slot, day.date); } catch (e) { return; }
+        if (!w) return;
+        var weatherRow = card.querySelector('.slot-weather');
+        if (weatherRow) {
+          weatherRow.innerHTML = '<span class="slot-weather-icon">' + escapeHTML(w.icon) + '</span>'
+            + '<span class="slot-weather-text">' + weatherText(w) + '</span>'
+            + (w.source === 'live' ? '<span class="slot-weather-live-dot" title="实时数据"></span>' : '');
+        }
+        var noteRow = card.querySelector('.slot-weather-note');
+        if (noteRow) {
+          noteRow.innerHTML = '📡 Open-Meteo · 11km 网格 · 参考' + (w.unavailable === true ? ' · <span class="slot-weather-error">⚠ 实时不可用</span>' : '');
+        }
+      });
+    });
+  }
   if (typeof fetchAllWeather === 'function') {
-    try { fetchAllWeather(trip); } catch (e) {}
+    try { fetchAllWeather(trip).then(updateWeatherRows); } catch (e) {}
   }
 
   // ----- init: 渲染时间轴 + 视图切换（默认标签页一天一页，初始不高亮地图） -----

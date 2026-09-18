@@ -1,0 +1,105 @@
+/* 按日配色 layer：把"第 N 天"映射成同套色彩体系。
+ * 单一色源在 :root，JS 通过 day-coloring.js 的 dayColor(dayIdx) 同步读，避免双源漂移。
+ * trip.days 长度 > 7 时回退到 --day7（与 day-coloring.js 行为一致）。
+ *
+ * 覆盖位置：地图 pin / polyline / 日高亮线 / 时间轴 day-tab / day-block / day-theme /
+ *           地图下方 route-chip / popup-nav-row 高德百度按钮 hover / slot 卡片的 marker。
+ * 使用：把本文件作为附加 CSS 在主样式表后引入，或在 :root 重新定义 --dayN 后再粘贴下方规则。
+ */
+
+/* ── 色源（与 day-coloring.js 同步）── */
+:root {
+  --day1: #b8392e;  --day1-light: rgba(184,57,46,0.10);
+  --day2: #4a8a8a;  --day2-light: rgba(74,138,138,0.10);
+  --day3: #2c4a6e;  --day3-light: rgba(44,74,110,0.10);
+  --day4: #a08040;  --day4-light: rgba(160,128,64,0.12);
+  --day5: #7a5a4a;  --day5-light: rgba(122,90,74,0.10);
+  --day6: #7a5a4a;  --day6-light: rgba(122,90,74,0.10);
+  --day7: #7a5a4a;  --day7-light: rgba(122,90,74,0.10);
+}
+
+/* ── 地图 pin（route-pin）按天描边 ── */
+.route-pin--day-0 { border-color: var(--day1) !important; }
+.route-pin--day-1 { border-color: var(--day2) !important; }
+.route-pin--day-2 { border-color: var(--day3) !important; }
+.route-pin--day-3 { border-color: var(--day4) !important; }
+.route-pin--day-4 { border-color: var(--day5) !important; }
+.route-pin--day-5 { border-color: var(--day6) !important; }
+.route-pin--day-6 { border-color: var(--day7) !important; }
+
+/* ── 时间轴 day-tab 未激活态（描边 + 数字色）── */
+.day-tab--day-1 { border-color: rgba(184,57,46,0.35); }
+.day-tab--day-1 .day-tab__num { color: var(--day1); }
+.day-tab--day-2 { border-color: rgba(74,138,138,0.35); }
+.day-tab--day-2 .day-tab__num { color: var(--day2); }
+.day-tab--day-3 { border-color: rgba(44,74,110,0.35); }
+.day-tab--day-3 .day-tab__num { color: var(--day3); }
+.day-tab--day-4 { border-color: rgba(160,128,64,0.35); }
+.day-tab--day-4 .day-tab__num { color: var(--day4); }
+.day-tab--day-5 { border-color: rgba(122,90,74,0.35); }
+.day-tab--day-5 .day-tab__num { color: var(--day5); }
+.day-tab--day-6 { border-color: rgba(122,90,74,0.35); }
+.day-tab--day-6 .day-tab__num { color: var(--day6); }
+.day-tab--day-7 { border-color: rgba(122,90,74,0.35); }
+.day-tab--day-7 .day-tab__num { color: var(--day7); }
+
+/* ── 时间轴 day-tab 激活态：描边改用当日色 ── */
+.day-tab.active.day-tab--day-1 { border-color: var(--day1); }
+.day-tab.active.day-tab--day-2 { border-color: var(--day2); }
+.day-tab.active.day-tab--day-3 { border-color: var(--day3); }
+.day-tab.active.day-tab--day-4 { border-color: var(--day4); }
+.day-tab.active.day-tab--day-5 { border-color: var(--day5); }
+.day-tab.active.day-tab--day-6 { border-color: var(--day6); }
+.day-tab.active.day-tab--day-7 { border-color: var(--day7); }
+
+/* ── 时间轴 day-block 左侧 3px 色条 ── */
+.day-block.day-1 { border-left: 3px solid var(--day1); padding-left: 0; }
+.day-block.day-2 { border-left: 3px solid var(--day2); padding-left: 0; }
+.day-block.day-3 { border-left: 3px solid var(--day3); padding-left: 0; }
+.day-block.day-4 { border-left: 3px solid var(--day4); padding-left: 0; }
+.day-block.day-5 { border-left: 3px solid var(--day5); padding-left: 0; }
+.day-block.day-6 { border-left: 3px solid var(--day6); padding-left: 0; }
+.day-block.day-7 { border-left: 3px solid var(--day7); padding-left: 0; }
+
+/* ── day-num 颜色（与 day-block day-N 对应）── */
+.day-1 .day-num { color: var(--day1); }
+.day-2 .day-num { color: var(--day2); }
+.day-3 .day-num { color: var(--day3); }
+.day-4 .day-num { color: var(--day4); }
+.day-5 .day-num { color: var(--day5); }
+.day-6 .day-num { color: var(--day6); }
+.day-7 .day-num { color: var(--day7); }
+
+/* ── day-theme 副标左侧 2px 色条 ── */
+.day-1 .day-theme { border-left-color: var(--day1); }
+.day-2 .day-theme { border-left-color: var(--day2); }
+.day-3 .day-theme { border-left-color: var(--day3); }
+.day-4 .day-theme { border-left-color: var(--day4); }
+.day-5 .day-theme { border-left-color: var(--day5); }
+.day-6 .day-theme { border-left-color: var(--day6); }
+.day-7 .day-theme { border-left-color: var(--day7); }
+
+/* ── 地图下方 route-chip 未激活态：左 3px 色条 + 数字徽章用当日色浅版 ── */
+.route-chip--day-1 { border-left: 3px solid var(--day1); }
+.route-chip--day-2 { border-left: 3px solid var(--day2); }
+.route-chip--day-3 { border-left: 3px solid var(--day3); }
+.route-chip--day-4 { border-left: 3px solid var(--day4); }
+.route-chip--day-5 { border-left: 3px solid var(--day5); }
+.route-chip--day-6 { border-left: 3px solid var(--day6); }
+.route-chip--day-7 { border-left: 3px solid var(--day7); }
+.route-chip--day-1 .route-chip__num { color: var(--day1); background: var(--day1-light); }
+.route-chip--day-2 .route-chip__num { color: var(--day2); background: var(--day2-light); }
+.route-chip--day-3 .route-chip__num { color: var(--day3); background: var(--day3-light); }
+.route-chip--day-4 .route-chip__num { color: var(--day4); background: var(--day4-light); }
+.route-chip--day-5 .route-chip__num { color: var(--day5); background: var(--day5-light); }
+.route-chip--day-6 .route-chip__num { color: var(--day6); background: var(--day6-light); }
+.route-chip--day-7 .route-chip__num { color: var(--day7); background: var(--day7-light); }
+
+/* ── route-chip 激活态：描边用当日色 ── */
+.route-chip.active.route-chip--day-1 { border-color: var(--day1); border-left-color: var(--day1); }
+.route-chip.active.route-chip--day-2 { border-color: var(--day2); border-left-color: var(--day2); }
+.route-chip.active.route-chip--day-3 { border-color: var(--day3); border-left-color: var(--day3); }
+.route-chip.active.route-chip--day-4 { border-color: var(--day4); border-left-color: var(--day4); }
+.route-chip.active.route-chip--day-5 { border-color: var(--day5); border-left-color: var(--day5); }
+.route-chip.active.route-chip--day-6 { border-color: var(--day6); border-left-color: var(--day6); }
+.route-chip.active.route-chip--day-7 { border-color: var(--day7); border-left-color: var(--day7); }

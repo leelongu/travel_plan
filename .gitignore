@@ -1,0 +1,42 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Logs / tmp
+*.log
+.tmp/
+
+docs/
+
+
+
+# 开发工具 / 数据源 / 测试 —— 不参与页面渲染，不 push
+tools/
+test/
+data/
+.github/
+validate_py.py
+CLAUDE.md
+*.webarchive
+DT*.PNG
+card1.jpg
+card2.jpg
+card3.jpg
+card4.jpg
+
+# skill 里不参与渲染的内容（说明书/文档/校验工具）
+travel-plan-viz/SKILL.md
+travel-plan-viz/references/
+travel-plan-viz/assets/page-contract.md
+travel-plan-viz/assets/validate.js

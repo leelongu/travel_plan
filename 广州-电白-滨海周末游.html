@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>广州→电白 · 滨海周末游 (8.29-8.30)</title>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="anonymous" />
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ─── Design tokens · 落日橙 + 海蓝深底 ───────────────────── */
+:root {
+  --bg:        #0D1B2A;
+  --bg-elev:   #142539;
+  --bg-card:   #1B2D44;
+  --ink:       #F2E6CC;        /* 沙色文字 */
+  --ink-mid:   #D9CBA8;
+  --ink-dim:   #8FA0B3;
+  --line:      rgba(255,138,61,0.18);
+  --line-soft: rgba(242,230,204,0.10);
+
+  --sunset:    #FF8A3D;        /* 主强调 · 落日橙 */
+  --sunset-d:  #E66A20;
+  --coral:     #FF6B6B;
+  --teal:      #2F8FA3;        /* 副强调 · 海青 */
+  --teal-d:    #1F6E80;
+  --amber:     #FFC168;
+  --gold:      #D9A441;
+
+  --day1:      #FF8A3D;        /* 周六 = 落日橙 */
+  --day2:      #2F8FA3;        /* 周日 = 海青 */
+
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+
+  --shadow-card:  0 4px 28px rgba(0,0,0,0.36), 0 1px 4px rgba(0,0,0,0.22);
+  --shadow-hover: 0 14px 50px rgba(0,0,0,0.5), 0 2px 10px rgba(0,0,0,0.3);
+
+  --contrain: 880px;
+}
+
+/* ─── Reset ──────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Mono', monospace;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.65;
+  overflow-x: hidden;
+  background-image:
+    radial-gradient(circle at 90% -5%, rgba(255,138,61,0.16), transparent 55%),
+    radial-gradient(circle at -10% 60%, rgba(47,143,163,0.10), transparent 50%);
+  background-attachment: fixed;
+}
+img { display: block; max-width: 100%; }
+
+.serif   { font-family: 'Noto Serif SC', serif; }
+.display { font-family: 'Cormorant Garamond', serif; }
+
+/* ─── Layout ─────────────────────────────────────── */
+.container {
+  max-width: var(--contrain);
+  margin: 0 auto;
+  padding: 56px 24px 96px;
+}
+
+/* ─── Hero ────────────────────────────────────────── */
+.hero {
+  text-align: center;
+  padding: 24px 0 40px;
+  border-bottom: 1px dashed var(--line);
+  margin-bottom: 40px;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--sunset);
+  margin-bottom: 16px;
+}
+.hero-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 900;
+  font-size: clamp(34px, 6vw, 56px);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.hero-title .accent { color: var(--sunset); }
+.hero-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(15px, 2vw, 19px);
+  color: var(--ink-dim);
+  margin-bottom: 24px;
+}
+.hero-meta {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 18px 30px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--ink-mid);
+}
+.hero-meta b { color: var(--amber); font-weight: 500; }
+
+/* ─── Section heading ────────────────────────────── */
+.section { margin-top: 56px; }
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px dashed var(--line);
+}
+.section-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  color: var(--sunset);
+  font-style: italic;
+}
+.section-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: -0.01em;
+}
+.section-title-en {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--ink-dim);
+  font-size: 14px;
+  margin-left: auto;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Pre-trip checklist ─────────────────────────── */
+.pretrip-todo {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: var(--bg-card);
+  border-radius: var(--r-md);
+  border: 1px solid var(--line-soft);
+  overflow: hidden;
+}
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 14px;
+}
+.todo-item:last-child { border-bottom: none; }
+.todo-item input[type="checkbox"] {
+  width: 18px; height: 18px;
+  accent-color: var(--sunset);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.todo-deadline {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--sunset);
+  background: rgba(255,138,61,0.12);
+  padding: 4px 8px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  letter-spacing: 0.04em;
+}
+.todo-text { color: var(--ink-mid); }
+.todo-text b { color: var(--ink); }
+
+/* ─── Pre-trip grid (weather/packing/payment/apps) ─── */
+.pretrip-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-top: 24px;
+}
+.pretrip-item {
+  background: var(--bg-card);
+  border-radius: var(--r-md);
+  padding: 20px;
+  border-left: 3px solid var(--sunset);
+}
+.pretrip-item:nth-child(2) { border-left-color: var(--teal); }
+.pretrip-item:nth-child(3) { border-left-color: var(--amber); }
+.pretrip-item:nth-child(4) { border-left-color: var(--coral); }
+.pretrip-item-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 10px;
+}
+.pretrip-item-content {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px;
+  color: var(--ink-mid);
+  line-height: 1.7;
+}
+.pretrip-item-content b { color: var(--ink); font-weight: 600; }
+.app-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  margin: 2px 4px 2px 0;
+  background: rgba(255,138,61,0.14);
+  color: var(--sunset);
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: 'DM Mono', monospace;
+}
+
+/* ─── Flights / 高铁班次 ─────────────────────────── */
+.flights-card {
+  background: var(--bg-card);
+  border-radius: var(--r-md);
+  padding: 20px;
+  border: 1px solid var(--line-soft);
+}
+.flights-section-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 14px;
+}
+.flight-list { list-style: none; }
+.flight-list li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--line-soft);
+  font-size: 13px;
+}
+.flight-list li:last-child { border-bottom: none; }
+.flight-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--sunset);
+  color: var(--bg);
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 12px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.05em;
+}
+.flight-code { font-family: 'DM Mono', monospace; color: var(--ink); font-weight: 500; }
+.flight-time { color: var(--ink-mid); font-family: 'DM Mono', monospace; font-size: 12px; }
+.flight-note {
+  margin-left: auto;
+  color: var(--ink-dim);
+  font-size: 11px;
+  text-align: right;
+  max-width: 50%;
+}
+.flight-list li.booked .flight-tag { background: var(--amber); }
+.flight-list li.booked .flight-code::after {
+  content: ' · 已预订';
+  color: var(--amber);
+  font-size: 11px;
+}
+
+/* ─── Hotels ─────────────────────────────────────── */
+.hotel-card {
+  background: var(--bg-card);
+  border-radius: var(--r-md);
+  padding: 22px;
+  margin-bottom: 18px;
+  border: 1px solid var(--line-soft);
+}
+.hotel-area {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.hotel-area-reason {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 13px;
+  color: var(--ink-dim);
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+.hotel-tiers {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 720px) {
+  .hotel-tiers { grid-template-columns: repeat(3, 1fr); }
+  .hotel-tiers.single { grid-template-columns: 1fr; }
+}
+.hotel-tier {
+  background: var(--bg-elev);
+  border-radius: var(--r-sm);
+  padding: 14px;
+  border-left: 3px solid var(--sunset);
+}
+.hotel-tier.tier-mid { border-left-color: var(--teal); }
+.hotel-tier.tier-up { border-left-color: var(--amber); }
+.hotel-tier-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 6px;
+}
+.hotel-tier-name {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.hotel-tier-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--sunset);
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.hotel-tier-note { font-size: 12px; color: var(--ink-dim); line-height: 1.6; }
+
+/* ─── Disclaimer ─────────────────────────────────── */
+.disclaimer {
+  background: linear-gradient(135deg, rgba(255,138,61,0.08), rgba(47,143,163,0.06));
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 18px 22px;
+  margin: 24px 0;
+  font-size: 12px;
+  color: var(--ink-dim);
+  line-height: 1.75;
+  font-family: 'Noto Serif SC', serif;
+}
+.disclaimer-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--coral);
+  margin-bottom: 8px;
+}
+.disclaimer b { color: var(--ink-mid); }
+
+/* ─── Map ────────────────────────────────────────── */
+.map-wrap {
+  background: var(--bg-card);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  border: 1px solid var(--line-soft);
+}
+#map { width: 100%; height: 480px; }
+.route-pin__num {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px;
+  background: var(--sunset);
+  color: var(--bg);
+  border-radius: 50%;
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 13px;
+  border: 2px solid var(--bg);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* ─── Day section ────────────────────────────────── */
+.day-section {
+  background: var(--bg-card);
+  border-radius: var(--r-lg);
+  padding: 28px 24px;
+  margin-bottom: 28px;
+  border-top: 4px solid var(--day1, var(--sunset));
+  box-shadow: var(--shadow-card);
+}
+.day-section[data-day="2"] { border-top-color: var(--day2); }
+
+.day-header { margin-bottom: 22px; }
+.day-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  font-family: 'DM Mono', monospace;
+}
+.day-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  color: var(--day-color, var(--sunset));
+  font-style: italic;
+  line-height: 1;
+}
+.day-section[data-day="2"] .day-num { color: var(--day2); }
+.day-date {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--ink);
+}
+.day-weekday {
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: 0.04em;
+}
+.day-theme {
+  font-family: 'Noto Serif SC', serif;
+  font-style: italic;
+  color: var(--ink-mid);
+  font-size: 14px;
+}
+.day-tips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.day-tips li {
+  font-size: 12px;
+  color: var(--ink-mid);
+  background: var(--bg-elev);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-family: 'Noto Serif SC', serif;
+}
+.day-tips li::before { content: '· '; color: var(--sunset); }
+
+/* ─── Alternatives (per-day branches) ─────────────── */
+.alternatives-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin: 18px 0 4px;
+}
+@media (min-width: 720px) { .alternatives-grid { grid-template-columns: repeat(3, 1fr); } }
+.alt-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-md);
+  padding: 16px;
+  position: relative;
+}
+.alt-card.alt-weather-good { border-top: 2px solid var(--sunset); }
+.alt-card.alt-weather-rain { border-top: 2px solid var(--teal); }
+.alt-card.alt-weather-mix  { border-top: 2px solid var(--amber); }
+.alt-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 6px;
+}
+.alt-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.alt-summary { font-size: 12.5px; color: var(--ink-mid); line-height: 1.7; }
+.alt-summary b { color: var(--ink); }
+.alt-route {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-dim);
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line-soft);
+  line-height: 1.6;
+}
+
+/* ─── Slots / timeline cards ──────────────────────── */
+.slots-wrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin-top: 18px;
+}
+@media (min-width: 720px) { .slots-wrap { grid-template-columns: repeat(2, 1fr); } }
+
+.slot-card {
+  background: var(--bg-elev);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  border: 1px solid var(--line-soft);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.slot-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+
+.slot-photo-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: linear-gradient(135deg, var(--day-color, var(--sunset)), var(--teal-d));
+  overflow: hidden;
+}
+.slot-photo-wrap::after {
+  content: attr(data-name);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.0);
+  font-family: 'Noto Serif SC', serif;
+  font-size: 18px;
+  text-align: center;
+  padding: 16px;
+}
+.slot-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.slot-period-badge {
+  position: absolute;
+  top: 10px; left: 10px;
+  background: rgba(13,27,42,0.85);
+  color: var(--ink);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  backdrop-filter: blur(6px);
+}
+
+.slot-body { padding: 16px; flex: 1; }
+.slot-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--sunset);
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+.slot-name {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--ink);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.slot-rating {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--amber);
+  margin-bottom: 8px;
+}
+.slot-rating span { color: var(--ink-dim); margin-left: 4px; font-size: 11px; }
+.slot-review {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.slot-info-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.slot-pill {
+  font-family: 'DM Mono', monospace;
+  font-size: 11.5px;
+  color: var(--ink-mid);
+  background: var(--bg-card);
+  padding: 5px 10px;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+.slot-pill-hours   { border-left: 2px solid var(--teal); }
+.slot-pill-ticket  { border-left: 2px solid var(--amber); }
+.slot-pill-transport{ border-left: 2px solid var(--coral); }
+.slot-pill-seasonal{ border-left: 2px solid var(--sunset); }
+
+.reminder-badge {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 4px 10px;
+  background: rgba(255,138,61,0.18);
+  color: var(--sunset);
+  border: 1px dashed var(--sunset);
+  border-radius: 4px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+}
+
+/* ─── Dining ─────────────────────────────────────── */
+.dining-section {
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px dashed var(--line);
+}
+.dining-section-head {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--sunset);
+  margin-bottom: 14px;
+  letter-spacing: 0.02em;
+}
+.dining-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 720px) { .dining-grid { grid-template-columns: repeat(2, 1fr); } }
+.dining-card {
+  background: var(--bg-elev);
+  border-radius: var(--r-md);
+  padding: 16px;
+  border: 1px solid var(--line-soft);
+}
+.dining-header { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+.dining-icon { font-size: 22px; line-height: 1; }
+.dining-meal-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.dining-place {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink);
+  margin: 2px 0;
+}
+.dining-hours {
+  font-size: 11.5px;
+  color: var(--ink-dim);
+  font-family: 'DM Mono', monospace;
+}
+.dining-dishes {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line-soft);
+}
+.dish-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 13px;
+}
+.dish-name { font-family: 'Noto Serif SC', serif; color: var(--ink-mid); }
+.dish-price {
+  font-family: 'DM Mono', monospace;
+  color: var(--sunset);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* ─── Global tips ────────────────────────────────── */
+.tips-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 720px) { .tips-list { grid-template-columns: repeat(2, 1fr); } }
+.tip-item {
+  display: flex;
+  gap: 14px;
+  background: var(--bg-card);
+  border-radius: var(--r-md);
+  padding: 14px 18px;
+  border-left: 3px solid var(--teal);
+  font-family: 'Noto Serif SC', serif;
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.7;
+}
+.tip-num {
+  flex-shrink: 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--teal);
+  line-height: 1;
+}
+
+/* ─── Footer / meta ───────────────────────────────── */
+.end-mark {
+  text-align: center;
+  padding: 32px 0;
+  color: var(--ink-dim);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+.end-mark::after {
+  content: '—  W E N D   E N D  —';
+  display: block;
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: var(--sunset);
+  margin-top: 6px;
+  font-family: 'DM Mono', monospace;
+  font-style: normal;
+}
+
+/* ─── Responsive ─────────────────────────────────── */
+@media (max-width: 600px) {
+  .container { padding: 32px 16px 64px; }
+  .hero { padding: 12px 0 24px; margin-bottom: 28px; }
+  .pretrip-grid { grid-template-columns: 1fr; }
+  .hotel-tiers { grid-template-columns: 1fr; }
+  .slots-wrap { grid-template-columns: 1fr; }
+  .alternatives-grid { grid-template-columns: 1fr; }
+  .dining-grid { grid-template-columns: 1fr; }
+  .tips-list { grid-template-columns: 1fr; }
+  .flight-note { display: none; }
+  #map { height: 360px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ─── HERO ─────────────────────────────────── -->
+  <header class="hero">
+    <div class="hero-eyebrow">MARITIME WEEKEND · 粤西</div>
+    <h1 class="hero-title">广州 → <span class="accent">电白</span> · 滨海周末游</h1>
+    <p class="hero-subtitle">"看海、吃不宰客的海鲜，2 人轻量出发"</p>
+    <div class="hero-meta">
+      <span><b>2 天 1 晚</b> · 全程高铁 + 本地打车</span>
+      <span>出发 <b>2026-08-29</b> 周六</span>
+      <span>返程 2026-08-30 周日</span>
+      <span>主调色：<b>落日橙 / 海青</b></span>
+    </div>
+  </header>
+
+  <!-- ─── 1. 出发前待办清单 ──────────────────────────── -->
+  <section class="section" id="pretrip-section">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2 class="section-title">出发前清单</h2>
+      <span class="section-title-en">PRE-TRIP CHECKLIST</span>
+    </div>
+    <div id="pretrip-checklist"><!-- JS renderChecklistHTML 注入 --></div>
+
+    <div class="pretrip-grid">
+      <div class="pretrip-item">
+        <div class="pretrip-item-label">天气 · 季节</div>
+        <div class="pretrip-item-content">
+          8 月底电白 <b>26-32℃</b>，午后阵雨频繁；海水温 ~28℃，宜下海。
+          <b>8/29 多云/阴 / 8/30 小雨</b>。周日出门看短期预报切换路线。
+          8 月底仍属台风季末段，出发前 <b>3 天</b> 起盯中央气象台台风网预警。
+        </div>
+      </div>
+      <div class="pretrip-item">
+        <div class="pretrip-item-label">穿搭 · 装备</div>
+        <div class="pretrip-item-content">
+          <b>泳衣 + 速干浴巾 + 防晒霜 SPF50+</b>；遮阳帽、墨镜、防滑凉鞋；
+          蚊怕水（海边傍晚）；薄外套 1 件（高铁/酒店空调冷）。
+          <b>晕船药</b>（如选 A 博贺客运坐船去海岛）。<b>现金 ¥500</b> 给传统排挡扫码慢。
+        </div>
+      </div>
+      <div class="pretrip-item">
+        <div class="pretrip-item-label">支付 · 门票</div>
+        <div class="pretrip-item-content">
+          主流扫码支付 (微信/支付宝) 在茂名稳；第一滩免费、博贺港放鸡岛需票 (¥158-168)；
+          御水古温泉 (B 方案) 含在喜来登房费。
+          <b>12306</b> App 用于高铁买票；关注电白天气公众号行前查台风。
+        </div>
+      </div>
+      <div class="pretrip-item">
+        <div class="pretrip-item-label">必备 App</div>
+        <div class="pretrip-item-content" style="display:flex; flex-wrap:wrap; gap:6px;">
+          <span class="app-tag">12306</span>
+          <span class="app-tag">高德地图</span>
+          <span class="app-tag">大众点评</span>
+          <span class="app-tag">中央气象台台风</span>
+          <span class="app-tag">墨迹天气</span>
+          <span class="app-tag">美团 / 滴滴</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 免责声明（出现在显眼位置） -->
+    <div class="disclaimer">
+      <div class="disclaimer-eyebrow">⚠ DISCLAIMER · 全覆盖免责</div>
+      <div id="disclaimer-text">本页全部信息（天气、高铁班次、酒店、餐厅、景点、门票、价格、营业时间、评分、活动等）均为 AI 基于公开资料整理的参考建议，可能不准确或已过时，不保证与实时情况一致；请务必在 12306 (高铁)、酒店官方/订房 App、美团/大众点评 (餐厅核位)、中央气象台台风网 (天气/台风) 等官方渠道核实后再做决定或前往。带儿童、晕船、台风预警、过敏等情况请务必现场咨询当班医师/景区工作人员。</div>
+    </div>
+  </section>
+
+  <!-- ─── 2. 高铁班次（当 flights 用） ──────────────────── -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2 class="section-title">高铁班次</h2>
+      <span class="section-title-en">GZ-SOUTH ⇄ MAOMING</span>
+    </div>
+    <div class="flights-card">
+      <div class="flights-section-title">去程 · 8/29 周六 · 广州南 → 茂名站 (10:00 起床节奏)</div>
+      <ul class="flight-list" id="flights-out"></ul>
+      <div class="flights-section-title" style="margin-top:18px;">返程 · 8/30 周日 · 茂名 → 广州南</div>
+      <ul class="flight-list" id="flights-back"></ul>
+      <p style="margin-top:14px; font-size:12px; color:var(--ink-dim);">
+        * 以 <b>12306</b> 实时为准；现"茂名东站"为货运站无客运业务，实际请锁定<b>茂名站</b>（站北五路 1 号）。
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── 3. 酒店区 ───────────────────────────────────── -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2 class="section-title">酒店片区</h2>
+      <span class="section-title-en">WHERE TO STAY</span>
+    </div>
+    <div id="hotels-list"></div>
+  </section>
+
+  <!-- ─── 4. 互动地图 ─────────────────────────────────── -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2 class="section-title">行程地图</h2>
+      <span class="section-title-en">INTERACTIVE MAP</span>
+    </div>
+    <div class="map-wrap">
+      <div id="map"></div>
+    </div>
+    <p style="margin-top:10px; font-size:11.5px; color:var(--ink-dim); font-family:'DM Mono',monospace;">
+      * 地图点按行程顺序连线 (周日 alternatives 详见下方方案卡)；
+      点击气泡可查看时刻、导航、高德地图 / Google 地图链接。
+    </p>
+  </section>
+
+  <!-- ─── 5. 每日时间轴（由 JS 渲染 days 数据） ──────────── -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2 class="section-title">每日时间轴</h2>
+      <span class="section-title-en">DAILY TIMELINE</span>
+    </div>
+    <div id="days-container"></div>
+  </section>
+
+  <!-- ─── 6. 全程实用贴士 ──────────────────────────────── -->
+  <section class="section">
+    <div class="section-head">
+      <span class="section-num">06</span>
+      <h2 class="section-title">全程实用贴士</h2>
+      <span class="section-title-en">GLOBAL TIPS</span>
+    </div>
+    <ul class="tips-list" id="global-tips"></ul>
+  </section>
+
+  <div class="end-mark"></div>
+
+</div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>
+
+<!-- map.js (inlined verbatim, security-hardened) -->
+<script>
+// Leaflet 地图引擎。纯函数（buildNavLink/buildMapAppLinks/routeCoordinates/gcj02ToWgs84）可单元测试；
+// initTravelMap 需浏览器 + Leaflet (L)。浏览器与 Node 双用。
+
+// HTML 转义，防止 XSS
+function escapeHTML(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// 坐标兜底：恶意 lat/lng 可能含字符串、NaN/Infinity 等非数字，夹到合法范围。
+// 来源若不可信（用户输入、AI 生成、第三方 skill），必须经此函数。
+function _sanitizeLat(v) {
+  var n = Number(v);
+  if (!isFinite(n)) return 0;
+  return Math.max(-90, Math.min(90, n));
+}
+function _sanitizeLng(v) {
+  var n = Number(v);
+  if (!isFinite(n)) return 0;
+  return Math.max(-180, Math.min(180, n));
+}
+
+// 生成跳转手机地图导航的链接。
+// iOS 不识别 geo: scheme，用 Apple Maps 的 https 通用链接；其余平台用 geo:。
+// ua 可选（浏览器里传 navigator.userAgent），不传则回退 geo:。
+// label 已 encodeURIComponent 编码；坐标经 _sanitizeLat/_sanitizeLng 夹到合法范围，
+//   防恶意字符串/NaN 突破 URL 上下文注入。
+function buildNavLink(lat, lng, label, ua) {
+  var sLat = _sanitizeLat(lat);
+  var sLng = _sanitizeLng(lng);
+  var encLabel = encodeURIComponent(String(label));
+  if (ua && /iPhone|iPad|iPod/.test(ua)) {
+    return 'https://maps.apple.com/?ll=' + sLat + ',' + sLng + '&q=' + encLabel;
+  }
+  return 'geo:' + sLat + ',' + sLng + '?q=' + sLat + ',' + sLng + '(' + encLabel + ')';
+}
+
+// 常用地图 App 的点位链接（免 key 的官方 URI 规范：高德 URI API、Google Maps URLs）。
+// 这不是 page-contract 的 actionLink——不承载实时数据主张，只是"打开地图看这个点"。
+// 境内点只给高德（Google 地图境内不可用、底图坐标系还会偏移）；境外点给 Google + 高德。
+// 输入坐标一律 WGS-84：高德 URI 用 coordinate=wgs84 声明由其换算，Google 本身即 WGS-84。
+// isInChinaBBox 声明在下方 GCJ 区块（函数声明有提升，此处可用）。
+// 坐标经 _sanitizeLat/_sanitizeLng 兜底，防恶意字符串注入 URL 参数。
+function buildMapAppLinks(lat, lng, label) {
+  var sLat = _sanitizeLat(lat);
+  var sLng = _sanitizeLng(lng);
+  var encLabel = encodeURIComponent(String(label));
+  var amap = {
+    label: '高德地图',
+    url: 'https://uri.amap.com/marker?position=' + sLng + ',' + sLat
+      + '&name=' + encLabel
+      + '&coordinate=wgs84&callnative=1&src=travel-plan-viz',
+  };
+  var google = {
+    label: 'Google 地图',
+    url: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(sLat + ',' + sLng),
+  };
+  return isInChinaBBox(sLat, sLng) ? [amap] : [google, amap];
+}
+
+// —— GCJ-02 → WGS-84 坐标转换 ——
+// 高德/腾讯地图返回的坐标是 GCJ-02（国测局加密），直接画在 OSM（WGS-84）瓦片上
+// 会偏移一百到几百米。凡坐标来自高德/腾讯类 skill，必须先经此函数转换。
+// 中国境外坐标原样返回（GCJ-02 仅在境内加偏）。
+var GCJ_A = 6378245.0;
+var GCJ_EE = 0.00669342162296594323;
+
+function isInChinaBBox(lat, lng) {
+  return lng >= 72.004 && lng <= 137.8347 && lat >= 0.8293 && lat <= 55.8271;
+}
+
+function gcjTransformLat(x, y) {
+  var ret = -100.0 + 2.0 * x + 3.0 * y + 0.2 * y * y + 0.1 * x * y + 0.2 * Math.sqrt(Math.abs(x));
+  ret += (20.0 * Math.sin(6.0 * x * Math.PI) + 20.0 * Math.sin(2.0 * x * Math.PI)) * 2.0 / 3.0;
+  ret += (20.0 * Math.sin(y * Math.PI) + 40.0 * Math.sin(y / 3.0 * Math.PI)) * 2.0 / 3.0;
+  ret += (160.0 * Math.sin(y / 12.0 * Math.PI) + 320.0 * Math.sin(y * Math.PI / 30.0)) * 2.0 / 3.0;
+  return ret;
+}
+
+function gcjTransformLng(x, y) {
+  var ret = 300.0 + x + 2.0 * y + 0.1 * x * x + 0.1 * x * y + 0.1 * Math.sqrt(Math.abs(x));
+  ret += (20.0 * Math.sin(6.0 * x * Math.PI) + 20.0 * Math.sin(2.0 * x * Math.PI)) * 2.0 / 3.0;
+  ret += (20.0 * Math.sin(x * Math.PI) + 40.0 * Math.sin(x / 3.0 * Math.PI)) * 2.0 / 3.0;
+  ret += (150.0 * Math.sin(x / 12.0 * Math.PI) + 300.0 * Math.sin(x / 30.0 * Math.PI)) * 2.0 / 3.0;
+  return ret;
+}
+
+function gcj02ToWgs84(lat, lng) {
+  if (!isInChinaBBox(lat, lng)) return { lat: lat, lng: lng };
+  var dLat = gcjTransformLat(lng - 105.0, lat - 35.0);
+  var dLng = gcjTransformLng(lng - 105.0, lat - 35.0);
+  var radLat = lat / 180.0 * Math.PI;
+  var magic = Math.sin(radLat);
+  magic = 1 - GCJ_EE * magic * magic;
+  var sqrtMagic = Math.sqrt(magic);
+  dLat = (dLat * 180.0) / ((GCJ_A * (1 - GCJ_EE)) / (magic * sqrtMagic) * Math.PI);
+  dLng = (dLng * 180.0) / (GCJ_A / sqrtMagic * Math.cos(radLat) * Math.PI);
+  return { lat: lat - dLat, lng: lng - dLng };
+}
+
+// 从有序点位提取 [lat,lng] 数组，用于连线
+function routeCoordinates(points) {
+  return points.map(function (p) { return [p.lat, p.lng]; });
+}
+
+// 初始化地图：编号 divIcon 标记、按序虚线路线、点击弹出 名称+时间+导航链接。
+// elementId: 容器 id；points: [{lat, lng, name, time}]（按行程顺序，坐标须为 WGS-84）
+// opts 可选：{ tileUrl, attribution } 替换默认 OSM 瓦片源（如 OSM 访问不稳时换镜像）。
+function initTravelMap(elementId, points, opts) {
+  opts = opts || {};
+  var map = L.map(elementId);
+  L.tileLayer(opts.tileUrl || 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: opts.attribution || '© OpenStreetMap contributors',
+    maxZoom: 19,
+  }).addTo(map);
+
+  var ua = (typeof navigator !== 'undefined' && navigator.userAgent) || '';
+  points.forEach(function (p, i) {
+    // 来自 trip-data 的坐标/名称若不可信，先兜底再喂给 Leaflet / URL 拼接
+    var sLat = _sanitizeLat(p.lat);
+    var sLng = _sanitizeLng(p.lng);
+    var icon = L.divIcon({
+      className: 'route-pin',
+      html: '<span class="route-pin__num">' + (i + 1) + '</span>',
+      iconSize: [28, 28],
+      iconAnchor: [14, 14],
+    });
+    var navLinks = [{ label: '导航', url: buildNavLink(sLat, sLng, p.name, ua) }]
+      .concat(buildMapAppLinks(sLat, sLng, p.name));
+    L.marker([sLat, sLng], { icon: icon }).addTo(map).bindPopup(
+      '<b>' + (i + 1) + '. ' + escapeHTML(String(p.name)) + '</b><br>'
+      + (p.time ? escapeHTML(String(p.time)) + '<br>' : '')
+      + navLinks.map(function (l) {
+          return '<a href="' + l.url + '">' + escapeHTML(l.label) + '</a>';
+        }).join(' · ')
+    );
+  });
+
+  var coords = routeCoordinates(points);
+  if (coords.length > 1) {
+    L.polyline(coords, { dashArray: '6 8', weight: 2 }).addTo(map);
+  }
+  map.fitBounds(coords.length ? coords : [[0, 0]], { padding: [30, 30] });
+  return map;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    buildNavLink: buildNavLink,
+    buildMapAppLinks: buildMapAppLinks,
+    routeCoordinates: routeCoordinates,
+    gcj02ToWgs84: gcj02ToWgs84,
+    initTravelMap: initTravelMap,
+  };
+}
+
+</script>
+
+<!-- reminders.js (inlined verbatim, security-hardened) -->
+<script>
+// 出发前提醒：截止日期计算 + 渲染。浏览器与 Node 双用。
+
+// startDateISO: 'YYYY-MM-DD'；items: [{item, leadDays}]
+// 返回按 deadline 升序的 [{item, leadDays, deadline}]，deadline 为 'YYYY-MM-DD'
+// 用 UTC 做日期运算，避免本地时区导致的偏移。
+function computeReminders(startDateISO, items) {
+  return items
+    .map(function (it) {
+      var d = new Date(startDateISO + 'T00:00:00Z');
+      d.setUTCDate(d.getUTCDate() - it.leadDays);
+      return { item: it.item, leadDays: it.leadDays, deadline: d.toISOString().slice(0, 10) };
+    })
+    .sort(function (a, b) {
+      return a.deadline < b.deadline ? -1 : a.deadline > b.deadline ? 1 : 0;
+    });
+}
+
+function escapeHTML(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function renderChecklistHTML(reminders) {
+  var lis = reminders.map(function (r) {
+    // leadDays 必须夹成非负整数；恶意 trip 数据传入 '"><script>' 等会破坏 HTML 结构
+    var ld = Math.max(0, Math.floor(Number(r.leadDays) || 0));
+    var dd = (typeof r.deadline === 'string' || typeof r.deadline === 'number')
+      ? escapeHTML(String(r.deadline))
+      : '';
+    return '<li class="todo-item">'
+      + '<input type="checkbox"> '
+      + '<span class="todo-deadline">' + dd + '前</span> '
+      + '<span class="todo-text">' + escapeHTML(String(r.item)) + '（建议提前' + ld + '天）</span>'
+      + '</li>';
+  }).join('');
+  return '<ul class="pretrip-todo">' + lis + '</ul>';
+}
+
+function reminderBadgeHTML(leadDays) {
+  var ld = Math.max(0, Math.floor(Number(leadDays) || 0));
+  return '<span class="reminder-badge">⚠️ 建议提前' + ld + '天订</span>';
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    computeReminders: computeReminders,
+    renderChecklistHTML: renderChecklistHTML,
+    reminderBadgeHTML: reminderBadgeHTML,
+  };
+}
+
+</script>
+
+<!-- ─── 嵌入 trip 数据（修改行程只改这里） ─────────────── -->
+<script id="trip-data" type="application/json">
+{
+  "title": "广州→电白 · 滨海周末游 (8.29-8.30)",
+  "startDate": "2026-08-29",
+  "colorScheme": "落日橙 + 海蓝深底 (粤西海滨日落主题)",
+  "preTrip": {
+    "weather": {
+      "summary": "8 月底电白 26-32℃，多云/阵雨频繁；海水 28℃ 适宜下海。8/29 周六 多云/阴 (32-25℃)，光线拍照最佳。8/30 周日 小雨 (31-25℃)，午后雷阵雨概率大。",
+      "typhoon": "8 月仍属台风季末段，出发前 3 天起关注中央气象台台风网 (typhoon.cma.cn)；8 号风球或暴雨红色预警时景区会临时关闭，临行前一晚务必查一次。"
+    },
+    "packing": "泳衣 + 速干浴巾 + 防水手机袋；防晒霜 SPF50+、遮阳帽、墨镜、防滑凉鞋；薄外套 1 件（高铁/酒店空调冷）；晕船药（如走 A 方案）；现金 ¥500 给传统排挡扫码慢。",
+    "payment": "微信/支付宝在茂名通行；第一滩免费、博贺港海岛需票 (¥158-168)、御水古温泉含喜来登房费。建议把高铁票、酒店单据截图离线备份。",
+    "apps": [
+      "12306 (高铁买票)",
+      "高德地图",
+      "中央气象台台风",
+      "墨迹天气",
+      "美团/大众点评 (餐厅核位)",
+      "滴滴 (本地打车)"
+    ],
+    "ticketTip": "周六是游客高峰：第一滩免费但周边停车场较挤；亚贵海鲜大排档建议提前 1 天电话预约；高铁票建议提前 15 天锁定理想班次。"
+  },
+  "flights": {
+    "booked": [],
+    "candidates": [
+      {
+        "label": "D7467",
+        "code": "广州南 → 茂名",
+        "time": "11:16→13:30",
+        "note": "二等座约 ¥197 (2h14m)；与晚起床节奏合拍，本行程首推"
+      },
+      {
+        "label": "D7187",
+        "code": "广州南 → 茂名",
+        "time": "12:53→15:02",
+        "note": "二等座约 ¥197 (2h09m)；再晚 1.5h 出门的兜底"
+      },
+      {
+        "label": "G6085/8",
+        "code": "广州南 → 茂名",
+        "time": "13:08→15:19",
+        "note": "G 字高铁稍快，二等座约 ¥210"
+      }
+    ]
+  },
+  "flightsBack": {
+    "candidates": [
+      {
+        "label": "D7180",
+        "code": "茂名 → 广州南",
+        "time": "15:30→17:50",
+        "note": "周日按 A 方案 14:00 出发回站首选"
+      },
+      {
+        "label": "G6086",
+        "code": "茂名 → 广州南",
+        "time": "16:10→18:25",
+        "note": "按 C/B 方案 16:00 返程"
+      },
+      {
+        "label": "D7468",
+        "code": "茂名 → 广州南",
+        "time": "17:40→20:04",
+        "note": "若行程拖到晚可兜底"
+      }
+    ]
+  },
+  "hotelAreas": [
+    {
+      "area": "中国第一滩 · 南海半岛中心广场片区",
+      "reason": "行程方便：距第一滩沙滩步行 5 分钟，紧邻南海旅游岛中心广场；周边夜生活丰富——大排档一条街、海鲜排挡、夜市广场、便利店、网约车点位全。看完日落散步吃饭回酒店极方便。",
+      "options": [
+        {
+          "tier": "经济",
+          "name": "大鹏商务酒店 (第一滩店)",
+          "priceRange": "¥140-180/晚",
+          "note": "步行 5 min 到第一滩，双床房基础够用"
+        },
+        {
+          "tier": "中档",
+          "name": "海云雁酒店 (第一滩店)",
+          "priceRange": "约 ¥500/晚",
+          "note": "⭐ 本行程首选：亲子海景房、评分 9.6、距第一滩 0.82 km、周边夜生活最密集"
+        },
+        {
+          "tier": "高端",
+          "name": "电白希尔顿逸林酒店",
+          "priceRange": "¥800+/晚",
+          "note": "哪吒主题房、下午茶赠送、早餐到 13:00；南海半岛中心地段"
+        }
+      ]
+    },
+    {
+      "area": "御水古温泉度假区 (电白麻岗镇热水村)",
+      "reason": "仅在 Day 2 雨天方案使用 — 真·天然氡氟泉（公元 589 年古泉、82℃、广东省温泉协会 + 全国温泉旅游泉质等级委员会认证「优质珍稀温泉」），阳台私汤、水乐园、唐风夜泡；夜生活偏冷清但白天温泉为王。距茂名站约 80 km / 1h20min。",
+      "options": [
+        {
+          "tier": "高端",
+          "name": "御水古温泉喜来登度假酒店",
+          "priceRange": "¥800+/晚 (含温泉无限次 + 水乐园)",
+          "note": "万豪系、4A 度假区内、阳台私汤、一房一温泉"
+        }
+      ]
+    }
+  ],
+  "disclaimer": "本页全部信息（天气、高铁班次、酒店、餐厅、景点、门票、价格、营业时间、评分、活动等）均为 AI 基于公开资料整理的参考建议，可能不准确或已过时，不保证与实时情况一致；请务必在 12306 (高铁)、酒店官方/订房 App、美团/大众点评 (餐厅核位)、中央气象台台风网 (天气/台风) 等官方渠道核实后再做决定或前往。带儿童、晕船、台风预警、过敏等情况请务必现场咨询当班医师/景区工作人员。",
+  "tips": [
+    "周日上午看临近预报：中央气象台台风网 + 墨迹 1 小时滚动，8/30 多云→小雨切换时立刻启动 B 温泉方案",
+    "亚贵大排档旺季排队：高峰期 18-20 点，建议 17:30 前到；卡位要点：先选海鲜再坐、加工费按斤必须先问清",
+    "海鲜防宰五铁律：水箱里划水的才是活鲜 · 按斤 vs 按道先问清 · 上秤归零 · 清蒸最省最鲜 · 周六中午价格波动大",
+    "晏镜岭日落黄金时段 17:30-18:50；登山 15 min 即可登顶灯塔；穿防滑鞋 (礁石段)",
+    "高铁往返请 12306 实时核 (尤其周日下午返程,票紧)；周日建议不晚于 18:00 抵茂名站",
+    "如泡御水古温泉：泳衣自带 (喜来登也有售但贵)、浴巾、温泉后 30 min 内补水、不要空腹 / 饱腹下池"
+  ],
+  "reminders": [
+    {
+      "item": "去程 D7467/D7187 高铁票",
+      "leadDays": 15
+    },
+    {
+      "item": "返程 D7180/G6086 高铁票",
+      "leadDays": 15
+    },
+    {
+      "item": "第一滩片区酒店 (周末紧张)",
+      "leadDays": 7
+    },
+    {
+      "item": "亚贵海鲜大排档预约 (高峰时段)",
+      "leadDays": 1
+    },
+    {
+      "item": "查询中央气象台 8/29-30 台风 / 雷暴预警",
+      "leadDays": 3
+    }
+  ],
+  "days": [
+    {
+      "date": "2026-08-29",
+      "weekday": "周六",
+      "theme": "晚起出发 + 第一滩踏浪 + 晏镜岭日落 + 亚贵海鲜",
+      "tips": [
+        "晚起别慌 — D7467 11:16 班次正好合拍，最迟 9:30 出门",
+        "第一滩下午最晒时段进防晒棚 / 椰林咖啡；傍晚再戏水",
+        "晏镜岭 17:30 黄金日落时段；登山 15 min 即可登顶"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "广州南站",
+          "time": "10:00–10:30",
+          "lat": 22.9915,
+          "lng": 113.2652,
+          "photo": "",
+          "rating": 4.3,
+          "review": "建议 9:30 前到站，地铁 2 号线广州南站 H 出口直插候车厅",
+          "openingHours": "全天",
+          "ticketPrice": "高铁票 (D7467) ¥197",
+          "transport": {
+            "mode": "地铁 2 号线",
+            "fare": "约 ¥8",
+            "duration": "约 1h"
+          }
+        },
+        {
+          "period": "noon",
+          "name": "茂名站 (原茂名东站)",
+          "time": "13:30–14:00",
+          "lat": 21.6453,
+          "lng": 110.9246,
+          "photo": "",
+          "rating": 4.0,
+          "review": "出站右转网约车上客区；下到第一滩 25-30 km。注：现「茂名东站」是货运站无客运业务，别订错",
+          "openingHours": "全天",
+          "ticketPrice": "高铁票 ¥197 已含",
+          "transport": {
+            "mode": "网约车 / 303 路公交",
+            "fare": "¥40-90 / 公交 ¥2",
+            "duration": "30-40 min"
+          }
+        },
+        {
+          "period": "afternoon",
+          "name": "中国第一滩",
+          "time": "14:30–17:00",
+          "lat": 21.4562,
+          "lng": 111.0525,
+          "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/晏镜岭.jpg?width=800",
+          "rating": 4.6,
+          "review": "国家 AAAA，12 km 长滩、宽 300 m，水清沙细 ('东方夏威夷')。防晒棚下午躲暴晒，傍晚冲淡水+踏浪；走沿岸 1-2 km 出片",
+          "openingHours": "全天开放",
+          "ticketPrice": "免费",
+          "transport": {
+            "mode": "网约车",
+            "fare": "¥20",
+            "duration": "10 min 到晏镜岭"
+          },
+          "seasonal": "8 月傍晚常现火红夕阳；蔚蓝海水 + 金色沙滩"
+        },
+        {
+          "period": "evening",
+          "name": "晏镜岭 (广东小垦丁)",
+          "time": "17:30–19:00",
+          "lat": 21.4697,
+          "lng": 111.0513,
+          "photo": "https://commons.wikimedia.org/wiki/Special:FilePath/晏镜岭.jpg?width=800",
+          "rating": 4.7,
+          "review": "海拔 400 m 天然观景台，15 min 登顶；俯瞰童子湾月牙渔港 + 渔船归港；山顶可同框日出日落。日落时间 18:51 (8/29)，17:30 抵达最稳",
+          "openingHours": "全天",
+          "ticketPrice": "免费",
+          "transport": {
+            "mode": "网约车 / 步行",
+            "fare": "¥20 / 30 min 步行",
+            "duration": "10 min 车"
+          },
+          "seasonal": "8 月末仍热，傍晚起风时温度舒适"
+        },
+        {
+          "period": "night",
+          "name": "亚贵海鲜大排档",
+          "time": "19:30–21:00",
+          "lat": 21.507,
+          "lng": 110.972,
+          "photo": "",
+          "rating": 4.4,
+          "review": "本地老牌海鲜排挡（人民路 18 号），水箱自选、本地人首选；推荐清蒸石斑、姜葱爆花蟹、蒜蓉蒸扇贝。人均 ¥90-110",
+          "openingHours": "17:00–次日 01:00",
+          "ticketPrice": "人均 ¥90-110",
+          "transport": {
+            "mode": "网约车",
+            "fare": "¥20",
+            "duration": "15 min"
+          }
+        },
+        {
+          "period": "night",
+          "name": "海云雁酒店 (第一滩店) · 入住",
+          "time": "21:30",
+          "lat": 21.4614,
+          "lng": 111.056,
+          "photo": "",
+          "rating": 4.6,
+          "review": "亲子海景房，评分 9.6，距第一滩 0.82 km；楼下夜市/便利店/大排档均步行 5 min 内 — 行程方便+夜生活双满足",
+          "openingHours": "全天",
+          "ticketPrice": "约 ¥500/晚",
+          "transport": {
+            "mode": "步行",
+            "fare": "—",
+            "duration": "—"
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "晚餐 · 海鲜",
+          "place": "亚贵海鲜大排档",
+          "hours": "17:00–次日 01:00",
+          "dishes": [
+            {
+              "name": "清蒸石斑",
+              "price": "约 ¥98/斤"
+            },
+            {
+              "name": "姜葱爆花蟹",
+              "price": "约 ¥80/份"
+            },
+            {
+              "name": "蒜蓉蒸扇贝",
+              "price": "约 ¥58/打"
+            },
+            {
+              "name": "盐水濑尿虾",
+              "price": "约 ¥65/斤"
+            }
+          ]
+        },
+        {
+          "meal": "宵夜",
+          "place": "第一滩海边大排档一条街",
+          "hours": "21:00–02:00",
+          "dishes": [
+            {
+              "name": "水东鸭粥",
+              "price": "¥20-35/份"
+            },
+            {
+              "name": "捞粉",
+              "price": "¥10"
+            },
+            {
+              "name": "蚝炸",
+              "price": "¥15/份"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-08-30",
+      "weekday": "周日",
+      "theme": "看天气选路线 · 海 / 泉 / 海+泉三套方案自选",
+      "tips": [
+        "出门前查 1 小时滚动预报 — 决定走 A 海边 / B 温泉 / C 海+泉 混合",
+        "周日午后雨更大；A 方案抓紧上午, B 方案建议中午前到温泉",
+        "无论哪条线, 18:00 前抵茂名站最稳"
+      ],
+      "alternatives": [
+        {
+          "label": "A · 天气好多云海边",
+          "summary": "晏镜岭日出 → 第一滩上午戏水 → 渔港码头大排档午餐 → 14:30 抵茂名站返程",
+          "route": "海云雁 06:30 出发 → 晏镜岭 (30 min 看日出) → 回酒店早餐 → 第一滩戏水 (至 11:30) → 渔港码头大排档 → 13:30 茂名站 → D7180 15:30 班次"
+        },
+        {
+          "label": "B · 雨天温泉路线",
+          "summary": "酒店早餐后 9:00 退房 → 包车去御水古温泉喜来登 (1h20min) → 真·天然氡氟泉 (82℃) 泡 1.5-2h → 14:30 返茂名站",
+          "route": "海云雁早餐 → 9:00 退房 (行李寄前台) → 9:30 包车 (¥400) 出发 → 11:00 温泉泳池 → 12:30 午餐 (喜来登自助 ¥128) → 13:30 返程 → 15:30 高铁"
+        },
+        {
+          "label": "C · 阴天海+暮温泉",
+          "summary": "上午海边 2 小时 → 渔港午餐 → 包车去御水古泉泡 1 小时 → 17:00 后返茂名站",
+          "route": "9:00 退房寄存 → 晏镜岭 + 童子湾 2 h → 12:00 渔港午餐 → 13:30 包车 (1h) → 14:30 温泉 → 16:30 启程 → 18:00 茂名站 → G6086"
+        }
+      ],
+      "slots": [],
+      "dining": [
+        {
+          "meal": "周日午餐",
+          "place": "渔港码头大排档 / 喜来登自助 (B 方案) / 亚贵 (C 方案)",
+          "hours": "11:30–14:00",
+          "dishes": [
+            {
+              "name": "清蒸杂鱼拼",
+              "price": "约 ¥88/份"
+            },
+            {
+              "name": "姜葱蟹",
+              "price": "约 ¥75/份"
+            },
+            {
+              "name": "白灼海虾",
+              "price": "约 ¥60/份"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "dataSources": [],
+  "colorScheme_": "sunset_ocean"
+}
+</script>
+
+<!-- ─── 渲染主逻辑 ───────────────────────────────────── -->
+<script>
+// 全局 escape (给渲染函数用)
+function escapeHTMLGlobal(s) {
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+var periodEmoji = { morning: 'AM', noon: '☀', afternoon: 'PM', evening: '🌅', night: '🌙' };
+var periodLabel = { morning: '上午', noon: '中午', afternoon: '下午', evening: '傍晚', night: '夜晚' };
+var mealEmoji = { '早餐': '☕', '午餐': '🍱', '晚餐': '🍽', '宵夜': '🌙' };
+
+// ── 从 <script id="trip-data"> 块解析 trip 数据 ──
+// 重要：上一步所有 renderer IIFE 都引用此全局变量。必须先解析再触发后续渲染。
+var trip = JSON.parse(document.getElementById('trip-data').textContent);
+
+// ── 免责声明（从 trip JSON 注入到正文 .disclaimer） ──
+(function () {
+  var dEl = document.getElementById('disclaimer-text');
+  if (dEl && trip.disclaimer) dEl.textContent = trip.disclaimer;
+})();
+
+// ── 高铁班次：去程 / 返程 分别渲染 ──
+(function () {
+  function renderList(targetId, list) {
+    var html = list.map(function (f) {
+      return '<li>'
+        + '<span class="flight-tag">' + escapeHTMLGlobal(f.label) + '</span>'
+        + '<span class="flight-code">' + escapeHTMLGlobal(f.code) + '</span>'
+        + '<span class="flight-time">' + escapeHTMLGlobal(f.time) + '</span>'
+        + '<span class="flight-note">' + escapeHTMLGlobal(f.note) + '</span>'
+        + '</li>';
+    }).join('');
+    document.getElementById(targetId).innerHTML = html;
+  }
+  renderList('flights-out', trip.flights.candidates);
+  renderList('flights-back', (trip.flightsBack || {}).candidates || []);
+})();
+
+// ── 酒店片区 ──
+(function () {
+  var html = (trip.hotelAreas || []).map(function (area) {
+    var tiers = area.options.map(function (o) {
+      var tierCls = o.tier === '高端' ? 'tier-up' : (o.tier === '中档' ? 'tier-mid' : '');
+      var highlight = /本行程首选|⭐/.test(o.note) ? ' style="outline:1px dashed var(--sunset); outline-offset:2px;"' : '';
+      return '<div class="hotel-tier ' + tierCls + '"' + highlight + '>'
+        + '<div class="hotel-tier-label">' + escapeHTMLGlobal(o.tier) + '</div>'
+        + '<div class="hotel-tier-name">' + escapeHTMLGlobal(o.name) + '</div>'
+        + '<div class="hotel-tier-price">' + escapeHTMLGlobal(o.priceRange) + '</div>'
+        + '<div class="hotel-tier-note">' + escapeHTMLGlobal(o.note) + '</div>'
+        + '</div>';
+    }).join('');
+    var tiersCls = area.options.length === 1 ? 'hotel-tiers single' : 'hotel-tiers';
+    return '<div class="hotel-card">'
+      + '<div class="hotel-area">' + escapeHTMLGlobal(area.area) + '</div>'
+      + '<div class="hotel-area-reason">' + escapeHTMLGlobal(area.reason) + '</div>'
+      + '<div class="' + tiersCls + '">' + tiers + '</div>'
+      + '</div>';
+  }).join('');
+  document.getElementById('hotels-list').innerHTML = html;
+})();
+
+// ── 全程 tips ──
+(function () {
+  var html = trip.tips.map(function (t, i) {
+    return '<li class="tip-item">'
+      + '<span class="tip-num">' + (i + 1) + '</span>'
+      + '<span>' + escapeHTMLGlobal(t) + '</span>'
+      + '</li>';
+  }).join('');
+  document.getElementById('global-tips').innerHTML = html;
+})();
+
+// ── 每日时间轴 ──
+(function () {
+  var container = document.getElementById('days-container');
+  trip.days.forEach(function (day, dayIdx) {
+    var section = document.createElement('div');
+    section.className = 'day-section';
+    section.setAttribute('data-day', dayIdx + 1);
+
+    // 头部
+    var dt = new Date(day.date + 'T00:00:00Z');
+    var weekdayCN = ['日','一','二','三','四','五','六'][dt.getUTCDay()];
+    var headerHTML = ''
+      + '<div class="day-header">'
+      + '  <div class="day-meta">'
+      + '    <span class="day-num">Day ' + (dayIdx + 1) + '</span>'
+      + '    <span class="day-date">' + day.date + ' · 周' + weekdayCN + '</span>'
+      + '  </div>'
+      + '  <div class="day-theme">' + escapeHTMLGlobal(day.theme || '') + '</div>'
+      + (day.tips && day.tips.length
+          ? '<ul class="day-tips">' + day.tips.map(function(t){ return '<li>' + escapeHTMLGlobal(t) + '</li>'; }).join('') + '</ul>'
+          : '')
+      + '</div>';
+
+    // alternatives (Day 2 的天气分支)
+    var altHTML = '';
+    if (day.alternatives && day.alternatives.length) {
+      var altCards = day.alternatives.map(function (a, i) {
+        var clsMap = ['alt-weather-good', 'alt-weather-rain', 'alt-weather-mix'];
+        return '<div class="alt-card ' + (clsMap[i] || '') + '">'
+          + '<div class="alt-label">' + escapeHTMLGlobal(a.label) + '</div>'
+          + '<div class="alt-title">' + escapeHTMLGlobal(a.summary.split(' →')[0]) + '</div>'
+          + '<div class="alt-summary">' + escapeHTMLGlobal(a.summary) + '</div>'
+          + '<div class="alt-route">' + escapeHTMLGlobal(a.route) + '</div>'
+          + '</div>';
+      }).join('');
+      altHTML = '<div class="alternatives-grid">' + altCards + '</div>';
+    }
+
+    // slots
+    var slotsHTML = '';
+    if (day.slots && day.slots.length) {
+      slotsHTML += '<div class="slots-wrap">';
+      day.slots.forEach(function (slot) {
+        var stars = '';
+        if (slot.rating) {
+          var full = Math.floor(slot.rating);
+          var half = (slot.rating - full) >= 0.5;
+          stars = '★'.repeat(full) + (half ? '½' : '');
+        }
+        var pills = [];
+        if (slot.openingHours) pills.push('<span class="slot-pill slot-pill-hours">🕐 ' + escapeHTMLGlobal(slot.openingHours) + '</span>');
+        if (slot.closedDays)   pills.push('<span class="slot-pill slot-pill-hours">📅 ' + escapeHTMLGlobal(slot.closedDays) + '</span>');
+        if (slot.ticketPrice)  pills.push('<span class="slot-pill slot-pill-ticket">🎫 ' + escapeHTMLGlobal(slot.ticketPrice) + '</span>');
+        if (slot.transport) {
+          var t = slot.transport;
+          pills.push('<span class="slot-pill slot-pill-transport">🚗 ' + escapeHTMLGlobal(t.mode) + ' · ' + escapeHTMLGlobal(t.fare) + ' · ' + escapeHTMLGlobal(t.duration) + '</span>');
+        }
+        if (slot.seasonal) pills.push('<span class="slot-pill slot-pill-seasonal">✨ ' + escapeHTMLGlobal(slot.seasonal) + '</span>');
+        var pillsHTML = pills.length ? '<div class="slot-info-pills">' + pills.join('') + '</div>' : '';
+
+        var badgeHTML = slot.needsBooking ? reminderBadgeHTML(slot.leadDays) : '';
+        var photoHTML = slot.photo
+          ? '<img class="slot-photo" src="' + escapeHTMLGlobal(slot.photo) + '" alt="' + escapeHTMLGlobal(slot.name) + '" onerror="this.style.display=\'none\'">'
+          : '';
+        var periodLabelHTML = '<span class="slot-period-badge">' + (periodLabel[slot.period] || slot.period) + '</span>';
+
+        slotsHTML += '<div class="slot-card">'
+          + '<div class="slot-photo-wrap" data-name="' + escapeHTMLGlobal(slot.name) + '">'
+          +   photoHTML
+          +   periodLabelHTML
+          + '</div>'
+          + '<div class="slot-body">'
+          +   '<div class="slot-time">' + escapeHTMLGlobal(slot.time) + '</div>'
+          +   '<div class="slot-name">' + escapeHTMLGlobal(slot.name) + '</div>'
+          +   (slot.rating ? '<div class="slot-rating">' + stars + ' <span>' + slot.rating + '</span></div>' : '')
+          +   '<div class="slot-review">' + escapeHTMLGlobal(slot.review) + '</div>'
+          +   pillsHTML
+          +   badgeHTML
+          + '</div>'
+          + '</div>';
+      });
+      slotsHTML += '</div>';
+    } else if (!altHTML) {
+      slotsHTML = '<p style="color:var(--ink-dim); font-size:13px; padding:8px 0;">本日所有分支见上方方案卡 (alternatives)。</p>';
+    }
+
+    // dining
+    var diningHTML = '';
+    if (day.dining && day.dining.length) {
+      var diningCards = day.dining.map(function (d) {
+        var icon = mealEmoji[d.meal] || '🍴';
+        var dishItems = (d.dishes || []).map(function (dish) {
+          return '<div class="dish-item">'
+            + '<span class="dish-name">' + escapeHTMLGlobal(dish.name) + '</span>'
+            + '<span class="dish-price">' + escapeHTMLGlobal(dish.price) + '</span>'
+            + '</div>';
+        }).join('');
+        return '<div class="dining-card">'
+          + '<div class="dining-header">'
+          +   '<span class="dining-icon">' + icon + '</span>'
+          +   '<div class="dining-meta">'
+          +     '<div class="dining-meal-label">// ' + escapeHTMLGlobal(d.meal) + '</div>'
+          +     '<div class="dining-place">' + escapeHTMLGlobal(d.place) + '</div>'
+          +     '<div class="dining-hours">' + escapeHTMLGlobal(d.hours) + '</div>'
+          +   '</div>'
+          + '</div>'
+          + (dishItems ? '<div class="dining-dishes">' + dishItems + '</div>' : '')
+          + '</div>';
+      }).join('');
+      diningHTML = '<div class="dining-section">'
+        + '<div class="dining-section-head">// 餐饮 · Dining</div>'
+        + '<div class="dining-grid">' + diningCards + '</div>'
+        + '</div>';
+    }
+
+    section.innerHTML = headerHTML + altHTML + slotsHTML + diningHTML;
+    container.appendChild(section);
+
+    if (dayIdx < trip.days.length - 1) {
+      var div = document.createElement('div');
+      div.className = 'divider';
+      div.style.cssText = 'height:1px; background:linear-gradient(90deg, transparent, var(--line), transparent); margin: 0 60px;';
+      container.appendChild(div);
+    }
+  });
+})();
+
+// ── On DOM ready ──────────────────────────────
+document.addEventListener('DOMContentLoaded', function () {
+  // 1. Pre-trip checklist
+  var reminders = computeReminders(trip.startDate, trip.reminders);
+  var checklistEl = document.getElementById('pretrip-checklist');
+  if (checklistEl) {
+    checklistEl.innerHTML = renderChecklistHTML(reminders);
+  }
+
+  // 2. Build map points (按行程顺序)
+  var points = [];
+  trip.days.forEach(function (day) {
+    (day.slots || []).forEach(function (slot) {
+      points.push({ lat: slot.lat, lng: slot.lng, name: slot.name, time: day.date + ' ' + slot.time });
+    });
+  });
+  // 给周日 alternatives 各方案加一个核心点做地图导航
+  if (trip.days.length >= 2 && trip.days[1].alternatives) {
+    var alts = trip.days[1].alternatives;
+    if (alts[0] && (alts[0].summary.indexOf('晏镜岭') >= 0))      points.push({ lat: 21.4697, lng: 111.0513, name: '晏镜岭 · A 方案起点', time: '08:00' });
+    if (alts[1] && (alts[1].summary.indexOf('御水古温泉') >= 0))  points.push({ lat: 21.4900, lng: 111.1800, name: '御水古温泉喜来登 · B 方案', time: '11:00' });
+    if (alts[2])                                                  points.push({ lat: 21.4900, lng: 111.1800, name: '御水古温泉 · C 方案兜底', time: '14:30' });
+  }
+
+  // 3. Init map
+  initTravelMap('map', points);
+});
+</script>
+
+</body>
+</html>
