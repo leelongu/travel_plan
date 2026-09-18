@@ -192,12 +192,14 @@ a:hover { color: var(--gold); text-decoration: underline; }
   margin-bottom: 16px;
   padding: 10px 0 4px;
   background: var(--bg-card);
-  position: sticky;
-  top: 0;
-  z-index: 100;
   border-bottom: 1px solid var(--border-soft);
   scrollbar-width: thin;
   scrollbar-color: rgba(184,134,46,0.3) transparent;
+}
+.day-tabs.is-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 .day-tabs::-webkit-scrollbar { height: 4px; }
 .day-tabs::-webkit-scrollbar-thumb { background: rgba(184,134,46,0.3); border-radius: 2px; }
@@ -447,7 +449,7 @@ footer { margin-top: 24px; padding: 24px 16px; border-top: 1px solid var(--borde
 /* VIEW TOGGLE（标签页 / 时间轴 切换） */
 .view-toggle {
   position: fixed;
-  top: 16px;
+  top: 60px;   /* 下移避开标签页模式下吸顶的日期 tabs */
   right: 16px;
   z-index: 1100;
   display: flex;
@@ -461,11 +463,11 @@ footer { margin-top: 24px; padding: 24px 16px; border-top: 1px solid var(--borde
 .view-toggle__btn {
   border: none;
   background: transparent;
-  color: rgba(247,242,232,0.55);
+  color: var(--gold-lt);
   padding: 7px 14px;
   font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.12em;
+  font-size: 11px;
+  letter-spacing: 0.08em;
   cursor: pointer;
   border-radius: 100px;
   transition: all 0.18s;
@@ -473,11 +475,10 @@ footer { margin-top: 24px; padding: 24px 16px; border-top: 1px solid var(--borde
   align-items: center;
   gap: 5px;
 }
-.view-toggle__btn.active { background: var(--gold); color: var(--bg-deep); font-weight: 700; }
-.view-toggle__btn:hover:not(.active) { color: var(--parchment); }
+.view-toggle__btn:hover { background: rgba(184,134,46,0.25); color: var(--parchment); }
 @media (max-width: 480px) {
-  .view-toggle { top: auto; bottom: 16px; right: 16px; left: 16px; justify-content: center; }
-  .view-toggle__btn { flex: 1; justify-content: center; padding: 10px 12px; }
+  .view-toggle { top: auto; bottom: 16px; right: 16px; left: auto; }
+  .view-toggle__btn { padding: 10px 14px; }
 }
 
 /* TIMELINE BOOKMARKS（时间轴右侧竖排圆点） */
@@ -601,6 +602,70 @@ details.section > .section-body { padding: 0 22px 20px; }
   letter-spacing: 0.04em;
 }
 .slot-weather-error { color: var(--cinnabar); }
+
+/* COUNTDOWN（此刻关注 · 下一个行程事件） */
+.countdown-card {
+  background: linear-gradient(160deg, #1a1410 0%, #2a1f15 60%, #3a2e22 100%);
+  color: var(--parchment);
+  padding: 28px 24px 26px;
+  margin: 24px 16px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+@media (min-width: 768px) { .countdown-card { padding: 32px 32px 30px; } }
+.countdown-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(184,134,46,0.18) 0%, transparent 50%),
+    radial-gradient(circle at 10% 90%, rgba(184,57,46,0.10) 0%, transparent 45%);
+  pointer-events: none;
+}
+.countdown-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--gold-lt); margin-bottom: 12px;
+  position: relative; z-index: 1;
+}
+.countdown-event {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 20px; position: relative; z-index: 1;
+}
+.countdown-event-icon { font-size: 30px; flex-shrink: 0; }
+.countdown-event-text {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 600; font-size: 19px; color: var(--parchment);
+  letter-spacing: 0.02em; line-height: 1.3;
+}
+.countdown-event-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; color: rgba(247,242,232,0.55);
+  letter-spacing: 0.12em; margin-top: 4px;
+}
+.countdown-timer {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  position: relative; z-index: 1;
+}
+@media (min-width: 768px) { .countdown-timer { gap: 16px; max-width: 400px; } }
+.countdown-cell {
+  background: rgba(247,242,232,0.05);
+  border: 1px solid rgba(184,134,46,0.25);
+  border-radius: var(--radius); padding: 14px 6px; text-align: center;
+  backdrop-filter: blur(4px);
+}
+.countdown-num {
+  font-family: 'ZCOOL XiaoWei', 'Noto Serif SC', serif;
+  font-size: 34px; line-height: 1; color: var(--gold-lt); font-weight: 400;
+  display: block; font-variant-numeric: tabular-nums;
+}
+@media (min-width: 768px) { .countdown-num { font-size: 46px; } }
+.countdown-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; letter-spacing: 0.2em; color: rgba(247,242,232,0.55);
+  margin-top: 6px; text-transform: uppercase;
+}
 
 /* utility */
 img { max-width: 100%; }
@@ -743,6 +808,32 @@ img { max-width: 100%; }
     </div>
   </section>
 
+  <!-- ═══════════════ COUNTDOWN（此刻关注 · 下一个行程事件）═══════════════ -->
+  <div class="countdown-card">
+    <div class="countdown-eyebrow">此刻关注 · RIGHT NOW</div>
+    <div class="countdown-event">
+      <span class="countdown-event-icon" id="cd-icon">⏳</span>
+      <div>
+        <div class="countdown-event-text" id="cd-event">加载中…</div>
+        <div class="countdown-event-time" id="cd-event-time"></div>
+      </div>
+    </div>
+    <div class="countdown-timer">
+      <div class="countdown-cell">
+        <span class="countdown-num" id="cd-d">--</span>
+        <div class="countdown-label">天</div>
+      </div>
+      <div class="countdown-cell">
+        <span class="countdown-num" id="cd-h">--</span>
+        <div class="countdown-label">时</div>
+      </div>
+      <div class="countdown-cell">
+        <span class="countdown-num" id="cd-m">--</span>
+        <div class="countdown-label">分</div>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══════════════ PRE-TRIP CHECKLIST ═══════════════ -->
   <section class="section section--checklist">
     <div class="section-header">
@@ -798,8 +889,7 @@ img { max-width: 100%; }
 
   <!-- ═══════════════ VIEW TOGGLE (fixed) ═══════════════ -->
   <div class="view-toggle" id="view-toggle">
-    <button type="button" class="view-toggle__btn active" data-mode="tabs">▤ 标签页</button>
-    <button type="button" class="view-toggle__btn" data-mode="timeline">≡ 时间轴</button>
+    <button type="button" class="view-toggle__btn" id="view-toggle-btn" data-mode="timeline">≡ 切到时间轴</button>
   </div>
 
   <!-- ═══════════════ DAILY TIMELINE ═══════════════ -->
@@ -3294,6 +3384,54 @@ if (typeof module !== 'undefined' && module.exports) {
       + '</tbody></table></div>';
   }
 
+  // ----- 0b. countdown（此刻关注 · 下一个行程事件）-----
+  var countdownTimerId = null;
+
+  function parseSlotStartTime(slot, dateStr) {
+    var m = String(slot.time || '').match(/(\d{1,2}):(\d{2})/);
+    if (!m) return null;
+    var hh = parseInt(m[1], 10), mm = parseInt(m[2], 10);
+    return new Date(dateStr + 'T' + (hh < 10 ? '0' + hh : hh) + ':' + (mm < 10 ? '0' + mm : mm) + ':00+08:00').getTime();
+  }
+
+  function findNextEvent(now) {
+    var candidates = [];
+    DAYS.forEach(function (d) {
+      (d.slots || []).forEach(function (s) {
+        var ts = parseSlotStartTime(s, d.date);
+        if (ts == null) return;
+        candidates.push({ t: ts, icon: chipEmoji(s.name), name: s.name, time: d.date + ' ' + (s.time || '') });
+      });
+    });
+    candidates = candidates.filter(function (c) { return c.t > now; })
+      .sort(function (a, b) { return a.t - b.t; });
+    if (!candidates.length) {
+      return { icon: '🏁', name: '行程已圆满结束 · 期待下次出发', time: '', diff: 0, done: true };
+    }
+    return Object.assign({}, candidates[0], { diff: candidates[0].t - now });
+  }
+
+  function tickCountdown() {
+    var now = Date.now();
+    var ev = findNextEvent(now);
+    document.getElementById('cd-icon').textContent = ev.icon;
+    document.getElementById('cd-event').textContent = ev.name;
+    document.getElementById('cd-event-time').textContent = ev.time || '';
+    if (ev.done) {
+      document.getElementById('cd-d').textContent = '✓';
+      document.getElementById('cd-h').textContent = '';
+      document.getElementById('cd-m').textContent = '';
+      if (countdownTimerId) clearInterval(countdownTimerId);
+      return;
+    }
+    var d = Math.floor(ev.diff / 86400000);
+    var h = Math.floor((ev.diff % 86400000) / 3600000);
+    var m = Math.floor((ev.diff % 3600000) / 60000);
+    document.getElementById('cd-d').textContent = d;
+    document.getElementById('cd-h').textContent = String(h).padStart(2, '0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2, '0');
+  }
+
   // ----- 1. checklist -----
   var checklistData = computeReminders(trip.startDate, trip.reminders);
   var checklistEl = document.getElementById('checklist-container');
@@ -3481,10 +3619,19 @@ if (typeof module !== 'undefined' && module.exports) {
   // ---- 视图切换（标签页 / 时间轴）----
   function setViewMode(mode, skipHighlight) {
     currentViewMode = mode;
-    document.querySelectorAll('.view-toggle__btn').forEach(function (b) {
-      if (b.getAttribute('data-mode') === mode) b.classList.add('active');
-      else b.classList.remove('active');
-    });
+    var btn = document.getElementById('view-toggle-btn');
+    if (btn) {
+      if (mode === 'tabs') {
+        btn.setAttribute('data-mode', 'timeline');
+        btn.textContent = '≡ 切到时间轴';
+      } else {
+        btn.setAttribute('data-mode', 'tabs');
+        btn.textContent = '▤ 切到标签页';
+      }
+    }
+    // 标签页模式下日期 tabs 吸顶；时间轴模式不吸顶
+    var tabsContainer = document.getElementById('day-tabs');
+    if (tabsContainer) tabsContainer.classList.toggle('is-sticky', mode === 'tabs');
     if (mode === 'timeline') {
       renderAllDays();
       clearDayHighlights();
@@ -3845,6 +3992,10 @@ if (typeof module !== 'undefined' && module.exports) {
   renderDayTabsHTML();
   initViewToggle();
   setViewMode('tabs', true);
+
+  // ----- countdown（此刻关注）倒计时启动 -----
+  tickCountdown();
+  countdownTimerId = setInterval(tickCountdown, 60000);
 })();
 
 </script>
