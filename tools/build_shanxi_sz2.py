@@ -771,8 +771,8 @@ INIT_SCRIPT = r"""
   if (typeof initTravelMap === 'function') {
     try {
       var travelMap = initTravelMap('map', pointsWithDayIdx, {
-        tileUrl: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-        attribution: '© OpenStreetMap contributors · © OpenTopoMap'
+        tileUrl: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
+        attribution: '© OpenStreetMap contributors · © CARTO'
       });
 
       // 缩放与位移限制（参考 shanxi-re.html / shanxi-6d.html 的实现）
