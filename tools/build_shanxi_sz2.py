@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build shanxi-sz2.html from data/trip_data.json + inlined engines.
+"""Build shanxi-sz.html from data/trip_data.json + inlined engines.
 
 Single-file HTML generator per travel-plan-viz SKILL.md:
 - Inline 5 engine files (map/reminders/weather/nav-buttons/day-coloring)
@@ -12,7 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 TRIP_JSON = ROOT / "data" / "trip_data.json"
-OUT = ROOT / "shanxi-sz2.html"
+OUT = ROOT / "shanxi-sz.html"
 
 # Engine sources — read at module import
 ENGINES = {
@@ -68,18 +68,17 @@ def render_html(trip):
     </div>
   </section>
 
-  <!-- ═══════════════ MAP (行程简图 · 顶部) ═══════════════ -->
-  <section class="section section--map-top">
+  <!-- ═══════════════ SUMMARY TABLE (行程简图 · 顶部) ═══════════════ -->
+  <section class="section">
     <div class="section-header">
-      <div class="section-icon jade">🗺️</div>
+      <div class="section-icon jade">🗓️</div>
       <div>
         <div class="section-title">行程简图</div>
-        <div class="section-subtitle">At a Glance · 朔州 → 临汾 · 7 天自驾</div>
+        <div class="section-subtitle">At a Glance · 7 天日程一览</div>
       </div>
     </div>
     <div class="section-body">
-      <div id="map" class="map"></div>
-      <div class="route-chips" id="route-chips"></div>
+      <div id="summary-container"><!-- JS 生成 --></div>
     </div>
   </section>
 
@@ -97,29 +96,44 @@ def render_html(trip):
     </div>
   </section>
 
-  <!-- ═══════════════ PRE-TRIP ESSENTIALS ═══════════════ -->
-  <section class="section">
-    <div class="section-header">
+  <!-- ═══════════════ PRE-TRIP ESSENTIALS (folded) ═══════════════ -->
+  <details class="section">
+    <summary class="section-header">
       <div class="section-icon gold">🌤️</div>
       <div>
         <div class="section-title">行前须知</div>
         <div class="section-subtitle">Pre-Trip · 9 月末山西定制</div>
       </div>
-    </div>
+    </summary>
     <div class="section-body" id="pretrip-container"></div>
-  </section>
+  </details>
 
-  <!-- ═══════════════ HOTELS ═══════════════ -->
+  <!-- ═══════════════ MAP ═══════════════ -->
   <section class="section">
     <div class="section-header">
+      <div class="section-icon jade">🗺️</div>
+      <div>
+        <div class="section-title">行程地图</div>
+        <div class="section-subtitle">按天配色 · 点击下方站点预览路线</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div id="map" class="map"></div>
+      <div class="route-chips" id="route-chips"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ HOTELS (folded) ═══════════════ -->
+  <details class="section">
+    <summary class="section-header">
       <div class="section-icon indigo">🏨</div>
       <div>
         <div class="section-title">住宿推荐 · 按片区价位</div>
         <div class="section-subtitle">Hotel Areas · 代县/浑源/大同/太原/临汾</div>
       </div>
-    </div>
+    </summary>
     <div class="section-body" id="hotels-container"></div>
-  </section>
+  </details>
 
   <!-- ═══════════════ VIEW TOGGLE (fixed) ═══════════════ -->
   <div class="view-toggle" id="view-toggle">
@@ -137,7 +151,7 @@ def render_html(trip):
       </div>
     </div>
     <div class="section-body">
-      <div id="day-tabs"></div>
+      <div class="day-tabs" id="day-tabs"></div>
       <div id="day-blocks"></div>
     </div>
   </section>
@@ -192,8 +206,8 @@ def render_html(trip):
   <!-- ═══════════════ NAV JUMP ═══════════════ -->
   <div class="nav-jump">
     <span class="nav-jump__label">// 切换行程版本</span>
-    <a href="shanxi-sz2.html" class="nav-jump__btn active" aria-disabled="true">7 天朔州进·太原出（当前）</a>
-    <a href="shanxi-sz.html" class="nav-jump__btn">6 天反向/原版（保留）</a>
+    <a href="shanxi-sz.html" class="nav-jump__btn active" aria-disabled="true">7 天朔州进·太原出（当前）</a>
+    <a href="shanxi-szXXX.html" class="nav-jump__btn">6 天反向/原版（保留）</a>
     <a href="index.html" class="nav-jump__btn">GitHub 首页</a>
   </div>
 
@@ -404,7 +418,22 @@ a:hover { color: var(--gold); text-decoration: underline; }
 @media (min-width: 768px) { .map { height: 480px; } }
 
 /* DAY TABS */
-.day-tabs { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 16px; padding-bottom: 4px; }
+.day-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  margin-bottom: 16px;
+  padding: 10px 0 4px;
+  background: var(--bg-card);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--border-soft);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(184,134,46,0.3) transparent;
+}
+.day-tabs::-webkit-scrollbar { height: 4px; }
+.day-tabs::-webkit-scrollbar-thumb { background: rgba(184,134,46,0.3); border-radius: 2px; }
 .day-tab {
   flex-shrink: 0;
   padding: 8px 14px;
@@ -427,6 +456,7 @@ a:hover { color: var(--gold); text-decoration: underline; }
   background: var(--bg-card-soft);
   border-radius: var(--radius);
   border-left: 3px solid;
+  scroll-margin-top: 72px;  /* 时间轴模式跳转时给吸顶 day-tabs 留空间 */
 }
 .day-block h3 {
   font-family: 'Noto Serif SC', serif;
@@ -706,6 +736,72 @@ footer { margin-top: 24px; padding: 24px 16px; border-top: 1px solid var(--borde
 .bookmark.is-current-day { background: var(--gold); color: var(--bg-deep); border-color: var(--gold); font-weight: 700; }
 @media (max-width: 767px) { #timeline-bookmarks { display: none; } }
 
+/* SUMMARY TABLE (行程简图) */
+.summary-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.summary-table thead th {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--parchment-dim);
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.summary-table tbody td {
+  padding: 8px 10px;
+  border-bottom: 1px dashed var(--border-soft);
+  vertical-align: top;
+}
+.summary-table tbody tr:last-child td { border-bottom: none; }
+.summary-table tbody tr:hover { background: rgba(184,134,46,0.05); }
+.summary-table .day-cell {
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--gold-lt);
+}
+.summary-table tbody tr.day-1 .day-cell { color: var(--day1); }
+.summary-table tbody tr.day-2 .day-cell { color: var(--day2); }
+.summary-table tbody tr.day-3 .day-cell { color: var(--day3); }
+.summary-table tbody tr.day-4 .day-cell { color: var(--day4); }
+.summary-table tbody tr.day-5 .day-cell { color: var(--day5); }
+.summary-table tbody tr.day-6 .day-cell { color: var(--day6); }
+.summary-table tbody tr.day-7 .day-cell { color: var(--day7); }
+.summary-table .date-cell { white-space: nowrap; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--parchment); }
+.summary-table .date-cell small { display: block; color: var(--parchment-dim); font-size: 10px; }
+.summary-table .theme-cell { font-size: 12px; line-height: 1.5; color: var(--parchment); }
+@media (max-width: 480px) {
+  .summary-table { font-size: 11px; }
+  .summary-table thead th, .summary-table tbody td { padding: 6px 6px; }
+}
+
+/* FOLDED SECTIONS（行前须知 / 住宿推荐 默认折叠） */
+details.section { padding: 0; }
+details.section > summary.section-header {
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  margin-bottom: 0;
+  padding: 20px 22px;
+}
+details.section > summary.section-header::-webkit-details-marker { display: none; }
+details.section > summary.section-header::after {
+  content: '▾';
+  margin-left: auto;
+  color: var(--gold-lt);
+  font-size: 13px;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+details.section:not([open]) > summary.section-header::after { transform: rotate(-90deg); }
+details.section > .section-body { padding: 0 22px 20px; }
+@media (min-width: 768px) {
+  details.section > summary.section-header { padding: 28px 32px; }
+  details.section > .section-body { padding: 0 32px 28px; }
+}
+
 /* utility */
 img { max-width: 100%; }
 """
@@ -739,6 +835,24 @@ INIT_SCRIPT = r"""
       });
     });
   })();
+
+  // ----- 0. summary table（行程简图）-----
+  var summaryEl = document.getElementById('summary-container');
+  if (summaryEl) {
+    summaryEl.innerHTML = '<div style="overflow-x:auto;">'
+      + '<table class="summary-table"><thead><tr>'
+      + '<th>Day</th><th>日期</th><th>主题</th>'
+      + '</tr></thead><tbody>'
+      + DAYS.map(function (day, di) {
+          var dateLabel = day.date.slice(5).replace('-', '/');
+          return '<tr class="day-' + (di + 1) + '">'
+            + '<td class="day-cell">Day ' + (di + 1) + '</td>'
+            + '<td class="date-cell">' + escapeHTML(dateLabel) + '<small>' + escapeHTML(day.weekday) + '</small></td>'
+            + '<td class="theme-cell">' + escapeHTML(day.theme) + '</td>'
+            + '</tr>';
+        }).join('')
+      + '</tbody></table></div>';
+  }
 
   // ----- 1. checklist -----
   var checklistData = computeReminders(trip.startDate, trip.reminders);
@@ -1038,8 +1152,8 @@ INIT_SCRIPT = r"""
   if (typeof initTravelMap === 'function') {
     try {
       travelMap = initTravelMap('map', mapPoints, {
-        tileUrl: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
-        attribution: '© OpenStreetMap contributors · © CARTO',
+        tileUrl: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        attribution: '© OpenStreetMap contributors',
         dayColor: (typeof dayColor === 'function') ? dayColor : undefined
       });
 
