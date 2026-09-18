@@ -255,6 +255,37 @@ a:hover { color: var(--gold); text-decoration: underline; }
   position: relative;
 }
 .slot-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (min-width: 768px) {
+  .slot-photo { height: auto; }
+  .slot-photo img { height: auto; object-fit: contain; background: var(--bg-mid); }
+}
+.slot-photo-nav {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  gap: 4px;
+  z-index: 2;
+}
+.slot-photo-nav button {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #f0c890;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  padding: 0;
+  transition: background 0.15s;
+}
+.slot-photo-nav button:hover { background: rgba(0, 0, 0, 0.8); }
+.slot-photo-nav button:active { background: rgba(184, 57, 46, 0.7); }
 .slot-rating { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold-lt); margin-bottom: 4px; }
 .slot-review { font-size: 12px; color: var(--parchment-dim); margin-bottom: 6px; line-height: 1.6; }
 .slot-meta { font-size: 11px; color: var(--parchment-dim); display: flex; flex-wrap: wrap; gap: 6px 12px; }
@@ -1305,7 +1336,7 @@ img { max-width: 100%; }
           "time": "10:30 出发 / 11:10 抵达 / 11:10–13:00 游览",
           "lat": 39.165,
           "lng": 112.745,
-          "photo": "assets/img/guangwu-greatwall.jpg",
+          "photos": ["assets/img/guangwu-greatwall.webp", "assets/img/guangwu-greatwall2.webp", "assets/img/guangwu-greatwall3.webp"],
           "photoCredit": {
             "author": "未知 (Wikimedia Commons)",
             "license": "CC",
@@ -1483,7 +1514,7 @@ img { max-width: 100%; }
           "time": "08:00 出发 / 08:20 抵达 / 08:20–09:30 游览+早餐",
           "lat": 38.624,
           "lng": 113.376,
-          "photo": "assets/img/nanchan-temple.jpg",
+          "photo": "assets/img/nanchan-temple.webp",
           "photoCredit": {
             "author": "bostonunion, Wikimedia Commons",
             "license": "CC BY-SA 3.0",
@@ -1525,7 +1556,7 @@ img { max-width: 100%; }
           "time": "09:30 出发 / 10:00 抵达 / 10:00–12:30 游览",
           "lat": 38.713,
           "lng": 113.255,
-          "photo": "assets/img/foguang-temple.jpg",
+          "photos": ["assets/img/foguang-temple.webp", "assets/img/foguang-temple2.webp", "assets/img/foguang-temple3.webp", "assets/img/foguang-temple4.webp"],
           "photoCredit": {
             "author": "Fanghong, Wikimedia Commons",
             "license": "CC BY-SA 3.0",
@@ -1687,7 +1718,7 @@ img { max-width: 100%; }
           "time": "08:00–10:30",
           "lat": 39.659,
           "lng": 113.704,
-          "photo": "assets/img/hanging-temple.jpg",
+          "photos": ["assets/img/hanging-temple.webp", "assets/img/hanging-temple2.jpg"],
           "photoCredit": {
             "author": "Severin Stalder, Wikimedia Commons",
             "license": "CC BY-SA 3.0",
@@ -1728,7 +1759,7 @@ img { max-width: 100%; }
           "time": "11:00 出发 / 12:00 抵达 / 12:00–13:30 游览+午餐",
           "lat": 39.563,
           "lng": 113.19,
-          "photo": "assets/img/yingxian-pagoda.jpg",
+          "photos": ["assets/img/yingxian-pagoda.webp", "assets/img/yingxian-pagoda2.webp"],
           "photoCredit": {
             "author": "Alancrh, Wikimedia Commons",
             "license": "CC BY-SA 3.0",
@@ -2056,7 +2087,7 @@ img { max-width: 100%; }
           "time": "07:30 出发 / 21:00 返回临汾（14h 高强度）",
           "lat": 36.241,
           "lng": 111.696,
-          "photo": "assets/img/guangsheng-temple.jpg",
+          "photos": ["assets/img/hukou-waterfall.jpg", "assets/img/guangsheng-temple.webp", "assets/img/xiaoxitian.webp", "assets/img/xiaoxitian2.webp", "assets/img/guangsheng-temple2.webp"],
           "photoCredit": {
             "author": "未知 (Wikimedia Commons)",
             "license": "CC",
@@ -2251,47 +2282,6 @@ img { max-width: 100%; }
           }
         },
         {
-          "period": "afternoon",
-          "name": "晋祠（游览）",
-          "time": "13:00–16:00",
-          "lat": 37.706,
-          "lng": 112.443,
-          "photo": "assets/img/jinci-temple.jpg",
-          "photoCredit": {
-            "author": "Zhangzhugang, Wikimedia Commons",
-            "license": "CC BY-SA 3.0",
-            "file": "File:Jinci Temple.jpg",
-            "url": "https://commons.wikimedia.org/wiki/File:Jinci_Temple.jpg"
-          },
-          "rating": 4.8,
-          "review": "晋祠游览 3h：核心看'三绝'（周柏·宋代彩塑·难老泉）+ '三匾'（'难老''对越''水镜台'）。奉圣寺+十方奉圣禅寺（含唐代塑像）可加 30 min。⚠️ 9 月底日落 18:00–18:15，16:00 必须出园开始南下。",
-          "openingHours": "8:00–18:00",
-          "ticketPrice": "¥80",
-          "transport": {
-            "mode": "步行",
-            "distance": "—",
-            "highway": "—",
-            "duration": "—",
-            "fare": "—"
-          },
-          "needsBooking": false,
-          "leadDays": 0,
-          "weather": {
-            "coords": {
-              "lat": 37.706,
-              "lng": 112.443
-            },
-            "fallback": {
-              "icon": "⛅",
-              "conditions": "多云",
-              "high": 22,
-              "low": 12,
-              "precipAdvice": "无需备伞",
-              "updatedAt": "2026-09-18"
-            }
-          }
-        },
-        {
           "period": "evening",
           "name": "晋祠 → 太原市区（夜宿）",
           "time": "16:00 出发 / 16:40 抵达",
@@ -2378,7 +2368,7 @@ img { max-width: 100%; }
           "time": "08:30 出发 / 09:00 抵达 / 09:00–11:00 游览",
           "lat": 37.82,
           "lng": 112.6,
-          "photo": "",
+          "photos": ["assets/img/beiqi.png", "assets/img/beiqi2.png"],
           "rating": 4.6,
           "review": "太原北齐壁画博物馆（迎泽区王家峰村）：全国首座北齐壁画专题馆，核心是北齐徐显秀墓壁画，约 1.5–2h 逛完。",
           "openingHours": "9:00–17:00（16:30 停止检票；周一闭馆）",
@@ -3505,12 +3495,26 @@ if (typeof module !== 'undefined' && module.exports) {
     var html = '';
     (day.slots || []).forEach(function (slot, slotIdx) {
       var photoHTML = '';
-      if (slot.photo) {
+      var photoSrc = slot.photo;
+      var photosAttr = '';
+      var photoNavHTML = '';
+      if (Array.isArray(slot.photos) && slot.photos.length) {
+        photoSrc = slot.photos[0];
+        photosAttr = ' data-photos="' + escapeHTML(JSON.stringify(slot.photos)) + '"';
+        if (slot.photos.length > 1) {
+          photoNavHTML = '<div class="slot-photo-nav">'
+            + '<button type="button" data-dir="prev" aria-label="上一张图">‹</button>'
+            + '<button type="button" data-dir="next" aria-label="下一张图">›</button>'
+            + '</div>';
+        }
+      }
+      if (photoSrc) {
         var credit = slot.photoCredit && slot.photoCredit.author
           ? '<div style="position:absolute;right:6px;background:rgba(0,0,0,0.6);color:#f0c890;font-size:9px;padding:2px 6px;border-radius:3px;font-family:DM Mono,monospace;">📷 ' + escapeHTML(slot.photoCredit.author.split(',')[0]) + '</div>'
           : '';
-        photoHTML = '<div class="slot-photo day-' + (dayIdx + 1) + '-bg">'
-          + '<img src="' + escapeHTML(slot.photo) + '" alt="' + escapeHTML(slot.name) + '" loading="lazy" onerror="this.style.display=\'none\'">'
+        photoHTML = '<div class="slot-photo day-' + (dayIdx + 1) + '-bg"' + photosAttr + '>'
+          + '<img src="' + escapeHTML(photoSrc) + '" alt="' + escapeHTML(slot.name) + '" loading="lazy" onerror="this.style.display=\'none\'">'
+          + photoNavHTML
           + credit + '</div>';
       }
       var reviewHTML = slot.review ? '<div class="slot-review">' + escapeHTML(slot.review) + '</div>' : '';
@@ -3605,8 +3609,106 @@ if (typeof module !== 'undefined' && module.exports) {
       + '</div>';
   }
 
+  // 景点图轮换：slot.photos 为数组时，每 10s 切换。
+  // 状态键用 photos JSON 字符串做幂等，视图切换重建 DOM 后同一 slot 不会重复挂定时器。
+  // 图片不在视口内时跳过 src 更新（但定时器继续 tick），避免页面高度跳变。
+  var photoCycleStates = {};
+
+  function armCycleTimer(key) {
+    var state = photoCycleStates[key];
+    if (!state || state.timerId) return;
+    state.timerId = setTimeout(function () { cycleAdvance(key); }, 10000);
+  }
+
+  function pauseCycleTimer(key) {
+    var state = photoCycleStates[key];
+    if (!state) return;
+    if (state.timerId) { clearTimeout(state.timerId); state.timerId = null; }
+  }
+
+  function isNodeVisible(node) {
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    var rect = node.getBoundingClientRect();
+    return rect.bottom > 0 && rect.top < vh;
+  }
+
+  function applyCycleImg(key) {
+    var state = photoCycleStates[key];
+    if (!state) return;
+    var nodes = document.querySelectorAll('.slot-photo[data-photos]');
+    for (var j = 0; j < nodes.length; j++) {
+      if (nodes[j].getAttribute('data-photos') !== key) continue;
+      var img = nodes[j].querySelector('img');
+      if (img) img.src = state.photos[state.idx];
+    }
+  }
+
+  function cycleAdvance(key) {
+    var state = photoCycleStates[key];
+    if (!state) return;
+    state.timerId = null;  // setTimeout fire 后 ID 不会被自动清，先清掉让 armCycleTimer 能重新挂
+    // 自动轮换：节点离屏或图未加载完就跳过，避免页面长度跳变 + 避免图片序列错位
+    var nodes = document.querySelectorAll('.slot-photo[data-photos]');
+    var ready = false;
+    for (var j = 0; j < nodes.length; j++) {
+      if (nodes[j].getAttribute('data-photos') !== key) continue;
+      if (!isNodeVisible(nodes[j])) continue;
+      var img = nodes[j].querySelector('img');
+      if (img && img.complete && img.naturalWidth > 0) { ready = true; break; }
+    }
+    if (!ready) { armCycleTimer(key); return; }
+    // 准备好了才推进 idx + 更新 src，保证序列不跳格
+    state.idx = (state.idx + 1) % state.photos.length;
+    applyCycleImg(key);
+    armCycleTimer(key);
+  }
+
+  function cycleStep(key, dir) {
+    var state = photoCycleStates[key];
+    if (!state) return;
+    pauseCycleTimer(key);
+    state.idx = dir === 'next'
+      ? (state.idx + 1) % state.photos.length
+      : (state.idx - 1 + state.photos.length) % state.photos.length;
+    // 手动点击：用户主动点的就该切，不做可见性拦截
+    applyCycleImg(key);
+    armCycleTimer(key);
+  }
+
+  function initPhotoCycles() {
+    var nodes = document.querySelectorAll('.slot-photo[data-photos]');
+    for (var i = 0; i < nodes.length; i++) {
+      var node = nodes[i];
+      var key = node.getAttribute('data-photos');
+      if (!photoCycleStates[key]) {
+        var photos;
+        try { photos = JSON.parse(key); } catch (e) { continue; }
+        if (!Array.isArray(photos) || photos.length < 2) continue;
+        photoCycleStates[key] = { photos: photos, idx: 0, timerId: null };
+        armCycleTimer(key);
+      }
+      // 重建 DOM 后重新给导航按钮挂点击；用按钮上的标记防重复（多次切 tab 会重复走）
+      var nav = node.querySelector('.slot-photo-nav');
+      if (!nav) continue;
+      var btns = nav.querySelectorAll('button[data-dir]');
+      for (var b = 0; b < btns.length; b++) {
+        // 把 key 作为参数注入 IIFE：var key 是函数级，外层 for 会改写它；
+        // 不传参的话所有按钮的 handler 都引用最后一个 slot 的 key。
+        (function (btn, k) {
+          if (btn._photoCycleWired) return;
+          btn._photoCycleWired = true;
+          btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            cycleStep(k, btn.getAttribute('data-dir'));
+          });
+        })(btns[b], key);
+      }
+    }
+  }
+
   function renderAllDays() {
     if (blocksEl) blocksEl.innerHTML = DAYS.map(renderDayBlockHTML).join('');
+    initPhotoCycles();
   }
 
   function renderDayTabsHTML() {
@@ -3630,6 +3732,7 @@ if (typeof module !== 'undefined' && module.exports) {
   function showDayTab(idx, skipHighlight) {
     currentDayIdx = idx;
     if (blocksEl) blocksEl.innerHTML = renderDayBlockHTML(DAYS[idx], idx);
+    initPhotoCycles();
     updateActiveTab(idx);
     if (!skipHighlight) highlightDayOnMap(idx);
   }
