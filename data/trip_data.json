@@ -1,0 +1,1626 @@
+{
+  "title": "山西 7 天 · 黑神话悟空古建朝圣（朔州进·太原出）",
+  "startDate": "2026-09-26",
+  "colorScheme": "shanxi-bronze-cinnabar-7d",
+  "preTrip": {
+    "weather": {
+      "summary": "9 月末 10 月初山西秋高气爽：朔州/大同约 18–20°C / 6–8°C，五台山/恒山等高海拔区 5–10°C 偏低。白天晴朗适合户外古建，傍晚/清晨骤冷需加外套。10/1 国庆首日大同可能降温（高海拔已入冬），需加抓绒/薄羽绒。壶口瀑布风沙大注意防晒+口罩。",
+      "typhoon": "山西内陆无台风影响；主要看 9 月底是否有寒潮预警，五台山/恒山/太行山高海拔区可能下雪。"
+    },
+    "packing": "7 天跨山西南北：抓绒+薄羽绒+防风外套各一；防滑徒步鞋必备（佛光寺东大殿台阶陡、悬空寺登临风大、恒山山顶冷）；保温杯、润唇膏、暖宝宝；常用药；雨伞/雨衣备用；寺庙内禁止短裤/拖鞋/帽。",
+    "payment": "全国通用：微信/支付宝覆盖绝大多数场景；山西老字号面馆偶有只收现金/微信，可备 300–500 元现金。",
+    "apps": [
+      "高德地图（境内导航）",
+      "12306（临汾西→太原南 高铁购票）",
+      "飞猪/携程（机票/酒店）",
+      "航司 APP（值机选座）",
+      "山西博物院公众号（免费预约）",
+      "恒山景区公众号（悬空寺登临票）"
+    ],
+    "ticketTip": "去程 9/26 周六早班（广州 T2 06:35 → 朔州 09:40），返程 10/2 周五下午班（太原→广州），班期均需自行核实。佛光寺/南禅寺/应县木塔现场购票即可；山西博物院需提前 1–3 天公众号免费预约（周一闭馆；9/30 周三正常开放）。9/28 周一悬空寺登临票需提前 7 天 9:00 公众号'恒山景区'蹲。9/29 周二云冈石窟可现场购票。10/1 国庆首日临汾一日游团（广胜寺+小西天+壶口瀑布）务必提前 1 周预订。山西文旅年卡（晋游卡）258 元/年含晋祠/雁门关/五台山等 120+ 景区，但本行程核心古建（云冈石窟/悬空寺/应县木塔/华严寺/善化寺/北岳恒山/佛光寺/南禅寺）均不在年卡。"
+  },
+  "flights": {
+    "booked": [],
+    "candidates": {
+      "outbound": [
+        {
+          "label": "广州 (CAN) → 朔州 (SZV)",
+          "code": "已选班次 · 9/26 周六早班",
+          "time": "06:35 广州白云 T2 起飞 → 09:40 朔州机场落地",
+          "note": "本行程主用班次：周六早班直飞/经停约 3h，落地朔州机场。机场柜台租车后直接南下广武长城。航班时间请自行核实。"
+        },
+        {
+          "label": "广州 (CAN) → 太原 (TYN) · 备选",
+          "code": "南航 CZ3701 等早班",
+          "time": "9/26 早班直飞 · 参考价 ¥1,000+",
+          "note": "备选：如主班次售罄，可查南航/东航/海航早班直飞太原（飞行 2h45m）。⚠️ 太原→朔州需多开 250 km / 3h。"
+        }
+      ],
+      "return": [
+        {
+          "label": "太原 (TYN) → 广州 (CAN) · 下午班",
+          "code": "南航 CZ3702 / 东航 MU5672 / 海航 HU7128 等",
+          "time": "10/2 周五 14:00–18:00 起飞",
+          "note": "本行程主用班次：Day 7 上午太原市区→武宿机场（打车 ¥40–60 / 30 min），起飞前预留 2h（国庆返程高峰）。航班时间请自行核实。"
+        },
+        {
+          "label": "太原 (TYN) → 广州 (CAN) · 晚班备选",
+          "code": "南航 CZ8202 等晚班",
+          "time": "10/2 周五 晚班 太原 → 广州",
+          "note": "晚班备选：若 Day 6 一日游拖到很晚、Day 7 想多休整半天可选晚班。国庆返程高峰务必提前 1 周订票。"
+        }
+      ]
+    }
+  },
+  "hotelAreas": [
+    {
+      "area": "代县古城内",
+      "reason": "Day 1 入住一晚（看完雁门关后赶过来）：边塞小城，体验古城夜景与静谧氛围；游览边靖楼、代州文庙、阿育王塔等。⚠️ 9/26 山区县道赶夜路有风险，如抵代县已晚 19:30 以后，可改住五台山台怀镇（详见下方）。",
+      "options": [
+        {
+          "tier": "经济",
+          "name": "代县招待所 / 古城内民宿",
+          "priceRange": "约 ¥150–300/晚",
+          "note": "设施偏旧但价格便宜；位置好"
+        },
+        {
+          "tier": "中档",
+          "name": "边客楼 / 赵杲观酒店",
+          "priceRange": "约 ¥350–600/晚",
+          "note": "古城内精品客栈；推荐，提前 1 周订"
+        },
+        {
+          "tier": "高端",
+          "name": "代县国际酒店（待补）",
+          "priceRange": "约 ¥600–900/晚",
+          "note": "代县高端选择较少"
+        }
+      ]
+    },
+    {
+      "area": "五台山 · 台怀镇（备选，仅当 Day 1 抵代县过晚时改住）",
+      "reason": "备选：若 Day 1 看完雁门关已 17:30 之后入园，山区县道夜行危险，建议改住五台山台怀镇（约 60 km / 1.5h）；次晨再走 G108 → 应县木塔（约 110 km / 2h）。",
+      "options": [
+        {
+          "tier": "经济",
+          "name": "台怀镇农家乐 / 客栈",
+          "priceRange": "约 ¥200–400/晚",
+          "note": "数量多，9 月底非高峰可现场订"
+        },
+        {
+          "tier": "中档",
+          "name": "五台山花卉山庄 / 胜家宾馆",
+          "priceRange": "约 ¥400–700/晚",
+          "note": "靠近核心景区，方便次晨出发"
+        },
+        {
+          "tier": "高端",
+          "name": "五台山万豪酒店 / 友谊宾馆",
+          "priceRange": "约 ¥900–1500/晚",
+          "note": "国际品牌；硬件稳定"
+        }
+      ]
+    },
+    {
+      "area": "浑源县城 · 永安镇",
+      "reason": "Day 2 入住：距悬空寺仅约 4 km、恒山约 5 km，次日可赶在 8:00 开园前进景区，比住应县省约 1 小时车程。县城以快捷酒店为主，供给充足。",
+      "options": [
+        {
+          "tier": "经济",
+          "name": "县城连锁快捷 / 本地宾馆",
+          "priceRange": "约 ¥150–280/晚",
+          "note": "干净够用；靠近县城中心吃饭方便"
+        },
+        {
+          "tier": "中档",
+          "name": "浑源恒山景区周边酒店",
+          "priceRange": "约 ¥300–500/晚",
+          "note": "旺季周末偏紧，建议提前 1 周订"
+        },
+        {
+          "tier": "高端",
+          "name": "浑源高端选择有限",
+          "priceRange": "约 ¥500–800/晚",
+          "note": "县城高端供给少；若在意住宿品质可改住大同、但次日需多跑约 85 km"
+        }
+      ]
+    },
+    {
+      "area": "大同古城 · 四牌楼/南门",
+      "reason": "Day 3 入住一晚：悬空寺/恒山半日后入住大同古城；步行可达善化寺、华严寺、九龙壁、四牌楼、古城墙。Day 4 早出云冈石窟方便。",
+      "options": [
+        {
+          "tier": "经济",
+          "name": "汉庭 / 锦江之星大同古城店",
+          "priceRange": "约 ¥260–450/晚",
+          "note": "位置好但隔音一般；拖行李需联系店家"
+        },
+        {
+          "tier": "中档",
+          "name": "大同酒店 / 全季大同古城店",
+          "priceRange": "约 ¥450–750/晚",
+          "note": "性价比最高；建议提前 1 周订"
+        },
+        {
+          "tier": "高端",
+          "name": "大同贵宾楼假日酒店 / 云冈国际酒店",
+          "priceRange": "约 ¥850–1500/晚",
+          "note": "国际品牌；硬件稳定"
+        }
+      ]
+    },
+    {
+      "area": "太原 · 钟楼街 / 柳巷 / 食品街",
+      "reason": "Day 4 入住一晚（19:30 大同抵达后入住）+ Day 6 高铁返太原再入住一晚：太原老城核心、吃饭最方便；步行可达食品街老字号；Day 5 出发去晋祠（市区西南 25 km）、Day 7 早去武宿机场也方便。",
+      "options": [
+        {
+          "tier": "经济",
+          "name": "如家 / 锦江之星钟楼街店",
+          "priceRange": "约 ¥280–480/晚",
+          "note": "市中心、交通便利"
+        },
+        {
+          "tier": "中档",
+          "name": "全季酒店太原柳巷店 / 亚朵钟楼街店",
+          "priceRange": "约 ¥480–750/晚",
+          "note": "硬件新、设计感强；适合一晚休整"
+        },
+        {
+          "tier": "高端",
+          "name": "太原凯宾斯基酒店 / 湖滨国际大酒店",
+          "priceRange": "约 ¥900–1500/晚",
+          "note": "汾河景观房视野佳；商务出行友好"
+        }
+      ]
+    },
+    {
+      "area": "临汾市区 · 鼓楼/解放路",
+      "reason": "Day 5 入住一晚（晋祠南下后入住）：临汾市区是 10/1 一日游团集散中心，次日还车+出发都方便；临汾西站近距，10/1 晚高铁返太原省时。",
+      "options": [
+        {
+          "tier": "经济",
+          "name": "如家 / 汉庭临汾鼓楼店",
+          "priceRange": "约 ¥180–320/晚",
+          "note": "市区核心、吃饭方便"
+        },
+        {
+          "tier": "中档",
+          "name": "全季临汾鼓楼店 / 亚朵临汾店",
+          "priceRange": "约 ¥350–550/晚",
+          "note": "硬件新；提前 1 周订"
+        },
+        {
+          "tier": "高端",
+          "name": "临汾华门假日酒店 / 临汾天鹅国际酒店",
+          "priceRange": "约 ¥600–1000/晚",
+          "note": "国庆首日偏紧；建议尽早订"
+        }
+      ]
+    }
+  ],
+  "disclaimer": "本页全部信息（天气、航班、酒店、餐厅、景点、门票、价格、营业时间、评分、活动等）均为 AI 基于公开资料整理的参考建议，可能不准确或已过时，不保证与实时情况一致；请务必在官方渠道 / 订票订房 / 地图等 App 上核实后再做决定或前往。山西古建文物以官方最新通知为准；佛光寺东大殿仅殿外参观。页面实景照片均来自 Wikimedia Commons，作者与许可证标注于每张图片右下角，点击可跳转原始文件页。",
+  "tips": [
+    "本行程 7 天 6 晚采用'朔州进太原出'一路向南不折返：Day 1 朔州/代县、Day 2 浑源、Day 3 大同、Day 4 太原、Day 5–6 临汾/太原、Day 7 返程。Day 1 落地强度大（落地+取车+ 2 景点），Day 2 强度最大（3 个古建+长途自驾），Day 5 强度也大（博物院+长途南下），Day 6 14h 高强度（广胜寺+小西天+壶口一日游）。",
+    "佛光寺东大殿禁止入殿，仅殿外参观。建议请文管员讲解，了解'四绝'：唐代建筑、彩塑、壁画、题记。",
+    "悬空寺登临票每日 9:00 公众号'恒山景区'放票（限 2475 张），出发前 7 天 9:00 准时蹲；错过只能远观。",
+    "应县木塔现仅开放一层，二层以上因塔身倾斜长期禁止攀登；2026 年 4 月起有数字沉浸式体验空间可作替代。塔院在木塔外围、不收门票。",
+    "山西博物院免费但需预约（提前 1–3 天微信公众号'山西博物院'）；周一闭馆，9/30 周三正常开放。",
+    "Day 1 雁门关走 G208 国道南下代县，**不要走二淅线**（山阴→代县段山路盘绕，国庆前夕已堵车）。",
+    "Day 2 佛光寺/南禅寺都在五台县西南（豆村、阳白乡），末段山区县道弯多路窄，需会车避让；务必自驾或包车。山区县道夜行危险——若 18:00 后无法抵达浑源，直接改住五台山台怀镇。",
+    "Day 2 段实测参考：佛光寺→南禅寺约 25 km/30 min，南禅寺→应县木塔约 140 km/2h（走 G18 荣乌高速），应县→浑源约 80 km/1.25 h（G18→G55）。⚠️ 9/27 周日崇福寺全天绕行代价大（约 270 km），可看时间和天气决定是否顺路。",
+    "Day 3 时间计算：悬空寺 8:00–10:30 出来；若爬恒山，14:00 前结束下山；若不爬，10:30 直接开车去大同（1h），14:30 抵达大同古城看华严寺/善化寺。⚠️ 9/28 周一华严寺/善化寺闭馆——大同补 1 个点请改去九龙壁+大同博物馆或法华寺。",
+    "9 月底 10 月初山西昼夜温差 10–15°C：白天短袖+外套足够；傍晚/清晨加抓绒；五台山/恒山务必带羽绒。10/1 国庆首日大同可能降温 5–8℃。",
+    "Day 4 大同→太原 必须 15:30 前出发！9 月底日落 18:00–18:15，山区段已亏人；晚 19:30 抵达太原柳巷/食品街。",
+    "Day 6 一日游三景点一日内全覆盖属超常规强度（14h）：广胜寺（洪洞）+ 小西天（隰县）+ 壶口瀑布（吉县）；若体力不够，提前与旅行社协商砍小西天。临汾西→太原南 高铁末班约 21:30，务必提前 1 周订票。",
+    "Day 7 国庆返程高峰——建议起飞前 2h 到武宿机场（太原武宿在市区东南约 15 km，打车 ¥40–60）。",
+    "🚗 70L 油箱 + 1.5T SUV 加油规划（按 ~10 L/100km 综合油耗推算）：**至少 3 次补满**——①朔州（提车当日，机场/高速入口加满 70L）；②应县（Day 2 抵达后加满，山区段附近加油站少）；③大同（Day 3 抵达后加满，保证 Day 4 下太原 320 km 余裕）。临汾还车前一天在大同/临汾高速前补满（多数租车合同要求满油还，否则按 ¥15-30/L 差量扣费）。参考坐标：朔州市区中石油、应县木塔附近中石化、大同古城南门中石化、临汾西站中石油。"
+  ],
+  "reminders": [
+    {
+      "item": "广州—朔州 去程机票（9/26 06:35 早班）",
+      "leadDays": 30
+    },
+    {
+      "item": "太原—广州 返程机票（10/2 下午班）",
+      "leadDays": 30
+    },
+    {
+      "item": "朔州机场租车（9/26 落地取车，10/1 临汾异地还车）",
+      "leadDays": 14
+    },
+    {
+      "item": "代县古城酒店（Day 1 一晚）",
+      "leadDays": 14
+    },
+    {
+      "item": "浑源县城酒店（Day 2 一晚）",
+      "leadDays": 14
+    },
+    {
+      "item": "大同古城酒店（Day 3 一晚）",
+      "leadDays": 21
+    },
+    {
+      "item": "太原酒店（Day 4 一晚）",
+      "leadDays": 14
+    },
+    {
+      "item": "临汾酒店（Day 5 一晚）",
+      "leadDays": 14
+    },
+    {
+      "item": "太原酒店（Day 6 晚高铁返太原后一晚）",
+      "leadDays": 14
+    },
+    {
+      "item": "山西博物院免费预约（9/30 上午）",
+      "leadDays": 3
+    },
+    {
+      "item": "悬空寺登临票预约（9/28 早班，9/21 9:00 蹲公众号）",
+      "leadDays": 7
+    },
+    {
+      "item": "云冈石窟购票（9/29 上午）",
+      "leadDays": 3
+    },
+    {
+      "item": "临汾一日游团（10/1 广胜寺+小西天+壶口，旅行社或临汾旅游集散中心）",
+      "leadDays": 14
+    },
+    {
+      "item": "临汾西→太原南 高铁票（10/1 晚约 20:30 班次）",
+      "leadDays": 14
+    },
+    {
+      "item": "佛光寺/雁门关/应县木塔/悬空寺/晋祠现场购票",
+      "leadDays": 0
+    }
+  ],
+  "days": [
+    {
+      "date": "2026-09-26",
+      "weekday": "周六",
+      "theme": "朔州落地 · 广武长城 + 雁门关 · 夜宿代县",
+      "tips": [
+        "9:40 落地朔州机场 → 10:30 出机场+取车 → 11:10 起下午段。建议提前 1 周线上预订租车+基础险+不计免赔。",
+        "⚠️ 雁门关直走 G208 国道南下代县，避开二淅线（山阴→代县段山路盘绕，国庆前夕已堵车）。",
+        "雁门关 9 月底 17:30 停止售票，建议 16:00 前入园；走边塞古长城主段、省体力，约 2h 够。",
+        "代县古城内免费，边靖楼夜景灯可观；晚餐推荐代县熬鱼+莜面。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "广州 → 朔州（落地 + 取车）",
+          "time": "06:35 起飞 / 09:40 落地 / 10:30 出机场+取车",
+          "lat": 39.388,
+          "lng": 112.405,
+          "photo": "",
+          "photoCredit": "",
+          "rating": 0,
+          "review": "06:35 广州白云 T2 起飞 → 09:40 朔州机场落地（约 3h 直飞/经停）。落地后机场柜台租车（建议提前 1 周线上预订，含第三者责任险+不计免赔），走 S40 朔州绕城转 X185 南下广武长城，约 40 km / 40 min。午餐控制在 30 min 内，13:00 前抵达广武开始下午段。",
+          "openingHours": "依航班",
+          "ticketPrice": "机票 ¥1,000+/人；租车 6 天 ¥1,800–2,600",
+          "transport": {
+            "mode": "飞机+自驾取车",
+            "distance": "约 1,800 km（飞行）",
+            "highway": "—",
+            "duration": "飞行 3h + 出机场+取车 1h",
+            "fare": "机票 ¥1,000+/人 + 取车 6 天 ¥1,800–2,600"
+          },
+          "needsBooking": true,
+          "leadDays": 30,
+          "weather": {
+            "coords": {
+              "lat": 39.388,
+              "lng": 112.405
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 20,
+              "low": 7,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "afternoon",
+          "name": "朔州 → 广武长城",
+          "time": "10:30 出发 / 11:10 抵达 / 11:10–13:00 游览",
+          "lat": 39.165,
+          "lng": 112.745,
+          "photo": "assets/img/guangwu-greatwall.jpg",
+          "photoCredit": {
+            "author": "未知 (Wikimedia Commons)",
+            "license": "CC",
+            "file": "File:Guangwu section great wall.jpg",
+            "url": "https://commons.wikimedia.org/wiki/File:Guangwu_section_great_wall.jpg"
+          },
+          "rating": 4.4,
+          "review": "广武长城（含旧广武古城+广武汉墓群）：山西保存最完好的明长城段落之一，旧广武城墙完整、登城视野开阔；广武汉墓群是中国最大的汉墓群之一（地面可见坟丘百余座）。免费开放、全天可爬。⚠️ 9 月底当地气温 18–20°C、风大，登城注意保暖。",
+          "openingHours": "全天（无围墙）",
+          "ticketPrice": "免费",
+          "transport": {
+            "mode": "自驾",
+            "distance": "约 40 km",
+            "highway": "S40 朔州绕城 → X185",
+            "duration": "约 40 分钟",
+            "fare": "油费约 ¥25"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 39.165,
+              "lng": 112.745
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 20,
+              "low": 6,
+              "precipAdvice": "风大加外套",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "afternoon",
+          "name": "广武 → 雁门关",
+          "time": "13:30 出发 / 14:00 抵达 / 14:00–17:30 游览",
+          "lat": 39.184,
+          "lng": 112.793,
+          "photo": "assets/img/yanmen-pass.jpg",
+          "photoCredit": {
+            "author": "未知 (Wikimedia Commons)",
+            "license": "CC",
+            "file": "File:雁门关.jpg",
+            "url": "https://commons.wikimedia.org/wiki/File:%E9%9B%81%E9%97%A8%E5%85%B3.jpg"
+          },
+          "rating": 4.6,
+          "review": "雁门关：'中华第一关'，长城重要关隘，景区分边塞古长城+瓮城+点将台+阜家岭等。全程步行约 2.5h（盘山+台阶较多）。⚠️ 9 月底日落 18:00–18:15，景区通常 8:00–18:00（17:30 停止售票），建议 14:00 入园可看完核心。10/1 国庆期间延长至 18:30。建议主走边塞古长城段，省体力。",
+          "openingHours": "8:00–18:00（17:30 停止售票；国庆延至 18:30）",
+          "ticketPrice": "¥90（现场或公众号'雁门关景区'）",
+          "transport": {
+            "mode": "自驾",
+            "distance": "约 8 km",
+            "highway": "S40 → G208",
+            "duration": "约 15 分钟",
+            "fare": "油费约 ¥5"
+          },
+          "needsBooking": true,
+          "leadDays": 3,
+          "weather": {
+            "coords": {
+              "lat": 39.184,
+              "lng": 112.793
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 21,
+              "low": 8,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "雁门关 → 代县古城（夜宿）",
+          "time": "17:30 出发 / 18:00 抵达",
+          "lat": 39.09,
+          "lng": 112.963,
+          "photo": "",
+          "photoCredit": "",
+          "rating": 0,
+          "review": "雁门关走 G208 国道南下代县古城（约 30 km / 30 min）。⚠️ 不要走二淅线（山阴→代县段山路盘绕，国庆前夕已堵车；走 G208 高速段最快）。夜宿代县古城：边靖楼（'万里长城第一楼'，夜景灯可观）、代州文庙、阿育王塔（古城内步行）。晚餐推荐代县熬鱼+莜面。",
+          "openingHours": "全天",
+          "ticketPrice": "古城免费",
+          "transport": {
+            "mode": "自驾",
+            "distance": "约 30 km",
+            "highway": "G208",
+            "duration": "约 30 分钟",
+            "fare": "油费约 ¥15"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 39.09,
+              "lng": 112.963
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 21,
+              "low": 8,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "朔州市区 · 老城面食",
+          "hours": "—",
+          "dishes": [
+            {
+              "name": "朔州羊杂汤",
+              "price": "¥28"
+            },
+            {
+              "name": "莜面窝窝",
+              "price": "¥22"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "代县古城 · 代州客栈/老菜馆",
+          "hours": "—",
+          "dishes": [
+            {
+              "name": "代县熬鱼",
+              "price": "¥68"
+            },
+            {
+              "name": "代县油糕",
+              "price": "¥15"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-27",
+      "weekday": "周日",
+      "theme": "南禅寺 + 佛光寺 + 应县木塔 · 夜宿浑源",
+      "tips": [
+        "佛光寺/南禅寺都在五台县西南（豆村、阳白乡），山区县道末段弯多路窄，需会车避让；务必自驾/包车。",
+        "⚠️ 山区县道夜行危险——若 18:00 后无法抵达浑源，直接改住五台山台怀镇（次晨多跑 100 km / 2h）。",
+        "佛光寺东大殿禁止入殿，建议请文管员讲解（工作日上午有，下午不一定）。南禅寺仅 30–40 min。",
+        "应县木塔仅一层开放；赶日落建议下一日提早出发或把应县放到 Day 3 上午。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "代县 → 佛光寺",
+          "time": "07:30 出发 / 09:00 抵达 / 09:00–11:30 游览",
+          "lat": 38.798,
+          "lng": 113.338,
+          "photo": "assets/img/foguang-temple.jpg",
+          "photoCredit": {
+            "author": "Fanghong, Wikimedia Commons",
+            "license": "CC BY-SA 3.0",
+            "file": "File:Foguang Temple.jpg",
+            "url": "https://commons.wikimedia.org/wiki/File:Foguang_Temple.jpg"
+          },
+          "rating": 4.9,
+          "review": "佛光寺东大殿：唐大中十一年（857 年）建，中国现存最重要的唐代木构建筑，被梁思成称为'中国建筑遗产第一珍宝\"。看\"四绝\"：唐代建筑、彩塑、壁画、题记。⚠️ 东大殿禁止入殿，仅殿外参观。文管员免费讲解（工作日上午有，下午不一定）。景区免费，停车场 ¥10。",
+          "openingHours": "8:30–17:00（旺季至 17:30）",
+          "ticketPrice": "免费（现场登记）",
+          "transport": {
+            "mode": "自驾",
+            "distance": "约 90 km",
+            "highway": "G108 → X906 山区段",
+            "duration": "约 1.5 小时",
+            "fare": "油费约 ¥55"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 38.798,
+              "lng": 113.338
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 16,
+              "low": 4,
+              "precipAdvice": "高海拔可能骤冷",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "noon",
+          "name": "佛光寺 → 南禅寺",
+          "time": "11:30 出发 / 12:00 抵达 / 12:00–13:00 游览+午餐",
+          "lat": 38.624,
+          "lng": 113.376,
+          "photo": "assets/img/nanchan-temple.jpg",
+          "photoCredit": {
+            "author": "bostonunion, Wikimedia Commons",
+            "license": "CC BY-SA 3.0",
+            "file": "File:Nanchan Temple.jpg",
+            "url": "https://commons.wikimedia.org/wiki/File:Nanchan_Temple.jpg"
+          },
+          "rating": 4.7,
+          "review": "南禅寺大殿：唐建中三年（782 年）建，比佛光寺东大殿早 75 年，是**中国现存最古老的唐代木构建筑**。殿内唐代彩塑 17 尊同为中国雕塑史瑰宝。规模比佛光寺小、看 30–40 min 足够。附近农家乐午餐（手工莜面+炖土鸡，约 ¥40/人）。⚠️ 两寺都在五台县西南豆村/阳白乡，山区县道末段弯多路窄。",
+          "openingHours": "8:30–17:00",
+          "ticketPrice": "免费（现场登记）",
+          "transport": {
+            "mode": "自驾",
+            "distance": "约 25 km",
+            "highway": "X906 山区段",
+            "duration": "约 30 分钟",
+            "fare": "油费约 ¥15"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 38.624,
+              "lng": 113.376
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 16,
+              "low": 4,
+              "precipAdvice": "高海拔可能骤冷",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "afternoon",
+          "name": "南禅寺 → 应县木塔",
+          "time": "13:00 出发 / 15:30 抵达 / 15:30–17:00 游览",
+          "lat": 39.563,
+          "lng": 113.19,
+          "photo": "assets/img/yingxian-pagoda.jpg",
+          "photoCredit": {
+            "author": "Alancrh, Wikimedia Commons",
+            "license": "CC BY-SA 3.0",
+            "file": "File:Wooden Pagoda of Yingxian.jpg",
+            "url": "https://commons.wikimedia.org/wiki/File:Yingxian-pagoda.jpg"
+          },
+          "rating": 4.8,
+          "review": "应县木塔（佛宫寺释迦塔）：辽清宁二年（1056 年）建，世界现存最古老最高大的木塔（67.31 m）。⚠️ 现仅开放一层（因塔身倾斜·二层以上长期封闭）；2026 年 4 月起增设数字沉浸式体验空间可作替代。塔院外围免费。9 月底日落 17:50–18:00，17:00 进入 1.5h 已紧张，建议下一日提早抵达。",
+          "openingHours": "8:00–18:00（17:30 停止售票）",
+          "ticketPrice": "¥50（现场或公众号'应县木塔'）",
+          "transport": {
+            "mode": "自驾",
+            "distance": "约 140 km",
+            "highway": "G18 荣乌高速",
+            "duration": "约 2 小时",
+            "fare": "油费约 ¥85 + 高速约 ¥40"
+          },
+          "needsBooking": true,
+          "leadDays": 3,
+          "weather": {
+            "coords": {
+              "lat": 39.563,
+              "lng": 113.19
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 20,
+              "low": 7,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "应县木塔 → 浑源（夜宿）",
+          "time": "17:00 出发 / 18:15 抵达",
+          "lat": 39.69,
+          "lng": 113.69,
+          "photo": "",
+          "photoCredit": "",
+          "rating": 0,
+          "review": "应县走 G18 荣乌高速转 G55 二广高速北上浑源（约 80 km / 1.25 h）。夜宿浑源县城，距悬空寺仅 4 km、恒山仅 5 km，比住应县省约 1h 车程。晚餐推荐浑源凉粉+恒山白酒。",
+          "openingHours": "全天",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "自驾",
+            "distance": "约 80 km",
+            "highway": "G18 → G55",
+            "duration": "约 1.25 小时",
+            "fare": "油费约 ¥50"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 39.69,
+              "lng": 113.69
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 20,
+              "low": 7,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "五台县豆村镇 · 农家乐",
+          "hours": "—",
+          "dishes": [
+            {
+              "name": "手工莜面",
+              "price": "¥25"
+            },
+            {
+              "name": "炖土鸡",
+              "price": "¥78"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "浑源县城 · 老字号",
+          "hours": "—",
+          "dishes": [
+            {
+              "name": "浑源凉粉",
+              "price": "¥18"
+            },
+            {
+              "name": "小媳妇凉粉",
+              "price": "¥15"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-28",
+      "weekday": "周一",
+      "theme": "悬空寺 + 北岳恒山/大同古城 · 夜宿大同",
+      "tips": [
+        "⚠️ 悬空寺登临票 9:00 公众号'恒山景区'放票，出发前 7 天 9:00 准时蹲；错过只能远观。",
+        "9 月底恒山山顶可能 0–5°C，务必薄羽绒+防风手套。",
+        "时间计算：悬空寺 8:00–10:30 出来；若爬恒山，14:00 前结束下山；若不爬，10:30 直接开车去大同（1h），14:30 抵达大同古城看华严寺/善化寺。",
+        "⚠️ 华严寺/善化寺周一闭馆——9/28 是周一，去大同补 1 个景点请改去九龙壁+大同博物馆或法华寺。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "悬空寺（8:00 开园即入）",
+          "time": "08:00–10:30",
+          "lat": 39.659,
+          "lng": 113.704,
+          "photo": "assets/img/hanging-temple.jpg",
+          "photoCredit": {
+            "author": "Severin Stalder, Wikimedia Commons",
+            "license": "CC BY-SA 3.0",
+            "file": "File:Hanging Temple.jpg",
+            "url": "https://commons.wikimedia.org/wiki/File:Hanging_Temple.jpg"
+          },
+          "rating": 4.7,
+          "review": "悬空寺：北魏始建、'中国第一空中寺院'，建在恒山金龙峡悬崖峭壁上。参观分两部分——寺院主体（必看）+ 登临票（攀登悬空栈道，限 2475 张/天）。⚠️ 登临票每日 9:00 公众号'恒山景区'放票，'本行程'出发前 7 天 9:00 准时蹲；错过只能远观。9 月底人流中等，工作日早 8:00 入园可避开旅行团。⚠️ 9:30 前登临票排队 30 min 内；10 点后陡增至 1.5h。",
+          "openingHours": "8:00–17:00（冬季至 16:30）",
+          "ticketPrice": "寺院门票 ¥15 + 登临票 ¥100（公众号预约）",
+          "transport": {
+            "mode": "自驾",
+            "distance": "约 4 km",
+            "highway": "县城路",
+            "duration": "约 10 分钟",
+            "fare": "油费约 ¥3"
+          },
+          "needsBooking": true,
+          "leadDays": 7,
+          "weather": {
+            "coords": {
+              "lat": 39.659,
+              "lng": 113.704
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 20,
+              "low": 7,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "afternoon",
+          "name": "北岳恒山（半日）",
+          "time": "11:00–15:30",
+          "lat": 39.671,
+          "lng": 113.73,
+          "photo": "assets/img/hengshan.jpg",
+          "photoCredit": {
+            "author": "未知 (Wikimedia Commons)",
+            "license": "CC",
+            "file": "File:Heng_Shan_Summit_View.jpg",
+            "url": "https://commons.wikimedia.org/wiki/File:Heng_Shan_Summit_View.jpg"
+          },
+          "rating": 4.4,
+          "review": "恒山：'五岳北岳'，主峰天峰岭 2016 m。半日游一般走**缆车上下+北岳庙+果老岭+悬空寺连接段**（不下山）。缆车 ¥70 上 + ¥60 下，约 2h 完成。⚠️ 不爬山者直接开车去大同（详见 alternatives）。9 月底山顶可能已 0–5°C，务必带薄羽绒+防风手套。",
+          "openingHours": "8:00–17:00",
+          "ticketPrice": "门票 ¥45 + 缆车 ¥70/上 + ¥60/下",
+          "transport": {
+            "mode": "自驾",
+            "distance": "约 5 km",
+            "highway": "县城路",
+            "duration": "约 5 分钟",
+            "fare": "—"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 39.671,
+              "lng": 113.73
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 20,
+              "low": 7,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "afternoon",
+          "name": "大同古城（华严寺+善化寺）",
+          "time": "14:30 抵达 / 16:30 游览",
+          "lat": 40.094,
+          "lng": 113.296,
+          "photo": "assets/img/huayan-temple.jpg",
+          "photoCredit": {
+            "author": "Schreibwanderer, Wikimedia Commons",
+            "license": "CC",
+            "file": "File:Datong_Huayan_Si_2013.08.29_09-45-47.jpg",
+            "url": "https://commons.wikimedia.org/wiki/File:Datong_Huayan_Si_2013.08.29_09-45-47.jpg"
+          },
+          "rating": 4.8,
+          "review": "大同古城：华严寺（辽金建筑群、薄伽教藏殿 '海会寺' 辽塑）/ 善化寺（唐代山门+辽金塑）。⚠️ 9 月底日落 18:00；14:30 抵达后约 2h 可看完两个核心寺院。步行+电瓶车（¥10）即可。晚上古城墙夜景灯 + 大同铜火锅晚餐。",
+          "openingHours": "8:30–17:30（华严寺）/ 8:30–17:00（善化寺）",
+          "ticketPrice": "华严寺 ¥50 + 善化寺 ¥50（工作日周一闭馆⚠️）",
+          "transport": {
+            "mode": "自驾",
+            "distance": "约 70 km",
+            "highway": "G55 二广高速",
+            "duration": "约 1 小时",
+            "fare": "油费约 ¥42"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 40.094,
+              "lng": 113.296
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 18,
+              "low": 6,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "大同古城（夜宿）",
+          "time": "18:30 入住",
+          "lat": 40.094,
+          "lng": 113.296,
+          "photo": "assets/img/shanhua-temple.jpg",
+          "photoCredit": {
+            "author": "Zhangzhugang, Wikimedia Commons",
+            "license": "CC BY-SA 3.0",
+            "file": "File:Shanhua Temple.jpg",
+            "url": "https://commons.wikimedia.org/wiki/File:Shanhua_Temple.jpg"
+          },
+          "rating": 0,
+          "review": "夜宿大同古城内四牌楼/南门附近：Day 4 早上去云冈方便、晚回吃饭方便；Day 5 出发去太原也近高速。晚餐推荐大同铜火锅（'凯鸽'等老字号，¥120/人）或'东方削面'。",
+          "openingHours": "全天",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "步行",
+            "distance": "—",
+            "highway": "—",
+            "duration": "—",
+            "fare": "—"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 40.094,
+              "lng": 113.296
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 18,
+              "low": 6,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        }
+      ],
+      "alternatives": [
+        {
+          "label": "方案 A 爬恒山（推荐·体力允许）",
+          "summary": "悬空寺 8:00–10:30 → 北岳恒山缆车半日游 11:00–15:30 → 大同古城散步+晚餐，宿大同古城。强度较大但涵盖北线两处核心景点。"
+        },
+        {
+          "label": "方案 B 不爬山·直接大同",
+          "summary": "悬空寺 8:00–10:30 → 直接开车去大同（1h）→ 13:00 抵达大同古城 → 九龙壁+大同博物馆 14:00–17:00。⚠️ 9/28 周一华严寺/善化寺闭馆。"
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "悬空寺脚下 · 农家乐",
+          "hours": "—",
+          "dishes": [
+            {
+              "name": "恒山白酒炖鸡",
+              "price": "¥88"
+            },
+            {
+              "name": "黄芪羊肉",
+              "price": "¥78"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "大同古城 · 凯鸽火锅",
+          "hours": "—",
+          "dishes": [
+            {
+              "name": "大同铜火锅",
+              "price": "¥128"
+            },
+            {
+              "name": "沙棘汁",
+              "price": "¥18"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-29",
+      "weekday": "周二",
+      "theme": "云冈石窟 + 大同市 → 太原 · 夜宿太原",
+      "tips": [
+        "云冈预留 3.5h；9/29 周二人少，可早 8:30 入园。",
+        "大同市 14:00–15:30 补一个点：善化寺（¥50，国宝级辽金寺院）或大同博物馆/九龙壁（免费）。",
+        "⚠️ 必须 15:30 前出发去太原！9 月底日落 18:00–18:15，山区段已亏人。",
+        "晚上抵达太原后可看汾河夜景或柳巷/食品街老字号晚餐（'郝刚刚羊汤'等）。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "大同 → 云冈石窟",
+          "time": "08:00 出发 / 08:40 抵达 / 08:40–12:00 游览",
+          "lat": 40.11,
+          "lng": 113.147,
+          "photo": "assets/img/yungang-grottoes.jpg",
+          "photoCredit": {
+            "author": "Marcin Białek, Wikimedia Commons",
+            "license": "CC BY-SA 4.0",
+            "file": "File:Yungang11 2010.JPG",
+            "url": "https://commons.wikimedia.org/wiki/File:Yungang11_2010.JPG"
+          },
+          "rating": 4.8,
+          "review": "云冈石窟：北魏皇家石窟巅峰，昙曜五窟（第 16–20 窟）是云冈精华，第 20 窟露天大佛最具识别度；第 5、6 窟雕饰繁复。预留 3.5h（含数字馆 3D 打印洞窟）。⚠️ 10/1 国庆首日人流高峰，但 9/29 周二人少。9 月底大同 18–20°C，清晨 5°C 加外套。",
+          "openingHours": "8:30–17:30（17:00 停止售票）",
+          "ticketPrice": "¥120（现场或公众号'云冈石窟'）",
+          "transport": {
+            "mode": "自驾",
+            "distance": "约 30 km",
+            "highway": "G55 二广高速 → S339",
+            "duration": "约 40 分钟",
+            "fare": "油费约 ¥20"
+          },
+          "needsBooking": true,
+          "leadDays": 3,
+          "weather": {
+            "coords": {
+              "lat": 40.11,
+              "lng": 113.147
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 18,
+              "low": 6,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "noon",
+          "name": "云冈石窟 → 大同古城",
+          "time": "12:00 出发 / 12:40 抵达 / 12:40–14:00 午餐+整理",
+          "lat": 40.094,
+          "lng": 113.296,
+          "photo": "",
+          "photoCredit": "",
+          "rating": 0,
+          "review": "云冈回大同古城午餐。⚠️ 14:00 起可逛一个市内点：推荐善化寺（昨未看完）/ 大同市博物馆/九龙壁。大同市博物馆免费、周二正常开放（仅周一闭馆）。",
+          "openingHours": "全天",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "自驾",
+            "distance": "约 30 km",
+            "highway": "G55",
+            "duration": "约 40 分钟",
+            "fare": "—"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 40.094,
+              "lng": 113.296
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 18,
+              "low": 6,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "afternoon",
+          "name": "大同古城闲逛（善化寺/九龙壁）",
+          "time": "14:00–15:30",
+          "lat": 40.094,
+          "lng": 113.296,
+          "photo": "assets/img/shanhua-temple.jpg",
+          "photoCredit": {
+            "author": "Zhangzhugang, Wikimedia Commons",
+            "license": "CC BY-SA 3.0",
+            "file": "File:Shanhua Temple.jpg",
+            "url": "https://commons.wikimedia.org/wiki/File:Shanhua_Temple.jpg"
+          },
+          "rating": 4.7,
+          "review": "善化寺：唐贞观年间（始建），'中国现存最完整的辽金寺院'，大雄宝殿内 24 尊金代塑像为国宝级。⚠️ 9/29 周二正常开放；昨 9/28 周一闭馆错过了。游览 1h。若时间还多，加九龙壁（明初·朱元璋第十三子代王朱桂府前照壁，免费）。",
+          "openingHours": "8:30–17:00",
+          "ticketPrice": "¥50",
+          "transport": {
+            "mode": "步行",
+            "distance": "古城内 1–2 km",
+            "highway": "—",
+            "duration": "约 1 小时",
+            "fare": "—"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 40.094,
+              "lng": 113.296
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 18,
+              "low": 6,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "afternoon",
+          "name": "大同 → 太原",
+          "time": "15:30 出发 / 19:30 抵达",
+          "lat": 37.871,
+          "lng": 112.564,
+          "photo": "",
+          "photoCredit": "",
+          "rating": 0,
+          "review": "大同走 G55 二广高速转 G5 京昆高速南下太原（约 320 km / 4h）。⚠️ 必须 15:30 前出发（不能拖到 16:00，否则 9 月底日落 18:00–18:15，山区段路已亏人）。9 月底日落 18:00–18:15；高速段可控，但中间有隧道+山区段。19:30 抵达太原钟楼街/柳巷，晚餐+入住。",
+          "openingHours": "全天",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "自驾",
+            "distance": "约 320 km",
+            "highway": "G55 → G5 京昆",
+            "duration": "约 4 小时",
+            "fare": "油费约 ¥200 + 高速约 ¥160"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 37.871,
+              "lng": 112.564
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 22,
+              "low": 12,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "大同古城 · 东方削面/老柴削面",
+          "hours": "—",
+          "dishes": [
+            {
+              "name": "大同刀削面",
+              "price": "¥25"
+            },
+            {
+              "name": "羊杂汤",
+              "price": "¥35"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "太原柳巷 · 郝刚刚羊汤/食品街",
+          "hours": "—",
+          "dishes": [
+            {
+              "name": "郝刚刚羊汤",
+              "price": "¥58"
+            },
+            {
+              "name": "莜面栲栳栳",
+              "price": "¥28"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-30",
+      "weekday": "周三",
+      "theme": "山西博物院 + 晋祠 → 临汾 · 夜宿临汾",
+      "tips": [
+        "山西博物院 8:30 最早场预约；提前 1–3 天公众号。",
+        "晋祠预留 3h；16:00 必须出园南下，否则天黑前到不了临汾。",
+        "太原→临汾 280 km / 4h。晚餐推荐临汾牛肉丸子面。",
+        "明早 7:30 临汾还车 → 报一日游团去广胜寺/小西天/壶口瀑布（详见 Day 6）。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "山西博物院",
+          "time": "08:30–11:30",
+          "lat": 37.876,
+          "lng": 112.551,
+          "photo": "assets/img/shanxi-museum.jpg",
+          "photoCredit": {
+            "author": "Roland Longbow, Wikimedia Commons",
+            "license": "CC BY-SA 3.0",
+            "file": "File:Shanxi Museum 20110719.jpg",
+            "url": "https://commons.wikimedia.org/wiki/File:Shanxi%20Museum%2020110719.jpg"
+          },
+          "rating": 4.8,
+          "review": "山西博物院：国家一级博物馆，重点看'晋魂'展厅：山西青铜器、佛教造像、戏曲文物、瓷器艺术。提前 1–3 天微信公众号'山西博物院'免费预约。⚠️ 周一闭馆，9/30 周三正常开放。上午去时间从容，按 2341 楼顺序参观约 3h。",
+          "openingHours": "9:00–17:00（16:00 停止入馆；周一闭馆）",
+          "ticketPrice": "免费（公众号预约）",
+          "transport": {
+            "mode": "网约车/公交",
+            "distance": "约 6 km",
+            "highway": "城市道路",
+            "duration": "约 20 分钟",
+            "fare": "—"
+          },
+          "needsBooking": true,
+          "leadDays": 3,
+          "weather": {
+            "coords": {
+              "lat": 37.876,
+              "lng": 112.551
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 22,
+              "low": 12,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "noon",
+          "name": "太原 → 晋祠",
+          "time": "11:30 出发 / 12:10 抵达 / 12:10–13:00 午餐",
+          "lat": 37.706,
+          "lng": 112.443,
+          "photo": "assets/img/jinci-temple.jpg",
+          "photoCredit": {
+            "author": "Zhangzhugang, Wikimedia Commons",
+            "license": "CC BY-SA 3.0",
+            "file": "File:Jinci Temple.jpg",
+            "url": "https://commons.wikimedia.org/wiki/File:Jinci_Temple.jpg"
+          },
+          "rating": 4.8,
+          "review": "晋祠：'中国现存最早的皇家祭祀园林'，周柏+宋代彩塑侍女像（'晋祠三绝'）+难老泉。⚠️ 晋祠门票含晋祠博物馆+晋祠公园+奉圣寺，¥80 起。开车从太原市区走 G5 京昆转 S56 太原绕城，约 30 km / 40 min。午餐可在晋祠附近餐馆。",
+          "openingHours": "8:00–18:00（夏季至 18:30）",
+          "ticketPrice": "¥80（公众号或现场；年卡 ¥40）",
+          "transport": {
+            "mode": "自驾",
+            "distance": "约 30 km",
+            "highway": "G5 京昆 → S56",
+            "duration": "约 40 分钟",
+            "fare": "油费约 ¥18 + 高速约 ¥5"
+          },
+          "needsBooking": true,
+          "leadDays": 3,
+          "weather": {
+            "coords": {
+              "lat": 37.706,
+              "lng": 112.443
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 22,
+              "low": 12,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "afternoon",
+          "name": "晋祠（游览）",
+          "time": "13:00–16:00",
+          "lat": 37.706,
+          "lng": 112.443,
+          "photo": "assets/img/jinci-temple.jpg",
+          "photoCredit": {
+            "author": "Zhangzhugang, Wikimedia Commons",
+            "license": "CC BY-SA 3.0",
+            "file": "File:Jinci Temple.jpg",
+            "url": "https://commons.wikimedia.org/wiki/File:Jinci_Temple.jpg"
+          },
+          "rating": 4.8,
+          "review": "晋祠游览 3h：核心看'三绝'（周柏·宋代彩塑·难老泉）+ '三匾'（'难老''对越''水镜台'）。奉圣寺+十方奉圣禅寺（含唐代塑像）可加 30 min。⚠️ 9 月底日落 18:00–18:15，16:00 必须出园开始南下。",
+          "openingHours": "8:00–18:00",
+          "ticketPrice": "¥80",
+          "transport": {
+            "mode": "步行",
+            "distance": "—",
+            "highway": "—",
+            "duration": "—",
+            "fare": "—"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 37.706,
+              "lng": 112.443
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 22,
+              "low": 12,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "晋祠 → 临汾（夜宿）",
+          "time": "16:00 出发 / 20:00 抵达",
+          "lat": 36.08,
+          "lng": 111.51,
+          "photo": "",
+          "photoCredit": "",
+          "rating": 0,
+          "review": "晋祠走 G5 京昆转 G22 青兰高速南下临汾（约 280 km / 4h）。晚 20:00 抵达临汾市区，晚餐推荐临汾牛肉丸子面/临汾刀削面。⚠️ 明早 7:30 临汾还车+1 日临汾/洪洞/吉县/隰县一日游。",
+          "openingHours": "全天",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "自驾",
+            "distance": "约 280 km",
+            "highway": "G5 → G22 青兰",
+            "duration": "约 4 小时",
+            "fare": "油费约 ¥170 + 高速约 ¥130"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 36.08,
+              "lng": 111.51
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 23,
+              "low": 13,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "晋祠附近 · 老菜馆",
+          "hours": "—",
+          "dishes": [
+            {
+              "name": "过油肉",
+              "price": "¥48"
+            },
+            {
+              "name": "莜面栲栳栳",
+              "price": "¥28"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "临汾市区 · 牛肉丸子面",
+          "hours": "—",
+          "dishes": [
+            {
+              "name": "临汾牛肉丸子面",
+              "price": "¥25"
+            },
+            {
+              "name": "临汾刀削面",
+              "price": "¥22"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-01",
+      "weekday": "周四",
+      "theme": "临汾还车 + 广胜寺+小西天+壶口瀑布 一日游 · 高铁返太原",
+      "tips": [
+        "⚠️ 国庆首日人多：临汾旅游集散中心 8:00 前到达、提前 1 周预订一日游。",
+        "⚠️ 高强度日（约 14h）：广胜寺+小西天+壶口瀑布一日内全覆盖已超常规；如体力不够可与旅行社协商砍小西天（团费不变）。",
+        "⚠️ 临汾西→太原南 高铁末班约 21:30；务必提前 1 周订票，避免一日游拖到 19:30 后没票。",
+        "🟡 备选：若担心一日游拖到 19:30 后没高铁，改 10/2 早上早班高铁（提前订）。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "临汾 · 还车",
+          "time": "07:30 还车",
+          "lat": 36.08,
+          "lng": 111.51,
+          "photo": "",
+          "photoCredit": "",
+          "rating": 0,
+          "review": "临汾市区租车点还车（建议选择临汾西站/市区还车点，异地还车费 ¥0–300/次）。⚠️ 加满油还车（参考位置：临汾西站附近中石化），否则按 ¥15–30/L 差量扣费。还车后步行或打车去临汾旅游集散中心（约 10 min），开始一日游。",
+          "openingHours": "8:00–18:00（提前与租车行预约）",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "步行/打车",
+            "distance": "—",
+            "highway": "—",
+            "duration": "—",
+            "fare": "—"
+          },
+          "needsBooking": true,
+          "leadDays": 7,
+          "weather": {
+            "coords": {
+              "lat": 36.08,
+              "lng": 111.51
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 23,
+              "low": 13,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "afternoon",
+          "name": "一日游 · 广胜寺 + 小西天 + 壶口瀑布",
+          "time": "07:30 出发 / 21:00 返回临汾（14h 高强度）",
+          "lat": 36.241,
+          "lng": 111.696,
+          "photo": "assets/img/guangsheng-temple.jpg",
+          "photoCredit": {
+            "author": "未知 (Wikimedia Commons)",
+            "license": "CC",
+            "file": "File:Guangsheng temple.jpg",
+            "url": "https://commons.wikimedia.org/wiki/File:Guangsheng_temple.jpg"
+          },
+          "rating": 4.7,
+          "review": "临汾出发·拼团一日游：广胜寺（洪洞县，¥50，约 1.5h）+ 小西天（隰县，¥50，约 1h）+ 壶口瀑布（吉县，¥100，约 2.5h）。总车程约 280 km，往返 6h、景点 5h、午餐 0.5h。⚠️ 国庆首日人多，壶口瀑布 12:00–14:00 排队较长。⚠️ 三点一日内全覆盖属高强度行程；若体力不够建议提前与旅行社协商砍小西天。",
+          "openingHours": "8:00–18:00",
+          "ticketPrice": "广胜寺 ¥50 + 小西天 ¥50 + 壶口 ¥100 + 车费约 ¥250",
+          "transport": {
+            "mode": "一日游包车",
+            "distance": "约 280 km",
+            "highway": "G22 青兰 → G108",
+            "duration": "约 14 小时（含午餐）",
+            "fare": "一日游团费约 ¥500–600/人（含车+门票）"
+          },
+          "needsBooking": true,
+          "leadDays": 7,
+          "weather": {
+            "coords": {
+              "lat": 36.241,
+              "lng": 111.696
+            },
+            "fallback": {
+              "icon": "☀",
+              "conditions": "晴",
+              "high": 23,
+              "low": 12,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "evening",
+          "name": "临汾西 → 太原南（高铁返程）",
+          "time": "21:30 出发 / 23:50 抵达太原",
+          "lat": 37.871,
+          "lng": 112.564,
+          "photo": "",
+          "photoCredit": "",
+          "rating": 0,
+          "review": "临汾西站乘高铁返太原南站（动车约 2.5h；末班车通常 21:30 左右，**务必提前 1 周订票**）。抵达太原后入住机场附近/南站附近酒店，明早方便去机场。🟡 备选：若一日游拖到 19:30 后才返回临汾，可改 10/2 早上 高铁回太原（约 7:00 早班高铁，太原午班车早上才能赶上，需早订）。",
+          "openingHours": "—",
+          "ticketPrice": "高铁二等座约 ¥150",
+          "transport": {
+            "mode": "高铁",
+            "distance": "约 270 km",
+            "highway": "大西高铁",
+            "duration": "约 2.5 小时",
+            "fare": "二等座约 ¥150"
+          },
+          "needsBooking": true,
+          "leadDays": 14,
+          "weather": {
+            "coords": {
+              "lat": 37.871,
+              "lng": 112.564
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 22,
+              "low": 12,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "壶口瀑布景区附近 · 农家乐",
+          "hours": "—",
+          "dishes": [
+            {
+              "name": "黄河鲤鱼",
+              "price": "¥88"
+            },
+            {
+              "name": "黄河大枣",
+              "price": "¥15"
+            }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "临汾市区/太原南站",
+          "hours": "—",
+          "dishes": [
+            {
+              "name": "临汾牛肉丸子面",
+              "price": "¥25"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-02",
+      "weekday": "周五",
+      "theme": "太原休整 → 武宿机场返广州 · 下午班",
+      "tips": [
+        "⚠️ 国庆返程高峰：建议起飞前 2h 到机场（节假日安检排队较长）。",
+        "若一日游 Day 6 拖到 19:30 后无高铁，改 10/2 早上 7:00 早班高铁返太原（需提前订），下午班时间够。",
+        "太原武宿机场在市区东南约 15 km，打车 ¥40–60 / 30 min；机场大巴约 ¥15。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "太原休整 / 汾河/柳巷闲逛",
+          "time": "08:00–12:00",
+          "lat": 37.871,
+          "lng": 112.564,
+          "photo": "",
+          "photoCredit": "",
+          "rating": 0,
+          "review": "昨晚高铁返太原已晚，建议今日轻松休整：可逛汾河公园（'汾河晚渡'夜景）/ 柳巷·食品街。⚠️ 午班飞机前 2h 到机场（太原武宿机场在市区东南约 15 km，打车 ¥40–60）。13:00 前退房出发去机场。",
+          "openingHours": "全天",
+          "ticketPrice": "—",
+          "transport": {
+            "mode": "步行/打车",
+            "distance": "—",
+            "highway": "—",
+            "duration": "—",
+            "fare": "—"
+          },
+          "needsBooking": false,
+          "leadDays": 0,
+          "weather": {
+            "coords": {
+              "lat": 37.871,
+              "lng": 112.564
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 22,
+              "low": 12,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        },
+        {
+          "period": "noon",
+          "name": "太原 → 武宿机场 → 广州",
+          "time": "13:00 出发 / 13:30 抵机场 / 15:00–18:00 起飞",
+          "lat": 37.747,
+          "lng": 112.629,
+          "photo": "",
+          "photoCredit": "",
+          "rating": 0,
+          "review": "太原武宿机场（TYN）→ 广州白云机场（CAN），下午班起飞。本行程主用班次备选：南航 CZ3702 / 东航 MU5672 / 海航 HU7128 等。⚠️ 国庆返程高峰，建议起飞前 2h 到机场办理值机。",
+          "openingHours": "依航班",
+          "ticketPrice": "机票 ¥1,000+/人；机场打车 ¥40–60",
+          "transport": {
+            "mode": "打车+飞机",
+            "distance": "约 1,700 km（飞行）+ 15 km（市区）",
+            "highway": "机场高速",
+            "duration": "飞行 2h45m + 市区 30 min",
+            "fare": "机票 ¥1,000+/人 + 打车 ¥40–60"
+          },
+          "needsBooking": true,
+          "leadDays": 30,
+          "weather": {
+            "coords": {
+              "lat": 37.747,
+              "lng": 112.629
+            },
+            "fallback": {
+              "icon": "⛅",
+              "conditions": "多云",
+              "high": 22,
+              "low": 12,
+              "precipAdvice": "无需备伞",
+              "updatedAt": "2026-09-18"
+            }
+          }
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "太原柳巷/食品街 · 老字号",
+          "hours": "—",
+          "dishes": [
+            {
+              "name": "郝刚刚羊汤",
+              "price": "¥58"
+            },
+            {
+              "name": "过油肉",
+              "price": "¥48"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "tourismCard": {
+    "name": "山西文旅年卡（晋游卡）",
+    "price": "标准版 258 元/年（工会普惠卡 100 元、亲子卡 599 元）",
+    "validity": "激活起 365 天（购买 3 个月内未激活将自动激活）",
+    "covers": "120+ 山西景区，含 5 家 5A 级（晋祠/平遥古城/雁门关/乔家大院/八泉峡）+ 40+ 家 4A 级",
+    "coversYourTrip": "本行程核心古建均不在年卡；雁门关免票+晋祠半价合计仅省 ¥130，扣年卡 ¥258 净亏 ¥128，**不推荐购买**。如未来还来山西可考虑。",
+    "limitations": "部分热门景区限 3 次/年（平遥、乔家、雁门关等）。⚠️ 已核实：本行程核心古建（云冈石窟/悬空寺/应县木塔/华严寺/善化寺/北岳恒山/佛光寺/南禅寺）均不在年卡",
+    "how": "微信公众号「山西文旅年卡」或「票通天下发布」实名购买，人脸识别入园，无需实体卡",
+    "savingsHint": "本行程核心古建均不在年卡；雁门关免票+晋祠半价合计仅省 ¥130，扣年卡 ¥258 净亏 ¥128，**不推荐购买**。"
+  },
+  "closureAudit": {
+    "generatedAt": "2026-09-18",
+    "method": "AI 整理自公开资料，出行前请再核实",
+    "items": [
+      {
+        "name": "佛光寺",
+        "status": "正常开放（东大殿仅殿外）",
+        "source": "公开资料",
+        "detail": "东大殿禁止入殿（仅殿外参观）。雨季遇山洪预警会临时闭馆（出发前查五台山天气）。9 月底非雨季，正常开放。"
+      },
+      {
+        "name": "南禅寺",
+        "status": "正常开放",
+        "source": "公开资料",
+        "detail": "未检索到 2026 年封闭修缮公告。规模小，看 30–40 min 足够。"
+      },
+      {
+        "name": "应县木塔",
+        "status": "仅一层开放",
+        "source": "公开资料",
+        "detail": "二层以上因塔身倾斜长期封闭。2026 年 4 月起增设数字沉浸式体验空间。⚠️ 塔院外围免费、不收门票。出发前可致电 0349-2023425 确认。"
+      },
+      {
+        "name": "悬空寺",
+        "status": "正常开放（登临票限流）",
+        "source": "公众号'恒山景区'",
+        "detail": "寺院主体正常售票；登临票每日 9:00 公众号放票 2475 张，出发前 7 天 9:00 准时蹲。错过只能远观。"
+      },
+      {
+        "name": "华严寺",
+        "status": "周一闭馆",
+        "source": "公开资料",
+        "detail": "未检索到 2026 年 10 月封闭修缮公告。周一闭馆，9/29 周二正常开放 9:00–17:00（16:30 停止售票）。⚠️ 9/28 周一闭馆。"
+      },
+      {
+        "name": "云冈石窟",
+        "status": "正常开放（部分洞窟轮换封闭）",
+        "source": "公开资料",
+        "detail": "未检索到 2026 年 10 月封闭修缮公告。世界文化遗产，部分洞窟长期轮换封闭保护属常态（不影响参观主线）。10/1 国庆首日人流高峰，建议 07:30 前乘首班直通车从大同古城出发，错峰入园。"
+      },
+      {
+        "name": "山西博物院",
+        "status": "周一闭馆（节假日除外）",
+        "source": "公众号'山西博物院'",
+        "detail": "9/30 周三正常开放 9:00–17:00（16:00 停止入馆）。需提前 1–3 天公众号免费预约。"
+      },
+      {
+        "name": "晋祠",
+        "status": "正常开放",
+        "source": "公开资料",
+        "detail": "未检索到 2026 年 10 月封闭修缮公告。殿内宋代彩塑围挡修复中，殿外建筑可看。"
+      }
+    ]
+  }
+}
