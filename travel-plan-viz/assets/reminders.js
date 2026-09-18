@@ -31,10 +31,11 @@ function renderChecklistHTML(reminders) {
     var dd = (typeof r.deadline === 'string' || typeof r.deadline === 'number')
       ? escapeHTML(String(r.deadline))
       : '';
+    var item = escapeHTML(String(r.item));
     return '<li class="todo-item">'
-      + '<input type="checkbox"> '
+      + '<input type="checkbox" data-key="' + item + '"> '
       + '<span class="todo-deadline">' + dd + '前</span> '
-      + '<span class="todo-text">' + escapeHTML(String(r.item)) + '（建议提前' + ld + '天）</span>'
+      + '<span class="todo-text">' + item + '（建议提前' + ld + '天）</span>'
       + '</li>';
   }).join('');
   return '<ul class="pretrip-todo">' + lis + '</ul>';

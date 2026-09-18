@@ -2862,10 +2862,11 @@ function renderChecklistHTML(reminders) {
     var dd = (typeof r.deadline === 'string' || typeof r.deadline === 'number')
       ? escapeHTML(String(r.deadline))
       : '';
+    var item = escapeHTML(String(r.item));
     return '<li class="todo-item">'
-      + '<input type="checkbox"> '
+      + '<input type="checkbox" data-key="' + item + '"> '
       + '<span class="todo-deadline">' + dd + '前</span> '
-      + '<span class="todo-text">' + escapeHTML(String(r.item)) + '（建议提前' + ld + '天）</span>'
+      + '<span class="todo-text">' + item + '（建议提前' + ld + '天）</span>'
       + '</li>';
   }).join('');
   return '<ul class="pretrip-todo">' + lis + '</ul>';
@@ -3437,6 +3438,23 @@ if (typeof module !== 'undefined' && module.exports) {
   var checklistEl = document.getElementById('checklist-container');
   if (checklistEl && typeof renderChecklistHTML === 'function') {
     checklistEl.innerHTML = renderChecklistHTML(checklistData);
+    // 勾选状态本地持久化（localStorage，单设备，无后端）
+    (function initChecklistPersist() {
+      if (typeof localStorage === 'undefined') return;
+      var KEY = 'travel-plan-viz-checklist-' + trip.startDate;
+      var store = {};
+      try { store = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { store = {}; }
+      checklistEl.querySelectorAll('input[type="checkbox"][data-key]').forEach(function (cb) {
+        cb.checked = !!store[cb.getAttribute('data-key')];
+      });
+      checklistEl.addEventListener('change', function (e) {
+        var cb = e.target;
+        if (cb && cb.matches && cb.matches('input[type="checkbox"][data-key]')) {
+          store[cb.getAttribute('data-key')] = cb.checked;
+          try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (err) {}
+        }
+      });
+    })();
   }
 
   // ----- 2. pretrip -----
