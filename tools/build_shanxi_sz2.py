@@ -68,6 +68,21 @@ def render_html(trip):
     </div>
   </section>
 
+  <!-- ═══════════════ MAP (行程简图 · 顶部) ═══════════════ -->
+  <section class="section section--map-top">
+    <div class="section-header">
+      <div class="section-icon jade">🗺️</div>
+      <div>
+        <div class="section-title">行程简图</div>
+        <div class="section-subtitle">At a Glance · 朔州 → 临汾 · 7 天自驾</div>
+      </div>
+    </div>
+    <div class="section-body">
+      <div id="map" class="map"></div>
+      <div class="route-chips" id="route-chips"></div>
+    </div>
+  </section>
+
   <!-- ═══════════════ PRE-TRIP CHECKLIST ═══════════════ -->
   <section class="section section--checklist">
     <div class="section-header">
@@ -94,20 +109,6 @@ def render_html(trip):
     <div class="section-body" id="pretrip-container"></div>
   </section>
 
-  <!-- ═══════════════ MAP ═══════════════ -->
-  <section class="section">
-    <div class="section-header">
-      <div class="section-icon jade">🗺️</div>
-      <div>
-        <div class="section-title">行程地图</div>
-        <div class="section-subtitle">点按每日色点跳到对应时间轴</div>
-      </div>
-    </div>
-    <div class="section-body">
-      <div id="map" class="map"></div>
-    </div>
-  </section>
-
   <!-- ═══════════════ HOTELS ═══════════════ -->
   <section class="section">
     <div class="section-header">
@@ -119,6 +120,12 @@ def render_html(trip):
     </div>
     <div class="section-body" id="hotels-container"></div>
   </section>
+
+  <!-- ═══════════════ VIEW TOGGLE (fixed) ═══════════════ -->
+  <div class="view-toggle" id="view-toggle">
+    <button type="button" class="view-toggle__btn active" data-mode="tabs">▤ 标签页</button>
+    <button type="button" class="view-toggle__btn" data-mode="timeline">≡ 时间轴</button>
+  </div>
 
   <!-- ═══════════════ DAILY TIMELINE ═══════════════ -->
   <section class="section">
@@ -554,6 +561,151 @@ footer { margin-top: 24px; padding: 24px 16px; border-top: 1px solid var(--borde
 .footer-cta { font-family: 'ZCOOL XiaoWei', serif; font-size: 16px; color: var(--gold-lt); margin-bottom: 6px; }
 .footer-line { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--parchment-dim); letter-spacing: 0.05em; }
 
+/* ROUTE PIN (map markers) — 基础圆形样式（按天描边见 day-coloring.css） */
+.route-pin {
+  background: var(--bg-deep) !important;
+  border: 2px solid var(--gold) !important;
+  border-radius: 50%;
+  display: flex !important;
+  align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+.route-pin__num {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight: 500;
+  color: var(--gold-lt);
+  line-height: 1;
+}
+
+/* ROUTE CHIPS（地图下方点击站点） */
+.route-chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 12px 0 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(184,134,46,0.3) transparent;
+}
+.route-chips::-webkit-scrollbar { height: 4px; }
+.route-chips::-webkit-scrollbar-thumb { background: rgba(184,134,46,0.3); border-radius: 2px; }
+.route-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  background: var(--bg-card-soft);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 12px;
+  color: var(--parchment-dim);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.18s ease;
+}
+.route-chip:hover { border-color: var(--gold); color: var(--parchment); transform: translateY(-1px); }
+.route-chip.active { background: var(--bg-soft); color: var(--gold-lt); border-color: var(--gold); font-weight: 600; }
+.route-chip__num {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  background: rgba(184,134,46,0.12);
+  border-radius: 50%;
+  width: 20px; height: 20px;
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.route-chip.active .route-chip__num { background: var(--gold); color: var(--bg-deep); }
+.route-chip__emoji { font-size: 13px; flex-shrink: 0; }
+
+/* MAP DAY HIGHLIGHT（点天标签时其余 pin 变暗） */
+.map-point-dim .route-pin { opacity: 0.25; transition: opacity 0.3s; }
+
+/* SLOT CARD NAV BUTTONS */
+.slot-nav-row__label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--parchment-dim);
+  letter-spacing: 0.08em;
+  align-self: center;
+}
+.popup-nav-link {
+  padding: 5px 12px;
+  border-radius: 100px;
+  border: 1px solid var(--gold);
+  background: rgba(184,134,46,0.10);
+  color: var(--gold-lt);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  cursor: pointer;
+}
+.popup-nav-link:hover { background: rgba(184,134,46,0.25); color: var(--parchment); }
+
+/* VIEW TOGGLE（标签页 / 时间轴 切换） */
+.view-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1100;
+  display: flex;
+  gap: 0;
+  background: var(--bg-soft);
+  border-radius: 100px;
+  padding: 4px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  border: 1px solid var(--border);
+}
+.view-toggle__btn {
+  border: none;
+  background: transparent;
+  color: rgba(247,242,232,0.55);
+  padding: 7px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  border-radius: 100px;
+  transition: all 0.18s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.view-toggle__btn.active { background: var(--gold); color: var(--bg-deep); font-weight: 700; }
+.view-toggle__btn:hover:not(.active) { color: var(--parchment); }
+@media (max-width: 480px) {
+  .view-toggle { top: auto; bottom: 16px; right: 16px; left: 16px; justify-content: center; }
+  .view-toggle__btn { flex: 1; justify-content: center; padding: 10px 12px; }
+}
+
+/* TIMELINE BOOKMARKS（时间轴右侧竖排圆点） */
+#timeline-bookmarks {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1099;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.bookmark {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--parchment-dim);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  transition: all 0.18s;
+  padding: 0;
+}
+.bookmark:hover { border-color: var(--gold); transform: scale(1.08); }
+.bookmark.is-current-day { background: var(--gold); color: var(--bg-deep); border-color: var(--gold); font-weight: 700; }
+@media (max-width: 767px) { #timeline-bookmarks { display: none; } }
+
 /* utility */
 img { max-width: 100%; }
 """
@@ -567,6 +719,26 @@ INIT_SCRIPT = r"""
   'use strict';
   var trip = JSON.parse(document.getElementById('trip-data').textContent);
   var DAYS = trip.days;
+
+  // 共享状态：travelMap/mapPoints 在下方 map 段赋值，供视图切换/高亮懒引用。
+  var travelMap = null;
+  var mapPoints = [];
+  var currentDayIdx = 0;
+  var currentViewMode = 'tabs';  // 'tabs' 一天一页 | 'timeline' 全部展开
+
+  // 给每个 slot 挂上一个可导航点（用于导航链接预填出发地 from）。
+  (function attachPrevNav() {
+    var last = null;
+    DAYS.forEach(function (day) {
+      (day.slots || []).forEach(function (slot) {
+        slot._prevNav = last;
+        if (typeof slot.lat === 'number' && typeof slot.lng === 'number'
+            && isFinite(slot.lat) && isFinite(slot.lng)) {
+          last = { lat: slot.lat, lng: slot.lng, name: String(slot.name || '') };
+        }
+      });
+    });
+  })();
 
   // ----- 1. checklist -----
   var checklistData = computeReminders(trip.startDate, trip.reminders);
@@ -634,7 +806,7 @@ INIT_SCRIPT = r"""
 
       var navRowHTML = '';
       if (typeof renderSlotNavRow === 'function' && typeof slot.lat === 'number') {
-        try { navRowHTML = renderSlotNavRow(slot); } catch (e) { navRowHTML = ''; }
+        try { navRowHTML = renderSlotNavRow(slot, slot._prevNav); } catch (e) { navRowHTML = ''; }
       }
 
       var periodMap = { morning: '上午', noon: '中午', afternoon: '下午', evening: '晚上' };
@@ -681,39 +853,135 @@ INIT_SCRIPT = r"""
       + '</div>';
   }
 
-  if (blocksEl) {
-    blocksEl.innerHTML = DAYS.map(function (day, dayIdx) {
+  function renderDayBlockHTML(day, dayIdx) {
+    var n = dayIdx + 1;
+    return '<div class="day-block day-' + n + '" id="day-block-' + dayIdx + '">'
+      + '<h3>Day ' + n + ' · ' + escapeHTML(day.theme) + '</h3>'
+      + '<div class="day-meta">' + escapeHTML(day.date) + ' · ' + escapeHTML(day.weekday) + '</div>'
+      + (day.tips && day.tips.length
+          ? '<ul class="day-tips">' + day.tips.map(function (t) { return '<li>' + escapeHTML(t) + '</li>'; }).join('') + '</ul>'
+          : '')
+      + renderSlotsHTML(day, dayIdx)
+      + renderAlternativesHTML(day)
+      + renderDiningHTML(day)
+      + '</div>';
+  }
+
+  function renderAllDays() {
+    if (blocksEl) blocksEl.innerHTML = DAYS.map(renderDayBlockHTML).join('');
+  }
+
+  function renderDayTabsHTML() {
+    if (!tabsEl) return;
+    tabsEl.innerHTML = DAYS.map(function (day, dayIdx) {
       var n = dayIdx + 1;
-      return '<div class="day-block day-' + n + '">'
-        + '<h3>Day ' + n + ' · ' + escapeHTML(day.theme) + '</h3>'
-        + '<div class="day-meta">' + escapeHTML(day.date) + ' · ' + escapeHTML(day.weekday) + '</div>'
-        + (day.tips && day.tips.length
-            ? '<ul class="day-tips">' + day.tips.map(function (t) { return '<li>' + escapeHTML(t) + '</li>'; }).join('') + '</ul>'
-            : '')
-        + renderSlotsHTML(day, dayIdx)
-        + renderAlternativesHTML(day)
-        + renderDiningHTML(day)
-        + '</div>';
+      return '<button type="button" class="day-tab day-tab--day-' + n + ' day-' + n + '" data-day-idx="' + dayIdx + '">'
+        + '<span class="day-tab__num">Day ' + n + '</span> · ' + escapeHTML(day.date.slice(5)) + '</button>';
     }).join('');
   }
 
-  if (tabsEl) {
-    tabsEl.innerHTML = DAYS.map(function (day, dayIdx) {
-      var n = dayIdx + 1;
-      return '<button class="day-tab day-tab--day-' + n + ' day-' + n + '" data-day="' + n + '">'
-        + '<span class="day-tab__num">Day ' + n + '</span> · ' + escapeHTML(day.date.slice(5)) + '</button>';
-    }).join('');
-    tabsEl.addEventListener('click', function (e) {
-      var btn = e.target.closest('.day-tab');
-      if (!btn) return;
-      var day = btn.getAttribute('data-day');
-      tabsEl.querySelectorAll('.day-tab').forEach(function (t) { t.classList.remove('active'); });
-      btn.classList.add('active');
-      var block = blocksEl.querySelector('.day-block.day-' + day);
-      if (block) block.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  function updateActiveTab(idx) {
+    if (!tabsEl) return;
+    tabsEl.querySelectorAll('.day-tab').forEach(function (t) {
+      var i = parseInt(t.getAttribute('data-day-idx'), 10);
+      if (i === idx) t.classList.add('active');
+      else t.classList.remove('active');
     });
-    var firstTab = tabsEl.querySelector('.day-tab');
-    if (firstTab) firstTab.classList.add('active');
+  }
+
+  function showDayTab(idx, skipHighlight) {
+    currentDayIdx = idx;
+    if (blocksEl) blocksEl.innerHTML = renderDayBlockHTML(DAYS[idx], idx);
+    updateActiveTab(idx);
+    if (!skipHighlight) highlightDayOnMap(idx);
+  }
+
+  // ---- 视图切换（标签页 / 时间轴）----
+  function setViewMode(mode, skipHighlight) {
+    currentViewMode = mode;
+    document.querySelectorAll('.view-toggle__btn').forEach(function (b) {
+      if (b.getAttribute('data-mode') === mode) b.classList.add('active');
+      else b.classList.remove('active');
+    });
+    if (mode === 'timeline') {
+      renderAllDays();
+      clearDayHighlights();
+      buildTimelineBookmarks();
+    } else {
+      teardownTimelineBookmarks();
+      showDayTab(currentDayIdx, skipHighlight);
+    }
+  }
+
+  function buildTimelineBookmarks() {
+    if (document.getElementById('timeline-bookmarks')) return;
+    var rail = document.createElement('aside');
+    rail.id = 'timeline-bookmarks';
+    rail.setAttribute('aria-label', '快速跳转到某一天');
+    DAYS.forEach(function (day, di) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'bookmark';
+      btn.setAttribute('data-day-idx', String(di));
+      btn.textContent = String(di + 1);
+      rail.appendChild(btn);
+    });
+    document.body.appendChild(rail);
+    if ('IntersectionObserver' in window) {
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          var idx = parseInt(e.target.id.replace('day-block-', ''), 10);
+          if (isNaN(idx)) return;
+          document.querySelectorAll('#timeline-bookmarks .bookmark').forEach(function (b) {
+            b.classList.toggle('is-current-day', parseInt(b.getAttribute('data-day-idx'), 10) === idx);
+          });
+        });
+      }, { rootMargin: '-10% 0px -70% 0px', threshold: 0 });
+      document.querySelectorAll('.day-block').forEach(function (b) { obs.observe(b); });
+    }
+  }
+
+  function teardownTimelineBookmarks() {
+    var rail = document.getElementById('timeline-bookmarks');
+    if (rail) rail.parentNode.removeChild(rail);
+  }
+
+  function initViewToggle() {
+    var vt = document.getElementById('view-toggle');
+    if (vt) {
+      vt.addEventListener('click', function (e) {
+        var btn = e.target.closest('button[data-mode]');
+        if (!btn) return;
+        var mode = btn.getAttribute('data-mode');
+        if (mode !== currentViewMode) setViewMode(mode);
+      });
+    }
+    if (tabsEl) {
+      tabsEl.addEventListener('click', function (e) {
+        var btn = e.target.closest('.day-tab');
+        if (!btn) return;
+        var idx = parseInt(btn.getAttribute('data-day-idx'), 10);
+        if (isNaN(idx)) return;
+        if (currentViewMode === 'tabs') {
+          showDayTab(idx);
+        } else {
+          currentDayIdx = idx;
+          updateActiveTab(idx);
+          highlightDayOnMap(idx);
+          var block = document.getElementById('day-block-' + idx);
+          if (block) block.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    }
+    document.body.addEventListener('click', function (e) {
+      var btn = e.target.closest('.bookmark');
+      if (!btn) return;
+      var idx = parseInt(btn.getAttribute('data-day-idx'), 10);
+      if (isNaN(idx)) return;
+      var target = document.getElementById('day-block-' + idx);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   }
 
   // ----- 5. tips -----
@@ -759,7 +1027,6 @@ INIT_SCRIPT = r"""
   renderFlights('return-flights', retList, '返程');
 
   // ----- 8. map -----
-  var mapPoints = [];
   DAYS.forEach(function (day, dayIdx) {
     (day.slots || []).forEach(function (slot) {
       if (typeof slot.lat === 'number' && typeof slot.lng === 'number' && !slot.hideFromMap) {
@@ -767,22 +1034,19 @@ INIT_SCRIPT = r"""
       }
     });
   });
-  var pointsWithDayIdx = (typeof attachDayIdx === 'function') ? attachDayIdx(trip, mapPoints) : mapPoints;
+  mapPoints = (typeof attachDayIdx === 'function') ? attachDayIdx(trip, mapPoints) : mapPoints;
   if (typeof initTravelMap === 'function') {
     try {
-      var travelMap = initTravelMap('map', pointsWithDayIdx, {
+      travelMap = initTravelMap('map', mapPoints, {
         tileUrl: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
-        attribution: '© OpenStreetMap contributors · © CARTO'
+        attribution: '© OpenStreetMap contributors · © CARTO',
+        dayColor: (typeof dayColor === 'function') ? dayColor : undefined
       });
 
-      // 缩放与位移限制（参考 shanxi-re.html / shanxi-6d.html 的实现）
-      // - maxBounds：点位外扩 30% 后作为硬墙
-      // - maxBoundsViscosity: 1.0：到边即被拽回
-      // - maxZoom: 19：阻止无限放大
-      // - minZoom = fitBounds 后的初始 zoom：阻止无限缩小拖出点位区域
-      if (travelMap && typeof L !== 'undefined' && pointsWithDayIdx.length >= 2) {
-        var lats = pointsWithDayIdx.map(function (p) { return p.lat; });
-        var lngs = pointsWithDayIdx.map(function (p) { return p.lng; });
+      // 缩放与位移限制：maxBounds 硬墙 + 黏度 + maxZoom/minZoom
+      if (travelMap && typeof L !== 'undefined' && mapPoints.length >= 2) {
+        var lats = mapPoints.map(function (p) { return p.lat; });
+        var lngs = mapPoints.map(function (p) { return p.lng; });
         var latLngs = lats.map(function (lat, i) { return [lat, lngs[i]]; });
         var pointBounds = L.latLngBounds(latLngs);
         var paddedBounds = pointBounds.pad(0.3);
@@ -798,6 +1062,170 @@ INIT_SCRIPT = r"""
     }
   }
 
+  // 地图按日高亮：dim 全部 pin + 画当天高亮折线 + 缩放到当天点位
+  function highlightDayOnMap(idx) {
+    if (!travelMap) return;
+    var day = DAYS[idx];
+    var dayCoords = (day.slots || []).filter(function (s) {
+      return typeof s.lat === 'number' && typeof s.lng === 'number' && !s.hideFromMap;
+    }).map(function (s) { return L.latLng(s.lat, s.lng); });
+    if (window.__dayHighlightLine) {
+      travelMap.removeLayer(window.__dayHighlightLine);
+      window.__dayHighlightLine = null;
+    }
+    if (dayCoords.length === 0) { clearDayHighlights(); return; }
+    var mapEl = document.getElementById('map');
+    if (mapEl) mapEl.classList.add('map-point-dim');
+    window.__dayHighlightLine = L.polyline(dayCoords, {
+      color: (typeof dayColor === 'function') ? dayColor(idx) : '#b8392e',
+      weight: 4,
+      opacity: 0.9
+    }).addTo(travelMap);
+    if (dayCoords.length === 1) {
+      travelMap.setView(dayCoords[0], Math.max(travelMap.getZoom(), 12));
+    } else {
+      travelMap.fitBounds(L.latLngBounds(dayCoords), { padding: [60, 60], maxZoom: 13 });
+    }
+  }
+
+  function clearDayHighlights() {
+    var mapEl = document.getElementById('map');
+    if (mapEl) mapEl.classList.remove('map-point-dim');
+    if (travelMap && window.__dayHighlightLine) {
+      travelMap.removeLayer(window.__dayHighlightLine);
+      window.__dayHighlightLine = null;
+    }
+  }
+
+  // ----- 8b. route chips（地图下方点击站点） -----
+  var activeChipIdx = 0;
+  var routeCache = {};
+  var animCancel = null;
+
+  function chipEmoji(name) {
+    if (!name) return '📍';
+    if (name.includes('机场')) return '✈️';
+    if (name.includes('长城') || name.includes('雁门关')) return '🏰';
+    if (name.includes('木塔')) return '🗼';
+    if (name.includes('云冈') || name.includes('石窟')) return '⛩️';
+    if (name.includes('壶口')) return '🌊';
+    if (name.includes('恒山')) return '⛰️';
+    if (name.includes('寺')) return '🏯';
+    if (name.includes('高铁') || name.includes('返程')) return '🚄';
+    if (name.includes('夜宿')) return '🏨';
+    return '📍';
+  }
+
+  function haversineKm(lat1, lng1, lat2, lng2) {
+    var R = 6371;
+    var toRad = function (d) { return d * Math.PI / 180; };
+    var dLat = toRad(lat2 - lat1), dLng = toRad(lng2 - lng1);
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  function durationForDistance(km) {
+    if (km < 5) return 0.8;
+    if (km > 200) return 3.0;
+    if (km <= 50) return 0.8 + (km - 5) * (1.0 / 45);
+    return 1.8 + (km - 50) * (1.2 / 150);
+  }
+
+  function fetchRoute(fromIdx, toIdx) {
+    var a = mapPoints[fromIdx], b = mapPoints[toIdx];
+    var key = a.lng + ',' + a.lat + ';' + b.lng + ',' + b.lat;
+    if (routeCache[key]) return Promise.resolve(routeCache[key]);
+    var url = 'https://router.project-osrm.org/route/v1/driving/' + a.lng + ',' + a.lat + ';' + b.lng + ',' + b.lat + '?overview=full&geometries=geojson';
+    return fetch(url, { mode: 'cors' })
+      .then(function (r) { if (!r.ok) throw new Error('OSRM HTTP ' + r.status); return r.json(); })
+      .then(function (data) {
+        if (data.code !== 'Ok' || !data.routes || !data.routes.length) throw new Error('OSRM no route');
+        var coords = data.routes[0].geometry.coordinates;
+        routeCache[key] = coords;
+        return coords;
+      })
+      .catch(function (err) {
+        console.warn('OSRM 失败，回退直线:', err.message);
+        var mid = [(a.lng + b.lng) / 2, (a.lat + b.lat) / 2];
+        var fallback = [[a.lng, a.lat], mid, [b.lng, b.lat]];
+        routeCache[key] = fallback;
+        return fallback;
+      });
+  }
+
+  function setActiveChip(idx) {
+    activeChipIdx = idx;
+    document.querySelectorAll('.route-chip').forEach(function (el) {
+      var i = parseInt(el.getAttribute('data-idx'), 10);
+      if (i === idx) el.classList.add('active');
+      else el.classList.remove('active');
+    });
+  }
+
+  function flyAlongRoute(fromIdx, toIdx) {
+    if (!travelMap) return;
+    if (fromIdx === toIdx) {
+      var p = mapPoints[toIdx];
+      travelMap.flyTo([p.lat, p.lng], Math.max(travelMap.getZoom(), 11), { duration: 0.6 });
+      setActiveChip(toIdx);
+      return;
+    }
+    if (animCancel) animCancel.cancelled = true;
+    var token = { cancelled: false };
+    animCancel = token;
+    setActiveChip(toIdx);
+    fetchRoute(fromIdx, toIdx).then(function (coords) {
+      if (token.cancelled) return;
+      var km = haversineKm(mapPoints[fromIdx].lat, mapPoints[fromIdx].lng, mapPoints[toIdx].lat, mapPoints[toIdx].lng);
+      var dur = durationForDistance(km) * 1000;
+      var startTs = null;
+      var targetZoom = Math.max(travelMap.getZoom(), km < 30 ? 12 : 9);
+      function step(ts) {
+        if (token.cancelled) return;
+        if (startTs === null) startTs = ts;
+        var t = (ts - startTs) / dur;
+        if (t >= 1) {
+          var last = coords[coords.length - 1];
+          travelMap.setView([last[1], last[0]], targetZoom, { animate: false });
+          return;
+        }
+        var idx = t * (coords.length - 1);
+        var i0 = Math.floor(idx);
+        var i1 = Math.min(coords.length - 1, i0 + 1);
+        var frac = idx - i0;
+        var c0 = coords[i0], c1 = coords[i1];
+        var lng = c0[0] + (c1[0] - c0[0]) * frac;
+        var lat = c0[1] + (c1[1] - c0[1]) * frac;
+        travelMap.setView([lat, lng], targetZoom, { animate: false });
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  function renderRouteChips() {
+    var container = document.getElementById('route-chips');
+    if (!container) return;
+    var html = '';
+    mapPoints.forEach(function (p, i) {
+      html += '<button type="button" class="route-chip route-chip--day-' + ((p.dayIdx || 0) + 1) + (i === 0 ? ' active' : '')
+        + '" data-idx="' + i + '">'
+        + '<span class="route-chip__num">' + (i + 1) + '</span>'
+        + '<span class="route-chip__emoji">' + chipEmoji(p.name) + '</span>'
+        + '<span>' + escapeHTML(p.name) + '</span>'
+        + '</button>';
+    });
+    container.innerHTML = html;
+    container.addEventListener('click', function (e) {
+      var btn = e.target.closest('.route-chip');
+      if (!btn) return;
+      var idx = parseInt(btn.getAttribute('data-idx'), 10);
+      if (isNaN(idx)) return;
+      flyAlongRoute(activeChipIdx, idx);
+    });
+  }
+  renderRouteChips();
+
   // ----- 9. nav buttons -----
   if (typeof initNavButtons === 'function') {
     try { initNavButtons(); } catch (e) {}
@@ -807,6 +1235,11 @@ INIT_SCRIPT = r"""
   if (typeof fetchAllWeather === 'function') {
     try { fetchAllWeather(trip); } catch (e) {}
   }
+
+  // ----- init: 渲染时间轴 + 视图切换（默认标签页一天一页，初始不高亮地图） -----
+  renderDayTabsHTML();
+  initViewToggle();
+  setViewMode('tabs', true);
 })();
 """
 
