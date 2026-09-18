@@ -292,6 +292,76 @@ a:hover { color: var(--gold); text-decoration: underline; }
 .slot-meta span::before { content: '·'; margin-right: 6px; color: var(--gold); }
 .slot-meta span:first-child::before { content: ''; margin: 0; }
 .slot-transport { padding: 8px 10px; background: rgba(0,0,0,0.2); border-radius: 6px; font-size: 11px; color: var(--parchment-dim); margin-top: 6px; }
+
+/* 待办事项：按 交通 / 景点 / 住宿 分组的表格 */
+.todo-section { margin-bottom: 22px; }
+.todo-section:last-child { margin-bottom: 0; }
+.todo-section-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold-lt);
+  margin: 0 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed var(--border-soft);
+}
+.todo-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.todo-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  color: var(--parchment);
+  min-width: 540px;
+}
+.todo-table th {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--parchment-dim);
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(184,134,46,0.04);
+  white-space: nowrap;
+}
+.todo-table td {
+  padding: 10px;
+  border-bottom: 1px solid rgba(184,134,46,0.12);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.todo-table tr:last-child td { border-bottom: 0; }
+.todo-table tr:hover td { background: rgba(184,134,46,0.05); }
+.todo-item-cell { min-width: 160px; }
+.todo-label { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; }
+.todo-label input[type="checkbox"] {
+  margin-top: 2px;
+  width: 14px; height: 14px;
+  accent-color: var(--gold);
+  flex-shrink: 0;
+}
+.todo-label input[type="checkbox"]:checked + span {
+  text-decoration: line-through;
+  color: var(--parchment-dim);
+  opacity: 0.6;
+}
+.todo-lead-cell { text-align: center; white-space: nowrap; }
+.todo-lead {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.todo-lead--urgent { background: rgba(184,57,46,0.18); color: #e8806e; }
+.todo-lead--soon    { background: rgba(184,134,46,0.18); color: var(--gold-lt); }
+.todo-lead--none   { background: rgba(120,120,120,0.15); color: var(--parchment-dim); }
+.todo-note { color: var(--parchment-dim); font-size: 11.5px; }
+.todo-note strong { color: var(--parchment); }
 .slot-nav-row { display: flex; gap: 6px; margin-top: 8px; }
 .slot-nav-btn {
   padding: 5px 12px;
@@ -1221,68 +1291,116 @@ img { max-width: 100%; }
   ],
   "reminders": [
     {
-      "item": "【机票·去程】广州→朔州 9/26 周六 06:35 起飞 / 09:40 落地（落地后直接机场取车开往 广武长城）— 携程/航司官网，建议提前 30 天",
+      "category": "交通", "item": "机票·去程",
+      "time": "9/26 周六 06:35 起飞 / 09:40 落地",
+      "platform": "携程 / 航司官网",
+      "note": "落地后直接机场取车开往 广武长城",
       "leadDays": 30
     },
     {
-      "item": "【机票·返程】太原→广州 10/2 周五下午班（参考 15:00–18:00 时段，武宿机场起飞；从酒店打车约 30 min）— 携程/航司官网",
+      "category": "交通", "item": "机票·返程",
+      "time": "10/2 周五 15:00–18:00 时段（武宿机场起飞）",
+      "platform": "携程 / 航司官网",
+      "note": "从酒店打车约 30 min 到机场",
       "leadDays": 30
     },
     {
-      "item": "【租车】朔州机场取车 9/26 10:30 → 大同南站异地还车 9/29 15:30，共 4 天 — 携程/悟空租车，基础险 + 不计免赔，6 座 SUV 较稳",
+      "category": "交通", "item": "租车",
+      "time": "9/26 10:30 取车 → 9/29 15:30 还车（4 天）",
+      "platform": "携程 / 悟空租车",
+      "note": "基础险 + 不计免赔；6 座 SUV 较稳",
       "leadDays": 14
     },
     {
-      "item": "【酒店·Day 1 一晚 9/26 周六】五台县/原平市酒店 — 18:30 抵达入住（雁门关 17:30 出发 → 18:30 到）；中档，**必须有停车场**（自驾最后一天）；推荐 G208 国道沿线",
+      "category": "交通", "item": "临汾一日游团（广胜寺+小西天+壶口）",
+      "time": "10/1 周四 07:30 出发，14h 高强度",
+      "platform": "携程/美团 / 临汾旅游集散中心",
+      "note": "务必提前 1 周，国庆首日最抢手；体力不够可砍小西天",
       "leadDays": 14
     },
     {
-      "item": "【酒店·Day 2 一晚 9/27 周日】浑源县城酒店 — 17:00 入住（佛光寺 12:30 出发 → 浑源 15:30 抵达 → 17:00 入住）；中档，**必须有停车场**；县城快捷/中档为主",
+      "category": "交通", "item": "临汾西→太原南 高铁",
+      "time": "10/1 周四 22:18 末班车",
+      "platform": "12306 App",
+      "note": "国庆返程高峰务必提前 1 周抢；务必 21:00 前返回临汾西",
       "leadDays": 14
     },
     {
-      "item": "【酒店·Day 3 一晚 9/28 周一】大同古城酒店 — 18:30 入住（悬空寺→应县→大同 17:00 抵古城）；中档，**必须有停车场**；步行可达 善化寺/华严寺/古城墙/九龙壁",
+      "category": "景点", "item": "山西博物院（免费）",
+      "time": "10/1 周四 09:00 入馆（08:30 出门）",
+      "platform": "微信公众号「山西博物院」",
+      "note": "提前 1–3 天 9:00 放票实名预约；周二闭馆，10/1 正常开放",
+      "leadDays": 3
+    },
+    {
+      "category": "景点", "item": "悬空寺登临票",
+      "time": "9/28 周一 09:00 前登临（08:00 入园）",
+      "platform": "微信公众号「恒山景区」",
+      "note": "提前 7 天 9:00 准时蹲；限 2475 张/天；寺院门票 ¥15 现场买，登临票 ¥100",
+      "leadDays": 7
+    },
+    {
+      "category": "景点", "item": "北齐壁画博物馆",
+      "time": "10/2 周五 09:00 入馆（08:30 出发）",
+      "platform": "微信公众号「太原北齐壁画博物馆」",
+      "note": "提前 1–15 天实名预约；¥35/人；周一闭馆（10/2 周五正常）",
+      "leadDays": 7
+    },
+    {
+      "category": "景点", "item": "云冈石窟",
+      "time": "9/29 周二 08:40 抵达入园（08:00 出发）",
+      "platform": "现场窗口 / 公众号「云冈石窟」",
+      "note": "¥120/人；提前 1 天购票均可",
+      "leadDays": 3
+    },
+    {
+      "category": "景点", "item": "佛光寺/南禅寺/应县木塔/华严寺/善化寺/北岳恒山/悬空寺寺院",
+      "time": "9/27–9/28 各景点",
+      "platform": "现场窗口 / 各景区公众号",
+      "note": "当天买即可",
+      "leadDays": 0
+    },
+    {
+      "category": "景点", "item": "山西文旅年卡（晋游卡 ¥258/年）",
+      "time": "出发前决定是否购买",
+      "platform": "微信公众号「山西文旅年卡」/「票通天下发布」",
+      "note": "本行程核心古建均不在年卡；仅 雁门关免票+晋祠半价合计省 ¥130，**不推荐为本行程单独买**。若已购：晋祠走年卡半价通道（带身份证+人脸），其余无额外操作",
+      "leadDays": 0
+    },
+    {
+      "category": "住宿", "item": "Day 1 一晚（9/26 周六）— 五台县/原平市",
+      "time": "18:30 抵达入住（雁门关 17:30 出发 → 18:30 到）",
+      "platform": "携程 / 美团",
+      "note": "中档；**必须有停车场**（自驾最后一日）；G208 国道沿线",
+      "leadDays": 14
+    },
+    {
+      "category": "住宿", "item": "Day 2 一晚（9/27 周日）— 浑源县城",
+      "time": "17:00 入住（佛光寺 12:30 出发 → 浑源 15:30 抵达）",
+      "platform": "携程 / 美团",
+      "note": "中档；**必须有停车场**；县城快捷/中档为主",
+      "leadDays": 14
+    },
+    {
+      "category": "住宿", "item": "Day 3 一晚（9/28 周一）— 大同古城",
+      "time": "18:30 入住（悬空寺→应县→大同 17:00 抵古城）",
+      "platform": "携程 / 美团",
+      "note": "中档；**必须有停车场**；步行可达 善化寺/华严寺/古城墙/九龙壁",
       "leadDays": 21
     },
     {
-      "item": "【酒店·Day 4 一晚 9/29 周二】临汾西站旁酒店 — 20:05 抵达临汾西站（已还车，无停车场需求）；中档，出站即达；次日跟团集合方便",
+      "category": "住宿", "item": "Day 4 一晚（9/29 周二）— 临汾西站旁",
+      "time": "20:05 抵达临汾西站",
+      "platform": "携程 / 美团",
+      "note": "中档；已还车无需停车场；出站即达；次日跟团集合方便",
       "leadDays": 14
     },
     {
-      "item": "【酒店·Day 5+6 连住两晚 9/30、10/1】太原酒店（迎泽区，靠近山西博物院 + 北齐壁画博物馆）— Day 5 夜高铁 22:18 → 次日 00:20 抵达，Day 7 早 8:30 退房去机场；中档，停车场非必需（10/2 打车去机场）",
+      "category": "住宿", "item": "Day 5+6 连住两晚（9/30、10/1）— 太原迎泽区",
+      "time": "9/30 凌晨 00:20 抵达 → 10/2 早 8:30 退房",
+      "platform": "携程 / 美团",
+      "note": "中档；停车场非必需（10/2 打车去机场）；靠近 山西博物院 + 北齐壁画博物馆",
       "leadDays": 14
-    },
-    {
-      "item": "【预约·山西博物院】10/1 周四 上午 09:00 入馆（计划 08:30 出门）— 微信公众号「山西博物院」提前 1–3 天 9:00 放票实名预约，**免费**，周二闭馆，10/1 正常开放",
-      "leadDays": 3
-    },
-    {
-      "item": "【预约·悬空寺登临票】9/28 周一 早 09:00 前登临（计划 08:00 入园，09:00 登临栈道）— 微信公众号「恒山景区」提前 7 天 9:00 准时蹲，每日 9:00 放当日+7 日票，限 2475 张/天；寺院门票 ¥15 现场买，登临票 ¥100 公众号约",
-      "leadDays": 7
-    },
-    {
-      "item": "【预约·北齐壁画博物馆】10/2 周五 上午 09:00 入馆（计划 08:30 出发）— 微信公众号「太原北齐壁画博物馆」提前 1–15 天实名预约，¥35/人，周一闭馆（10/2 是周五，正常开放）",
-      "leadDays": 7
-    },
-    {
-      "item": "【预约·临汾一日游团】10/1 周四 07:30 出发 14h 高强度（含 广胜寺+小西天+壶口瀑布）— 携程/美团搜「临汾一日游」或临汾旅游集散中心现场；务必提前 1 周，国庆首日最抢手；体力不够可砍小西天",
-      "leadDays": 14
-    },
-    {
-      "item": "【购票·临汾西→太原南 高铁】10/1 周四 22:18 末班车（务必 21:00 前返回临汾西站）— 12306 App，国庆返程高峰务必提前 1 周抢",
-      "leadDays": 14
-    },
-    {
-      "item": "【购票·云冈石窟】9/29 周二 上午 08:40 抵达入园（计划 08:00 出发）— 现场窗口或公众号「云冈石窟」提前 1 天购票均可，¥120/人",
-      "leadDays": 3
-    },
-    {
-      "item": "【购票·其余景区现场购】9/27–9/28 佛光寺/南禅寺/应县木塔/华严寺/善化寺/北岳恒山/悬空寺寺院门票 — 现场窗口或景区公众号当天买",
-      "leadDays": 0
-    },
-    {
-      "item": "【年卡用户】山西文旅年卡（晋游卡 ¥258/年）人脸识别入园 — 本行程核心古建（云冈/悬空寺/应县木塔/华严寺/善化寺/北岳恒山/佛光寺/南禅寺）均不在年卡，仅 雁门关免票 + 晋祠半价合计省 ¥130，**不推荐为本行程单独买**。若已购：晋祠走年卡半价通道（带身份证 + 人脸）；其余无额外操作，照常买票",
-      "leadDays": 0
     }
   ],
   "days": [
@@ -2833,7 +2951,15 @@ function computeReminders(startDateISO, items) {
     .map(function (it) {
       var d = new Date(startDateISO + 'T00:00:00Z');
       d.setUTCDate(d.getUTCDate() - it.leadDays);
-      return { item: it.item, leadDays: it.leadDays, deadline: d.toISOString().slice(0, 10) };
+      return {
+        item: it.item,
+        category: it.category,
+        time: it.time,
+        platform: it.platform,
+        note: it.note,
+        leadDays: it.leadDays,
+        deadline: d.toISOString().slice(0, 10)
+      };
     })
     .sort(function (a, b) {
       return a.deadline < b.deadline ? -1 : a.deadline > b.deadline ? 1 : 0;
@@ -2850,20 +2976,41 @@ function escapeHTML(s) {
 }
 
 function renderChecklistHTML(reminders) {
-  var lis = reminders.map(function (r) {
-    // leadDays 必须夹成非负整数；恶意 trip 数据传入 '"><script>' 等会破坏 HTML 结构
-    var ld = Math.max(0, Math.floor(Number(r.leadDays) || 0));
-    var dd = (typeof r.deadline === 'string' || typeof r.deadline === 'number')
-      ? escapeHTML(String(r.deadline))
-      : '';
-    var item = escapeHTML(String(r.item));
-    return '<li class="todo-item">'
-      + '<input type="checkbox" data-key="' + item + '"> '
-      + '<span class="todo-deadline">' + dd + '前</span> '
-      + '<span class="todo-text">' + item + '（建议提前' + ld + '天）</span>'
-      + '</li>';
-  }).join('');
-  return '<ul class="pretrip-todo">' + lis + '</ul>';
+  // 按 category 分组成 3 张表：交通 / 景点 / 住宿
+  var sections = [
+    { key: '交通', icon: '🚗', label: '交通', cols: ['具体项', '时间', '平台', '提前', '备注'] },
+    { key: '景点', icon: '🏛️', label: '景点', cols: ['具体项', '入园时间', '平台', '提前', '备注'] },
+    { key: '住宿', icon: '🏨', label: '住宿', cols: ['具体项', '入住时间', '平台', '提前', '备注'] }
+  ];
+  var html = '';
+  sections.forEach(function (sec) {
+    var rows = reminders.filter(function (r) { return r.category === sec.key; });
+    if (!rows.length) return;
+    var head = sec.cols.map(function (c) { return '<th>' + escapeHTML(c) + '</th>'; }).join('');
+    var body = rows.map(function (r) {
+      var ld = Math.max(0, Math.floor(Number(r.leadDays) || 0));
+      var leadTxt = ld > 0 ? ld + ' 天' : '当天';
+      var leadCls = ld > 14 ? 'todo-lead--urgent' : (ld > 0 ? 'todo-lead--soon' : 'todo-lead--none');
+      return '<tr>'
+        + '<td class="todo-item-cell"><label class="todo-label">'
+        +   '<input type="checkbox" data-key="' + escapeHTML(r.item) + '"> '
+        +   '<span>' + escapeHTML(r.item) + '</span>'
+        + '</label></td>'
+        + '<td>' + escapeHTML(r.time || '') + '</td>'
+        + '<td>' + escapeHTML(r.platform || '') + '</td>'
+        + '<td class="todo-lead-cell"><span class="todo-lead ' + leadCls + '">' + leadTxt + '</span></td>'
+        + '<td class="todo-note">' + escapeHTML(r.note || '') + '</td>'
+        + '</tr>';
+    }).join('');
+    html += '<div class="todo-section">'
+      + '<h4 class="todo-section-title">' + sec.icon + ' ' + sec.label + '（' + rows.length + '）</h4>'
+      + '<div class="todo-table-wrap"><table class="todo-table">'
+      + '<thead><tr>' + head + '</tr></thead>'
+      + '<tbody>' + body + '</tbody>'
+      + '</table></div>'
+      + '</div>';
+  });
+  return html;
 }
 
 function reminderBadgeHTML(leadDays) {
